@@ -17,6 +17,7 @@
 
 #include <array>
 #include <thread>
+#include <tuple>
 
 typedef task task;
 
@@ -38,6 +39,12 @@ namespace WaifuEngine
             static threadpool * get_instance();
 
             void add_task(task t);
+
+            template<typename ... _types>
+            std::tuple<_types ...> await_tasks()
+            {
+                std::array<std::thread, sizeof...(_types)> threads;
+            }
 
         };
     }
