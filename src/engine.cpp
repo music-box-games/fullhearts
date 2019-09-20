@@ -36,7 +36,7 @@ namespace WaifuEngine
         // start up systems
     }
 
-    void engine::update(float dt)
+    void engine::update(float)
     {
         // update systems
     }    
@@ -44,5 +44,10 @@ namespace WaifuEngine
     void engine::stop()
     {
         // shutdown all systems
+    }
+
+    int engine::exec()
+    {
+        return 0;
     }
 }

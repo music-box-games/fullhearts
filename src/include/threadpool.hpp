@@ -15,22 +15,24 @@
 #ifndef _WAIFU_THREADPOOL_H_
 #define _WAIFU_THREADPOOL_H_
 
-#include <array>
+#include <vector>
 #include <thread>
-#include <tuple>
-
-typedef task task;
+#include <functional>
+#include <cstdarg>
 
 namespace WaifuEngine
 {
     namespace threads
     {
+        using thread = void*;
+
+        using task = std::function<void()>;
         class threadpool
         {
         private:
             static threadpool * instance_;
 
-            std::array<std::thread, 4> pool_;
+            std::vector<thread> pool_;
 
             threadpool();
         public:  
@@ -38,13 +40,13 @@ namespace WaifuEngine
 
             static threadpool * get_instance();
 
+            void update(float);
+
             void add_task(task t);
 
-            template<typename ... _types>
-            std::tuple<_types ...> await_tasks()
-            {
-                std::array<std::thread, sizeof...(_types)> threads;
-            }
+            void await_task(task t);
+
+            void await_tasks(task ts ...);
 
         };
     }
