@@ -20,11 +20,13 @@
 #include <functional>
 #include <cstdarg>
 
+#include <boost/thread.hpp>
+
 namespace WaifuEngine
 {
     namespace threads
     {
-        using thread = void*;
+        using thread = boost::thread;
 
         using task = std::function<void()>;
         class threadpool
@@ -42,11 +44,11 @@ namespace WaifuEngine
 
             void update(float);
 
-            void add_task(task t);
+            void add_task(task){}
 
-            void await_task(task t);
+            void await_task(task t){}
 
-            void await_tasks(task ts ...);
+            void await_tasks(task){}
 
         };
     }
