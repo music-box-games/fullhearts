@@ -1,24 +1,20 @@
 # require cmake version 3.10
 cmake_minimum_required(VERSION 3.10.2)
 
-# setup debug or release
-set(DBG 1)
-
-if(DBG)
-set(DEBUG 1)
-else(DBG)
-set(RELEASE 0)
-endif(DBG)
-
-
+##################
 # set project name
+##################
 project(fullhearts)
 
-# add include directory
+###########################
+# add dirs to include paths
+###########################
 include_directories(src/include)
 include_directories(${Boost_INCLUDE_DIR})
 
+##################
 # add source files
+##################
 file(GLOB SOURCES "src/*.cpp")
 
 # c++17 compiler flags
@@ -33,7 +29,9 @@ endif(MSVC)
 # set exe output
 add_executable(fullhearts ${SOURCES})
 
-# add libraries
+# LIBRARIES 
+# find boost LIBRARIES
+
 if(WIN32)
 endif(WIN32)
 
