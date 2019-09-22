@@ -17,12 +17,20 @@
 #ifndef _WAIFU_ENGINE_H_
 #define _WAIFU_ENGINE_H_
 
+#include <vector>
+
+#include "system.hpp"
+
 namespace WaifuEngine
 {
     class engine
     {
     private:
+        static bool running;
+
         static engine * instance_;
+
+        std::vector<base_system *> systems_;
 
         engine();
         void update(float dt);
@@ -31,6 +39,7 @@ namespace WaifuEngine
 
     public:
         static engine * get_instance();
+        static void shutdown();
 
         int exec();
 

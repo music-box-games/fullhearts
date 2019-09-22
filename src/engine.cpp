@@ -14,13 +14,20 @@
 */
 /******************************************************************************/
 
+#include <algorithm>
+
 #include "include/engine.hpp"
+#include "include/threadpool.hpp"
 
 namespace WaifuEngine
 {
     engine * engine::instance_ = nullptr;
+    bool engine::running = true;
 
-    engine::engine() {};
+    engine::engine()
+    {
+        systems_.push_back(threads::threadpool::get_instance());
+    }
 
     engine * engine::get_instance()
     {
@@ -31,14 +38,22 @@ namespace WaifuEngine
         return instance_;
     }
 
+    void engine::shutdown()
+    {
+        running = false;
+    }
+
     void engine::start()
     {
         // start up systems
     }
 
-    void engine::update(float)
+    void engine::update(float dt)
     {
         // update systems
+        std::for_each(systems_.begin(), systems_.end(), [dt](base_system * s) -> void {
+            s->update(dt);
+        });
     }    
 
     void engine::stop()
@@ -48,6 +63,16 @@ namespace WaifuEngine
 
     int engine::exec()
     {
+        while(running)
+        {
+            update(0.0167f);
+        }
+
+        std::for_each(systems_.begin(), systems_.end(), [](base_system * s) -> void {
+            delete s;
+        });
+        systems_.clear();        
+
         return 0;
     }
 }

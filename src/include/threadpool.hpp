@@ -22,6 +22,8 @@
 
 #include <boost/thread.hpp>
 
+#include "system.hpp"
+
 namespace WaifuEngine
 {
     namespace threads
@@ -29,26 +31,39 @@ namespace WaifuEngine
         using thread = boost::thread;
 
         using task = std::function<void()>;
-        class threadpool
+        class threadpool : public system<threadpool>
         {
         private:
+
             static threadpool * instance_;
 
             std::vector<thread> pool_;
 
             threadpool();
+
+            void join_done_impl(std::vector<thread>& p);
+            void join_done(std::vector<thread>& p);
+            void join_done();
+
+            void try_join_done_impl(std::vector<thread>& p);
+            void try_join_done(std::vector<thread>& p);
+            void try_join_done();
         public:  
+            SYS_NAME(threadpool);
+
             ~threadpool();
 
             static threadpool * get_instance();
 
             void update(float);
 
-            void add_task(task){}
+            void draw() {} // TODO: draw on-screen (or somewhere) some sort of usage data on threads
 
-            void await_task(task t){}
+            void add_task(task t);
 
-            void await_tasks(task){}
+            void await_task(task t);
+
+            void await_tasks(std::tuple<task> ts);
 
         };
     }
