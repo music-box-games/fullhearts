@@ -31,8 +31,7 @@ namespace WaifuEngine
 
         argparse::argparse() : desc_(po::options_description("Options"))
         {
-            desc_.add_options()("--help", "Shows help message.");
-            desc_.add_options()("--h", "Shows help message.");
+            desc_.add_options()("help", "Shows help message.")("h", "Shows help message.");
         }
 
         argparse::~argparse() {}
@@ -46,8 +45,15 @@ namespace WaifuEngine
         {
             try
             {
+#ifdef _DEBUG
+                WaifuEngine::trace::log("Beginning cmd parse");
+#endif // _DEBUG
                 po::store(po::parse_command_line(argc, argv, desc_), vm_); // can throw
-                if(vm_.count("--help") || vm_.count("-h"))
+#ifdef _DEBUG
+                WaifuEngine::trace::log("Found options:");
+                po::notify(vm_);
+#endif // _DEBUG
+                if(vm_.count("help") || vm_.count("h"))
                 {
                     WaifuEngine::trace::log(desc_);
                     return 1;
@@ -56,6 +62,7 @@ namespace WaifuEngine
             catch(const po::error& e)
             {
                 WaifuEngine::trace::error(e.what());
+                return 1;
             }
             
             for(auto o : vm_)
