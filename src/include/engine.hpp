@@ -18,8 +18,7 @@
 #define _WAIFU_ENGINE_H_
 
 #include <vector>
-
-#include "system.hpp"
+#include <system.hpp>
 
 namespace WaifuEngine
 {

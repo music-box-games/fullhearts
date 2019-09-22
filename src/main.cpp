@@ -12,10 +12,21 @@
 */
 /******************************************************************************/
 
-#include "include/engine.hpp"
+#include <inputargs.hpp>
+#include <engine.hpp>
+#include <wstr.hpp>
 
 int main(int argc, char ** argv)
 {
+    WaifuEngine::utils::argparse * ap = WaifuEngine::utils::argparse::get_instance();
+    if(ap->parse(argc, argv)) return 0;
+
+    std::for_each(WaifuEngine::utils::argparse::opts_.begin(), WaifuEngine::utils::argparse::opts_.end(), [](WaifuEngine::str s) -> void
+    {
+        std::cout << s;
+        std::cout << WaifuEngine::str("\n");
+    });
+
     auto * e = WaifuEngine::engine::get_instance();
     
     return e->exec();

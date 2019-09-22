@@ -22,7 +22,7 @@
 
 #include <boost/thread.hpp>
 
-#include "system.hpp"
+#include <system.hpp>
 
 namespace WaifuEngine
 {

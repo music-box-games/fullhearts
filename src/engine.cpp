@@ -16,8 +16,8 @@
 
 #include <algorithm>
 
-#include "include/engine.hpp"
-#include "include/threadpool.hpp"
+#include <engine.hpp>
+#include <threadpool.hpp>
 
 namespace WaifuEngine
 {

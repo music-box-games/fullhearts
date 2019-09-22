@@ -7,7 +7,7 @@
 \date   
 \brief
 
-\copyright    All content (c) 2018 Music Box Games, all rights reserved.
+\copyright    All content (c) 2019 Music Box Games, all rights reserved.
 */
 /******************************************************************************/
 
