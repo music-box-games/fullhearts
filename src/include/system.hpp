@@ -31,7 +31,7 @@ namespace WaifuEngine
         virtual ~base_system() {}
 
         virtual void update(float dt) = 0;
-        virtual void draw() = 0;
+        virtual void draw() const = 0;
     };
 
     template<typename S>
@@ -42,8 +42,8 @@ namespace WaifuEngine
         system() : base_system(S::NAME) {}
         virtual ~system() {}
 
-        virtual void update(float dt) = 0;
-        virtual void draw() = 0;
+        virtual void update(float dt) override = 0;
+        virtual void draw() const override = 0;
     };
 }
 

@@ -48,6 +48,7 @@ namespace WaifuEngine
                 sname = n + ss.str();
                 ++gcount;
             }
+            objects_.insert(sname, std::shared_ptr<object>(new object(sname)));
             return objects_[sname];
         }
 
