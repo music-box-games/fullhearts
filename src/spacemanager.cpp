@@ -42,7 +42,18 @@ namespace WaifuEngine
 
         space_ptr& spacemanager::add_space(WaifuEngine::str name)
         {
-            spaces_.insert(name, std::make_shared<space>(name));
+            spaces_.emplace(std::make_pair(name, std::make_shared<space>(name)));
+            return spaces_[name];
+        }
+
+        void spacemanager::remove_space(WaifuEngine::str name)
+        {
+            spaces_.erase(name);
+        }
+
+        space_map& spacemanager::get_spaces()
+        {
+            return spaces_;
         }
     }
 }

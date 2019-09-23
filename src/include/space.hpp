@@ -26,7 +26,6 @@ namespace WaifuEngine
     namespace object_management
     {
         using obj_map = std::unordered_map<::WaifuEngine::str, std::shared_ptr<object>>;
-        typedef std::shared_ptr<space> space_ptr;
 
         class space
         {
@@ -46,6 +45,7 @@ namespace WaifuEngine
 
             obj_map const& get_objmap();
         };
+        typedef std::shared_ptr<space> space_ptr;
     }
 }
 

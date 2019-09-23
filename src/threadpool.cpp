@@ -44,6 +44,11 @@ namespace WaifuEngine
             try_join_done();
         }
 
+        void threadpool::draw() const
+        {
+            
+        }
+
         void threadpool::add_task(task t)
         {
             pool_.push_back(thread(t));

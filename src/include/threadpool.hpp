@@ -57,7 +57,7 @@ namespace WaifuEngine
 
             void update(float);
 
-            void draw() {} // TODO: draw on-screen (or somewhere) some sort of usage data on threads
+            void draw() const; // TODO: draw on-screen (or somewhere) some sort of usage data on threads
 
             void add_task(task t);
 
