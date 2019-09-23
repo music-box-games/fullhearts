@@ -35,7 +35,7 @@ namespace WaifuEngine
                 virtual ~_waifu_component_base() {}
 
                 virtual void update(float dt) = 0;
-                virtual void draw() = 0;
+                virtual void draw() const = 0;
                 
             };
         }
@@ -49,7 +49,7 @@ namespace WaifuEngine
             virtual ~component() {}
 
             virtual void update(float dt) = 0;
-            virtual void draw() = 0;
+            virtual void draw() const = 0;
             
         };
 
@@ -63,7 +63,7 @@ namespace WaifuEngine
             virtual ~example_component() { /* ... shutdown here */ }
 
             virtual void update(float) { /* update component here */ }
-            virtual void draw() { /* draw component here */ }
+            virtual void draw() const { /* draw component here */ }
         };
     }
 }

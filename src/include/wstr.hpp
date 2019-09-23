@@ -18,8 +18,12 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <fstream>
+#include <string_view>
 
 #define STRWIDE 0
+
+#define tostr(x) #x
 
 #if STRWIDE
 namespace WaifuEngine
@@ -27,6 +31,9 @@ namespace WaifuEngine
     typedef std::wstring str;
     typedef std::wstringstream strstream;
     typedef std::wostream ostr;
+    typedef std::wofstream ofstream;
+    typedef std::wifstream ifstream;
+    typedef std::wstring_view string_view;
     namespace io {}
 }
 #else // STRWIDE
@@ -35,10 +42,29 @@ namespace WaifuEngine
     typedef std::string str;
     typedef std::stringstream strstream;
     typedef std::ostream ostr;
+    typedef std::ofstream ofstream;
+    typedef std::ifstream ifstream;
+    typedef std::string_view string_view;
     namespace io {}
 }
 #endif // STRWIDE
 
-namespace wio = WaifuEngine::io;
+namespace WaifuEngine
+{
+    namespace io
+    {
+        bool string_contains(::WaifuEngine::str s, ::WaifuEngine::str find);
+
+        template<typename T>
+        str type_to_string()
+        {
+            return tostr(T);
+        }
+    }
+}
+
+#define HAS(x) find(x) != WaifuEngine::str::npos
+
+namespace wio = ::WaifuEngine::io;
 
 #endif // !_WAIFU_STR_H_
