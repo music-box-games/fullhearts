@@ -14,6 +14,9 @@
 #ifndef _WAIFU_MESSAGING_H_
 #define _WAIFU_MESSAGING_H_
 
+#include <unordered_map>
+#include <set>
+#include <functional>
 #include <wstr.hpp>
 #include <system.hpp>
 
@@ -23,6 +26,16 @@ namespace WaifuEngine
 {
     namespace messaging
     {
+        class message
+        {
+
+        };
+
+        class inputevent : public message
+        {
+            typedef std::function<void(WaifuEngine::str)> tcallback;
+        };
+
         class messenger : public ::WaifuEngine::system<messenger>
         {
         private:
@@ -30,6 +43,8 @@ namespace WaifuEngine
             messenger() {};
 
             void dispatch_message();
+
+            std::unordered_map<WaifuEngine::str, std::set<std::function<void(void)>>> events_;
         public:
             SYS_NAME(messenger);
             static messenger * get_instance();
@@ -37,10 +52,7 @@ namespace WaifuEngine
 
             virtual void update(float) override {}
             virtual void draw() const override {}
-
         };
-
-        
     }
 }
 
