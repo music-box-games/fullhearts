@@ -18,15 +18,15 @@ namespace WaifuEngine
 {
     namespace object_management
     {
-        std::shared_ptr<spacemanager> spacemanager::instance_ = nullptr;
+        spacemanager * spacemanager::instance_ = nullptr;
 
         spacemanager::spacemanager() : system<spacemanager>(), spaces_(space_map()){}
 
-        std::shared_ptr<spacemanager>& spacemanager::get_instance()
+        spacemanager * spacemanager::get_instance()
         {
             if(instance_ == nullptr)
             {
-                instance_.reset(new spacemanager());
+                instance_ = new spacemanager();
             }
             return instance_;
         }
@@ -53,9 +53,9 @@ namespace WaifuEngine
             });
         }
 
-        space_ptr& spacemanager::add_space(WaifuEngine::str name)
+        space * spacemanager::add_space(WaifuEngine::str name)
         {
-            spaces_.emplace(std::make_pair(name, std::make_shared<space>(name)));
+            spaces_.emplace(std::make_pair(name, new space(name)));
             return spaces_[name];
         }
 

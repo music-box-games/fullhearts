@@ -26,26 +26,26 @@ namespace WaifuEngine
 {
     namespace object_management
     {
-        using space_map = std::unordered_map<WaifuEngine::str, std::shared_ptr<WaifuEngine::object_management::space>>;
+        using space_map = std::unordered_map<WaifuEngine::str, space *>;
 
         class spacemanager : public system<spacemanager>
         {
         private:
-            static std::shared_ptr<spacemanager> instance_;
+            static spacemanager * instance_;
 
             space_map spaces_;
             spacemanager();
         public:
             SYS_NAME(spacemanager);
 
-            std::shared_ptr<spacemanager>& get_instance();
+            spacemanager * get_instance();
 
             virtual ~spacemanager();
 
             virtual void update(float dt) override;
             virtual void draw() const override;
 
-            space_ptr& add_space(WaifuEngine::str name);
+            space * add_space(WaifuEngine::str name);
             void remove_space(WaifuEngine::str name);
 
 
