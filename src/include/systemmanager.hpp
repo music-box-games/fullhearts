@@ -37,7 +37,7 @@ namespace WaifuEngine
         template<typename _SysType>
         base_system * add_system()
         {
-            systems_.emplaces(std::make_pair(_SysType::NAME, new _SysType()));
+            systems_.emplace(std::make_pair(_SysType::NAME, new _SysType()));
             return systems_[_SysType::NAME];
         }
 
