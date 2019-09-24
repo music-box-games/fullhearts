@@ -24,7 +24,6 @@ namespace WaifuEngine
             delete s.second;
         });
         systems_.clear();
-        delete instance_;
     }
 
     void system_manager::update(float dt)

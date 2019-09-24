@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <vector>
+#include <mutex>
 
 namespace WaifuEngine
 {
@@ -31,6 +32,7 @@ namespace WaifuEngine
         class object
         {
         private:
+            std::mutex lock_;
             WaifuEngine::str name_;
 
             comp_map components_;
@@ -41,12 +43,14 @@ namespace WaifuEngine
 
             void update(float dt)
             {
+                std::scoped_lock(lock_);
                 std::for_each(components_.begin(), components_.end(), [&dt](auto c) -> void {
                     c.second->update(dt);
                 });
             }
             void draw() const
             {
+                std::scoped_lock(lock_);
                 std::for_each(components_.begin(), components_.end(), [](auto c) -> void {
                     c.second->draw();
                 });
@@ -57,6 +61,7 @@ namespace WaifuEngine
             {
                 int cnum = 1;
                 WaifuEngine::str sname = name;
+                std::scoped_lock(lock_);
                 while(components_.count(sname))
                 {
                     WaifuEngine::strstream ss;
@@ -70,6 +75,7 @@ namespace WaifuEngine
             template<typename _CompType>
             std::shared_ptr<_CompType> get_component()
             {
+                std::scoped_lock(lock_);
                 for(auto c : components_)
                 {
                     if(c.first.HAS(tostr(_CompType)))
@@ -83,6 +89,7 @@ namespace WaifuEngine
 
             std::shared_ptr<WaifuEngine::components::impl::_waifu_component_base> get_component(WaifuEngine::str name)
             {
+                std::scoped_lock(lock_);
                 for(auto c : components_)
                 {
                     if(c.first == name)
@@ -95,6 +102,7 @@ namespace WaifuEngine
 
             void remove_component(WaifuEngine::str name)
             {
+                std::scoped_lock(lock_);
                 if(components_.count(name))
                 {
                     components_.erase(name);
@@ -104,6 +112,7 @@ namespace WaifuEngine
             template<typename _CompType>
             int remove_comps_of_type()
             {
+                std::scoped_lock(lock_);
                 int rcount = 0;
                 std::vector<WaifuEngine::str> keys;
                 std::for_each(components_.begin(), components_.end(), [&rcount, &keys](auto c) -> void {

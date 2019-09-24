@@ -35,7 +35,7 @@ namespace WaifuEngine
             static messenger * get_instance();
             virtual ~messenger();
 
-            virtual void update(float dt) override {}
+            virtual void update(float) override {}
             virtual void draw() const override {}
 
         };
