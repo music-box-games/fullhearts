@@ -28,7 +28,7 @@ namespace WaifuEngine
 
     void system_manager::update(float dt)
     {
-        std::for_each(systems_.begin(), systems_.end(), [](auto * s) -> void {
+        std::for_each(systems_.begin(), systems_.end(), [&dt](auto * s) -> void {
             s->update(dt);
         });
     }
