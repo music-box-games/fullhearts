@@ -20,23 +20,23 @@ namespace WaifuEngine
 
     system_manager::~system_manager()
     {
-        std::for_each(systems_.begin(), systems_.end(), [](auto * s) -> void {
-            delete s;
+        std::for_each(systems_.begin(), systems_.end(), [](std::pair<str, base_system *> s) -> void {
+            delete s.second;
         });
         systems_.clear();
     }
 
     void system_manager::update(float dt)
     {
-        std::for_each(systems_.begin(), systems_.end(), [&dt](auto * s) -> void {
-            s->update(dt);
+        std::for_each(systems_.begin(), systems_.end(), [&dt](std::pair<str, base_system *> s) -> void {
+            s.second->update(dt);
         });
     }
 
     void system_manager::draw() const
     {
-        std::for_each(systems_.cbegin(), systems_.cend(), [](auto * s) -> void {
-            s->draw();
+        std::for_each(systems_.cbegin(), systems_.cend(), [](std::pair<str, base_system *> s) -> void {
+            s.second->draw();
         });
     }
 

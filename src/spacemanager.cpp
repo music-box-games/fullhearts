@@ -33,12 +33,25 @@ namespace WaifuEngine
 
         spacemanager::~spacemanager()
         {
-            
+            std::for_each(spaces_.begin(), spaces_.end(), [](std::pair<WaifuEngine::str, space *> s) -> void {
+                delete s.second;
+            });
+            spaces_.clear();
         }
 
-        void spacemanager::update(float) {}
+        void spacemanager::update(float dt)
+        {
+            std::for_each(spaces_.begin(), spaces_.end(), [&dt](std::pair<WaifuEngine::str, space *> s) -> void {
+                s.second->update(dt);
+            });
+        }
 
-        void spacemanager::draw() const {}
+        void spacemanager::draw() const
+        {
+            std::for_each(spaces_.cbegin(), spaces_.cend(), [](std::pair<WaifuEngine::str, space *> s) -> void {
+                s.second->draw();
+            });
+        }
 
         space_ptr& spacemanager::add_space(WaifuEngine::str name)
         {
