@@ -35,6 +35,7 @@ namespace WaifuEngine
     typedef std::wifstream ifstream;
     typedef std::wstring_view string_view;
     namespace io {}
+#define WSTR(x) Lx
 }
 #else // STRWIDE
 namespace WaifuEngine
@@ -46,6 +47,7 @@ namespace WaifuEngine
     typedef std::ifstream ifstream;
     typedef std::string_view string_view;
     namespace io {}
+#define WSTR(x) x
 }
 #endif // STRWIDE
 
