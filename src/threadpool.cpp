@@ -28,6 +28,7 @@ namespace WaifuEngine
                 t.interrupt();
             });
             pool_.clear();
+            delete instance_;
         }
 
         threadpool * threadpool::get_instance()

@@ -37,6 +37,8 @@ namespace WaifuEngine
                 delete s.second;
             });
             spaces_.clear();
+
+            delete instance_;
         }
 
         void spacemanager::update(float dt)

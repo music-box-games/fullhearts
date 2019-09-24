@@ -38,7 +38,7 @@ namespace WaifuEngine
         public:
             SYS_NAME(spacemanager);
 
-            spacemanager * get_instance();
+            static spacemanager * get_instance();
 
             virtual ~spacemanager();
 
