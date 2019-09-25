@@ -27,105 +27,52 @@ namespace WaifuEngine
 {
     namespace object_management
     {
-        using comp_map = std::unordered_map<WaifuEngine::str, std::shared_ptr<WaifuEngine::components::impl::_waifu_component_base>>;
+        using comp_map = std::unordered_map<WaifuEngine::str, WaifuEngine::components::impl::_waifu_component_base *>;
 
+        // TODO:
+        // This is temp currently. This impl only supports one copy of each component
         class object
         {
         private:
-            std::mutex lock_;
-            WaifuEngine::str name_;
-
             comp_map components_;
+            WaifuEngine::str name_;
+            std::mutex lock_;
 
         public:
-            object(WaifuEngine::str name) : name_(name), components_(comp_map()) {}
-            ~object() {}
+            object(WaifuEngine::str n);
+            ~object();
 
-            void update(float dt)
+            void update(float dt);
+            void draw();
+
+            template<typename _CompType>
+            _CompType * add_component()
             {
                 std::scoped_lock l(lock_);
-                std::for_each(components_.begin(), components_.end(), [&dt](auto c) -> void {
-                    c.second->update(dt);
-                });
-            }
-            void draw()
-            {
-                std::scoped_lock l(lock_);
-                std::for_each(components_.begin(), components_.end(), [](auto c) -> void {
-                    c.second->draw();
-                });
+                if(components_.count(_CompType::NAME))
+                {
+                    // TODO: temp
+                    return nullptr;
+                }
+                components_.insert(_CompType::NAME, new _CompType(this));
             }
 
             template<typename _CompType>
-            std::shared_ptr<_CompType> add_component(WaifuEngine::str name)
-            {
-                int cnum = 1;
-                WaifuEngine::str sname = name;
-                std::scoped_lock l(lock_);
-                while(components_.count(sname))
-                {
-                    WaifuEngine::strstream ss;
-                    ss << cnum;
-                    sname = name + ss.str();
-                }
-                components_.insert(sname, std::make_shared<_CompType>(sname));
-                return components_[sname];
-            }
-
-            template<typename _CompType>
-            std::shared_ptr<_CompType> get_component()
+            void remove_component()
             {
                 std::scoped_lock l(lock_);
-                for(auto c : components_)
+                if(components_.count(_CompType::NAME))
                 {
-                    if(c.first.HAS(tostr(_CompType)))
-                    {
-                        return c.second;
-                    }
-                }
-
-                return std::shared_ptr<_CompType>(nullptr);
-            }
-
-            std::shared_ptr<WaifuEngine::components::impl::_waifu_component_base> get_component(WaifuEngine::str name)
-            {
-                std::scoped_lock l(lock_);
-                for(auto c : components_)
-                {
-                    if(c.first == name)
-                    {
-                        return c.second;
-                    }
-                }
-                return std::shared_ptr<::WaifuEngine::components::impl::_waifu_component_base>(nullptr);
-            }
-
-            void remove_component(WaifuEngine::str name)
-            {
-                std::scoped_lock l(lock_);
-                if(components_.count(name))
-                {
-                    components_.erase(name);
+                    delete components_[_CompType::NAME].second;
+                    components_.erase(_CompType::NAME);
                 }
             }
 
             template<typename _CompType>
-            int remove_comps_of_type()
+            bool has_component()
             {
-                int rcount = 0;
-                std::vector<WaifuEngine::str> keys;
                 std::scoped_lock l(lock_);
-                std::for_each(components_.begin(), components_.end(), [&rcount, &keys](auto c) -> void {
-                    if(wio::string_contains(c.first, _CompType::NAME))
-                    {
-                        ++rcount;
-                        keys.push_back(c.first);
-                    }
-                });
-                std::for_each(keys.begin(), keys.end(), [this](WaifuEngine::str s) -> void {
-                    components_.erase(s);
-                });
-                return rcount;
+                return bool(components_.count(_CompType::NAME));
             }
         };
     }

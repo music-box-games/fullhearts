@@ -21,6 +21,9 @@
 
 namespace WaifuEngine
 {
+    // forward declaration for object
+    namespace object_management { class object; }
+
     namespace components
     {
         namespace impl
@@ -28,14 +31,18 @@ namespace WaifuEngine
             class _waifu_component_base
             {
             private:
+                object_management::object * parent_;
+
             public:
                 WaifuEngine::str NAME;
 
-                _waifu_component_base(WaifuEngine::str n) : NAME(n) {}
+                _waifu_component_base(WaifuEngine::str n, object_management::object * parent) : parent_(parent), NAME(n) {}
                 virtual ~_waifu_component_base() {}
 
                 virtual void update(float dt) = 0;
                 virtual void draw() const = 0;
+
+                object_management::object  * parent() { return parent_; }
                 
             };
         }
@@ -45,7 +52,7 @@ namespace WaifuEngine
         {
         private:
         public:
-            component() : impl::_waifu_component_base(_BASE::NAME) {}
+            component(object_management::object * parent) : impl::_waifu_component_base(_BASE::NAME, parent) {}
             virtual ~component() {}
 
             virtual void update(float dt) = 0;
@@ -59,7 +66,7 @@ namespace WaifuEngine
         public:
             COMPONENT_NAME(example_component);
 
-            example_component() : component<example_component>() { /* ... example here */ }
+            example_component(object_management::object * parent) : component<example_component>(parent) { /* ... example here */ }
             virtual ~example_component() { /* ... shutdown here */ }
 
             virtual void update(float) { /* update component here */ }
