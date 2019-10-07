@@ -21,13 +21,23 @@ project(fullhearts)
 ###########################
 # add dirs to include paths
 ###########################
-include_directories(src/include)
+include_directories(./include)
 include_directories(${Boost_INCLUDE_DIR})
+
+# add subdirs
+add_subdirectory(components)
+add_subdirectory(engine)
+add_subdirectory(io)
+add_subdirectory(messaging)
+add_subdirectory(spaces)
+add_subdirectory(threads)
+add_subdirectory(trace)
+add_subdirectory(utils)
 
 ##################
 # add source files
 ##################
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "./*.cpp")
 
 ######################
 # compiler flags
@@ -68,6 +78,16 @@ add_executable(fullhearts ${SOURCES})
 ###########
 # LIBRARIES
 ########### 
+# link subdirs
+target_link_libraries(fullhearts components)
+target_link_libraries(fullhearts engine)
+target_link_libraries(fullhearts io)
+target_link_libraries(fullhearts messaging)
+target_link_libraries(fullhearts spaces)
+target_link_libraries(fullhearts threads)
+target_link_libraries(fullhearts trace)
+target_link_libraries(fullhearts utils)
+
 # find boost libs
 # windows
 if(WIN32)
