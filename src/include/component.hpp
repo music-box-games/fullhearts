@@ -36,6 +36,7 @@ namespace WaifuEngine
             public:
                 WaifuEngine::str NAME;
 
+                _waifu_component_base() = delete;
                 _waifu_component_base(WaifuEngine::str n, object_management::object * parent) : parent_(parent), NAME(n) {}
                 virtual ~_waifu_component_base() {}
 

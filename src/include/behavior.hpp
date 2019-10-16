@@ -24,6 +24,8 @@ namespace WaifuEngine
 {
     namespace components
     {
+        // behavior class, this can be used just like this, but it would probably be better
+        // to derive from this class for specific behaviors
         class behavior : public component<behavior>
         {
         private:
@@ -43,6 +45,17 @@ namespace WaifuEngine
 
             void add_behavior(std::function<bool()> trigger, std::function<void()> action);
 
+        };
+
+        class example_behavior : public behavior
+        {
+        private:
+        public:
+            COMPONENT_NAME(example_behavior);
+
+            example_behavior(object_management::object *) { /* ... */ }
+
+            example_behavior(example_behavior const&) { /* ... */ } 
         };
     }
 }
