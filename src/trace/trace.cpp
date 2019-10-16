@@ -20,18 +20,7 @@ namespace WaifuEngine
     {
         namespace _impl
         {
-            std::deque<WaifuEngine::str> logged_msgs = std::deque<WaifuEngine::str>();
 
-            std::ofstream log;
-
-            WaifuEngine::ofstream& get_log_file()
-            {
-                if(!log.is_open())
-                {
-                    log.open(WaifuEngine::str(LOGFILE));
-                }
-                return log;
-            }
         }
     }
 }

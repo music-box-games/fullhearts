@@ -61,11 +61,8 @@ namespace WaifuEngine
             tk.join();
         }
 
-        void threadpool::await_tasks(std::tuple<task> ts)
+        void threadpool::await_tasks(std::tuple<task>)
         {
-            std::vector<thread> thds;
-            std::apply([&thds](auto&&...args) {((thds.push_back(thread(args))), ...);}, ts);
-            join_done(thds);
         }
 
         void threadpool::join_done_impl(std::vector<thread>& p)

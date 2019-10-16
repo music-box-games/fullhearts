@@ -17,7 +17,7 @@
 
 #include <functional>
 #include <boost/any.hpp>
-#include <wstr.hpp>
+#include <string>
 
 #define MSGNAME(x) static constexpr const char * NAME = #x
 
@@ -29,7 +29,7 @@ namespace WaifuEngine
         {
             struct _base_message
             {
-                WaifuEngine::str const NAME; 
+                std::wstring const NAME; 
             }; 
         }
 
@@ -41,7 +41,7 @@ namespace WaifuEngine
 
         struct inputevent : public message<inputevent>
         {
-            typedef WaifuEngine::str _datatype;
+            typedef std::wstring _datatype;
             //typedef std::function<void(_datatype)>;
 
             _datatype data_;

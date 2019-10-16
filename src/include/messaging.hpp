@@ -20,6 +20,7 @@
 #include <system.hpp>
 #include <message.hpp>
 #include <threadpool.hpp>
+#include <wstr.hpp>
 
 namespace WaifuEngine
 {

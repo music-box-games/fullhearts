@@ -96,8 +96,8 @@ endif(WIN32)
 if(UNIX)
     # boost threads
     FIND_PACKAGE(Boost 1.65.1 COMPONENTS thread REQUIRED)
-    TARGET_LINK_LIBRARIES(fullhearts LINK_PUBLIC ${Boost_LIBRARIES})
+    target_link_libraries(fullhearts ${Boost_LIBRARIES})
     # boost program_options
     FIND_PACKAGE(Boost 1.65.1 COMPONENTS program_options REQUIRED)
-    TARGET_LINK_LIBRARIES(fullhearts LINK_PUBLIC ${Boost_LIBRARIES})
+    target_link_libraries(fullhearts ${Boost_LIBRARIES})
 endif(UNIX)

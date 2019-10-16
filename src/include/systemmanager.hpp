@@ -58,7 +58,7 @@ namespace WaifuEngine
             }
             catch(std::out_of_range const&)
             {
-                trace::warning(WSTR("System manager doesn't contain system: ") + _SysType::NAME);
+                //trace::warning(WSTR("System manager doesn't contain system: ") + _SysType::NAME);
                 return nullptr;
             }
         }

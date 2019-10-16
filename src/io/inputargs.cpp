@@ -46,22 +46,22 @@ namespace WaifuEngine
             try
             {
 #ifdef _DEBUG
-                WaifuEngine::trace::log("Beginning cmd parse");
+                //WaifuEngine::trace::log("Beginning cmd parse");
 #endif // _DEBUG
                 po::store(po::parse_command_line(argc, argv, desc_), vm_); // can throw
 #ifdef _DEBUG
-                WaifuEngine::trace::log("Found options:");
+                //WaifuEngine::trace::log("Found options:");
                 po::notify(vm_);
 #endif // _DEBUG
                 if(vm_.count("help") || vm_.count("h"))
                 {
-                    WaifuEngine::trace::log(desc_);
+                    //WaifuEngine::trace::log(desc_);
                     return 1;
                 }
             }
             catch(const po::error& e)
             {
-                WaifuEngine::trace::error(e.what());
+                //WaifuEngine::trace::error(e.what());
                 return 1;
             }
             
