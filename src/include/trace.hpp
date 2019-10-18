@@ -18,15 +18,31 @@
 #include <queue>
 #include <string_view>
 
-#define log(x) _impl::_impl_trace_log_func(x)
-#define warning(x) _impl::_impl_trace_warning_func(x, __LINE__, __FILE__)
-#define error(x) _impl::_impl_trace_error_func(x, __LINE__, __FILE__)
+#include <wstr.hpp>
+#include <system.hpp>
+
+#define log(level, message) _impl::impl_trace_log(level, message, __LINE__, __FILE__)
 
 namespace WaifuEngine
 {
     namespace trace
     {
+        enum class trace_level
+        {
+            log = 0,
+            verbose,
+            trace,
 
+            // special
+            count,
+        };
+
+        namespace _impl
+        {
+            void _impl_trace_log(::WaifuEngine::trace::trace_level level, ::WaifuEngine::str message, decltype(__LINE__) l, decltype(__FILE__) f);
+        }
+
+        
     }
 }
 
