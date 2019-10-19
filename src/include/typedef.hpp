@@ -6,8 +6,8 @@
 
 namespace WaifuEngine
 {
-    typedef std::wstring string_type;
-    typedef std::wstringstream sstream_type;
+    typedef std::string string_type;
+    typedef std::stringstream sstream_type;
 }
 
 #endif // !_W_TYPEDEF_H_

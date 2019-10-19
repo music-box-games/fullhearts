@@ -33,7 +33,7 @@ namespace WaifuEngine
 
         spacemanager::~spacemanager()
         {
-            std::for_each(spaces_.begin(), spaces_.end(), [](std::pair<WaifuEngine::str, space *> s) -> void {
+            std::for_each(spaces_.begin(), spaces_.end(), [](std::pair<WaifuEngine::string_type, space *> s) -> void {
                 delete s.second;
             });
             spaces_.clear();
@@ -43,25 +43,25 @@ namespace WaifuEngine
 
         void spacemanager::update(float dt)
         {
-            std::for_each(spaces_.begin(), spaces_.end(), [&dt](std::pair<WaifuEngine::str, space *> s) -> void {
+            std::for_each(spaces_.begin(), spaces_.end(), [&dt](std::pair<WaifuEngine::string_type, space *> s) -> void {
                 s.second->update(dt);
             });
         }
 
         void spacemanager::draw() const
         {
-            std::for_each(spaces_.cbegin(), spaces_.cend(), [](std::pair<WaifuEngine::str, space *> s) -> void {
+            std::for_each(spaces_.cbegin(), spaces_.cend(), [](std::pair<WaifuEngine::string_type, space *> s) -> void {
                 s.second->draw();
             });
         }
 
-        space * spacemanager::add_space(WaifuEngine::string_typename)
+        space * spacemanager::add_space(WaifuEngine::string_type name)
         {
             spaces_.emplace(std::make_pair(name, new space(name)));
             return spaces_[name];
         }
 
-        void spacemanager::remove_space(WaifuEngine::string_typename)
+        void spacemanager::remove_space(WaifuEngine::string_type name)
         {
             spaces_.erase(name);
         }

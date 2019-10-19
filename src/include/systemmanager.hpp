@@ -16,17 +16,17 @@
 
 #include <unordered_map>
 #include <system.hpp>
-#include <wstr.hpp>
+#include <strutils.hpp>
 #include <trace.hpp>
 
 namespace WaifuEngine
 {
-    typedef std::unordered_map<str, base_system *> sys_map;
+    typedef std::unordered_map<string_type, base_system *> sys_map;
 
     class system_manager
     {
     private:
-        std::unordered_map<str, base_system *> systems_;
+        std::unordered_map<string_type, base_system *> systems_;
     public:
         system_manager();
         ~system_manager();
@@ -47,7 +47,7 @@ namespace WaifuEngine
             systems_.erase(_SysType::NAME);
         }
 
-        void remove_system(str name);
+        void remove_system(string_type name);
 
         template<typename _SysType>
         _SysType * get_system()
@@ -63,7 +63,7 @@ namespace WaifuEngine
             }
         }
 
-        base_system * get_system(str name);
+        base_system * get_system(string_type name);
 
         template<typename _SysType>
         bool has_system()
@@ -71,7 +71,7 @@ namespace WaifuEngine
             return bool(systems_.count(_SysType::NAME));
         }
 
-        bool has_system(str name);
+        bool has_system(string_type name);
     };
 }
 

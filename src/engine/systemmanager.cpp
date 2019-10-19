@@ -20,7 +20,7 @@ namespace WaifuEngine
 
     system_manager::~system_manager()
     {
-        std::for_each(systems_.begin(), systems_.end(), [](std::pair<str, base_system *> s) -> void {
+        std::for_each(systems_.begin(), systems_.end(), [](std::pair<string_type, base_system *> s) -> void {
             delete s.second;
         });
         systems_.clear();
@@ -28,24 +28,24 @@ namespace WaifuEngine
 
     void system_manager::update(float dt)
     {
-        std::for_each(systems_.begin(), systems_.end(), [&dt](std::pair<str, base_system *> s) -> void {
+        std::for_each(systems_.begin(), systems_.end(), [&dt](std::pair<string_type, base_system *> s) -> void {
             s.second->update(dt);
         });
     }
 
     void system_manager::draw() const
     {
-        std::for_each(systems_.cbegin(), systems_.cend(), [](std::pair<str, base_system *> s) -> void {
+        std::for_each(systems_.cbegin(), systems_.cend(), [](std::pair<string_type, base_system *> s) -> void {
             s.second->draw();
         });
     }
 
-    void system_manager::remove_system(str name)
+    void system_manager::remove_system(string_type name)
     {
         systems_.erase(name);
     }
 
-    base_system * system_manager::get_system(str name)
+    base_system * system_manager::get_system(string_type name)
     {
         try
         {
@@ -58,7 +58,7 @@ namespace WaifuEngine
         }
     }
 
-    bool system_manager::has_system(str name)
+    bool system_manager::has_system(string_type name)
     {
         return bool(systems_.count(name));
     }

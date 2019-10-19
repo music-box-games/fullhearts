@@ -39,8 +39,8 @@ namespace WaifuEngine
 
         void argparse::add_opt(WaifuEngine::string_type opt, WaifuEngine::string_type msg)
         {
-            desc_.add_options()(opt.c_str(), msg.c_str());
-            desc_.add_options()();
+            desc_.add_options()(opt.c_str(), opt.c_str());
+            //desc_.add_options()(::WaifuEngine::utils::string::wtomb(opt.c_str()).c_str(), ::WaifuEngine::utils::string::wtomb(opt.c_str()).c_str());
         }
 
         int argparse::parse(int argc, char ** argv)
