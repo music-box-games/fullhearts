@@ -17,31 +17,31 @@
 #define _WAIFU_SPACE_H_
 
 #include <memory>
-#include <object.hpp>
 #include <unordered_map>
-#include <wstr.hpp>
+#include <object.hpp>
+#include <typedef.hpp>
 
 namespace WaifuEngine
 {
     namespace object_management
     {
-        using obj_map = std::unordered_map<::WaifuEngine::str, std::shared_ptr<object>>;
+        using obj_map = std::unordered_map<::WaifuEngine::string_type, std::shared_ptr<object>>;
 
         class space
         {
         private:
             obj_map objects_;
-            WaifuEngine::str name_;
+            WaifuEngine::string_type name_;
 
         public:
-            space(WaifuEngine::str name);
+            space(WaifuEngine::string_type name);
             ~space();
 
             void update(float dt);
             void draw();
 
-            std::shared_ptr<object> add_object(WaifuEngine::str name);
-            void remove_object(WaifuEngine::str name);
+            std::shared_ptr<object> add_object(WaifuEngine::string_type name);
+            void remove_object(WaifuEngine::string_type name);
 
             obj_map const& get_objmap();
         };

@@ -18,7 +18,7 @@ namespace WaifuEngine
 {
     namespace object_management
     {
-        object::object(WaifuEngine::str n) : components_(comp_map()), name_(n)
+        object::object(WaifuEngine::string_typen) : components_(comp_map()), name_(n)
         {
 
         }

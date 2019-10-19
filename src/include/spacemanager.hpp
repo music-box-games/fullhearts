@@ -17,7 +17,7 @@
 
 #include <unordered_map>
 #include <memory>
-#include <wstr.hpp>
+#include <typedef.hpp>
 #include <space.hpp>
 #include <object.hpp>
 #include <system.hpp>
@@ -26,7 +26,7 @@ namespace WaifuEngine
 {
     namespace object_management
     {
-        using space_map = std::unordered_map<WaifuEngine::str, space *>;
+        using space_map = std::unordered_map<WaifuEngine::string_type, space *>;
 
         class spacemanager : public system<spacemanager>
         {
@@ -45,8 +45,8 @@ namespace WaifuEngine
             virtual void update(float dt) override;
             virtual void draw() const override;
 
-            space * add_space(WaifuEngine::str name);
-            void remove_space(WaifuEngine::str name);
+            space * add_space(WaifuEngine::string_type name);
+            void remove_space(WaifuEngine::string_type name);
 
 
             space_map& get_spaces();

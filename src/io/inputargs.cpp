@@ -15,13 +15,14 @@
 #include <iostream>
 #include <inputargs.hpp>
 #include <trace.hpp>
+#include <utils.hpp>
 
 namespace WaifuEngine
 {
     namespace utils
     {
         argparse * argparse::inst_ = nullptr;
-        std::set<WaifuEngine::str> argparse::opts_ = std::set<WaifuEngine::str>();
+        std::set<WaifuEngine::string_type> argparse::opts_ = std::set<WaifuEngine::string_type>();
 
         argparse * argparse::get_instance()
         {
@@ -36,9 +37,10 @@ namespace WaifuEngine
 
         argparse::~argparse() {}
 
-        void argparse::add_opt(WaifuEngine::str opt, WaifuEngine::str msg)
+        void argparse::add_opt(WaifuEngine::string_type opt, WaifuEngine::string_type msg)
         {
             desc_.add_options()(opt.c_str(), msg.c_str());
+            desc_.add_options()();
         }
 
         int argparse::parse(int argc, char ** argv)
@@ -67,7 +69,7 @@ namespace WaifuEngine
             
             for(auto o : vm_)
             {
-                WaifuEngine::strstream ss;
+                WaifuEngine::sstream_type ss;
                 ss << o.first;
                 opts_.insert(ss.str());
             }
@@ -75,7 +77,7 @@ namespace WaifuEngine
             return 0;
         }
 
-        bool argparse::has_arg(WaifuEngine::str a)
+        bool argparse::has_arg(WaifuEngine::string_type a)
         {
             return vm_.count(a);
         }

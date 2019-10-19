@@ -18,10 +18,13 @@
 #include <queue>
 #include <string_view>
 
-#include <wstr.hpp>
+#include <typedef.hpp>
 #include <system.hpp>
 
-#define log(level, message) _impl::impl_trace_log(level, message, __LINE__, __FILE__)
+#define writelog(level, message) _impl::impl_trace_log(level, message, __LINE__, __FILE__)
+#define log(m) writelog(::WaifuEngine::trace::trace_level::log, m)
+#define verbose(m) writelog(::WaifuEngine::trace::trace_level::verbose, m)
+#define trace(m) writelog(::WaifuEngine::trace::trace_level::trace, m)
 
 namespace WaifuEngine
 {
@@ -39,10 +42,10 @@ namespace WaifuEngine
 
         namespace _impl
         {
-            void _impl_trace_log(::WaifuEngine::trace::trace_level level, ::WaifuEngine::str message, decltype(__LINE__) l, decltype(__FILE__) f);
+            void _impl_trace_log(::WaifuEngine::trace::trace_level level, ::WaifuEngine::string_type message, decltype(__LINE__) l, decltype(__FILE__) f);
         }
 
-        
+        void write(trace_level lvl, ::WaifuEngine::string_type message);
     }
 }
 

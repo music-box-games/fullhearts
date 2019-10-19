@@ -19,7 +19,7 @@ namespace WaifuEngine
 {
     namespace object_management
     {
-        space::space(WaifuEngine::str name) : objects_(obj_map()), name_(name) {}
+        space::space(WaifuEngine::string_typename) : objects_(obj_map()), name_(name) {}
 
         space::~space() {}
 
@@ -37,7 +37,7 @@ namespace WaifuEngine
             });
         }
 
-        std::shared_ptr<object> space::add_object(WaifuEngine::str n)
+        std::shared_ptr<object> space::add_object(WaifuEngine::string_typen)
         {
             int gcount = 1;
             auto sname = n;
@@ -52,7 +52,7 @@ namespace WaifuEngine
             return objects_[sname];
         }
 
-        void space::remove_object(WaifuEngine::str n)
+        void space::remove_object(WaifuEngine::string_typen)
         {
             objects_.erase(n);
         }

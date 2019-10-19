@@ -20,7 +20,8 @@
 #include <system.hpp>
 #include <message.hpp>
 #include <threadpool.hpp>
-#include <wstr.hpp>
+
+#include <typedef.hpp>
 
 namespace WaifuEngine
 {
@@ -34,8 +35,8 @@ namespace WaifuEngine
 
             void dispatch_message();
             
-            std::unordered_map<::WaifuEngine::str, std::unordered_map<void *, void *>> sync_events_;
-            std::unordered_map<::WaifuEngine::str, std::unordered_map<void *, std::function<void(boost::any)>>> async_events_;
+            std::unordered_map<::WaifuEngine::string_type, std::unordered_map<void *, void *>> sync_events_;
+            std::unordered_map<::WaifuEngine::string_type, std::unordered_map<void *, std::function<void(boost::any)>>> async_events_;
             
             template<typename _MsgType, typename _ClassType>
             void attach_handler(_ClassType * inst, void(_ClassType::*f)(boost::any))

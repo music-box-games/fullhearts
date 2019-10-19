@@ -17,7 +17,7 @@
 
 #define COMPONENT_NAME(x) static constexpr const char * NAME = #x
 
-#include <wstr.hpp>
+#include <typedef.hpp>
 
 namespace WaifuEngine
 {
@@ -34,10 +34,10 @@ namespace WaifuEngine
                 object_management::object * parent_;
 
             public:
-                WaifuEngine::str NAME;
+                WaifuEngine::string_type NAME;
 
                 _waifu_component_base() = delete;
-                _waifu_component_base(WaifuEngine::str n, object_management::object * parent) : parent_(parent), NAME(n) {}
+                _waifu_component_base(WaifuEngine::string_type n, object_management::object * parent) : parent_(parent), NAME(n) {}
                 virtual ~_waifu_component_base() {}
 
                 virtual void update(float dt) = 0;

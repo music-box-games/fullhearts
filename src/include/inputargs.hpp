@@ -16,7 +16,7 @@
 #define _WAIFU_INPUTARGS_H_
 
 #include <set>
-#include <wstr.hpp>
+#include <typedef.hpp>
 #include <boost/program_options.hpp>
 
 namespace po = ::boost::program_options;
@@ -35,13 +35,13 @@ namespace WaifuEngine
             argparse();
 
         public:
-            static std::set<WaifuEngine::str> opts_;
+            static std::set<WaifuEngine::string_type> opts_;
             static argparse * get_instance();
 
             ~argparse();
 
-            void add_opt(WaifuEngine::str opt, WaifuEngine::str msg);
-            bool has_arg(WaifuEngine::str a);
+            void add_opt(WaifuEngine::string_type opt, WaifuEngine::string_type msg);
+            bool has_arg(WaifuEngine::string_type a);
             int parse(int argc, char ** argv);
             
         };

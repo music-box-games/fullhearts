@@ -15,19 +15,20 @@
 #ifndef _WAIFU_GAMEOBJ_H_
 #define _WAIFU_GAMEOBJ_H_
 
-#include <wstr.hpp>
-#include <component.hpp>
 #include <memory>
 #include <unordered_map>
 #include <algorithm>
 #include <vector>
 #include <mutex>
 
+#include <typedef.hpp>
+#include <component.hpp>
+
 namespace WaifuEngine
 {
     namespace object_management
     {
-        using comp_map = std::unordered_map<WaifuEngine::str, WaifuEngine::components::impl::_waifu_component_base *>;
+        using comp_map = std::unordered_map<WaifuEngine::string_type, WaifuEngine::components::impl::_waifu_component_base *>;
 
         // TODO:
         // This is temp currently. This impl only supports one copy of each component
@@ -35,11 +36,11 @@ namespace WaifuEngine
         {
         private:
             comp_map components_;
-            WaifuEngine::str name_;
+            WaifuEngine::string_type name_;
             std::mutex lock_;
 
         public:
-            object(WaifuEngine::str n);
+            object(WaifuEngine::string_type n);
             ~object();
 
             void update(float dt);

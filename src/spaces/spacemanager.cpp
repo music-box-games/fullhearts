@@ -55,13 +55,13 @@ namespace WaifuEngine
             });
         }
 
-        space * spacemanager::add_space(WaifuEngine::str name)
+        space * spacemanager::add_space(WaifuEngine::string_typename)
         {
             spaces_.emplace(std::make_pair(name, new space(name)));
             return spaces_[name];
         }
 
-        void spacemanager::remove_space(WaifuEngine::str name)
+        void spacemanager::remove_space(WaifuEngine::string_typename)
         {
             spaces_.erase(name);
         }
