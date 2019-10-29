@@ -18,6 +18,37 @@ endif(DBG)
 ##################
 project(fullhearts)
 
+######################
+# compiler flags
+######################
+# standard flags
+if(MSVC)
+else(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -pedantic")
+endif(MSVC)
+# c++17
+if(MSVC)
+    # /std:c++17 for msvc
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+else(MSVC)
+    # -std=c++17 for clang++/g++
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+endif(MSVC)
+# debug information
+if(DEBUG)
+    if(MSVC)
+    else(MSVC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g3")
+    endif(MSVC)
+endif(DEBUG)
+# compiler optimizations
+if(RELEASE)
+    if(MSVC)
+    else(MSVC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    endif(MSVC)
+endif(RELEASE)
+
 ###########################
 # add dirs to include paths
 ###########################
@@ -39,37 +70,6 @@ add_subdirectory(utils)
 ##################
 file(GLOB SOURCES "./*.cpp")
 
-######################
-# compiler flags
-######################
-# standard flags
-if(MSVC)
-else(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -pedantic")
-endif(MSVC)
-# c++17
-if(MSVC)
-    # /std:c++17 for msvc
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-else(MSVC)
-    # -std=c++17 for clang++
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-endif(MSVC)
-# debug information
-if(DEBUG)
-    if(MSVC)
-    else(MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g3")
-    endif(MSVC)
-endif(DEBUG)
-# compiler optimizations
-if(RELEASE)
-    if(MSVC)
-    else(MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
-    endif(MSVC)
-endif(RELEASE)
-
 ################
 # set exe output
 ################
@@ -89,15 +89,11 @@ target_link_libraries(fullhearts trace)
 target_link_libraries(fullhearts utils)
 
 # find boost libs
-# windows
-if(WIN32)
-endif(WIN32)
-# linux
-if(UNIX)
-    # boost threads
-    FIND_PACKAGE(Boost 1.65.1 COMPONENTS thread REQUIRED)
-    target_link_libraries(fullhearts ${Boost_LIBRARIES})
-    # boost program_options
-    FIND_PACKAGE(Boost 1.65.1 COMPONENTS program_options REQUIRED)
-    target_link_libraries(fullhearts ${Boost_LIBRARIES})
-endif(UNIX)
+set(Boost_DETAILED_FAILURE_MSG ON)
+set(BOOST_ROOT "E:\\dev\\sdk\\boost_1_71_0")
+set(Boost_USE_STATIC_RUNTIME OFF)
+set(BOOST_DEBUG ON)
+set(Boost_USE_MULTITHREADED ON)
+
+FIND_PACKAGE(Boost 1.71.0 COMPONENTS thread program_options)
+target_link_libraries(fullhearts ${Boost_LIBRARIES})
