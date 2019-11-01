@@ -13,6 +13,9 @@ else(DBG)
     set(RELEASE 1)
 endif(DBG)
 
+# vars
+set(BOOST_VER 1_71_0)
+
 ##################
 # set project name
 ##################
@@ -45,7 +48,7 @@ endif(DEBUG)
 if(RELEASE)
     if(MSVC)
     else(MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
     endif(MSVC)
 endif(RELEASE)
 
@@ -53,7 +56,7 @@ endif(RELEASE)
 # add dirs to include paths
 ###########################
 include_directories(./include)
-include_directories(${Boost_INCLUDE_DIR})
+include_directories(../external/${BOOST_VER})
 
 # add subdirs
 add_subdirectory(components)
@@ -89,11 +92,6 @@ target_link_libraries(fullhearts trace)
 target_link_libraries(fullhearts utils)
 
 # find boost libs
-set(Boost_DETAILED_FAILURE_MSG ON)
-set(BOOST_ROOT "E:\\dev\\sdk\\boost_1_71_0")
-set(Boost_USE_STATIC_RUNTIME OFF)
-set(BOOST_DEBUG ON)
-set(Boost_USE_MULTITHREADED ON)
+add_library(b_po SHARED IMPORTED)
+set_target_properties(b_po PROPERTIES IMPORTED_LOCATION ../external/boost_1_71_0/stage/libs)
 
-FIND_PACKAGE(Boost 1.71.0 COMPONENTS thread program_options)
-target_link_libraries(fullhearts ${Boost_LIBRARIES})
