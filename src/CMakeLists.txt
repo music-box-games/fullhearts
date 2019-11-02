@@ -1,97 +1,97 @@
-############################
-# require cmake version 3.10
-############################
 cmake_minimum_required(VERSION 3.10.2)
 
-set(DBG 1)
-if(DBG)
-    set(DEBUG 1)
-    set(RELEASE 0)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DEBUG")
-else(DBG)
-    set(DEBUG 0)
-    set(RELEASE 1)
-endif(DBG)
+set(PRJNME fullhearts)
+set(EXENAME fh)
+set(EXTRA_FLAGS "") # extra compile flags
+set(DBG TRUE) # debug mode
 
-# vars
-set(BOOST_VER 1_71_0)
+# project name
+project(${PRJNME})
 
-##################
-# set project name
-##################
-project(fullhearts)
-
-######################
 # compiler flags
-######################
-# standard flags
+# debug/release mode
+if(DBG)
 if(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DDEBUG /D_DEBUG") # debug defines
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /Od /Zi") # turn off compiler opts and debug info on
+# TODO: find way to set sln to debug build mode
 else(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -Wall -pedantic")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DDEBUG -D_DEBUG") # debug defines
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -O0 -g3") # turn off opt and turn on debug info
 endif(MSVC)
-# c++17
+else(DBG)
 if(MSVC)
-    # /std:c++17 for msvc
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DRELEASE /D_RELEASE") # release defines
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /O2") # 02 optimization
 else(MSVC)
-    # -std=c++17 for clang++/g++
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DRELEASE -D_RELEASE") # release defines
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -O3 -g0") # 03 and no debug info
 endif(MSVC)
-# debug information
-if(DEBUG)
-    if(MSVC)
-    else(MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g3")
-    endif(MSVC)
-endif(DEBUG)
-# compiler optimizations
-if(RELEASE)
-    if(MSVC)
-    else(MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
-    endif(MSVC)
-endif(RELEASE)
+endif(DBG)
+# std version
+if(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /std:c++17")
+else(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} --std=c++17")
+endif(MSVC)
+# platform defines
+# win 32
+if(WIN32)
+if(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DWIN32 /D_WIN32")
+else(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DWIN32 -D_WIN32")
+endif(MSVC)
+endif(WIN32)
+# win 64
+if(WIN64)
+if(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DWIN64 /D_WIN64")
+else(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DWIN64 -D_WIN64")
+endif(MSVC)
+endif(WIN64)
+# linux
+if(UNIX AND NOT APPLE)
+if(MSVC) # for sake of redundancy
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DLINUX /D_LINUX")
+else(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DLINUX -D_LINUX")
+endif(MSVC)
+endif(UNIX AND NOT APPLE)
+# macos
+if(UNIX AND APPLE)
+if(MSVC) # redundancy
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DMACOS /D_MACOS")
+else(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DMACOS -D_MACOS")
+endif(MSVC)
+endif(UNIX AND APPLE)
+# warnings and errors
+if(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /W2") # /W2 because msvc warnings are weird
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /WX") # warnings are errors
+else(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -Werror -Wextra -Wall")
+endif(MSVC)
 
-###########################
-# add dirs to include paths
-###########################
+# add include paths
 include_directories(./include)
-include_directories(../external/${BOOST_VER})
+include_directories(./core/include)
+include_directories(./core/components)
 
 # add subdirs
 add_subdirectory(components)
-add_subdirectory(engine)
-add_subdirectory(io)
-add_subdirectory(messaging)
-add_subdirectory(spaces)
-add_subdirectory(threads)
-add_subdirectory(trace)
-add_subdirectory(utils)
+add_subdirectory(core)
 
-##################
-# add source files
-##################
-file(GLOB SOURCES "./*.cpp")
+# add root src
+file(GLOB SOURCES "./*.cc")
 
-################
-# set exe output
-################
-add_executable(fullhearts ${SOURCES})
+# set ouput
+add_executable(${EXENAME} ${SOURCES})
 
-###########
-# LIBRARIES
-########### 
 # link subdirs
-target_link_libraries(fullhearts components)
-target_link_libraries(fullhearts engine)
-target_link_libraries(fullhearts io)
-target_link_libraries(fullhearts messaging)
-target_link_libraries(fullhearts spaces)
-target_link_libraries(fullhearts threads)
-target_link_libraries(fullhearts trace)
-target_link_libraries(fullhearts utils)
+target_link_libraries(${EXENAME} components)
+target_link_libraries(${EXENAME} core)
 
-# find boost libs
-add_library(b_po SHARED IMPORTED)
-set_target_properties(b_po PROPERTIES IMPORTED_LOCATION ../external/boost_1_71_0/stage/libs)
-
+# link other libs
