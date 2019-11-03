@@ -12,7 +12,7 @@ namespace waifuengine
         {
             using tp = std::chrono::steady_clock::time_point;
 
-            static std::array<std::function<frame_val_t(tp, tp)>, 4> funs
+            static std::array<std::function<frame_val_t(tp, tp)>, 4> const funs
             {
                 [](tp s, tp e) -> frame_val_t { return std::chrono::duration_cast<std::chrono::seconds>(e - s).count(); },
                 [](tp s, tp e) -> frame_val_t { return std::chrono::duration_cast<std::chrono::milliseconds>(e - s).count(); },
@@ -51,12 +51,7 @@ namespace waifuengine
 
         double frame_watcher::fps() const
         {
-            double fps = 0;
-            std::for_each(history_.begin(), history_.end(), [&fps](auto& t) -> void {
-                fps += t;
-            });
-            auto tpf = fps / history_.size(); // time per frame
-            return 60.0 / tpf;
+            return 1 / frame_time();  // take reciprocal to get how many time-per-frames fit into 1 second
         }
 
         double frame_watcher::frame_time() const
