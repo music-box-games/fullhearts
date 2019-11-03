@@ -4,6 +4,10 @@
 #include <framewatcher.hpp>
 #include <log.hpp>
 
+#ifdef DEBUG
+#include <hardware.hpp>
+#endif // DEBUG
+
 namespace waifuengine
 {
     namespace core
@@ -26,18 +30,13 @@ namespace waifuengine
 
         engine::~engine()
         {
+            
         }
 
         void engine::update()
         {
             static frame_watcher fw;
             fw.hit();
-#ifdef DEBUG
-            auto f = fw.fps();
-            std::stringstream ss;
-            ss << "Average fps: " << f;
-            waifuengine::log::trace(ss.str());
-#endif // DEBUG
             // update things
         }
 

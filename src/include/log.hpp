@@ -4,8 +4,8 @@
 #include <string>
 #include <sstream>
 
-#define ERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
-#define WARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
+#define LOGERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
+#define LOGWARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
 
 namespace waifuengine
 {

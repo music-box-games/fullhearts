@@ -32,6 +32,7 @@ namespace waifuengine
             static void best_model();
 
             static calculation_model model_; // this should be serialized if possible
+            static bool model_calculated;
         };
 
         typedef physics2 physics;

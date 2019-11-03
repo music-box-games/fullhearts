@@ -38,17 +38,17 @@ endif(MSVC)
 # win 32
 if(WIN32)
 if(MSVC)
-set(EXTRA_FLAGS "${EXTRA_FLAGS} /DWIN32 /D_WIN32")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DWIN32 /D_WIN32 /DWINDOWS")
 else(MSVC)
-set(EXTRA_FLAGS "${EXTRA_FLAGS} -DWIN32 -D_WIN32")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DWIN32 -D_WIN32 -DWINDOWS")
 endif(MSVC)
 endif(WIN32)
 # win 64
 if(WIN64)
 if(MSVC)
-set(EXTRA_FLAGS "${EXTRA_FLAGS} /DWIN64 /D_WIN64")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /DWIN64 /D_WIN64 /DWINDOWS")
 else(MSVC)
-set(EXTRA_FLAGS "${EXTRA_FLAGS} -DWIN64 -D_WIN64")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -DWIN64 -D_WIN64 -DWINDOWS")
 endif(MSVC)
 endif(WIN64)
 # linux
@@ -93,6 +93,7 @@ include_directories(./include)
 add_subdirectory(components)
 add_subdirectory(core)
 add_subdirectory(log)
+add_subdirectory(utils)
 
 # add root src
 file(GLOB SOURCES "./*.cc")
@@ -104,5 +105,6 @@ add_executable(${EXENAME} ${SOURCES})
 target_link_libraries(${EXENAME} components)
 target_link_libraries(${EXENAME} core)
 target_link_libraries(${EXENAME} log)
+target_link_libraries(${EXENAME} utils)
 
 # link other libs
