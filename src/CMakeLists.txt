@@ -74,6 +74,7 @@ set(EXTRA_FLAGS "${EXTRA_FLAGS} /W2") # /W2 because msvc warnings are weird
 set(EXTRA_FLAGS "${EXTRA_FLAGS} /WX") # warnings are errors
 else(MSVC)
 set(EXTRA_FLAGS "${EXTRA_FLAGS} -Werror -Wextra -Wall")
+set(EXTRA_FLAGS "${EXTRA_FLAGS} -Wno-unused") # turn off warnings for unused functions/variables
 endif(MSVC)
 
 # C++ exceptions
