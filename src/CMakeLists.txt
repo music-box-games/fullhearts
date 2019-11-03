@@ -67,6 +67,7 @@ else(MSVC)
 set(EXTRA_FLAGS "${EXTRA_FLAGS} -DMACOS -D_MACOS")
 endif(MSVC)
 endif(UNIX AND APPLE)
+
 # warnings and errors
 if(MSVC)
 set(EXTRA_FLAGS "${EXTRA_FLAGS} /W2") # /W2 because msvc warnings are weird
@@ -75,14 +76,22 @@ else(MSVC)
 set(EXTRA_FLAGS "${EXTRA_FLAGS} -Werror -Wextra -Wall")
 endif(MSVC)
 
+# C++ exceptions
+if(MSVC)
+set(EXTRA_FLAGS "${EXTRA_FLAGS} /EHsc")
+else(MSVC)
+endif(MSVC)
+
+# apply extra compile flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_COMPILER_FLAGS} ${EXTRA_FLAGS}")
+
 # add include paths
 include_directories(./include)
-include_directories(./core/include)
-include_directories(./core/components)
 
 # add subdirs
 add_subdirectory(components)
 add_subdirectory(core)
+add_subdirectory(log)
 
 # add root src
 file(GLOB SOURCES "./*.cc")
@@ -93,5 +102,6 @@ add_executable(${EXENAME} ${SOURCES})
 # link subdirs
 target_link_libraries(${EXENAME} components)
 target_link_libraries(${EXENAME} core)
+target_link_libraries(${EXENAME} log)
 
 # link other libs

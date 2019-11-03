@@ -1,0 +1,45 @@
+#ifndef _W_TRACE_HPP_
+#define _W_TRACE_HPP_
+
+#include <string>
+#include <sstream>
+
+#define ERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
+#define WARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
+
+namespace waifuengine
+{
+    namespace log
+    {
+        namespace _impl
+        {
+            void error_helper(std::string message, std::string file, int line);
+
+            void warning_helper(std::string message, std::string file, int line);
+        }
+
+        enum class trace_level
+        {
+            trace = 0,
+            debug,
+            errors,
+            warnings,
+        };
+
+        void init(trace_level l);
+        void shutdown();
+
+        void level(trace_level l);
+        trace_level level();
+
+        void log(std::string message, trace_level level);
+
+        void trace(std::string message);
+        void debug(std::string message);
+        void error(std::string message);
+        void warning(std::string message);
+
+    } // namespace trace
+} // namespace waifuengine
+
+#endif // !_W_TRACE_HPP_

@@ -12,19 +12,22 @@ namespace waifuengine
         class frame_watcher
         {
         private:
-            typedef std::chrono::steady_clock::time_point::rep frame_val_t;
 
             std::size_t target_;
             std::size_t const retain_ = 100; // how many samples to retain
-            std::deque<frame_val_t> history_; // history of frame times
+            std::deque<double> history_; // history of frame times
             std::chrono::steady_clock::time_point last_hit_;
 
+            double get_timespan_ms(std::chrono::steady_clock::time_point s, std::chrono::steady_clock::time_point e);
+
         public:
+            typedef std::chrono::steady_clock::time_point::rep frame_val_t;
             frame_watcher(std::size_t target = 30);
             ~frame_watcher();
 
             void hit();
-            std::size_t fps() const;
+            double fps() const;
+            double frame_time() const;
         };
     }
 }
