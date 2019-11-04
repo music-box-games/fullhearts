@@ -94,6 +94,7 @@ add_subdirectory(components)
 add_subdirectory(core)
 add_subdirectory(log)
 add_subdirectory(utils)
+add_subdirectory(messaging)
 
 # add root src
 file(GLOB SOURCES "./*.cc")
@@ -106,5 +107,6 @@ target_link_libraries(${EXENAME} components)
 target_link_libraries(${EXENAME} core)
 target_link_libraries(${EXENAME} log)
 target_link_libraries(${EXENAME} utils)
+target_link_libraries(${EXENAME} messaging)
 
 # link other libs
