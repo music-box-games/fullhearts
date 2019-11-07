@@ -122,14 +122,9 @@ namespace waifuengine
         hardware_info const get_hardware_info()
         {
             if(hwcache) return hwcached_info;
-
             hardware_info hi;
-            if(cpucache) hi.cpu = cpucached_info;
-            else hi.cpu = get_cpu_info();
-
-            if(gpucache) hi.gpu = gpucached_info;
-            else hi.gpu = get_gpu_info();
-            
+            hi.cpu = (cpucache) ? cpucached_info : get_cpu_info();
+            hi.gpu = (gpucache) ? gpucached_info : get_gpu_info();
             return hi;
         }
 

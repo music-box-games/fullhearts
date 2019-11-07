@@ -4,9 +4,6 @@
 #include <string>
 #include <sstream>
 
-#define LOGERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
-#define LOGWARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
-
 namespace waifuengine
 {
     namespace log
@@ -41,5 +38,8 @@ namespace waifuengine
 
     } // namespace trace
 } // namespace waifuengine
+
+#define LOGERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
+#define LOGWARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
 
 #endif // !_W_TRACE_HPP_
