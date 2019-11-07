@@ -1,3 +1,4 @@
+
 #include <timer_manager.hpp>
 
 namespace waifuengine
@@ -47,7 +48,7 @@ namespace waifuengine
         void timer_manager::update()
         {
             static int const count = 0; // counter to only purge so often
-            static int const purge_limit = 100; // 
+            static int const purge_limit = 100; // purge every this many cycles 
 
             static auto const f = [](std::pair<std::string, std::shared_ptr<trigger_timer>> t) -> void {
                 t.second->update();
