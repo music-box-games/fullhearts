@@ -47,7 +47,7 @@ namespace waifuengine
 
         void timer_manager::update()
         {
-            static int const count = 0; // counter to only purge so often
+            static int count = 0; // counter to only purge so often
             static int const purge_limit = 100; // purge every this many cycles 
 
             static auto const f = [](std::pair<std::string, std::shared_ptr<trigger_timer>> t) -> void {
@@ -62,9 +62,16 @@ namespace waifuengine
             ++count;
         }
 
-        void timer_manager::draw()
+        void timer_manager::purge()
         {
-            
+            std::vector<std::string> to_be_deleted;
+            for(auto t : timers_)
+            {
+                if(t.second->done())
+                {
+                    
+                }
+            }
         }
     }
 }

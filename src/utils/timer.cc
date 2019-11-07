@@ -76,5 +76,10 @@ namespace waifuengine
                 if(!repeat_) { stop(); } else { restart(); }
             }
         }
+
+        bool trigger_timer::done() const
+        {
+            return !repeat_ && (sc::duration_cast<sc::milliseconds>(sc::steady_clock::now() - start_).count() >= limit_.count());
+        }
     }
 }

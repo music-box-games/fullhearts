@@ -66,6 +66,8 @@ namespace waifuengine
             }
 
             void update();
+
+            bool done() const;
         };
     }
 }

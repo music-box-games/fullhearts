@@ -28,8 +28,7 @@ namespace waifuengine
             std::shared_ptr<trigger_timer> emplace_timer(std::string name, bool repeat, std::chrono::milliseconds limit);
             std::shared_ptr<trigger_timer> emplace_timer(std::string name, bool repeat, std::chrono::milliseconds limit, std::function<void()> trigger);
 
-            void update(float dt);
-            void draw() const;
+            void update();
         };
     }
 }
