@@ -1,21 +1,13 @@
-#include <array>
-#include <string_view>
+#include <unordered_set>
 
 #include <engine.hpp>
 #include <args.hpp>
 
-using namespace std::literals;
-using namespace std::string_view_literals;
-using namespace std::literals::string_view_literals;
 
-static constexpr std::array<std::string_view, 1> flags = 
+
+static int handle_args(waifuengine::core::arg_parser const& ap)
 {
-    "--timer-test"sv,
-};
-
-static void handle_args(waifuengine::core::arg_parser const& ap)
-{
-
+    return 0;
 }
 
 int main(int argc, char ** argv)
@@ -23,7 +15,15 @@ int main(int argc, char ** argv)
     waifuengine::core::arg_parser ap;
     ap.add_flag("--timer-test");
     ap.parse(argc, argv);
-    handle_args(ap);
+    int result = handle_args(ap);
+    if(result == -1) return 0;
+    if(result == 0) {}
+    else
+    {
+        // report error number
+        return -1;
+    }
+    
 
     auto e = waifuengine::core::build_engine();
 
