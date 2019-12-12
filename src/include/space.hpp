@@ -22,7 +22,7 @@ namespace waifuengine
             space(std::string n);
             ~space();
 
-            void add_object(std::string name);
+            std::shared_ptr<gameobject> add_object(std::string name);
             void remove_object(std::string name);
             std::shared_ptr<gameobject> get_object(std::string name);
 

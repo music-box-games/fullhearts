@@ -17,8 +17,8 @@ namespace waifuengine
             public:
                 std::string name;
 
-                _base_component(std::string n);
-                virtual ~_base_component();
+                _base_component(std::string n) : name(n) {}
+                virtual ~_base_component() {}
 
                 virtual void update(float dt) = 0;
                 virtual void draw() const = 0;

@@ -22,11 +22,12 @@ namespace waifuengine
             objects_.clear();
         }
 
-        void space::add_object(std::string n)
+        std::shared_ptr<gameobject> space::add_object(std::string n)
         {
             // add object and place it in the map
             auto obj = std::shared_ptr<gameobject>(new gameobject(n));
             objects_[n] = obj;
+            return obj;
         }
 
         void space::remove_object(std::string n)
