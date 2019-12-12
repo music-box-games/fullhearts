@@ -5,12 +5,7 @@ namespace waifuengine
 {
     namespace tests
     {
-        class test_friend final
-        {
-            
-        };
-
-        bool timer_tests();
+        
     }
 }
 

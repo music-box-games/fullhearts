@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{85A55865-8EB0-35B0-8B70-2651625986E9}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ZERO_CHECK</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\gtest\1.10.0\_\_\package\5ad274d83035c78ba2b205e6cf4f1b317aee8e05\include;C:\.conan\8edd9b\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\3fb49604f9c2f729b85ba3115852006824e72cab\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\d16a91eadaaf5829b928b12d2f836ff7680d3df5\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\gtest\1.10.0\_\_\package\5ad274d83035c78ba2b205e6cf4f1b317aee8e05\include;C:\.conan\8edd9b\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\3fb49604f9c2f729b85ba3115852006824e72cab\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\d16a91eadaaf5829b928b12d2f836ff7680d3df5\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\gtest\1.10.0\_\_\package\5ad274d83035c78ba2b205e6cf4f1b317aee8e05\include;C:\.conan\8edd9b\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\3fb49604f9c2f729b85ba3115852006824e72cab\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\d16a91eadaaf5829b928b12d2f836ff7680d3df5\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\gtest\1.10.0\_\_\package\5ad274d83035c78ba2b205e6cf4f1b317aee8e05\include;C:\.conan\8edd9b\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\3fb49604f9c2f729b85ba3115852006824e72cab\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\d16a91eadaaf5829b928b12d2f836ff7680d3df5\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\c9b54e19cabc4344c3369b0064cf557a\generate.stamp.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Checking Build System</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/dev/musicboxgames/repo/fullhearts/build/fullhearts.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeSystem.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\src\components\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\core\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\log\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\messaging\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\utils\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\components\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\core\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\log\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\utils\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\messaging\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Checking Build System</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/dev/musicboxgames/repo/fullhearts/build/fullhearts.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeSystem.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\src\components\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\core\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\log\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\messaging\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\utils\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\components\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\core\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\log\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\utils\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\messaging\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Checking Build System</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/dev/musicboxgames/repo/fullhearts/build/fullhearts.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeSystem.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\src\components\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\core\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\log\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\messaging\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\utils\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\components\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\core\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\log\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\utils\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\messaging\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Checking Build System</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/dev/musicboxgames/repo/fullhearts/build/fullhearts.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\3.15.4\CMakeSystem.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\src\components\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\core\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\log\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\messaging\CMakeLists.txt;E:\dev\musicboxgames\repo\fullhearts\src\utils\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\dev\musicboxgames\repo\fullhearts\build\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\components\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\core\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\log\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\utils\CMakeFiles\generate.stamp;E:\dev\musicboxgames\repo\fullhearts\build\src\messaging\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -6,9 +6,6 @@ namespace waifuengine
 {
     namespace tests
     {
-        bool timer_tests()
-        {
-            
-        }
+        
     }
 }
