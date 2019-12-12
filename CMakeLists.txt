@@ -23,6 +23,7 @@ add_subdirectory(./src/core)
 add_subdirectory(./src/log)
 add_subdirectory(./src/utils)
 add_subdirectory(./src/messaging)
+add_subdirectory(./src/tests)
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
@@ -36,6 +37,7 @@ target_link_libraries(${EXENAME} core)
 target_link_libraries(${EXENAME} log)
 target_link_libraries(${EXENAME} utils)
 target_link_libraries(${EXENAME} messaging)
+target_link_libraries(${EXENAME} tests)
 
 # link other libs
 target_link_libraries(${EXENAME} ${CONAN_LIBS})

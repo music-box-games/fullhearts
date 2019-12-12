@@ -38,5 +38,29 @@ namespace waifuengine
             static auto const f = [](std::pair<std::string, std::shared_ptr<space>> sp) -> void { sp.second->draw(); };
             std::for_each(spaces_.begin(), spaces_.end(), f);
         }
+
+        std::size_t space_manager::spaces() const
+        {
+            return spaces_.size();
+        }
+
+        std::size_t space_manager::objects() const
+        {
+            std::size_t count = 0;
+            std::for_each(spaces_.begin(), spaces_.end(), [&count](auto sp) {
+                count += sp.second->objects();
+            });
+            return count;
+        }
+
+        std::size_t space_manager::components() const
+        {
+            std::size_t count = 0;
+            std::for_each(spaces_.begin(), spaces_.end(), [&count](auto sp) {
+                count += sp.second->components();
+            });
+            return count;
+        }
+
     }
 }

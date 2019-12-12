@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <numeric>
 
 #include <space.hpp>
 #include <gameobject.hpp>
@@ -48,6 +49,20 @@ namespace waifuengine
         {
             static auto const f = [](std::pair<std::string, std::shared_ptr<gameobject>> obj) -> void { obj.second->draw(); };
             std::for_each(objects_.begin(), objects_.end(), f);
+        }
+
+        std::size_t space::objects() const
+        {
+            return objects_.size();
+        }
+
+        std::size_t space::components() const
+        {
+            std::size_t count = 0;
+            std::for_each(objects_.begin(), objects_.end(), [&count](auto obj) {
+                count += obj.second->components();
+            });
+            return count;
         }
     }
 }

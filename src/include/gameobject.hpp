@@ -56,6 +56,8 @@ namespace waifuengine
             void draw() const;
 
             std::string const& name() const;
+
+            std::size_t components() const { return components_.size(); }
         };
     }
 }

@@ -5,7 +5,7 @@ namespace waifuengine
 {
     namespace tests
     {
-        
+        int run_tests(int argc, char ** argv);
     }
 }
 

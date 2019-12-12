@@ -28,6 +28,9 @@ namespace waifuengine
 
             void update(float dt);
             void draw() const;
+
+            std::size_t objects() const;
+            std::size_t components() const;
         };
     }
 }

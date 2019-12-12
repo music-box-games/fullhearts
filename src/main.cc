@@ -1,29 +1,26 @@
 #include <unordered_set>
 
+#include <boost/program_options.hpp>
+
 #include <engine.hpp>
-#include <args.hpp>
+#include <tests.hpp>
 
-
-
-static int handle_args(waifuengine::core::arg_parser const& ap)
-{
-    return 0;
-}
 
 int main(int argc, char ** argv)
 {
-    waifuengine::core::arg_parser ap;
-    ap.add_flag("--timer-test");
-    ap.parse(argc, argv);
-    int result = handle_args(ap);
-    if(result == -1) return 0;
-    if(result == 0) {}
-    else
+    namespace po = boost::program_options;
+
+    po::options_description desc("Options");
+    desc.add_options()
+    ("test,t", "Runs engine tests.");
+
+    po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);
+    if(vm.count("test"))
     {
-        // report error number
-        return -1;
+        return waifuengine::tests::run_tests(argc, argv);
     }
-    
 
     auto e = waifuengine::core::build_engine();
 
