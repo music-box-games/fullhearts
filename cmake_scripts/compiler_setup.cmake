@@ -7,3 +7,9 @@ add_compile_options(/W3)
 else()
 add_compile_options(-Werror -Wall -Wextra)
 endif()
+
+# add definitions for OS
+if(WIN32)
+add_compile_definitions(WINDOWS)
+else()
+endif()

@@ -10,6 +10,10 @@
 #include <component.hpp>
 #include <dummy.hpp>
 
+#include <hardware.hpp>
+
+
+// TODO: a lot of this can be improved by sharing resources
 namespace waifuengine
 {
     namespace tests
@@ -77,6 +81,21 @@ namespace waifuengine
             ASSERT_EQ(sm.components(), 1);
             o->remove_component<::waifuengine::components::dummy>();
             ASSERT_EQ(sm.components(), 0);
+        }
+
+        TEST(HardwareTests, CPUIDTest)
+        {
+            auto hwi = ::waifuengine::utils::get_hardware_info();
+            EXPECT_NE(hwi.cpu.arch.size(), 0);
+            EXPECT_NE(hwi.cpu.type.size(), 0);
+            EXPECT_NE(hwi.cpu.cores, 0);
+        }
+
+        TEST(HardwareTests, GPUIDTest)
+        {
+            auto hwi = ::waifuengine::utils::get_hardware_info();
+            EXPECT_NE(hwi.gpu.make.size(), 0);
+            EXPECT_NE(hwi.gpu.model.size(), 0);
         }
     }
 }

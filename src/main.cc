@@ -2,24 +2,17 @@
 
 #include <boost/program_options.hpp>
 
+#include <args.hpp>
 #include <engine.hpp>
 #include <tests.hpp>
 
 
 int main(int argc, char ** argv)
 {
-    namespace po = boost::program_options;
-
-    po::options_description desc("Options");
-    desc.add_options()
-    ("test,t", "Runs engine tests.");
-
-    po::variables_map vm;
-    po::store(po::parse_command_line(argc, argv, desc), vm);
-    po::notify(vm);
-    if(vm.count("test"))
+    auto ret = waifuengine::utils::args::parse(argc, argv);
+    if(ret.has_value())
     {
-        return waifuengine::tests::run_tests(argc, argv);
+        return ret.value();
     }
 
     auto e = waifuengine::core::build_engine();

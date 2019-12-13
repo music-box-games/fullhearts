@@ -2,6 +2,7 @@
 #define _W_HARDWARE_HPP_
 
 #include <string>
+#include <ostream>
 
 namespace waifuengine
 {
@@ -14,6 +15,7 @@ namespace waifuengine
 			int cores;
 
             operator std::string();
+            friend std::ostream& operator<<(std::ostream& os, cpu_info const& cpu);
         };
 
         struct gpu_info
@@ -23,6 +25,7 @@ namespace waifuengine
             bool discrete;
 
             operator std::string();
+            friend std::ostream& operator<<(std::ostream& os , gpu_info const& gpu);
         };
 
         struct hardware_info
@@ -31,6 +34,7 @@ namespace waifuengine
             gpu_info gpu;
 
             operator std::string();
+            friend std::ostream& operator<<(std::ostream& os, hardware_info const& hwi);
         };
 
         hardware_info const get_hardware_info();

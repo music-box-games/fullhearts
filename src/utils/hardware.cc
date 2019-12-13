@@ -26,6 +26,9 @@ namespace waifuengine
         static cpu_info get_cpu_info()
         {
 			cpu_info cpu;
+            cpu.arch = "UNIMPLEMENTED";
+            cpu.type = "UNIMPLEMENTED";
+            cpu.cores = 0;
 #ifdef WINDOWS
             static std::unordered_map<int, std::pair<std::string, std::string>> architectures
             {
@@ -70,7 +73,8 @@ namespace waifuengine
             cpu.type = brandstring; 
             ss.str("");
 
-            waifuengine::log::trace(std::string(cpu));
+            ss << cpu;
+            waifuengine::log::trace(ss.str());
 #endif // WINDOWS
             cpucache = true;
             cpucached_info = cpu;
@@ -89,34 +93,22 @@ namespace waifuengine
             return gpu;
         }
 
-        cpu_info::operator std::string()
+        std::ostream& operator<<(std::ostream& os, cpu_info const& cpu)
         {
-            std::stringstream ss;
-            ss << "CPU Type: " << type << '\n';
-            ss << "Architecture: " << arch << '\n';
-            ss << "Cores: " << cores << '\n';
-
-
-            return ss.str();
+            os << "CPU Type: " << cpu.type << '\n' << "CPU Architecture: " << cpu.arch << '\n' << "CPU Cores: " << cpu.cores << '\n';
+            return os;
         }
 
-        gpu_info::operator std::string()
+        std::ostream& operator<<(std::ostream& os, gpu_info const& gpu)
         {
-            std::stringstream ss;
-            ss << "Make: " << make << '\n';
-            ss << "Model: " << model << '\n';
-            return ss.str();
+            os << "GPU Make: " << gpu.make << '\n' << "GPU Model: " << gpu.make << '\n';
+            return os;
         }
 
-        hardware_info::operator std::string()
+        std::ostream& operator<<(std::ostream& os, hardware_info const& hwi)
         {
-            std::stringstream ss;
-            ss << "\nCPU:\n";
-            ss << std::string(cpu);
-            ss << "\nGPU:\n";
-            ss << std::string(gpu);
-
-            return ss.str();
+            os << hwi.cpu << '\n' << hwi.gpu;
+            return os;
         }
 
         hardware_info const get_hardware_info()
