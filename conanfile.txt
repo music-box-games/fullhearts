@@ -1,6 +1,7 @@
 [requires]
 gtest/1.10.0
 boost/1.71.0@conan/stable
+glfw/3.3@bincrafters/stable
 
 [generators]
 cmake
