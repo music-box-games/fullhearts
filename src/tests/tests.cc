@@ -83,6 +83,8 @@ namespace waifuengine
             ASSERT_EQ(sm.components(), 0);
         }
 
+        // TODO: move these into their respective parts rather than a separate file for all tests
+
         TEST(HardwareTests, CPUIDTest)
         {
             auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
@@ -96,6 +98,12 @@ namespace waifuengine
             auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
             EXPECT_NE(hwi.gpu.make.size(), 0);
             EXPECT_NE(hwi.gpu.model.size(), 0);
+        }
+
+        TEST(HardwareTests, RAMTest)
+        {
+            auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
+            EXPECT_NE(hwi.memory, 0);
         }
     }
 }
