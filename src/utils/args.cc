@@ -42,6 +42,7 @@ namespace waifuengine
           return hardware_dump;
         }
 
+        // if no flags require ending the program, return with no value
         return {};
       }
     }
