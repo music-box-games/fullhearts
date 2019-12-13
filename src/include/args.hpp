@@ -11,6 +11,7 @@ namespace waifuengine
     {
       enum return_values
       {
+        help = 1,
         gtest_success,
         gtest_fail,
         hardware_dump,
