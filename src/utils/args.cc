@@ -30,7 +30,7 @@ namespace waifuengine
         }
         if(vm.count("hardware-dump"))
         {
-          auto hwi = ::waifuengine::utils::get_hardware_info();
+          auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
           ::std::cout << hwi << '\n';
           return hardware_dump;
         }

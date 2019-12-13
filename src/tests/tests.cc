@@ -85,7 +85,7 @@ namespace waifuengine
 
         TEST(HardwareTests, CPUIDTest)
         {
-            auto hwi = ::waifuengine::utils::get_hardware_info();
+            auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
             EXPECT_NE(hwi.cpu.arch.size(), 0);
             EXPECT_NE(hwi.cpu.type.size(), 0);
             EXPECT_NE(hwi.cpu.cores, 0);
@@ -93,7 +93,7 @@ namespace waifuengine
 
         TEST(HardwareTests, GPUIDTest)
         {
-            auto hwi = ::waifuengine::utils::get_hardware_info();
+            auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
             EXPECT_NE(hwi.gpu.make.size(), 0);
             EXPECT_NE(hwi.gpu.model.size(), 0);
         }

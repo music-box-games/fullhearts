@@ -29,7 +29,7 @@ namespace waifuengine
 
         void physics2::best_model()
         {
-            auto hw = ::waifuengine::utils::get_hardware_info();
+            auto hw = ::waifuengine::utils::hardware::get_hardware_info();
             if(hw.gpu.discrete)
             {
                 model_ = calculation_model::gpu;                
