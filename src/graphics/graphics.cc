@@ -69,12 +69,19 @@ namespace waifuengine
 
         void update(float dt)
         {
-
+          glfwPollEvents();
         }
 
         void draw() const
         {
+          glClear(GL_COLOR_BUFFER_BIT);
+          // swap buffers
+          glfwSwapBuffers(window_);
+        }
 
+        GLFWwindow * get_window()
+        {
+          return window_;
         }
       };
 
@@ -90,6 +97,11 @@ namespace waifuengine
       {
         delete glman;
         glman = nullptr;
+      }
+
+      GLFWwindow * get_window()
+      {
+        return glman->get_window();
       }
     }
   }
