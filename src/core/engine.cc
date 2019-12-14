@@ -3,6 +3,7 @@
 #include <engine.hpp>
 #include <framewatcher.hpp>
 #include <log.hpp>
+#include <graphics.hpp>
 
 #ifdef DEBUG
 #include <hardware.hpp>
@@ -25,12 +26,14 @@ namespace waifuengine
         {
             waifuengine::log::init(waifuengine::log::trace_level::trace);
             waifuengine::log::trace("engine init");
+            waifuengine::graphics::opengl::init();
             running = true;
         }
 
         engine::~engine()
         {
-            
+            waifuengine::graphics::opengl::shutdown();
+            waifuengine::log::shutdown();
         }
 
         void engine::update()

@@ -5,6 +5,8 @@
 #include <args.hpp>
 #include <hardware.hpp>
 #include <tests.hpp>
+#include <return_values.hpp>
+#include <log.hpp>
 
 namespace waifuengine
 {
@@ -14,6 +16,12 @@ namespace waifuengine
     {
       std::optional<int> parse(int argc, char ** argv)
       {
+        waifuengine::log::trace("Parsing command line. Args are:");
+        for(int i = 0; i < argc; ++i)
+        {
+          waifuengine::log::trace(argv[i]);
+        }
+
         namespace po = boost::program_options;
 
         po::options_description desc("Options");
@@ -29,7 +37,7 @@ namespace waifuengine
         if(vm.count("help"))
         {
           std::cout << desc << '\n';
-          return help;
+          return waifuengine::core::return_values::help;
         }
         if(vm.count("test"))
         {
@@ -39,7 +47,7 @@ namespace waifuengine
         {
           auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
           ::std::cout << hwi << '\n';
-          return hardware_dump;
+          return ::waifuengine::core::return_values::hardware_dump;
         }
 
         // if no flags require ending the program, return with no value

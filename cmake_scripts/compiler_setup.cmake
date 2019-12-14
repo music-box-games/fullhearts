@@ -13,3 +13,8 @@ if(WIN32)
 add_compile_definitions(WINDOWS)
 else()
 endif()
+
+# set debug mode
+if(DBG)
+add_compile_definitions(DEBUG)
+endif()

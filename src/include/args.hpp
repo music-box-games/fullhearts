@@ -3,20 +3,14 @@
 
 #include <optional>
 
+#include <return_values.hpp>
+
 namespace waifuengine
 {
   namespace utils
   {
     namespace args
     {
-      enum return_values
-      {
-        help = 1,
-        gtest_success,
-        gtest_fail,
-        hardware_dump,
-      };
-
       std::optional<int> parse(int argc, char ** argv);
     }
   }
