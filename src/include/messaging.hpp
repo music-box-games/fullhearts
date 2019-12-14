@@ -9,7 +9,9 @@
 namespace waifuengine
 {
     namespace messaging
-    { /*
+    { 
+        namespace impl {} // modules when
+        /*
         class message_handler
         {
         private:
