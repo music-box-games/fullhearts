@@ -1,4 +1,6 @@
 #include <iostream>
+#include <functional>
+
 
 #include <gtest/gtest.h>
 
@@ -12,6 +14,8 @@
 
 #include <hardware.hpp>
 
+#include <events.hpp>
+#include <event_manager.hpp>
 
 // TODO: a lot of this can be improved by sharing resources
 namespace waifuengine
@@ -104,6 +108,53 @@ namespace waifuengine
         {
             auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
             EXPECT_NE(hwi.memory, 0);
+        }
+
+        TEST(EventTests, PrintEventTest)
+        {
+            class sender
+            {
+            public:
+                void sendit(std::string m)
+                {
+                    events::cout_event e(m);
+                    events::handle(&e);
+                }
+            };
+
+            class receiver
+            {
+            public:
+                std::stringstream ss;
+            private:
+
+                void message_handler(::waifuengine::events::event * e)
+                {
+                    auto ce = dynamic_cast<::waifuengine::events::cout_event *>(e);
+                    ss << ce->message;
+                }
+
+            public:
+                receiver()
+                {
+                    auto f = std::bind(&receiver::message_handler, this, std::placeholders::_1);
+                    ::waifuengine::events::subscribe<::waifuengine::events::cout_event>(this, f);     
+                }
+
+                ~receiver()
+                {
+                    //::waifuengine::events::unsubscribe<::waifuengine::events::cout_event>(this);
+                }
+            };
+
+            ::waifuengine::events::init();
+
+            receiver r;
+            sender s;
+            s.sendit("REEE");
+            ASSERT_EQ(std::string("REEE"), r.ss.str());
+
+            ::waifuengine::events::shutdown();
         }
     }
 }
