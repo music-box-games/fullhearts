@@ -10,6 +10,9 @@ project(${PRJ})
 # load compiler setup script
 include(./cmake_scripts/compiler_setup.cmake)
 
+# load postbuild copy script
+include(./cmake_scripts/postbuild_copy.cmake)
+
 # load conan cmake file
 include(./build/conanbuildinfo.cmake)
 conan_basic_setup()
@@ -45,3 +48,12 @@ target_link_libraries(${EXENAME} input)
 
 # link other libs
 target_link_libraries(${EXENAME} ${CONAN_LIBS})
+
+# copy files to build folder
+if(MSVC)
+# if msvc, need to add bin folder to copy into
+set(EXE_OUT_PATH ${CMAKE_BINARY_DIR}/bin)
+else()
+set(EXE_OUT_PATH ${CMAKE_BINARY_DIR})
+endif()
+pbcopy(${EXENAME} ${CMAKE_SOURCE_DIR}/shaders ${EXE_OUT_PATH}/shaders)
