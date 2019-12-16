@@ -1,5 +1,12 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+
 #include <input.hpp>
 #include <graphics.hpp>
+
+#include <event_manager.hpp>
 
 namespace we = ::waifuengine;
 
@@ -17,6 +24,11 @@ namespace opengl
   void shutdown()
   {
 
+  }
+
+  void update()
+  {
+    auto * window = we::graphics::opengl::get_window();
   }
 }
 
