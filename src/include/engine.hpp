@@ -19,6 +19,8 @@ namespace waifuengine
 
             void update();
             void draw() const;
+
+            void load_initial_scene();
         };
 
         std::unique_ptr<engine> build_engine();

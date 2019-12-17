@@ -31,6 +31,9 @@ namespace waifuengine
             std::size_t spaces() const;
             std::size_t objects() const;
             std::size_t components() const;
+
+            void clear();
+            void remove_object(std::string n);
         };
     }
 }

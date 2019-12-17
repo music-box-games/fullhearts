@@ -1,0 +1,44 @@
+#include <fstream>
+
+#include <utils.hpp>
+#include <log.hpp>
+
+namespace we = ::waifuengine;
+
+namespace waifuengine
+{
+  namespace utils
+  {
+    std::vector<std::string> parse_file_to_vector(std::string f)
+    {
+      std::ifstream file(f);
+      if(!file.is_open())
+      {
+        std::stringstream ss;
+        ss << "Could not open file: " << f;
+        we::log::warning(ss.str());
+        return {};
+      }
+      std::string buffer;
+      std::vector<std::string> lines;
+      while(std::getline(file, buffer))
+      {
+        lines.push_back(buffer);
+      }
+
+      return lines;
+    }
+
+    std::string parse_file_to_string(std::string f)
+    {
+      auto v = parse_file_to_vector(f);
+      std::stringstream ss;
+      for(auto const& s : v)
+      {
+        ss << s << '\n';
+      }
+
+      return ss.str();
+    }
+  }
+}

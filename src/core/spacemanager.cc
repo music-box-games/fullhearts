@@ -62,5 +62,18 @@ namespace waifuengine
             return count;
         }
 
+        void space_manager::clear()
+        {
+            spaces_.clear();
+        }
+
+        void space_manager::remove_object(std::string name)
+        {
+            for(auto& s : spaces_)
+            {
+                s.second->remove_object(name);
+            }
+        }
+
     }
 }

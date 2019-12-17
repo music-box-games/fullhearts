@@ -1,6 +1,7 @@
 #ifndef _W_GRAPHICS_HPP_
 #define _W_GRAPHICS_HPP_
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 namespace waifuengine
@@ -16,6 +17,11 @@ namespace waifuengine
 
       GLFWwindow * get_window();
     }
+
+    void init();
+    void update(float dt);
+    void draw();
+    void shutdown();
   }
 }
 

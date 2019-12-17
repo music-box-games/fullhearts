@@ -1,15 +1,14 @@
 // this file was written following this tutorial: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
 
 #include <iostream>
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include <filesystem>
 
 #include <graphics.hpp>
 #include <log.hpp>
 #include <return_values.hpp>
 #include <log.hpp>
+#include <shader.hpp>
+#include <utils.hpp>
 
 namespace we = ::waifuengine;
 
@@ -23,6 +22,7 @@ namespace waifuengine
       {
       private:
         GLFWwindow * window_;
+        GLuint prog_id = 0;
 
         GLFWerrorfun error_callback = [](int i, const char * c) -> void { we::log::error(c); };
 
@@ -60,6 +60,11 @@ namespace waifuengine
             return; // TODO: also exit from here
           }
 
+          // load shaders
+          auto v = we::utils::get_path_relative_to_exe("\\shaders\\vertexshader.txt");
+          auto f = we::utils::get_path_relative_to_exe("\\shaders\\fragmentshader.txt");
+          prog_id = we::graphics::shaders::opengl::load(v.string(), f.string());
+          glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
         }
 
         ~opengl_manager()
@@ -74,7 +79,8 @@ namespace waifuengine
 
         void draw() const
         {
-          glClear(GL_COLOR_BUFFER_BIT);
+          glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+          glUseProgram(prog_id);
           // swap buffers
           glfwSwapBuffers(window_);
         }
@@ -99,10 +105,40 @@ namespace waifuengine
         glman = nullptr;
       }
 
+      void update(float dt)
+      {
+        glman->update(dt);
+      }
+
+      void draw()
+      {
+        glman->draw();
+      }
+
       GLFWwindow * get_window()
       {
         return glman->get_window();
       }
+    }
+
+    void init()
+    {
+      opengl::init();
+    }
+
+    void update(float dt)
+    {
+      opengl::update(dt);
+    }
+
+    void draw()
+    {
+      opengl::draw();
+    }
+
+    void shutdown()
+    {
+      opengl::shutdown();
     }
   }
 }

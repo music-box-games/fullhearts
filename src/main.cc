@@ -1,3 +1,4 @@
+#include <iostream>
 #include <unordered_set>
 
 #include <boost/program_options.hpp>
@@ -15,12 +16,16 @@ int main(int argc, char ** argv)
         return ret.value();
     }
 
-    auto e = waifuengine::core::build_engine();
+    std::unique_ptr<waifuengine::core::engine> e = waifuengine::core::build_engine();
+    e->load_initial_scene();
 
-    while(waifuengine::core::engine::running)
+
+    while(::waifuengine::core::engine::running)
     {
         e->update();
+        e->draw();
     }
+ 
 
     return 0;
 }

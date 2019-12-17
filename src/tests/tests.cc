@@ -1,6 +1,7 @@
 #include <iostream>
 #include <functional>
-
+#include <filesystem>
+#include <fstream>
 
 #include <gtest/gtest.h>
 
@@ -16,6 +17,8 @@
 
 #include <events.hpp>
 #include <event_manager.hpp>
+
+#include <utils.hpp>
 
 // TODO: a lot of this can be improved by sharing resources
 namespace waifuengine
@@ -155,6 +158,26 @@ namespace waifuengine
             ASSERT_EQ(std::string("REEE"), r.ss.str());
 
             ::waifuengine::events::shutdown();
+        }
+
+        TEST(UtilTests, FileParseTest)
+        {
+            std::string fname = "/WETESTTEXTFILE";
+            std::ofstream tfile(fname);
+            ASSERT_TRUE(tfile.is_open());
+            int linecount = 5;
+            for(int i = 0; i < linecount; ++i)
+            {
+                tfile << "line " << i << '\n';
+            }
+            tfile.close();
+            auto v = ::waifuengine::utils::parse_file_to_vector(fname);
+            ASSERT_EQ(linecount, v.size());
+            for(auto const& s : v)
+            {
+                ASSERT_NE(s.size(), 0);
+            }
+            std::filesystem::remove(fname);
         }
     }
 }
