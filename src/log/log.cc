@@ -2,6 +2,7 @@
 #include <unordered_map>
 
 #include <log.hpp>
+#include <settings.hpp>
 
 namespace waifuengine
 {
@@ -9,6 +10,7 @@ namespace waifuengine
     {
         static std::unordered_map<trace_level, std::string> levels
         {
+            {trace_level::pedantic, "[PED-TRACE] "},
             {trace_level::trace, "[TRACE] "},
             {trace_level::debug, "[DEBUG] "},
             {trace_level::errors, "[ERROR] "},
@@ -62,6 +64,14 @@ namespace waifuengine
                 std::cout << levels[level] << message << '\n';
                 if(level == trace_level::errors) { std::cerr << levels[level] << message << '\n';}
 #endif // DEBUG
+            }
+        }
+
+        void pedantic(std::string message)
+        {
+            if(settings::pedantic_debug)
+            {
+                log(message, trace_level::pedantic);
             }
         }
 

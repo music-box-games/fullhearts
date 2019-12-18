@@ -2,9 +2,10 @@
 gtest/1.10.0
 boost/1.71.0@conan/stable
 glfw/3.3@bincrafters/stable
-glew/2.1.0@bincrafters/stable
+glad/0.1.29@bincrafters/stable
 glm/0.9.9.5@g-truc/stable
 frozen/20181020@bincrafters/stable
+soil2/1.11@bincrafters/stable
 
 [generators]
 cmake

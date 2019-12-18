@@ -1,7 +1,7 @@
 #ifndef _WE_BASIC_SHAPE_HPP_
 #define _WE_BASIC_SHAPE_HPP_
 
-#include <gl/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <component.hpp>
@@ -26,10 +26,9 @@ namespace waifuengine
     class basic_triangle : public basic_shape
     {
     private:
-      GLuint vertbuffer;
+      unsigned int vao, vbo;
 
-      
-      static constexpr GLfloat g_vertex_buffer_data[] = 
+      static constexpr float triangle_data[] = 
       {
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,

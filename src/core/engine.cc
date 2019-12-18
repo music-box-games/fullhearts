@@ -6,6 +6,7 @@
 #include <graphics.hpp>
 #include <scenemanager.hpp>
 #include <draw_test_scene.hpp>
+#include <input.hpp>
 
 #ifdef DEBUG
 #include <hardware.hpp>
@@ -28,8 +29,9 @@ namespace waifuengine
 
         engine::engine()
         {
-            waifuengine::log::init(waifuengine::log::trace_level::trace);
+            waifuengine::log::init(waifuengine::log::trace_level::pedantic);
             waifuengine::graphics::init();
+            waifuengine::input::init();
             waifuengine::scenes::init();
             running = true;
         }
@@ -37,7 +39,8 @@ namespace waifuengine
         engine::~engine()
         {
             waifuengine::scenes::shutdown();
-            waifuengine::graphics::opengl::shutdown();
+            waifuengine::input::shutdown();
+            waifuengine::graphics::shutdown();
             waifuengine::log::shutdown();
         }
 
@@ -45,16 +48,18 @@ namespace waifuengine
         {
             static frame_watcher fw;
             fw.hit();
-            // update things
-            ::waifuengine::scenes::update(fw.frame_time());
-            ::waifuengine::graphics::opengl::update(fw.frame_time());
-        }
+            // clear buffer
+            we::graphics::clear();
 
-        void engine::draw() const
-        {
-            // draw things
-            ::waifuengine::scenes::draw();
-            ::waifuengine::graphics::opengl::draw();
+            // update things
+            we::input::update();
+            ::waifuengine::scenes::update(fw.frame_time());
+
+            // now draw
+            we::scenes::draw();
+
+            // then render
+            ::waifuengine::graphics::render();
         }
 
         void engine::load_initial_scene()

@@ -18,7 +18,6 @@ namespace waifuengine
             ~engine();
 
             void update();
-            void draw() const;
 
             void load_initial_scene();
         };

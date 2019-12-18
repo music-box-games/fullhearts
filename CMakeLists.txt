@@ -30,6 +30,7 @@ add_subdirectory(./src/tests)
 add_subdirectory(./src/graphics)
 add_subdirectory(./src/input)
 add_subdirectory(./src/scenes)
+add_subdirectory(./src/settings)
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
@@ -47,6 +48,7 @@ target_link_libraries(${EXENAME} tests)
 target_link_libraries(${EXENAME} graphics)
 target_link_libraries(${EXENAME} input)
 target_link_libraries(${EXENAME} scenes)
+target_link_libraries(${EXENAME} settings)
 
 # link other libs
 target_link_libraries(${EXENAME} ${CONAN_LIBS})

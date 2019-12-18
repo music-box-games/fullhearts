@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <memory>
 
 #include <scenes.hpp>
 
@@ -16,7 +17,7 @@ namespace waifuengine
       class scene_manager
       {
       private:
-        using scene_container = std::unordered_map<std::string, ::waifuengine::scenes::scene *>;
+        using scene_container = std::unordered_map<std::string, std::shared_ptr<::waifuengine::scenes::scene>>;
         scene_container smap;
 
       public:
@@ -32,9 +33,9 @@ namespace waifuengine
           std::string sname(Scene::NAME);
           if(smap.count(sname))
           {
-            delete smap[sname];
+            smap.erase(sname);
           }
-          smap[sname] = new Scene();
+          smap[sname] = std::shared_ptr<::waifuengine::scenes::scene>(new Scene());
         }
 
         template<typename Scene>
@@ -43,7 +44,6 @@ namespace waifuengine
           std::string sname(Scene::NAME);
           if(smap.count(sname))
           {
-            delete smap[sname];
             smap.erase(sname);
           }
         }

@@ -23,7 +23,6 @@ int main(int argc, char ** argv)
     while(::waifuengine::core::engine::running)
     {
         e->update();
-        e->draw();
     }
  
 

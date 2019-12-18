@@ -116,15 +116,34 @@ namespace waifuengine
             we::log::error(ss.str());
             return 0;
           }
-          // detach shaders and free memory
-          glDetachShader(program_id, vert_id);
-          glDetachShader(program_id, frag_id);
-
+          // free memory
           glDeleteShader(vert_id);
           glDeleteShader(frag_id);
 
           return program_id;
         }
+      }
+
+      shader::shader() : program_id(0) {}
+
+      shader::shader(std::string vert_shader, std::string frag_shader)
+      {
+        program_id = we::graphics::shaders::opengl::load(vert_shader, frag_shader);
+      }
+
+      shader::shader(shader const& other)
+      {
+        program_id = other.program_id;
+      }
+
+      shader::~shader()
+      {
+
+      }
+
+      void shader::use() const
+      {
+        glUseProgram(program_id);
       }
     }
   }

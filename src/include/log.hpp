@@ -17,7 +17,8 @@ namespace waifuengine
 
         enum class trace_level
         {
-            trace = 0,
+            pedantic,
+            trace,
             debug,
             errors,
             warnings,
@@ -31,6 +32,7 @@ namespace waifuengine
 
         void log(std::string message, trace_level level);
 
+        void pedantic(std::string message); // only prints when --pedantic is provided
         void trace(std::string message);
         void debug(std::string message);
         void error(std::string message);
