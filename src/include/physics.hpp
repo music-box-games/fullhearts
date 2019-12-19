@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   physics.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Physics component.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_PHYSICS_HPP_
 #define _W_PHYSICS_HPP_
 

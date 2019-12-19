@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   hardware.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Functions and utils related to the hardware connected to the computer.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_HARDWARE_HPP_
 #define _W_HARDWARE_HPP_
 

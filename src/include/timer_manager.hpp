@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   timer_manager.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Managers timers, and calls their triggers when they run out.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_TIMERMANAGER_HPP_
 #define _W_TIMERMANAGER_HPP_
 

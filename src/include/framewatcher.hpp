@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   framewatcher.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    The framwatcher keeps track of how long a frame takes.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_FRAME_WATCHER_HPP_
 #define _W_FRAME_WATCHER_HPP_
 

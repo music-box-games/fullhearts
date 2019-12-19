@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file   timer.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Timer class. Times things.
+
+*/
+/******************************************************************************/
 
 #include <timer.hpp>
 

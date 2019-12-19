@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   tests.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Engine tests
+
+*/
+/******************************************************************************/
+
 #include <iostream>
 #include <functional>
 #include <filesystem>

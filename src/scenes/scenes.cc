@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file   scenes.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Scene class, responible for managing it's own space manager
+
+*/
+/******************************************************************************/
 
 #include <scenes.hpp>
 

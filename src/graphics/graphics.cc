@@ -1,4 +1,15 @@
-// this file was written following this tutorial: http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
+/******************************************************************************/
+/*!
+\file   graphics.cc   
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Graphics namespaces. Handles initialization and shutdown of graphics systems,
+  as well as handling different graphics APIs
+
+*/
+/******************************************************************************/
+
 
 #include <iostream>
 #include <filesystem>

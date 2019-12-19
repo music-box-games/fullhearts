@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   utils.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Various utilities.
+
+*/
+/******************************************************************************/
+
 #include <fstream>
 
 #include <utils.hpp>

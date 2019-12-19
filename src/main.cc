@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   main.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Main. It's main idk. Builds and updates the engine.
+
+*/
+/******************************************************************************/
+
 #include <iostream>
 #include <unordered_set>
 

@@ -1,4 +1,13 @@
-// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-2-the-first-triangle/
+/******************************************************************************/
+/*!
+\file   shader.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Shader class. Handles creating, compiling, and using shaders.
+
+*/
+/******************************************************************************/
 
 #include <fstream>
 #include <sstream>

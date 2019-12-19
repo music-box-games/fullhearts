@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file   gameobject.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Game object class. The game object works as a container for components.
+
+*/
+/******************************************************************************/
 
 #include <gameobject.hpp>
 #include <component.hpp>

@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   spacemanager.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Space manager class. A space manager is a container for spaces, and handles their
+    creation, destruction, updating, and drawing.
+
+*/
+/******************************************************************************/
+
 #include <algorithm>
 
 #include <spacemanager.hpp>

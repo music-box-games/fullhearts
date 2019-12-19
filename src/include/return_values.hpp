@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   return_values.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Special return values for the program.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_RETURN_VALUES_HPP_
 #define _W_RETURN_VALUES_HPP_
 

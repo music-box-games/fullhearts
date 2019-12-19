@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   timer.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Timer class. Times things.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_TIMER_HPP_
 #define _W_TIMER_HPP_
 

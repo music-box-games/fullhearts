@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   engine.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Engine class. Handles the init and shutdown for engine systems.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_ENGINE_HPP_
 #define _W_ENGINE_HPP_
 

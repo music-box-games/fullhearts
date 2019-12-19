@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   hardware.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Utils related to hardware installed in the computer.
+
+*/
+/******************************************************************************/
+
 #include <sstream>
 #include <unordered_map>
 #include <cstring>

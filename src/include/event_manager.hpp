@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   event_manager.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Event manager class that handles passing events off to registered listeners.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_EVENT_MANAGER_HPP_
 #define _WE_EVENT_MANAGER_HPP_
 

@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   component.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Component base classes. Components are where all the game magic happens.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_COMPONENT_HPP_
 #define _W_COMPONENT_HPP_
 

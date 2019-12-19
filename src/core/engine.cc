@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   engine.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Class that represents the entire engine. Takes care of initialization and shutdown
+    for all ssytems
+
+*/
+/******************************************************************************/
+
 #include <sstream>
 
 #include <engine.hpp>

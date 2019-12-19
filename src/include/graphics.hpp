@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   graphics.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Graphics namespaces. Handles the initialization and shutdown of graphics systems
+  and various APIs.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_GRAPHICS_HPP_
 #define _W_GRAPHICS_HPP_
 

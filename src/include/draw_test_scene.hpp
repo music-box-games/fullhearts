@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   draw_test_scene.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Test scene for testing drawing.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_DRAW_TEST_SCENE_HPP_
 #define _WE_DRAW_TEST_SCENE_HPP_
 

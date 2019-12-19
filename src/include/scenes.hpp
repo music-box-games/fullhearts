@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   scenes.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Scene class. A scene contains a space manager to manage spaces and objects.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_SCENES_HPP_
 #define _WE_SCENES_HPP_
 

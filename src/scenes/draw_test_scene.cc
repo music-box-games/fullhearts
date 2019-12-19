@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   draw_test_scene.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Test scene for draw testing.
+
+*/
+/******************************************************************************/
+
 #include <draw_test_scene.hpp>
 
 #include <spacemanager.hpp>

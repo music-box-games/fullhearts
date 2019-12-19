@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   gameobject.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    The game object is a container that holds and manages components.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_GAMEOBJECT_HPP_
 #define _W_GAMEOBJECT_HPP_
 

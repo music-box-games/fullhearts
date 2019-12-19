@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   bitmanip.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Functions related to bit manipulation.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_BITMANIP_HPP_
 #define _W_BITMANIP_HPP_
 

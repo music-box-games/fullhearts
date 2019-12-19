@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   log.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Handles logging.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_TRACE_HPP_
 #define _W_TRACE_HPP_
 

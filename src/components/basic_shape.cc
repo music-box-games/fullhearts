@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   basic_shape.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  A collection of classes that draw basic shapes.
+
+*/
+/******************************************************************************/
+
 #include <basic_shape.hpp>
 
 #include <log.hpp>

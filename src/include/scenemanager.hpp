@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file   scenemanager.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Manages scenes. Scenes contain a space manager, which contains spaces, which 
+  contain objects, which contain components. The Scene manager is the top dog for
+  controlling stuff.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_SCENE_MANAGER_HPP_
 #define _WE_SCENE_MANAGER_HPP_
 

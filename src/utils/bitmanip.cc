@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   bitmanip.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Bit manipulation functions
+
+*/
+/******************************************************************************/
+
 #include <bitmanip.hpp>
 
 namespace waifuengine

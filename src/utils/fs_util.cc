@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   fs_util.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Filesystem utilities.
+
+*/
+/******************************************************************************/
+
 #include <boost/tokenizer.hpp>
 
 #include <fs_util.hpp>

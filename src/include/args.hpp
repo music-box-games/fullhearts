@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   args.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Handles parsing arguments passed into the program.
+
+*/
+/******************************************************************************/
+
 #ifndef _W_ARGS_HPP_
 #define _W_ARGS_HPP_
 

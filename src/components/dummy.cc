@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   dummy.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Dummy component used for testing.
+
+*/
+/******************************************************************************/
+
 #include <dummy.hpp>
 
 namespace waifuengine

@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   event_manager.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  The event_manager class handles registering and passing around events.
+
+*/
+/******************************************************************************/
+
 #include <event_manager.hpp>
 
 namespace waifuengine

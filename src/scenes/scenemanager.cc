@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   scenemanager.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  The scene manager manages all existing scenes.
+
+*/
+/******************************************************************************/
+
 #include <scenemanager.hpp>
 
 #include <log.hpp>

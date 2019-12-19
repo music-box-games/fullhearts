@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   fs_util.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Utilities related to filesystem.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_FS_UTIL_HPP_
 #define _WE_FS_UTIL_HPP_
 

@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   args.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Handles and parses arguments passed into the program
+
+*/
+/******************************************************************************/
+
 #include <iostream>
 
 #include <boost/program_options.hpp>

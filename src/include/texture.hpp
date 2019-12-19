@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   texture.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Texture class, handles texturing and drawing textures.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_TEXTURE_HPP_
 #define _WE_TEXTURE_HPP_
 

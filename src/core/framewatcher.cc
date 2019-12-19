@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   framewatcher.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Class to calculate frame time.
+
+*/
+/******************************************************************************/
+
 #include <algorithm>
 #include <array>
 #include <functional>

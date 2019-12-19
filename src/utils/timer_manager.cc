@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file   timer_manager.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Manager for timers, and calls the trigger when time runs out
+
+*/
+/******************************************************************************/
 
 #include <timer_manager.hpp>
 

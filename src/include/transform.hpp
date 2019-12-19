@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   transform.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Transform components for transforms.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_TRANSFORM_HPP_
 #define _WE_TRANSFORM_HPP_
 

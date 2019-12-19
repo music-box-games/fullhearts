@@ -1,4 +1,16 @@
+/******************************************************************************/
+/*!
+\file   events.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Event class. Events are used to pass data around the engine to registered classes.
+
+*/
+/******************************************************************************/
+
 #include <events.hpp>
+
 namespace waifuengine
 {
   namespace events

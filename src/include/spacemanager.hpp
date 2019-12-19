@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file   spacemanager.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    The space manager class contains and manages spaces.
+
+*/
+/******************************************************************************/
 
 #ifndef _W_SPACE_MANAGER_HPP_
 #define _W_SPACE_MANAGER_HPP_

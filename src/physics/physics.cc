@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   physics.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Physics component for making physics calculations
+
+*/
+/******************************************************************************/
+
 #include <physics.hpp>
 #include <hardware.hpp>
 

@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file   space.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Space class. A space contains and manages game obejcts.
+
+*/
+/******************************************************************************/
 
 #ifndef _W_SPACE_HPP_
 #define _W_SPACE_HPP_

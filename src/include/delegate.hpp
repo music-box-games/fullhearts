@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   delegate.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Function delegate class for wrapping functions.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_DELEGATE_HPP_
 #define _WE_DELEGATE_HPP_
 

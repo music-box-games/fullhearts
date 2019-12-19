@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   input.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Handles user input.
+
+*/
+/******************************************************************************/
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>

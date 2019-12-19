@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   basic_shape.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  A collection of classes that handle drawing basic shapes.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_BASIC_SHAPE_HPP_
 #define _WE_BASIC_SHAPE_HPP_
 

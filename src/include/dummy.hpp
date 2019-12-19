@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   dummy.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  dummy component for testing.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_DUMMY_HPP_
 #define _WE_DUMMY_HPP_
 

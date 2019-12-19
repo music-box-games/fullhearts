@@ -1,3 +1,15 @@
+/******************************************************************************/
+/*!
+\file   space.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Space class. A space is a container for gameobjects, and handles the creation,
+    destruction, updating, and drawing of game objects.
+
+*/
+/******************************************************************************/
+
 #include <algorithm>
 #include <numeric>
 

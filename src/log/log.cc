@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   log.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+    Handles logging.
+
+*/
+/******************************************************************************/
+
 #include <iostream>
 #include <unordered_map>
 

@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   utils.hpp
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Various utility functions.
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_UTLIS_HPP_
 #define _WE_UTILS_HPP_
 
