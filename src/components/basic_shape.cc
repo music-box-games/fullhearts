@@ -38,10 +38,10 @@ namespace waifuengine
     {
       // TODO: find a better way to fade between colors
       we::log::pedantic("basic_triangle: update");
-      float timevalue = glfwGetTime();
+      float timevalue = glfwGetTime(); // TODO: maybe move the calculations to the shader
       float redvalue = (cos(timevalue) / 2.0f) + 0.5f;
       float greenvalue = (sin(timevalue) / 2.0f) + 0.5f;
-      float bluevalue = (tan(timevalue) / 2.0f) + 0.5f;
+      float bluevalue = (acos(timevalue)) + 0.5f;
       we::graphics::shaders::shader shd = we::graphics::opengl::shader_id();
       shd.use();
       shd.set_uniform4<float>("tricolor", redvalue, greenvalue, bluevalue, 1.0f);

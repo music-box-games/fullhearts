@@ -7,6 +7,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <component.hpp>
+
 namespace waifuengine
 {
   namespace graphics
@@ -18,16 +20,22 @@ namespace waifuengine
         GLuint load(std::string vert_shader, std::string frag_shader);
       }
 
-      class shader
+      class shader : public ::waifuengine::components::component<shader>
       {
       private:
         unsigned int program_id;
 
       public:
+        COMPONENT_NAME(shader);
+        COMPONENT_TYPE(shader);
+
         shader();
         shader(std::string vert_shader, std::string frag_shader);
         shader(shader const& other);
         ~shader();
+
+        virtual void update(float dt) override;
+        virtual void draw() const override;
 
         void use() const;
 

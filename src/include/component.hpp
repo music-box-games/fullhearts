@@ -5,25 +5,42 @@
 #include <string_view>
 
 #define COMPONENT_NAME(x) static constexpr const char * NAME = #x
+#define COMPONENT_TYPE(x) static constexpr ::waifuengine::components::component_types TYPE = ::waifuengine::components::component_types::x
 
 namespace waifuengine
 {
     namespace components
     {
+        enum class component_types
+        {
+            physics,
+            transform,
+            shader,
+            texture,
+            sprite,
+            
+            // special ones
+            basic_shape,
+            basic_triangle,
+            dummy,
+        };
+
         namespace _impl
         {
             class _base_component
             {
             public:
                 std::string name;
+                component_types type;
 
-                _base_component(std::string n) : name(n) {}
+                _base_component(std::string n, component_types t) : name(n), type(t) {}
                 virtual ~_base_component() {}
 
                 virtual void update(float dt) = 0;
                 virtual void draw() const = 0;
 
                 operator std::string() { return name; }
+                bool operator<(_base_component const& rhs) { return type < rhs.type; }
             };
         }
 
@@ -31,7 +48,7 @@ namespace waifuengine
         class component : public _impl::_base_component
         {
         public:
-            component() : _impl::_base_component(_Derive::NAME) {}
+            component() : _impl::_base_component(_Derive::NAME, _Derive::TYPE) {}
             virtual ~component() {}
 
             virtual void update(float dt) = 0;

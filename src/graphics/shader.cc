@@ -141,6 +141,16 @@ namespace waifuengine
 
       }
 
+      void shader::update(float)
+      {
+
+      }
+
+      void shader::draw() const
+      {
+        
+      }
+
       void shader::use() const
       {
         glUseProgram(program_id);

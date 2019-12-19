@@ -15,6 +15,7 @@ namespace waifuengine
     {
     public:
       COMPONENT_NAME(basic_shape);
+      COMPONENT_TYPE(basic_shape);
 
       basic_shape();
       virtual ~basic_shape();
@@ -30,14 +31,15 @@ namespace waifuengine
 
       static constexpr float triangle_data[] = 
       {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f,
       };
 
 
     public:
       COMPONENT_NAME(basic_triangle);
+      COMPONENT_TYPE(basic_triangle);
 
       basic_triangle();
       virtual ~basic_triangle();

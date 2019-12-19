@@ -11,6 +11,7 @@ namespace waifuengine
     {
     public:
       COMPONENT_NAME(dummy);
+      COMPONENT_TYPE(dummy);
 
       dummy();
       virtual ~dummy();
