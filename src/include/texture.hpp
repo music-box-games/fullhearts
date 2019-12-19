@@ -20,13 +20,19 @@ namespace waifuengine
   {
     class texture : public components::component<texture>
     {
+    private:
+      unsigned int texture_id;
+      
     public:
       COMPONENT_NAME(texture);
       COMPONENT_TYPE(texture);
 
       texture();
+      texture(std::string file);
       texture(texture const& other);
       ~texture();
+
+      void load_texture(std::string file);
 
     };
   }
