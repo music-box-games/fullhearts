@@ -50,8 +50,6 @@ namespace memory
     node * head;
     node * tail;
 
-    std::unordered_map<void *, node *> allocated_blocks;
-
     node * build_node()
     {
       node * n = (node*)malloc(sizeof(node));
@@ -110,7 +108,7 @@ namespace memory
     }
 
   public:
-    manager() : initialized(false), total_size(0), head(nullptr), tail(nullptr), allocated_blocks({})
+    manager() : initialized(false), total_size(0), head(nullptr), tail(nullptr)
     {
 
     }
