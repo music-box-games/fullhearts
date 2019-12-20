@@ -46,6 +46,7 @@ namespace waifuengine
         desc.add_options()
             ("help,h", "Prints help message.")
             ("test,t", "Runs engine tests. If this flag is specified, no other flags will be evaluated.")
+            ("benchmark,b", "Runs engine benchmark. If this flag is specified, no other flags will be evaluated.")
             ("hardware-dump,hd", "Prints information about the hardware on the current machine.")
             ("pedantic,p", "Turns on pedantic debug output. Warning: This will be a crazy amount of information");
 

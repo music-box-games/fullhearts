@@ -19,10 +19,8 @@
 #include <scenemanager.hpp>
 #include <draw_test_scene.hpp>
 #include <input.hpp>
-
-#ifdef DEBUG
+#include <memory_manager.hpp>
 #include <hardware.hpp>
-#endif // DEBUG
 
 namespace we = ::waifuengine;
 

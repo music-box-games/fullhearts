@@ -14,6 +14,7 @@
 
 #include <string>
 #include <ostream>
+#include <cstddef>
 
 namespace waifuengine
 {
@@ -21,6 +22,11 @@ namespace waifuengine
     {
         namespace hardware
         {
+            constexpr std::size_t BYTE = sizeof(std::byte);
+            constexpr std::size_t KILOBYTE = BYTE * 1024;
+            constexpr std::size_t MEGABYTE = KILOBYTE * 1024;
+            constexpr std::size_t GIGABYTE = MEGABYTE * 1024;
+
             struct cpu_info
             {
                 std::string arch;
