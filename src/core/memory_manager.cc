@@ -57,7 +57,6 @@ namespace memory
       node * n = (node*)malloc(sizeof(node));
       n->prev = nullptr;
       n->next = nullptr;
-      n->data = nullptr;
       return n;
     }
 
@@ -78,6 +77,36 @@ namespace memory
       n->prev = tail;
       tail->next = n;
       tail = n;
+    }
+
+    void split_node(node * n, std::size_t nsize)
+    {
+      // TODO: double check this when it isn't 4:20am
+      // create new node to stick after the node being split
+      node * nxt = build_node();
+      nxt->prev = n;
+      nxt->next = n->next;
+      nxt->data.allocated = false;
+      nxt->data.memory = (char*)n->data.memory + nsize;
+      nxt->data.size = n->data.size - nsize;
+
+      n->next = nxt;
+      n->data.size = nsize;
+    }
+
+    void consolidate()
+    {
+
+    }
+
+    node * find(void * address)
+    {
+      node * temp = head;
+      while(temp)
+      {
+        if(temp->data.memory == address) return temp;
+      }
+      return nullptr;
     }
 
   public:
@@ -117,12 +146,19 @@ namespace memory
 
     void * allocate(std::size_t size)
     {
-      return malloc(size);
+      node * ret = tail;
+      split_node(ret, size);
+      ret->data.allocated = true;
+      // mark node in cache of allocated blocks
+      return ret->data.memory;
     }
 
     void free(void * ptr)
     {
-      ::free(ptr);
+      // TODO: improve this by adding cache
+      node * n = find(ptr);
+      if(n) n->data.allocated = false;
+      // else do error handling 
     }
   };
 
@@ -135,13 +171,15 @@ namespace memory
 
   void shutdown()
   {
+    // TODO: check for unreleased memory
+    // TODO: if debug gather stats about session
     man.release();
   }
 }
 } // namespace core
 } // namespace waifuengine
 
-#define WE_USE_STD_MEMORY
+//#define WE_USE_STD_MEMORY
 #ifndef WE_USE_STD_MEMORY
 
 void * operator new(std::size_t size)
