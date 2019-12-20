@@ -47,6 +47,7 @@ namespace waifuengine
             std::shared_ptr<_CType> add_component()
             {
                 auto ptr = std::shared_ptr<_CType>(new _CType);
+                ptr->parent = std::shared_ptr<gameobject>(this);
                 components_[_CType::NAME] = ptr; // TODO: handle multiple of one component
                 return ptr;
             }

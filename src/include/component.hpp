@@ -15,6 +15,8 @@
 #include <string>
 #include <string_view>
 
+#include <gameobject.hpp>
+
 #define COMPONENT_NAME(x) static constexpr const char * NAME = #x
 #define COMPONENT_TYPE(x) static constexpr ::waifuengine::components::component_types TYPE = ::waifuengine::components::component_types::x
 
@@ -43,6 +45,7 @@ namespace waifuengine
             public:
                 std::string name;
                 component_types type;
+                std::shared_ptr<waifuengine::object_management::gameobject> parent;
 
                 _base_component(std::string n, component_types t) : name(n), type(t) {}
                 virtual ~_base_component() {}

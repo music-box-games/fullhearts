@@ -15,6 +15,7 @@
 #include <thread>
 #include <algorithm>
 #include <functional>
+#include <unordered_map>
 
 #include <shader.hpp>
 #include <log.hpp>
@@ -164,6 +165,29 @@ namespace waifuengine
       {
         glUseProgram(program_id);
       }
+
+      static std::unordered_map<std::string, std::shared_ptr<shader>> loaded_shaders;
+
+      std::optional<std::shared_ptr<shader>> load_shader(std::string vertex_shader, std::string fragment_shader, std::string name)
+      {
+        shader * s = new shader(vertex_shader, fragment_shader);
+        if(s == nullptr) return {};
+        std::shared_ptr<shader> ptr(s);
+        loaded_shaders[name] = ptr;
+        return std::optional(ptr);
+      }
+
+      std::optional<std::shared_ptr<shader>> get_shader(std::string name)
+      {
+        if(loaded_shaders.count(name))
+        {
+          return std::optional(loaded_shaders[name]);
+        }
+        else return {};
+      }
+
+      void init() {}
+      void shutdown() { loaded_shaders.clear(); }
     }
   }
 }

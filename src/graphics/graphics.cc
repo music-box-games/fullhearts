@@ -21,6 +21,8 @@
 #include <shader.hpp>
 #include <utils.hpp>
 #include <engine.hpp>
+#include <shader.hpp>
+#include <texture.hpp>
 
 namespace we = ::waifuengine;
 
@@ -91,14 +93,20 @@ namespace waifuengine
           glfwSetFramebufferSizeCallback(window_, opengl_manager::framebuffer_resize_callback);
 
           // load shaders
+          shaders::init();
           auto v = we::utils::get_path_relative_to_exe("\\shaders\\vertexshader.vert");
           auto f = we::utils::get_path_relative_to_exe("\\shaders\\fragmentshader.frag");
           prog_id = shaders::shader(v.string(), f.string());
+
+          // load textures
+          textures::init();
         }
 
         ~opengl_manager()
         {
           we::log::trace("opengl_manager: destructing");
+          textures::shutdown(); // unload textures
+          shaders::shutdown(); // unload shaders
           glfwTerminate();
         }
 

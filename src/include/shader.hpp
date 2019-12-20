@@ -14,6 +14,8 @@
 
 #include <string>
 #include <string_view>
+#include <memory>
+#include <optional>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -26,11 +28,6 @@ namespace waifuengine
   {
     namespace shaders
     {
-      namespace opengl
-      {
-        GLuint load(std::string vert_shader, std::string frag_shader);
-      }
-
       class shader : public ::waifuengine::components::component<shader>
       {
       private:
@@ -91,6 +88,12 @@ namespace waifuengine
           glUniform4f(glGetUniformLocation(program_id, uniform_name.c_str()), val1, val2, val3, val4);
         }
       };
+
+      std::optional<std::shared_ptr<shader>> load_shader(std::string vertex_shader, std::string fragment_shader, std::string name);
+      std::optional<std::shared_ptr<shader>> get_shader(std::string name);
+
+      void init();
+      void shutdown();
     }
   }
 }
