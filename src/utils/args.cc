@@ -64,6 +64,10 @@ namespace waifuengine
         {
           return ::waifuengine::tests::run_tests(argc, argv);
         }
+        if(vm.count("pedantic"))
+        {
+          we::settings::pedantic_debug = true;
+        }
         if(vm.count("benchmark"))
         {
           we::benchmarks::run();
@@ -74,10 +78,6 @@ namespace waifuengine
           auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
           ::std::cout << hwi << '\n';
           return ::waifuengine::core::return_values::hardware_dump;
-        }
-        if(vm.count("pedantic"))
-        {
-          we::settings::pedantic_debug = true;
         }
 
         // if no flags require ending the program, return with no value

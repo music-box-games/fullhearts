@@ -12,7 +12,7 @@
 #ifndef _WE_MEMORY_MANAGER_HPP_
 #define _WE_MEMORY_MANAGER_HPP_
 
-//#define WE_USE_STD_MEMORY
+#define WE_USE_STD_MEMORY
 #define MEMMANAGE_CACHING
 
 

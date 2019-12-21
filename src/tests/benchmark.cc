@@ -21,6 +21,7 @@
 #include <timer.hpp>
 #include <memory_manager.hpp>
 #include <utils.hpp>
+#include <log.hpp>
 
 namespace we = ::waifuengine;
 
