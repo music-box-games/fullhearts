@@ -22,12 +22,20 @@
 #include <timer_manager.hpp>
 #include <timer.hpp>
 
+#define WE_UTIL_STRINGIFY(x) #x
+
 namespace waifuengine
 {
   namespace utils
   {
     std::vector<std::string> parse_file_to_vector(std::string f);
     std::string parse_file_to_string(std::string f);
+
+    template<typename T>
+    std::string to_string()
+    {
+      return WE_UTIL_STRINGIFY(T);
+    }
   }
 }
 

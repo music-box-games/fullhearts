@@ -40,7 +40,7 @@ namespace waifuengine
             {
                 auto n = std::chrono::steady_clock::now();
 
-                return std::chrono::duration_cast<_tsType>(n - start_).count();
+                return std::chrono::duration_cast<_tsType>(n - start_);
             }
         };
 

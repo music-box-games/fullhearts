@@ -19,6 +19,7 @@
 #include <return_values.hpp>
 #include <log.hpp>
 #include <settings.hpp>
+#include <benchmark.hpp>
 
 namespace we = ::waifuengine;
 namespace po = boost::program_options;
@@ -62,6 +63,11 @@ namespace waifuengine
         if(vm.count("test"))
         {
           return ::waifuengine::tests::run_tests(argc, argv);
+        }
+        if(vm.count("benchmark"))
+        {
+          we::benchmarks::run();
+          return 1; // TODO: set up return code for this
         }
         if(vm.count("hardware-dump"))
         {
