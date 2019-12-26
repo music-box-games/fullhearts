@@ -14,6 +14,9 @@
 #include <cstddef>
 #include <list>
 #include <unordered_map>
+#include <algorithm>
+#include <mutex> // scoped_lock
+#include <cstring> // memset
 
 #include <memory_manager.hpp>
 #include <hardware.hpp>
@@ -26,16 +29,30 @@ namespace core
 {
 namespace memory
 {
+
   class manager
   {
   private:
-    static constexpr std::size_t DEFAULT_SIZE = we::utils::hardware::GIGABYTE;
-    char * pool; // memory pool
-    bool initialized;
-    std::size_t total_size;
+    std::byte * pool;
+    std::size_t pool_size;
+
+    allocation_policy fit;
+
+    std::size_t allocations;
+    std::size_t deallocations;
+    std::size_t allocated;
+    std::size_t unallocated;
+    std::size_t nodes;
+
+    friend memory_debugger;
+
+    void coalesce()
+    {
+
+    }
 
   public:
-    manager() : initialized(false), total_size(0)
+    manager() : pool(nullptr), pool_size(0), fit(allocation_policy::none), allocations(0), deallocations(0), allocated(0), unallocated(0), nodes(0)
     {
 
     }
@@ -45,59 +62,117 @@ namespace memory
 
     }
 
-    void init(std::size_t size)
+    void init(std::size_t s, allocation_policy f)
     {
-      total_size = size;
-      pool = (char*)malloc(size);
-      initialized = true;
+      pool = (std::byte*)malloc(s);
+      pool_size = s;
+      fit = f;
     }
 
-    bool is_initialized() const
+    void shutdown()
     {
-      return initialized;
-    }
-
-    void release()
-    {
+      // TODO: check for unreleased objects
+      // TODO: take data on usage over time
       free(pool);
-      total_size = 0;
-      initialized = false;
+      pool_size = 0;
+      fit = allocation_policy::none;
+      allocations = 0;
+      deallocations = 0;
+      allocated = 0;
+      unallocated = 0;
+      nodes = 0;
     }
 
-    void * allocate(std::size_t size)
+    void * allocate(std::size_t s)
     {
+      ++allocated;
+      ++allocations;
       return nullptr;
     }
 
-    void free(void * ptr)
+    void deallocate(void * ptr)
     {
-      
+      ++deallocations;
+      ++unallocated;
     }
 
-    std::size_t size() const 
+    std::size_t size() const
     {
-      return total_size;
+      return pool_size;
+    }
+
+    void clean()
+    {
+      memset(pool, 0, pool_size); // zero out all memory
+      allocated = 0;
+      unallocated = 0;
     }
   };
 
+  memory_debugger::memory_debugger(void* man)
+  {
+#ifdef DEBUG
+    manage = static_cast<we::core::memory::manager*>(man);
+#else
+    manage = nullptr;
+#endif // DEUBG
+  }
+
+  memory_debugger::memory_debugger(memory_debugger& other)
+  {
+#ifdef DEBUG
+    manage = other.manager;
+#else
+    manage = nullptr;
+#endif
+  }
+
+  memory_debugger::~memory_debugger() {}
+
+  void * memory_debugger::alloc(std::size_t s) 
+  { 
+#ifdef DEBUG
+    return manage->allocate(s); 
+#else
+    return nullptr;
+#endif // DEBUG
+  }
+
+  void memory_debugger::dealloc(void * ptr) 
+  {
+#ifdef DEBUG
+    manage->deallocate(ptr); 
+#endif // DEBUG
+  }
+
+  std::byte * memory_debugger::get_pool() 
+  { 
+#ifdef DEBUG
+    return manage->pool; 
+#else 
+    return nullptr;
+#endif
+  }
+
   static manager man;
 
-  void init(std::size_t size)
+  memory_debugger attach_debugger()
   {
-    man.init(size);
+    return memory_debugger(&man);
+  }
+
+  void init(std::size_t size, allocation_policy fit)
+  {
+    man.init(size, fit);
   }
 
   void shutdown()
   {
     // TODO: check for unreleased memory
     // TODO: if debug gather stats about session
-    man.release();
+    man.shutdown();
   }
 
-  std::size_t size()
-  {
-    return man.size();
-  }
 }
 } // namespace core
 } // namespace waifuengine
@@ -106,28 +181,18 @@ namespace memory
 
 void * operator new(std::size_t size)
 {
-  if(we::core::memory::man.is_initialized())
-  {
-    return we::core::memory::man.allocate(size);
-  }
-  else
-  {
-    return malloc(size);
-  }
-  
+}
+
+void* operator new[](std::size_t size)
+{
 }
 
 void operator delete(void * ptr)
 {
-  if(we::core::memory::man.is_initialized())
-  {
-    we::core::memory::man.free(ptr);
-  }
-  else
-  {
-    free(ptr);
-  }
-  
+}
+
+void operator delete[](void* ptr)
+{
 }
 
 #endif // WE_USE_STD_MEMORY

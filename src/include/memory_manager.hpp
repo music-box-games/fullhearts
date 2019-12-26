@@ -22,9 +22,43 @@ namespace core
 {
 namespace memory
 {
-  void init(std::size_t size);
+  namespace allocation_policies
+  {
+    enum class sequential
+    {
+      first_fit,
+      best_fit,
+      next_fit,
+    };
+  }
+  enum class allocation_policy
+  {
+    first_fit,
+    best_fit,
+
+    // special
+    none,
+  };
+
+  class memory_debugger
+  {
+  private:
+    manager* manage;
+
+  public:
+    memory_debugger(void* m);
+    memory_debugger(memory_debugger& other);
+    ~memory_debugger();
+
+    void * alloc(std::size_t s);
+    void dealloc(void * p);
+
+    std::byte * get_pool();
+  };
+
+  void init(std::size_t size, allocation_policy fit);
   void shutdown();
-  std::size_t size();
+  memory_debugger attach_debugger();
 } // namespace memory
 } // namespace core
 } // namespace waifuengine

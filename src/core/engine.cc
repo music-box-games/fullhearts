@@ -63,7 +63,7 @@ namespace waifuengine
 
             // update things
             we::input::update();
-            ::waifuengine::scenes::update(fw.frame_time());
+            ::waifuengine::scenes::update(static_cast<float>(fw.frame_time()));
 
             // now draw
             we::scenes::draw();

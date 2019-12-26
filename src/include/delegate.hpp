@@ -35,7 +35,7 @@ namespace waifuengine
   private:
 
   public:
-    delegate() {}
+    delegate(Class * inst) : {}
     virtual ~delegate() override {}
 
     virtual void invoke()

@@ -38,9 +38,10 @@ namespace waifuengine
           ss << "Parsing command line. Args are:\n";
           for(int i = 0; i < argc; ++i)
           {
-            ss << argv[i];
+            ss << argv[i] << '\n';
           }
-          we::log::trace(ss.str());
+          std::string s = ss.str();
+          we::log::trace(s);
         }
 
         po::options_description desc("Options");
