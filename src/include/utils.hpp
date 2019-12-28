@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <string>
+#include <type_traits>
 
 #include <fs_util.hpp>
 #include <args.hpp>
@@ -35,6 +36,12 @@ namespace waifuengine
     std::string to_string()
     {
       return WE_UTIL_STRINGIFY(T);
+    }
+
+    template<typename T>
+    constexpr auto to_underlying(T obj) noexcept
+    {
+      return static_cast<std::underlying_type<T>>(obj);
     }
   }
 }

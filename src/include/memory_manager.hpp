@@ -39,6 +39,7 @@ namespace memory
     // special
     none,
   };
+  class manager;
 
   class memory_debugger
   {
@@ -51,7 +52,7 @@ namespace memory
     ~memory_debugger();
 
     void * alloc(std::size_t s);
-    void dealloc(void * p);
+    void dealloc(void * p, std::size_t s);
 
     std::byte * get_pool();
   };

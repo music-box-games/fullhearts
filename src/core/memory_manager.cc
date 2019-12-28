@@ -17,9 +17,13 @@
 #include <algorithm>
 #include <mutex> // scoped_lock
 #include <cstring> // memset
+#include <memory> // std::unique_ptr
+
+#include <frozen/set.h>
 
 #include <memory_manager.hpp>
 #include <hardware.hpp>
+#include <allocator.hpp>
 
 namespace we = ::waifuengine;
 
@@ -30,82 +34,48 @@ namespace core
 namespace memory
 {
 
+  // TODO: change this to all be the same increments for easy lookup when alloc request isn't perfectly aligned
+  // set of different data sizes
+  static constexpr frozen::set<std::size_t, 47> data_sizes = 
+  {
+    // 4 byte increments
+    4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
+    52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96,
+    // 32 byte increments
+    128, 160, 192, 224, 256, 288, 320, 352, 384,
+    416, 448, 480, 512, 544, 576, 608, 634,
+    // 64 byte increments
+    704, 768, 832, 896, 960, 1024,
+  };
+
   class manager
   {
   private:
-    std::byte * pool;
-    std::size_t pool_size;
-
-    allocation_policy fit;
-
-    std::size_t allocations;
-    std::size_t deallocations;
-    std::size_t allocated;
-    std::size_t unallocated;
-    std::size_t nodes;
-
-    friend memory_debugger;
-
-    void coalesce()
-    {
-
-    }
+    std::unordered_map<std::size_t, std::unique_ptr<allocator>> allocators;
 
   public:
-    manager() : pool(nullptr), pool_size(0), fit(allocation_policy::none), allocations(0), deallocations(0), allocated(0), unallocated(0), nodes(0)
+    manager() {}
+    ~manager() {}
+
+    void init()
     {
-
-    }
-
-    ~manager()
-    {
-
-    }
-
-    void init(std::size_t s, allocation_policy f)
-    {
-      pool = (std::byte*)malloc(s);
-      pool_size = s;
-      fit = f;
+      // TODO: build default allocator(s)
     }
 
     void shutdown()
     {
-      // TODO: check for unreleased objects
-      // TODO: take data on usage over time
-      free(pool);
-      pool_size = 0;
-      fit = allocation_policy::none;
-      allocations = 0;
-      deallocations = 0;
-      allocated = 0;
-      unallocated = 0;
-      nodes = 0;
+      allocators.clear(); // clear the allocators, which will handle cleanup themselves
     }
 
-    void * allocate(std::size_t s)
+    void * allocate(std::size_t size)
     {
-      ++allocated;
-      ++allocations;
+      // TODO: get proper allocator for size and pass info along
       return nullptr;
     }
 
-    void deallocate(void * ptr)
+    void deallocate(void * ptr, std::size_t size)
     {
-      ++deallocations;
-      ++unallocated;
-    }
-
-    std::size_t size() const
-    {
-      return pool_size;
-    }
-
-    void clean()
-    {
-      memset(pool, 0, pool_size); // zero out all memory
-      allocated = 0;
-      unallocated = 0;
+      // TODO: get proper allocator for size, then call deallocation from that
     }
   };
 
@@ -121,7 +91,7 @@ namespace memory
   memory_debugger::memory_debugger(memory_debugger& other)
   {
 #ifdef DEBUG
-    manage = other.manager;
+    manage = other.manage;
 #else
     manage = nullptr;
 #endif
@@ -138,17 +108,17 @@ namespace memory
 #endif // DEBUG
   }
 
-  void memory_debugger::dealloc(void * ptr) 
+  void memory_debugger::dealloc(void * ptr, std::size_t s) 
   {
 #ifdef DEBUG
-    manage->deallocate(ptr); 
+    manage->deallocate(ptr, s); 
 #endif // DEBUG
   }
 
   std::byte * memory_debugger::get_pool() 
   { 
 #ifdef DEBUG
-    return manage->pool; 
+    return nullptr;
 #else 
     return nullptr;
 #endif
@@ -163,7 +133,7 @@ namespace memory
 
   void init(std::size_t size, allocation_policy fit)
   {
-    man.init(size, fit);
+    man.init();
   }
 
   void shutdown()
@@ -187,11 +157,11 @@ void* operator new[](std::size_t size)
 {
 }
 
-void operator delete(void * ptr)
+void operator delete(void * ptr, std::size_t size)
 {
 }
 
-void operator delete[](void* ptr)
+void operator delete[](void* ptr, std::size_t size)
 {
 }
 
