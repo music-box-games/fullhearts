@@ -15,6 +15,8 @@
 #include <cstddef> // std::byte, std::size_t
 #include <cstdlib> // std::malloc
 
+#include <hardware.hpp>
+
 namespace waifuengine
 {
   namespace core
@@ -29,6 +31,8 @@ namespace waifuengine
         static constexpr unsigned char PATTERN_ALLOCATED = 0xFD;
         static constexpr unsigned char PATTERN_UNALLOCATED = 0xFE;
         static constexpr unsigned char PATTERN_FREED = 0xFF;
+
+        static constexpr std::size_t DEFAULT_PAGE_SIZE_B = waifuengine::utils::hardware::MEGABYTE;
 
         class block
         {
@@ -78,6 +82,8 @@ namespace waifuengine
 
         class page_list
         {
+        private:
+          page * build_page();
         public:
           struct header
           {

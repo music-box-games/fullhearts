@@ -9,7 +9,12 @@
 */
 /******************************************************************************/
 
+#include <new>
+
 #include <allocator.hpp>
+#include <hardware.hpp>
+
+namespace we = ::waifuengine;
 
 namespace waifuengine
 {
@@ -27,24 +32,74 @@ namespace memory
     // TODO: write debug patterns if debug build
   }
 
-  allocator::page::~page() {}
+  allocator::page::~page() 
+  {
+    // TODO: free each object
+  }
 
   allocator::page_list::page_list(std::size_t psize, std::size_t dsize) : head({head.page_count = 0, head.page_size = psize, head.object_count = 0, head.object_size = dsize}),
   pg(nullptr)
   {
-    
+    // Allocate first page
+    pg = static_cast<page*>(malloc(sizeof(page)));
+    if(pg == nullptr)
+    {
+      throw std::bad_alloc();
+    }
+    pg = new(pg)page(psize, dsize);
+    ++head.page_count;
+  }
+
+  allocator::page_list::~page_list()
+  {
+    auto * temp = pg; // get head of list
+    // free each page
+    while(temp)
+    {
+      auto * n = temp->next;
+      temp->~page();
+      free(temp);
+      temp = n;
+    }
+  }
+
+  allocator::page * allocator::page_list::build_page()
+  {
+    page * p = static_cast<page*>(malloc(sizeof(page)));
+    if(p == nullptr)
+    {
+      throw std::bad_alloc();
+    }
+    p = new(p)page(head.page_size, head.object_size);
+    return p;
   }
 
   allocator::page * allocator::page_list::add_front()
   {
     // TODO: allocate new page and insert it at front of list
-    return nullptr;
+    auto * p = build_page();
+    p->next = pg;
+    pg = p;
+    return p;
   }
 
   allocator::page * allocator::page_list::add_back()
   {
     // TODO: allocate new page and insert it at end of list
-    return nullptr;
+    if(head.page_count == 0)
+    {
+      return add_front();
+    }
+    auto * p = build_page();
+    auto * walk = pg, * prev = pg;
+    while(walk)
+    {
+      prev = walk;
+      walk = walk->next;
+    }
+    prev->next = p;
+
+    return p;
   }
 
   std::size_t allocator::page_list::padding() const
@@ -55,17 +110,35 @@ namespace memory
 
   allocator::allocator(std::size_t psize, std::size_t dsize) : header(nullptr), datasize(dsize), pagesize(psize), pool(nullptr)
   {
-    // TODO: allocate pool and add first page
+    // allocate pool
+    pool = static_cast<std::byte*>(malloc(10 * we::utils::hardware::MEGABYTE));
+    if(pool == nullptr)
+    {
+      // throw 
+      throw std::bad_alloc();
+    }
+    // allocate page list
+    header = static_cast<page_list*>(malloc(sizeof(page_list)));
+    if(header == nullptr)
+    {
+      throw std::bad_alloc();
+    }
+    header = new(header)page_list(psize, dsize);
   }
 
   allocator::~allocator()
   {
     // TODO: free pool and page list
+    header->~page_list();
+    free(header);
+    free(pool);
   }
 
   void allocator::reset(std::size_t psize, std::size_t dsize)
   {
     // TODO: free pages and add accomodate for new sizes
+    header->~page_list();
+    header = new(header)page_list(psize, dsize);
   }
 }
 }
