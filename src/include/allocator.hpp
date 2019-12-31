@@ -14,6 +14,7 @@
 
 #include <cstddef> // std::byte, std::size_t
 #include <cstdlib> // std::malloc
+#include <unordered_map>
 
 #include <hardware.hpp>
 
@@ -109,12 +110,17 @@ namespace waifuengine
           page * add_back();
           // Calculates total padding between objects
           std::size_t padding() const;
+          
         };
 
         page_list * header; // list of pages
         std::size_t datasize; // usable size of each object
         std::size_t pagesize; // usable size of each page
         std::byte * pool; // pool of memory
+
+#ifdef DEBUG
+        friend class memory_debugger;
+#endif // DEBUG
 
       public:
         // Constructor
@@ -126,6 +132,18 @@ namespace waifuengine
         ~allocator();
         // Resets the allocator for a different data or page size
         void reset(std::size_t psize, std::size_t dsize);
+
+        void * allocate(std::size_t s);
+        void deallocate(void * ptr);
+      };
+
+      // TODO: wrap this in ifdef debug
+      class allocator_debugger
+      {
+      public:
+        allocator * alloc;
+        allocator_debugger(allocator * a);
+        ~allocator_debugger();
       };
     }
   }

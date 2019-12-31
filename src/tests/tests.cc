@@ -31,6 +31,9 @@
 
 #include <utils.hpp>
 
+#include <memory_manager.hpp>
+#include <allocator.hpp>
+
 
 
 // TODO: a lot of this can be improved by sharing resources
@@ -191,6 +194,11 @@ namespace waifuengine
                 ASSERT_NE(s.size(), 0);
             }
             std::filesystem::remove(fname);
+        }
+
+        TEST(MemoryTests, Allocators)
+        {
+            
         }
     }
 }

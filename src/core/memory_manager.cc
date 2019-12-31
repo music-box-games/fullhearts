@@ -133,14 +133,20 @@ namespace memory
 
   void init(std::size_t size, allocation_policy fit)
   {
+#ifndef WE_USE_STD_MEMORY
     man.init();
+#endif // !WE_USE_STD_MEMORY
+
   }
 
   void shutdown()
   {
     // TODO: check for unreleased memory
     // TODO: if debug gather stats about session
+#ifndef WE_USE_STD_MEMORY
     man.shutdown();
+#endif // !WE_USE_STD_MEMORY
+
   }
 
 }
@@ -165,5 +171,5 @@ void operator delete[](void* ptr, std::size_t size)
 {
 }
 
-#endif // WE_USE_STD_MEMORY
+#endif // !WE_USE_STD_MEMORY
 

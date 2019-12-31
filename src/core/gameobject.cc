@@ -17,7 +17,10 @@ namespace waifuengine
     namespace object_management
     {
         gameobject::gameobject(std::string n) : name_(n) {}
-        gameobject::~gameobject() {}
+        gameobject::~gameobject()
+        {
+          components_.clear();
+        }
 
         void gameobject::update(float dt)
         {
