@@ -19,7 +19,6 @@
 #include <scenemanager.hpp>
 #include <draw_test_scene.hpp>
 #include <input.hpp>
-#include <memory_manager.hpp>
 #include <hardware.hpp>
 
 namespace we = ::waifuengine;

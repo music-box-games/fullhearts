@@ -18,17 +18,14 @@
 #include <engine.hpp>
 #include <tests.hpp>
 #include <hardware.hpp>
-#include <memory_manager.hpp>
 
 namespace we = ::waifuengine;
 
 int main(int argc, char ** argv)
 {
-    we::core::memory::init(we::utils::hardware::GIGABYTE, we::core::memory::allocation_policy::first_fit);
     auto ret = waifuengine::utils::args::parse(argc, argv);
     if(ret.has_value())
     {
-        we::core::memory::shutdown();
         return ret.value();
     }
 
@@ -40,9 +37,6 @@ int main(int argc, char ** argv)
     {
         e->update();
     }
-
-    we::core::memory::shutdown();
- 
 
     return 0;
 }
