@@ -13,11 +13,20 @@ branches:
     - integration
 
 before_install:
-  # install packages on linux
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -q update; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt -y install python3; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt -y install pip3; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco update all; fi
+
+install:
+  # install packages on linux
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install python3; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo pip3 install conan; fi
   # install packages on windows
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python3 3.1.8; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install conan; fi
 
 script:
-  
+  - mkdir build;
+  - cd build;
+  - conan install .. --build missing -s build_type=Debug;
+  - cmake ..;
+  - cmake --build . --config Debug --parallel
