@@ -22,7 +22,7 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo pip3 install conan; fi
   # install packages on windows
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip3 install conan; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install conan; fi
 
 after_success:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
