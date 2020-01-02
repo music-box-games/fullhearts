@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10.2)
 
 set(PRJ fullhearts)
-set(EXENAME fh)
+set(EXENAME fh) # exe name
 set(DBG TRUE) # debug mode
 
 # project name
