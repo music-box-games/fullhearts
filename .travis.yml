@@ -14,7 +14,7 @@ branches:
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -q update; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco upgrade all; fi
+  #- if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco upgrade all; fi
 
 install:
   # install packages on linux
