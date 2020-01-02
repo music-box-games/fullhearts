@@ -31,7 +31,6 @@
 
 #include <utils.hpp>
 
-
 // TODO: a lot of this can be improved by sharing resources
 namespace waifuengine
 {
