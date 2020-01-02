@@ -1,2 +1,2 @@
 file(GLOB scenesrc "./*.cc")
-add_library(scenes ${scenesrc})
+add_library(scenes ${LINK_TYPE} ${scenesrc})

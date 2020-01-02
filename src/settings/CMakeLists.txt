@@ -1,2 +1,2 @@
 file(GLOB settingssrc "./*.cc")
-add_library(settings ${settingssrc})
+add_library(settings ${LINK_TYPE} ${settingssrc})

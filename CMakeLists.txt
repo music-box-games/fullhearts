@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10.2)
 set(PRJ fullhearts)
 set(EXENAME fh)
 set(DBG TRUE) # debug mode
+set(LINK_TYPE STATIC)
 
 # project name
 project(${PRJ})

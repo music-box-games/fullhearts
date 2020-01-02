@@ -1,2 +1,2 @@
 file(GLOB eventsrc "./*.cc")
-add_library(events ${eventsrc})
+add_library(events ${LINK_TYPE} ${eventsrc})

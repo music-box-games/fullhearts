@@ -1,2 +1,2 @@
 file(GLOB UTILSRC "./*.cc")
-add_library(utils ${UTILSRC})
+add_library(utils ${LINK_TYPE} ${UTILSRC})
