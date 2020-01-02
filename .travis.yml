@@ -1,0 +1,23 @@
+language: cpp
+
+os:
+  - windows
+
+compiler:
+  - g++
+  - clang++
+
+branches:
+  only:
+    - master
+    - integration
+
+before_install:
+  # install packages on linux
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -q update; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt -y install python3; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; sudo apt -y install pip3; fi
+  # install packages on windows
+
+script:
+  
