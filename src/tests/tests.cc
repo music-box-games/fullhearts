@@ -32,7 +32,6 @@
 #include <utils.hpp>
 
 
-
 // TODO: a lot of this can be improved by sharing resources
 namespace waifuengine
 {
@@ -83,13 +82,6 @@ namespace waifuengine
             s->remove_object("test object");
         }
 
-        TEST(HelperTests1, NewHelp1)
-        {
-            long long * ll = new long long();
-            ASSERT_NE(ll, nullptr);
-            delete ll;
-        }
-
         TEST(ComponentTests, BuildTest)
         {
             ::waifuengine::object_management::space_manager sm;
@@ -108,13 +100,6 @@ namespace waifuengine
             ASSERT_EQ(sm.components(), 1);
             o->remove_component<::waifuengine::components::dummy>();
             ASSERT_EQ(sm.components(), 0);
-        }
-
-        TEST(HelperTests2, NewHelp2)
-        {
-            long long * ll = new long long();
-            ASSERT_NE(ll, nullptr);
-            delete ll;
         }
 
         // TODO: move these into their respective parts rather than a separate file for all tests
