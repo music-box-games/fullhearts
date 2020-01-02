@@ -18,3 +18,8 @@ endif()
 if(DBG)
 add_compile_definitions(DEBUG)
 endif()
+
+# comdat
+if(WIN32)
+add_compile_options(/Gy)
+endif()
