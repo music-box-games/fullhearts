@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10.2) # cmake version
 
-set(PRJ fullhearts)
-set(EXENAME fh)
+set(PRJ fullhearts) # project (solution) name
+set(EXENAME fh) # exe name
 set(DBG TRUE) # debug mode
 set(LINK_TYPE STATIC)
 
