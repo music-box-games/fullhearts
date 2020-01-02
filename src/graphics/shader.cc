@@ -38,22 +38,26 @@ namespace waifuengine
             ss << "Loading shaders:\n" << vert_shader << '\n' << frag_shader;
             we::log::trace(ss.str());
           }
+          // create ids for vertex and fragment shaders
           GLuint vert_id = glCreateShader(GL_VERTEX_SHADER);
           GLuint frag_id = glCreateShader(GL_FRAGMENT_SHADER);
 
           std::string vert_src, frag_src;
 
-          // copy vertex and frag shader source code into memory
+          // copies vertex and frag shader source code into memory
           auto load_func = [](std::string f, std::string * dest) -> void {
             *dest = we::utils::parse_file_to_string(f);
           };
 
+          // TODO: convert to std::jthread when supported
+          // load source code in separate threads
           std::vector<std::thread> load_threads;
           std::thread t1(load_func, vert_shader, &vert_src);
           std::thread t2(load_func, frag_shader, &frag_src);
 
           load_threads.push_back(std::move(t1));
           load_threads.push_back(std::move(t2));
+          // wait for jobs to finish
           std::for_each(load_threads.begin(), load_threads.end(), [](std::thread& t) {
             t.join();
           });
@@ -69,13 +73,14 @@ namespace waifuengine
             we::log::trace(ss.str());
           }
           const char *vert_src_ptr = vert_src.c_str();
-          glShaderSource(vert_id, 1, &vert_src_ptr, NULL);
-          glCompileShader(vert_id);
+          glShaderSource(vert_id, 1, &vert_src_ptr, NULL); // pass source to opengl
+          glCompileShader(vert_id); // run compiler
           // check vertex shader
-          glGetShaderiv(vert_id, GL_COMPILE_STATUS, &result);
-          glGetShaderiv(vert_id, GL_INFO_LOG_LENGTH, &info_log_length);
+          glGetShaderiv(vert_id, GL_COMPILE_STATUS, &result); // check compile status
+          glGetShaderiv(vert_id, GL_INFO_LOG_LENGTH, &info_log_length); // check that log is empty
           if(info_log_length > 0)
           {
+            // if log isn't empty, report what errors happened
             std::vector<char> vert_error_message(info_log_length + 1);
             glGetShaderInfoLog(vert_id, info_log_length, NULL, &vert_error_message[0]);
             std::stringstream ss;
@@ -92,13 +97,14 @@ namespace waifuengine
             we::log::trace(ss.str());
           }
           const char * frag_src_ptr = frag_src.c_str();
-          glShaderSource(frag_id, 1, &frag_src_ptr, NULL);
-          glCompileShader(frag_id);
+          glShaderSource(frag_id, 1, &frag_src_ptr, NULL); // pass source to opengl, assign to frag_id
+          glCompileShader(frag_id); // compile
           // check frag shader
-          glGetShaderiv(frag_id, GL_COMPILE_STATUS, &result);
-          glGetShaderiv(frag_id, GL_INFO_LOG_LENGTH, &info_log_length);
+          glGetShaderiv(frag_id, GL_COMPILE_STATUS, &result); // check compile
+          glGetShaderiv(frag_id, GL_INFO_LOG_LENGTH, &info_log_length); // check log
           if(info_log_length > 0)
           {
+            // report error
             std::vector<char> frag_error_message(info_log_length + 1);
             glGetShaderInfoLog(frag_id, info_log_length, NULL, &frag_error_message[0]);
             std::stringstream ss;
@@ -109,16 +115,17 @@ namespace waifuengine
 
           // link program
           we::log::trace("Linking shader program");
-          GLuint program_id = glCreateProgram();
-          glAttachShader(program_id, vert_id);
-          glAttachShader(program_id, frag_id);
-          glLinkProgram(program_id);
+          GLuint program_id = glCreateProgram(); // create shader program
+          glAttachShader(program_id, vert_id); // add vertex shader
+          glAttachShader(program_id, frag_id); // add fragment shader
+          glLinkProgram(program_id); // link program
 
           // check linking successful
-          glGetProgramiv(program_id, GL_LINK_STATUS, &result);
-          glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
+          glGetProgramiv(program_id, GL_LINK_STATUS, &result); // check link
+          glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length); // check log
           if(info_log_length > 0)
           {
+            // errors
             std::vector<char> prg_error_message(info_log_length + 1);
             glGetProgramInfoLog(program_id, info_log_length, NULL, &prg_error_message[0]);
             std::stringstream ss;
@@ -138,6 +145,7 @@ namespace waifuengine
 
       shader::shader(std::string vert_shader, std::string frag_shader)
       {
+        // load, compile, and link shader program from provided source
         program_id = we::graphics::shaders::opengl::load(vert_shader, frag_shader);
       }
 
@@ -166,28 +174,39 @@ namespace waifuengine
         glUseProgram(program_id);
       }
 
-      static std::unordered_map<std::string, std::shared_ptr<shader>> loaded_shaders;
+      unsigned int shader::id() const
+      {
+        return program_id;
+      }
+
+      static std::unordered_map<std::string, unsigned int> shader_names;
+      static std::unordered_map<unsigned int, std::shared_ptr<shader>> loaded_shaders;
 
       std::optional<std::shared_ptr<shader>> load_shader(std::string vertex_shader, std::string fragment_shader, std::string name)
       {
         shader * s = new shader(vertex_shader, fragment_shader);
         if(s == nullptr) return {};
         std::shared_ptr<shader> ptr(s);
-        loaded_shaders[name] = ptr;
+        shader_names[s->id()] = name;
+        loaded_shaders[s->id()] = ptr;
         return std::optional(ptr);
       }
 
       std::optional<std::shared_ptr<shader>> get_shader(std::string name)
       {
-        if(loaded_shaders.count(name))
+        if(shader_names.count(name))
         {
-          return std::optional(loaded_shaders[name]);
+          return std::optional(loaded_shaders[shader_names[name]]);
         }
         else return {};
       }
 
       void init() {}
-      void shutdown() { loaded_shaders.clear(); }
+      void shutdown() 
+      { 
+        shader_names.clear();
+        loaded_shaders.clear();
+      }
     }
   }
 }

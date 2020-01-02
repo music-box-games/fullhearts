@@ -47,6 +47,8 @@ namespace waifuengine
 
         void use() const;
 
+        unsigned int id() const;
+
         template<typename uniform_type>
         void set_uniform1(std::string, uniform_type);
         template<typename uniform_type>
