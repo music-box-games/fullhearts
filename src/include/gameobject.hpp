@@ -32,7 +32,7 @@ namespace waifuengine
 {
     namespace object_management
     {
-        class gameobject
+        class gameobject : public std::enable_shared_from_this<gameobject>
         {
         private:
             std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>> components_;
@@ -47,7 +47,7 @@ namespace waifuengine
             std::shared_ptr<_CType> add_component()
             {
                 auto ptr = std::shared_ptr<_CType>(new _CType);
-                ptr->parent = std::shared_ptr<gameobject>(this);
+                ptr->parent = std::weak_ptr<gameobject>(shared_from_this());
                 components_[_CType::NAME] = ptr; // TODO: handle multiple of one component
                 return ptr;
             }

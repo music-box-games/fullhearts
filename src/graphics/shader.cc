@@ -187,7 +187,7 @@ namespace waifuengine
         shader * s = new shader(vertex_shader, fragment_shader);
         if(s == nullptr) return {};
         std::shared_ptr<shader> ptr(s);
-        shader_names[s->id()] = name;
+        shader_names[name] = s->id();
         loaded_shaders[s->id()] = ptr;
         return std::optional(ptr);
       }

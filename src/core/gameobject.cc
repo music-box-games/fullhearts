@@ -16,7 +16,7 @@ namespace waifuengine
 {
     namespace object_management
     {
-        gameobject::gameobject(std::string n) : name_(n) {}
+        gameobject::gameobject(std::string n) : std::enable_shared_from_this<gameobject>(), name_(n) {}
         gameobject::~gameobject()
         {
           components_.clear();
