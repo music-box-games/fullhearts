@@ -42,5 +42,5 @@ endif()
 # standard filesystem
 if(MSVC)
 else()
-add_compile_options(-lstdc++fs)
+add_link_options(-lstdc++fs)
 endif()
