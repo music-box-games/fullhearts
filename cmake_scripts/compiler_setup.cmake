@@ -8,11 +8,6 @@ else()
 add_compile_options(-Wall -Wextra)
 endif()
 
-if(MSVC)
-else()
-add_compile_options(-fsanitize=address)
-endif()
-
 # add definitions for OS
 if(WIN32)
 add_compile_definitions(WINDOWS)
