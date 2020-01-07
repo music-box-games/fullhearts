@@ -16,7 +16,11 @@ endif()
 
 # set debug mode
 if(DBG)
-add_compile_definitions(DEBUG)
+#add_compile_definitions(DEBUG)
+if(WIN32)
+else()
+add_compile_options(-DDEBUG)
+endif()
 endif()
 
 # comdat
