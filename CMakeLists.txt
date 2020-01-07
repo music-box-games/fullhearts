@@ -39,10 +39,12 @@ file(GLOB SOURCES "./src/*.cc")
 # set ouput
 add_executable(${EXENAME} ${SOURCES})
 
-set_target_properties(${EXENAME} PROPERTIES LINK_INTERFACE_MULTIPLICITY 10)
-
 # link subdirs
+if(MSVC)
 target_link_libraries(${EXENAME} components core log utils events graphics input scenes settings tests)
+else()
+target_link_libraries(${EXENAME} -Wl, --start-group components core log utils events graphics input scenes settings tests -Wl, --end-group)
+endif()
 
 # link other libs
 target_link_libraries(${EXENAME} ${CONAN_LIBS})
