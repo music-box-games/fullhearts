@@ -42,16 +42,7 @@ add_executable(${EXENAME} ${SOURCES})
 set_target_properties(${EXENAME} PROPERTIES LINK_INTERFACE_MULTIPLICITY 10)
 
 # link subdirs
-target_link_libraries(${EXENAME} components)
-target_link_libraries(${EXENAME} core)
-target_link_libraries(${EXENAME} log)
-target_link_libraries(${EXENAME} utils)
-target_link_libraries(${EXENAME} events)
-target_link_libraries(${EXENAME} graphics)
-target_link_libraries(${EXENAME} input)
-target_link_libraries(${EXENAME} scenes)
-target_link_libraries(${EXENAME} settings)
-target_link_libraries(${EXENAME} tests)
+target_link_libraries(${EXENAME} components core log utils events graphics input scenes settings tests)
 
 # link other libs
 target_link_libraries(${EXENAME} ${CONAN_LIBS})
