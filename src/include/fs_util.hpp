@@ -12,16 +12,7 @@
 #ifndef _WE_FS_UTIL_HPP_
 #define _WE_FS_UTIL_HPP_
 
-#ifdef __cpp_lib_filesystem
-#include <filesystem>
-namespace fs = std::filesystem;
-#elif __cpp_lib_experimental_filesystem
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#else
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
-#endif
+#include <filesystem.hpp>
 
 namespace waifuengine
 {
