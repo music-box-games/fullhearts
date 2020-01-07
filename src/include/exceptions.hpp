@@ -19,7 +19,7 @@ namespace waifuengine
         exception(const char *  m);
         exception(std::string const& m);
         virtual ~exception();
-        virtual const char * what() const override;
+        virtual const char * what() const noexcept(false) override;
         virtual void what(const char * m);
         virtual void what(std::string const& m);
       };
