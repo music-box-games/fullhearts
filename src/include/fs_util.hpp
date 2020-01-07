@@ -12,13 +12,21 @@
 #ifndef _WE_FS_UTIL_HPP_
 #define _WE_FS_UTIL_HPP_
 
+#ifdef __cpp_lib_filesystem
 #include <filesystem>
+namespace fs = std::filesystem;
+#elif __cpp_lib_experimental_filesystem
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#else
+#error "No filesystem support"
+#endif
 
 namespace waifuengine
 {
   namespace utils
   {
-    std::filesystem::path get_path_relative_to_exe(std::string find);
+    fs::path get_path_relative_to_exe(std::string find);
   }
 }
 
