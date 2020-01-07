@@ -17,8 +17,11 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
+#include <sstream>
 
 #include <scenes.hpp>
+
+namespace we = ::waifuengine;
 
 namespace waifuengine
 {
