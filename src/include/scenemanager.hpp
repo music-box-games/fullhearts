@@ -20,6 +20,7 @@
 #include <sstream>
 
 #include <scenes.hpp>
+#include <log.hpp>
 
 namespace we = ::waifuengine;
 
