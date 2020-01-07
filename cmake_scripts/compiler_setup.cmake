@@ -1,5 +1,9 @@
 # set c++ standard
 set(CMAKE_CXX_STANDARD 17)
+if(MSVC)
+else()
+add_compile_options(-std=c++17)
+endif()
 
 # set warning and error levels
 if(MSVC)
