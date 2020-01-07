@@ -1,8 +1,8 @@
 language: cpp
 
 os:
-  #- windows
-  - linux
+  - windows
+  #- linux
 
 compiler:
   - clang++
