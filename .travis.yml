@@ -40,6 +40,7 @@ after_failure:
 script:
   - mkdir build;
   - cd build;
+  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
   - conan install .. --build missing -s build_type=Debug;
   - cmake ..;
   - cmake --build . --config Debug --parallel
