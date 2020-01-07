@@ -188,7 +188,7 @@ namespace waifuengine
             {
                 ASSERT_NE(s.size(), 0);
             }
-            std::filesystem::remove(fname);
+            fs::remove(fname);
         }
     }
 }
