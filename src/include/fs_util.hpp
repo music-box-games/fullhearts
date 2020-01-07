@@ -19,7 +19,8 @@ namespace fs = std::filesystem;
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 #else
-#error "No filesystem support"
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
 #endif
 
 namespace waifuengine

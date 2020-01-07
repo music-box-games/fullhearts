@@ -20,11 +20,11 @@ namespace waifuengine
 {
   namespace utils
   {
-    std::filesystem::path get_path_relative_to_exe(std::string find)
+    fs::path get_path_relative_to_exe(std::string find)
     {
-      if(std::filesystem::exists(std::filesystem::current_path().string() + find))
+      if(fs::exists(fs::current_path().string() + find))
       {
-        return std::filesystem::path(std::filesystem::current_path().string() + find);
+        return fs::path(fs::current_path().string() + find);
       }
 
       boost::char_separator<char> delim("/");
@@ -32,10 +32,10 @@ namespace waifuengine
 
       {
         std::stringstream ss;
-        ss << "Could not find " << find << " relative to cwd (" << std::filesystem::current_path() << ')';
+        ss << "Could not find " << find << " relative to cwd (" << fs::current_path() << ')';
         we::log::warning(ss.str());
       }
-      return std::filesystem::path("ERROR VALUE");
+      return fs::path("ERROR VALUE");
     }
   }
 }
