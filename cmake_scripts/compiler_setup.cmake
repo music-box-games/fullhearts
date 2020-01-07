@@ -27,3 +27,9 @@ endif()
 if(WIN32)
 add_compile_options(/Gy)
 endif()
+
+# turn off unused function
+if(MSVC)
+else()
+add_compile_options(-Wno-unused-function)
+endif()

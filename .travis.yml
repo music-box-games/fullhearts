@@ -5,7 +5,6 @@ os:
   - linux
 
 compiler:
-  - g++
   - clang++
 
 branches:
@@ -19,6 +18,7 @@ before_install:
 
 install:
   # install packages on linux
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install clang-8; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install python3; fi
   #- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install python3-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install python3-pip; fi
@@ -40,7 +40,11 @@ after_failure:
 script:
   - mkdir build;
   - cd build;
-  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan;
+  - sudo update-alternatives --set c++ /usr/bin/clang++-8;
+  - conan profile update settings.compiler=clang default;
+  - conan profile update settings.compiler.version=8 default;
+  - conan profile update settings.compiler.libcxx=libstdc++11 default;
   - conan install .. --build missing -s build_type=Debug;
   - cmake ..;
   - cmake --build . --config Debug --parallel
