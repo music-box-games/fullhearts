@@ -13,7 +13,7 @@ namespace exceptions
   exception::exception(std::string const& m) : ::std::exception(), message(m) {}
   exception::~exception() {}
 
-  const char * exception::what() const { return message.c_str(); }
+  const char * exception::what() const throw() { return message.c_str(); }
   void exception::what(const char * m) { message = m; }
   void exception::what(std::string const& m) { message = m; }
 
