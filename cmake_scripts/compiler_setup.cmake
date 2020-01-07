@@ -38,3 +38,9 @@ else()
 add_compile_options(-Wno-unused-function)
 add_compile_options(-Wno-unused-private-field)
 endif()
+
+# standard filesystem
+if(MSVC)
+else()
+add_compile_options(-lstdc++fs)
+endif()
