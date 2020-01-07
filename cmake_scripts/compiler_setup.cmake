@@ -28,8 +28,9 @@ if(WIN32)
 add_compile_options(/Gy)
 endif()
 
-# turn off unused function
+# turn off warnings
 if(MSVC)
 else()
 add_compile_options(-Wno-unused-function)
+add_compile_options(-Wno-unused-private-field)
 endif()
