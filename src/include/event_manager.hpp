@@ -63,7 +63,7 @@ namespace waifuengine
         {
           if(events_[ename].count(instance))
           {
-            delete events_[ename][instance].first;
+            //delete events_[ename][instance].first;
             events_[ename].erase(instance);
           }
         }
