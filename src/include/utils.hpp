@@ -9,7 +9,7 @@
 */
 /******************************************************************************/
 
-#ifndef _WE_UTLIS_HPP_
+#ifndef _WE_UTILS_HPP_
 #define _WE_UTILS_HPP_
 
 #include <vector>
