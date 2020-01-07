@@ -69,6 +69,10 @@ namespace waifuengine
                 purge();
                 count = 0;
             }
+            for(auto& t : timers_)
+            {
+                f(t);
+            }
             ++count;
         }
 
