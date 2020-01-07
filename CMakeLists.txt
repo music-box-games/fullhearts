@@ -39,6 +39,8 @@ file(GLOB SOURCES "./src/*.cc")
 # set ouput
 add_executable(${EXENAME} ${SOURCES})
 
+set_target_properties(${EXENAME} PROPERTIES LINK_INTERFACE_MULTIPLICITY 10)
+
 # link subdirs
 target_link_libraries(${EXENAME} components)
 target_link_libraries(${EXENAME} core)

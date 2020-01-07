@@ -1,8 +1,6 @@
 # set c++ standard
 set(CMAKE_CXX_STANDARD 17)
 
-set(LINK_INTERFACE_MULTIPLICITY 10)
-
 # set warning and error levels
 if(MSVC)
 add_compile_options(/W3)
