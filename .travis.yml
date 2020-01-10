@@ -21,12 +21,15 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install clang-8; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install python3; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo pip install conan; fi
-  # install packages on windows
+  # windows
+  # install choco packages
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip || wget https://bootstrap.pypa.io/get-pip.py; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python get-pip.py; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install --upgrade pip; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; refreshenv; fi # refresh env after installing from choco
+
+  # install python packages
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install conan; fi
+
+  # install conan packages
 
 after_success:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
@@ -41,10 +44,6 @@ script:
   - mkdir build;
   - cd build;
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan;
-  - sudo update-alternatives --set c++ /usr/bin/clang++-8;
-  - conan profile update settings.compiler=clang default;
-  - conan profile update settings.compiler.version=8 default;
-  - conan profile update settings.compiler.libcxx=libstdc++11 default;
   - conan install .. --build missing -s build_type=Debug;
   - cmake ..;
   - cmake --build . --config Debug --parallel
