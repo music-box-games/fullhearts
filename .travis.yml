@@ -24,7 +24,7 @@ install:
   # windows
   # install choco packages
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; refreshenv; fi # refresh env after installing from choco
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then refreshenv; fi # refresh env after installing from choco
 
   # install python packages
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install conan; fi
