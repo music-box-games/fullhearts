@@ -21,12 +21,13 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install clang-8; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt -y install python3; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo pip install conan; fi
+
   # windows
   # install choco packages
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python; fi
 
   # install python packages
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip install conan; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then pip3 install conan; fi
 
   # install conan packages
 
