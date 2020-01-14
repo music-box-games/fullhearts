@@ -10,5 +10,7 @@ install:
   - python -m pip install conan
 
 build_script:
+  - mkdir build
+  - cd build
   - conan install .. --build missing -s build_type=Debug
 
