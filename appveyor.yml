@@ -15,7 +15,7 @@ install:
 build_script:
   - mkdir build
   - cd build
-  - conan install .. --build missing -s build_type=Debug -s compiler.libcxx=libstdc++11
+  - conan install .. --build missing -s build_type=Debug -s compiler=clang
   - cmake ..
   - cmake --build . --config Debug --parallel
 
