@@ -8,7 +8,8 @@ image:
   - Ubuntu
 
 install:
-  - pip install conan
+  - cmd: pip install conan
+  - sh: sudo pip install conan
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan;
 
 build_script:
