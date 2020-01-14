@@ -21,8 +21,8 @@ install:
   # install choco packages
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python3; fi
 
-  # install python packages
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install conan; fi
+  # install conan packages
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install conan; fi
 
   # install conan packages
 
