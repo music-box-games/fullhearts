@@ -11,8 +11,6 @@
 
 #include <unordered_map>
 
-#include <SOIL2/SOIL2.h>
-
 #include <texture.hpp>
 #include <log.hpp>
 
@@ -36,8 +34,7 @@ texture::~texture() {}
 
 void texture::load_texture(std::string file)
 {
-  texture_id = SOIL_load_OGL_texture(file.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
-                                     SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+  texture_id = 0;
   // check that loading worked properly
   if (texture_id == 0)
   {
