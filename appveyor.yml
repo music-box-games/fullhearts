@@ -1,0 +1,11 @@
+branches:
+  only:
+    - master
+    - integration
+
+image:
+  - Visual Studio 2019
+
+install:
+  - python3 -m pip install conan
+

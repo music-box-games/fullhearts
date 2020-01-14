@@ -18,11 +18,8 @@ before_install:
 
 install:
   # windows
-  # install choco packages
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install python3; fi
-
   # install conan packages
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install conan; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install conan; refreshenv; fi
 
   # install conan packages
 
