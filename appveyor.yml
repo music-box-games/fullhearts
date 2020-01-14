@@ -9,3 +9,6 @@ image:
 install:
   - python -m pip install conan
 
+build_script:
+  - conan install .. --build missing -s build_type=Debug
+
