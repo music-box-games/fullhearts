@@ -7,6 +7,8 @@ image:
   #- Visual Studio 2019
   - Ubuntu
 
+stack: python 3.8
+
 install:
   - cmd: pip install conan
   - sh: sudo pip install conan
@@ -30,4 +32,3 @@ on_failure:
 environment:
     CC: clang
     CXX: clang++
-    PYTHON: "C:\\Python38-x64"
