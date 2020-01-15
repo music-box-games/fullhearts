@@ -9,6 +9,7 @@ image:
 
 install:
   - cmd: pip install conan
+  - sh: sudo apt install python3-pip -y
   - sh: sudo pip3 install conan
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan;
 
