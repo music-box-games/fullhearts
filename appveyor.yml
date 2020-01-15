@@ -30,3 +30,4 @@ on_failure:
 environment:
     CC: clang
     CXX: clang++
+    PYTHON: "C:\\Python38-x64"
