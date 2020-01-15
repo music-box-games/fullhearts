@@ -6,7 +6,7 @@ branches:
     - integration
 
 image:
-  - Visual Studio 2019
+  #- Visual Studio 2019
   - Ubuntu
 
 install:
