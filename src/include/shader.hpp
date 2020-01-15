@@ -49,46 +49,17 @@ namespace waifuengine
 
         unsigned int id() const;
 
-        template<typename uniform_type>
-        void set_uniform1(std::string, uniform_type);
-        template<typename uniform_type>
-        void set_uniform4(std::string, uniform_type, uniform_type, uniform_type, uniform_type);
+        void set_uniform1(std::string uniform_name, int value);
 
-        template<>
-        void set_uniform1(std::string uniform_name, int value)
-        {
-          glUniform1i(glGetUniformLocation(program_id, uniform_name.c_str()), value);
-        }
+        void set_uniform1(std::string uniform_name, bool value);
 
-        template<>
-        void set_uniform1(std::string uniform_name, bool value)
-        {
-          glUniform1i(glGetUniformLocation(program_id, uniform_name.c_str()), (int)value);
-        }
+        void set_uniform1(std::string uniform_name, float value);
 
-        template<>
-        void set_uniform1(std::string uniform_name, float value)
-        {
-          glUniform1f(glGetUniformLocation(program_id, uniform_name.c_str()), value);
-        }
+        void set_uniform4(std::string uniform_name, int val1, int val2, int val3, int val4);
 
-        template<>
-        void set_uniform4(std::string uniform_name, int val1, int val2, int val3, int val4)
-        {
-          glUniform4i(glGetUniformLocation(program_id, uniform_name.c_str()), val1, val2, val3, val4);
-        }
+        void set_uniform4(std::string uniform_name, bool val1, bool val2, bool val3, bool val4);
 
-        template<>
-        void set_uniform4(std::string uniform_name, bool val1, bool val2, bool val3, bool val4)
-        {
-          glUniform4i(glGetUniformLocation(program_id, uniform_name.c_str()), (int)val1, (int)val2, (int)val3, (int)val4);
-        }
-
-        template<>
-        void set_uniform4(std::string uniform_name, float val1, float val2, float val3, float val4)
-        {
-          glUniform4f(glGetUniformLocation(program_id, uniform_name.c_str()), val1, val2, val3, val4);
-        }
+        void set_uniform4(std::string uniform_name, float val1, float val2, float val3, float val4);
       };
 
       std::optional<std::shared_ptr<shader>> load_shader(std::string vertex_shader, std::string fragment_shader, std::string name);

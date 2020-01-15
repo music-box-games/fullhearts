@@ -179,6 +179,36 @@ namespace waifuengine
         return program_id;
       }
 
+      void shader::set_uniform1(std::string uniform_name, int value)
+        {
+          glUniform1i(glGetUniformLocation(program_id, uniform_name.c_str()), value);
+        }
+
+        void shader::set_uniform1(std::string uniform_name, bool value)
+        {
+          glUniform1i(glGetUniformLocation(program_id, uniform_name.c_str()), (int)value);
+        }
+
+        void shader::set_uniform1(std::string uniform_name, float value)
+        {
+          glUniform1f(glGetUniformLocation(program_id, uniform_name.c_str()), value);
+        }
+
+        void shader::set_uniform4(std::string uniform_name, int val1, int val2, int val3, int val4)
+        {
+          glUniform4i(glGetUniformLocation(program_id, uniform_name.c_str()), val1, val2, val3, val4);
+        }
+
+        void shader::set_uniform4(std::string uniform_name, bool val1, bool val2, bool val3, bool val4)
+        {
+          glUniform4i(glGetUniformLocation(program_id, uniform_name.c_str()), (int)val1, (int)val2, (int)val3, (int)val4);
+        }
+
+        void shader::set_uniform4(std::string uniform_name, float val1, float val2, float val3, float val4)
+        {
+          glUniform4f(glGetUniformLocation(program_id, uniform_name.c_str()), val1, val2, val3, val4);
+        }
+
       static std::unordered_map<std::string, unsigned int> shader_names;
       static std::unordered_map<unsigned int, std::shared_ptr<shader>> loaded_shaders;
 
