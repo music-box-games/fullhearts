@@ -22,6 +22,7 @@
 #include <engine.hpp>
 #include <shader.hpp>
 #include <texture.hpp>
+#include <window.hpp>
 
 namespace we = ::waifuengine;
 
@@ -133,6 +134,29 @@ namespace waifuengine
         {
           return prog_id;
         }
+      };
+
+      class graphics_manager
+      {
+      private:
+        we::graphics::window * window;
+      public:
+        graphics_manager();
+        ~graphics_manager();
+        void clear()
+        {
+          we::log::pedantic("graphics_manager: clear");
+          window->clear();
+        }
+
+        void render()
+        {
+          we::log::pedantic("graphics_manager: render");
+          window->render();
+        }
+        
+        we::graphics::window * get_window();
+        shaders::shader& shader_id();
       };
 
 

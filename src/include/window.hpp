@@ -29,6 +29,7 @@ namespace waifuengine
   {
     namespace opengl
     {
+      #ifdef WE_GRAPHICS_OPENGL
       class window_handle
       {
       public:
@@ -39,17 +40,35 @@ namespace waifuengine
 
         data_type * data();
 
+        void clear();
+        void render();
+
       private:
         data_type * window;
       };
+      #endif // WE_GRAPHICS_OPENGL
     }
 
     namespace sdl2
     {
+      #ifdef WE_GRAPHICS_SDL2
       class window_handle
       {
+      public:
+        using data_type = SDL_Window;
 
+        window_handle();
+        ~window_handle();
+
+        data_type * data();
+
+        void clear();
+        void render();
+
+      private:
+        data_type * window;
       };
+      #endif // WE_GRAPHICS_SDL2
     }
 
     class window
@@ -66,6 +85,9 @@ namespace waifuengine
       ~window();
 
       window_type * data();
+
+      void clear();
+      void render();
 
     private:
       window_type * handle;
