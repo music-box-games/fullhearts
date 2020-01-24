@@ -14,6 +14,8 @@
 
 #define WE_GRAPHICS_OPENGL
 
+#include <memory> // std::unique_ptr, std::weak_ptr
+
 #ifdef WE_GRAPHICS_OPENGL
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -84,13 +86,13 @@ namespace waifuengine
       window();
       ~window();
 
-      window_type * data();
+      std::weak_ptr<window_type> data();
 
       void clear();
       void render();
 
     private:
-      window_type * handle;
+      std::unique_ptr<window_type> handle;
     };
   }
 }
