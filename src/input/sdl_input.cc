@@ -1,6 +1,6 @@
 #include <sdl_input.hpp>
 
-#ifdef WE_GRAPHICS_SDL2
+#ifndef WE_GRAPHICS_SDL2
 
 #include <SDL.h>
 
@@ -14,6 +14,8 @@ namespace input
 {
 namespace sdl2
 {
+
+
   void init()
   {
 
@@ -27,6 +29,13 @@ namespace sdl2
       if(e.type == SDL_QUIT)
       {
         we::core::engine::shutdown();
+      }
+      else if(e.type == SDL_KEYDOWN)
+      {
+        switch(e.key.keysym.sym)
+        {
+          
+        }
       }
     }
   }
