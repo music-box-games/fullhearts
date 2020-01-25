@@ -35,3 +35,4 @@ add_compile_options(-Wno-unused-function)
 add_compile_options(-Wno-unused-private-field)
 endif()
 
+add_compile_definitions(WE_GRAPHICS_SDL2)

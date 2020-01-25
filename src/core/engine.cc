@@ -39,7 +39,7 @@ namespace waifuengine
         engine::engine()
         {
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
-            waifuengine::graphics::init();
+            waifuengine::graphics::init(200, 200, "test");
             waifuengine::input::init();
             waifuengine::scenes::init();
             running = true;
@@ -55,8 +55,10 @@ namespace waifuengine
 
         void engine::update()
         {
+            // track frame rate
             static frame_watcher fw;
             fw.hit();
+
             // clear buffer
             we::graphics::clear();
 

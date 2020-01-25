@@ -15,7 +15,6 @@
 #include <space.hpp>
 #include <gameobject.hpp>
 #include <component.hpp>
-#include <basic_shape.hpp>
 
 namespace waifuengine
 {
@@ -25,7 +24,6 @@ namespace waifuengine
     {
       std::shared_ptr<::waifuengine::object_management::space> sp = manager.add_space("test space");
       std::shared_ptr<::waifuengine::object_management::gameobject> o = sp->add_object("test object");
-      std::shared_ptr<::waifuengine::components::basic_triangle> tr = o->add_component<::waifuengine::components::basic_triangle>();
     }
 
     draw_test_scene::~draw_test_scene()

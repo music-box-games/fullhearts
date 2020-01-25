@@ -19,7 +19,9 @@
 #include <log.hpp>
 #include <engine.hpp>
 
-#include <event_manager.hpp>
+#ifdef WE_GRAPHICS_SDL2
+#include <sdl_input.hpp>
+#endif // WE_GRAPHICS_SDL2
 
 namespace we = ::waifuengine;
 
@@ -27,50 +29,25 @@ namespace waifuengine
 {
 namespace input
 {
-namespace opengl
-{
-  void init()
-  {
-    we::log::trace("opengl input: init");
-  }
-
-  void shutdown()
-  {
-    we::log::trace("opengl input: shutdown");
-  }
-
-  void update()
-  {
-    we::log::pedantic("opengl input: update");
-    auto * window = we::graphics::opengl::get_window();
-    if(glfwWindowShouldClose(window))
-    {
-      we::core::engine::shutdown();
-    }
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
-      glfwSetWindowShouldClose(window, true);
-    }
-  }
-}
-
 void init()
 {
-  we::log::trace("input: init");
-  opengl::init();
+  #ifdef WE_GRAPHICS_SDL2
+  sdl2::init();
+  #endif
 }
 
 void shutdown()
 {
-  opengl::shutdown();
-  we::log::trace("input: shutdown");
+  #ifdef WE_GRAPHICS_SDL2
+  sdl2::shutdown();
+  #endif
 }
 
 void update()
 {
-  we::log::pedantic("input: update");
-  opengl::update();
+  #ifdef WE_GRAPHICS_SDL2
+  sdl2::update();
+  #endif
 }
-
 } // namespace input
 } // namespace waifuengine

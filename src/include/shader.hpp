@@ -12,61 +12,13 @@
 #ifndef _WE_SHADER_HPP_
 #define _WE_SHADER_HPP_
 
-#include <string>
-#include <string_view>
-#include <memory>
-#include <optional>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <component.hpp>
-
 namespace waifuengine
 {
   namespace graphics
   {
     namespace shaders
     {
-      class shader : public ::waifuengine::components::component<shader>
-      {
-      private:
-        unsigned int program_id;
 
-      public:
-        COMPONENT_NAME(shader);
-        COMPONENT_TYPE(shader);
-
-        shader();
-        shader(std::string vert_shader, std::string frag_shader);
-        shader(shader const& other);
-        ~shader();
-
-        virtual void update(float dt) override;
-        virtual void draw() const override;
-
-        void use() const;
-
-        unsigned int id() const;
-
-        void set_uniform1(std::string uniform_name, int value);
-
-        void set_uniform1(std::string uniform_name, bool value);
-
-        void set_uniform1(std::string uniform_name, float value);
-
-        void set_uniform4(std::string uniform_name, int val1, int val2, int val3, int val4);
-
-        void set_uniform4(std::string uniform_name, bool val1, bool val2, bool val3, bool val4);
-
-        void set_uniform4(std::string uniform_name, float val1, float val2, float val3, float val4);
-      };
-
-      std::optional<std::shared_ptr<shader>> load_shader(std::string vertex_shader, std::string fragment_shader, std::string name);
-      std::optional<std::shared_ptr<shader>> get_shader(std::string name);
-
-      void init();
-      void shutdown();
     }
   }
 }

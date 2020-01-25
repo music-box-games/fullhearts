@@ -11,7 +11,8 @@
 
 #ifndef _WE_SDL_GRAPHICS_HPP_
 #define _WE_SDL_GRAPHICS_HPP_
-#ifndef WE_GRAPHICS_SDL2
+
+#ifdef WE_GRAPHICS_SDL2
 
 namespace waifuengine
 {
@@ -28,4 +29,4 @@ namespace waifuengine
 }
 
 #endif // WE_GRAPHICS_SDL2
-#endif // _WE_SDL_GRAPHICS_HPP_
+#endif // !_WE_SDL_GRAPHICS_HPP_

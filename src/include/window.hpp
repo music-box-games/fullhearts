@@ -12,9 +12,8 @@
 #ifndef _WE_WINDOW_HPP_
 #define _WE_WINDOW_HPP_
 
-#define WE_GRAPHICS_OPENGL
-
 #include <memory> // std::unique_ptr, std::weak_ptr
+#include <string>
 
 #ifdef WE_GRAPHICS_OPENGL
 #include <glad/glad.h>
@@ -37,7 +36,7 @@ namespace waifuengine
       public:
         using data_type = GLFWwindow;
 
-        window_handle();
+        window_handle(unsigned width, unsigned height, std::string title);
         ~window_handle();
 
         data_type * data();
@@ -49,7 +48,7 @@ namespace waifuengine
         data_type * window;
       };
       #endif // WE_GRAPHICS_OPENGL
-    }
+    } // opengl
 
     namespace sdl2
     {
@@ -59,7 +58,7 @@ namespace waifuengine
       public:
         using data_type = SDL_Window;
 
-        window_handle();
+        window_handle(unsigned width, unsigned height, std::string title);
         ~window_handle();
 
         data_type * data();
@@ -71,7 +70,7 @@ namespace waifuengine
         data_type * window;
       };
       #endif // WE_GRAPHICS_SDL2
-    }
+    } // sdl2
 
     class window
     {
@@ -83,16 +82,16 @@ namespace waifuengine
       using window_type = sdl2::window_handle;
       #endif // WE_GRAPHICS_SDL2
       
-      window();
+      window(unsigned width, unsigned height, std::string title = "");
       ~window();
 
-      std::weak_ptr<window_type> data();
+      std::shared_ptr<window_type> data();
 
       void clear();
       void render();
 
     private:
-      std::unique_ptr<window_type> handle;
+      std::shared_ptr<window_type> handle;
     };
   }
 }

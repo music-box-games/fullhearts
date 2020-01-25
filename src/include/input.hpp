@@ -16,13 +16,6 @@ namespace waifuengine
 {
   namespace input
   {
-    namespace opengl
-    {
-      void init();
-      void update();
-      void shutdown();
-    }
-
     void init();
     void update();
     void shutdown();
