@@ -39,7 +39,7 @@ namespace waifuengine
         engine::engine()
         {
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
-            waifuengine::graphics::init(200, 200, "test");
+            waifuengine::graphics::init(1280, 720, "test");
             waifuengine::input::init();
             waifuengine::scenes::init();
             running = true;
