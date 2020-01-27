@@ -11,7 +11,7 @@ namespace waifuengine
   {
     enum class inputs
     {
-      BACKTICK,
+      ESCAPE, BACKTICK,
       ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO,
       MINUS, EQUALS, BACKSPACE, TAB,
       Q, W, E, R, T, Y, U, I, O, P, LBRACKET, RBRACKET, BACKSLASH,
