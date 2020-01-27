@@ -40,12 +40,11 @@ namespace sdl2
     auto * window = we::graphics::get_window()->data()->data();
     SDL_Surface * window_surface = SDL_GetWindowSurface(window);
     SDL_FillRect(window_surface, NULL, SDL_MapRGB(window_surface->format, 0xF5, 0x42, 0xE3));
-    SDL_UpdateWindowSurface(window);
   }
 
   void render()
   {
-
+    SDL_UpdateWindowSurface(we::graphics::get_window()->data()->data());
   }
 
   void shutdown()
