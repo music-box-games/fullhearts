@@ -42,5 +42,10 @@ namespace waifuengine
     {
       manager.draw();
     }
+
+    we::object_management::space_manager * scene::get_manager()
+    {
+      return &manager;
+    }
   }
 }

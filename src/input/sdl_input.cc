@@ -1,6 +1,6 @@
 #include <sdl_input.hpp>
 
-#ifndef WE_GRAPHICS_SDL2
+#ifdef WE_GRAPHICS_SDL2
 
 #include <SDL.h>
 
@@ -14,8 +14,6 @@ namespace input
 {
 namespace sdl2
 {
-
-
   void init()
   {
 

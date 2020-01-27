@@ -1,5 +1,7 @@
 #ifndef _WE_SDL_INPUT_HPP_
 #define _WE_SDL_INPUT_HPP_
+
+
 #ifdef WE_GRAPHICS_SDL2
 namespace waifuengine
 {

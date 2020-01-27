@@ -18,6 +18,8 @@
 
 #define SCENE_NAME(x) static constexpr std::string_view NAME = #x
 
+namespace we = ::waifuengine;
+
 // TODO: Currently only one instance of each scene allowed
 
 namespace waifuengine
@@ -37,6 +39,8 @@ namespace waifuengine
 
       scene(std::string n);
       virtual ~scene();
+
+      we::object_management::space_manager * get_manager();
     };
   }
 }

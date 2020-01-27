@@ -15,7 +15,7 @@
 #define _WE_SCENE_MANAGER_HPP_
 
 #include <string>
-#include <unordered_map>
+#include <utility>
 #include <memory>
 #include <sstream>
 
@@ -34,7 +34,7 @@ namespace waifuengine
       class scene_manager
       {
       private:
-        using scene_container = std::unordered_map<std::string, std::shared_ptr<::waifuengine::scenes::scene>>;
+        using scene_container = std::pair<std::string, std::shared_ptr<::waifuengine::scenes::scene>>;
         scene_container smap;
 
       public:
@@ -48,22 +48,18 @@ namespace waifuengine
         void load()
         {
           std::string sname(Scene::NAME);
-          if(smap.count(sname))
-          {
-            smap.erase(sname);
-          }
-          smap[sname] = std::shared_ptr<::waifuengine::scenes::scene>(new Scene());
+          smap.first = sname;
+          smap.second = std::shared_ptr<::waifuengine::scenes::scene>(new Scene());
         }
 
         template<typename Scene>
         void unload()
         {
-          std::string sname(Scene::NAME);
-          if(smap.count(sname))
-          {
-            smap.erase(sname);
-          }
+          smap.first = "";
+          smap.second->reset(nullptr);
         }
+
+        std::shared_ptr<scene> current_scene();
       };
 
       extern scene_manager * smanager;
@@ -89,6 +85,8 @@ namespace waifuengine
     void shutdown();
     void update(float dt);
     void draw();
+
+    std::shared_ptr<scene> current_scene();
   }
 }
 

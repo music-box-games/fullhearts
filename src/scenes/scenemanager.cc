@@ -35,18 +35,17 @@ namespace waifuengine
 
       void scene_manager::update(float dt)
       {
-        for(auto& s : smap)
-        {
-          s.second->update(dt);
-        }
+        smap.second->update(dt);
       }
 
       void scene_manager::draw() const
       {
-        for(auto& s : smap)
-        {
-          s.second->draw();
-        }
+        smap.second->draw();
+      }
+
+      std::shared_ptr<scene> scene_manager::current_scene()
+      {
+        return smap.second;
       }
     }
 
@@ -74,6 +73,11 @@ namespace waifuengine
     void draw()
     {
       impl::smanager->draw();
+    }
+
+    std::shared_ptr<scene> current_scene()
+    {
+      return impl::smanager->current_scene();
     }
   }
 }

@@ -1,0 +1,42 @@
+#ifndef _WE_S_IMAGE_HPP_
+#define _WE_S_IMAGE_HPP_
+
+#ifdef WE_GRAPHICS_SDL2
+
+#include <string>
+
+#include <SDL.h>
+
+namespace waifuengine
+{
+  namespace graphics
+  {
+    namespace sdl2
+    {
+      class image_handle
+      {
+      public:
+        using image_type = SDL_Surface;
+        
+        image_handle();
+        ~image_handle();
+
+        void load_image(std::string file);
+        image_type * get_image();
+
+        void release_image();
+
+        bool valid() const;
+
+        void draw() const;
+
+      private:
+        image_type * data;
+      };
+    }
+  }
+}
+
+#endif // WE_GRAPHICS_SDL2
+
+#endif // !_WE_S_IMAGE_HPP_
