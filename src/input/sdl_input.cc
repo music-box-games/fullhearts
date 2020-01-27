@@ -32,7 +32,11 @@ namespace sdl2
       {
         switch(e.key.keysym.sym)
         {
-          
+        case SDLK_ESCAPE:
+          we::core::engine::shutdown();
+          break;
+        default:
+          break;
         }
       }
     }
