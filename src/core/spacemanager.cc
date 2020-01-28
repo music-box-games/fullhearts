@@ -87,5 +87,16 @@ namespace waifuengine
             }
         }
 
+        default_spaces space_manager::build_default_spaces()
+        {
+            default_spaces r;
+            r.bg = add_space("Background Space", space_order::BACKGROUND);
+            r.ch = add_space("Character Space", space_order::CHARACTER);
+            r.fx = add_space("FX Space", space_order::FX);
+            r.ui = add_space("UI Space", space_order::UI);
+            r.tr = add_space("Transition Space", space_order::TRANSITION);
+            return r;
+        }
+
     }
 }

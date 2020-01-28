@@ -3,5 +3,6 @@
 
 #include <draw_test_scene.hpp>
 #include <scene_splashscreen.hpp>
+#include <scene_mm.hpp>
 
 #endif 

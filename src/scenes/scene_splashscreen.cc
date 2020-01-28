@@ -9,6 +9,8 @@
 #include <timer.hpp>
 #include <engine.hpp>
 #include <event_manager.hpp>
+#include <scenemanager.hpp>
+#include <scenelist.hpp>
 
 namespace we = ::waifuengine;
 
@@ -18,7 +20,7 @@ namespace scenes
 {
 static void transition()
 {
-  we::core::engine::shutdown();
+  we::scenes::queue_load<scene_mainmenu>();
 }
 
 static we::utils::trigger_timer * transition_timer = nullptr;
@@ -41,6 +43,7 @@ scene_splashscreen::scene_splashscreen() : scene(std::string(NAME))
   manager.add_space("Character Space", we::object_management::space_order::CHARACTER);
   manager.add_space("FX Space", we::object_management::space_order::FX);
   manager.add_space("UI Space", we::object_management::space_order::UI);
+  manager.add_space("Transition Space", we::object_management::space_order::TRANSITION);
   we::factory::background_factory::build_background("test background", "./assets/images/test/wallpaper.bmp", sp);
 
   transition_timer = new we::utils::trigger_timer(false, std::chrono::milliseconds(6000), transition);

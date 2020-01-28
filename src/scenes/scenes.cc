@@ -19,17 +19,17 @@ namespace waifuengine
 {
   namespace scenes
   {
-    scene::scene(std::string n) : NAME(n)
+    scene::scene(std::string n) : name(n)
     {
       std::stringstream ss;
-      ss << "scene \"" << NAME << "\" constructing";
+      ss << "scene \"" << name << "\" constructing";
       we::log::trace(ss.str());
     }
 
     scene::~scene()
     {
       std::stringstream ss;
-      ss << "scene \"" << NAME << "\" destructing";
+      ss << "scene \"" << name << "\" destructing";
       we::log::trace(ss.str());
     }
 

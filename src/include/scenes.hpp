@@ -32,7 +32,7 @@ namespace waifuengine
       ::waifuengine::object_management::space_manager manager;
 
     public:
-      std::string NAME;
+      std::string name;
 
       void update(float dt);
       void draw() const;

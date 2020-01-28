@@ -22,10 +22,30 @@ namespace waifuengine
 {
     namespace object_management
     {
+        struct default_spaces
+        {
+            using ptrt = std::shared_ptr<space>;
+
+            ptrt bg;
+            ptrt ch;
+            ptrt fx;
+            ptrt ui;
+            ptrt tr;
+        };
+
         class space_manager
         {
         private:
             std::map<std::string, std::shared_ptr<space>> spaces_;
+
+            std::map<std::string, space_order> const defaults =
+            {
+                {"Background Space", space_order::BACKGROUND },
+                {"Character Space", space_order::CHARACTER },
+                { "FX Space", space_order::FX },
+                { "UI Space", space_order::UI },
+                { "Transition Space", space_order::TRANSITION },
+            };
 
         public:
             space_manager();
@@ -44,6 +64,8 @@ namespace waifuengine
 
             void clear();
             void remove_object(std::string n);
+
+            default_spaces build_default_spaces();
         };
     }
 }

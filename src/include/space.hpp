@@ -26,6 +26,7 @@ namespace waifuengine
             CHARACTER,
             FX,
             UI,
+            TRANSITION,
             // special
             UNORDERED,
         };

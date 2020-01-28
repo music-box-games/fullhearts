@@ -35,6 +35,12 @@ namespace waifuengine
 
       void scene_manager::update(float dt)
       {
+        if(queued)
+        {
+          unload<void>(); // TODO: remote template from this
+          qf();
+          queued = false;
+        }
         smap.second->update(dt);
       }
 

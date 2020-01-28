@@ -18,6 +18,7 @@
 #include <utility>
 #include <memory>
 #include <sstream>
+#include <functional>
 
 #include <scenes.hpp>
 #include <log.hpp>
@@ -37,6 +38,9 @@ namespace waifuengine
         using scene_container = std::pair<std::string, std::shared_ptr<::waifuengine::scenes::scene>>;
         scene_container smap;
 
+        bool queued = false;
+        std::function<void()> qf;
+
       public:
         scene_manager();
         ~scene_manager();
@@ -53,10 +57,17 @@ namespace waifuengine
         }
 
         template<typename Scene>
+        void queue_load()
+        {
+          qf = std::bind(&scene_manager::load<Scene>, this);
+          queued = true;
+        }
+
+        template<typename Scene>
         void unload()
         {
           smap.first = "";
-          smap.second->reset(nullptr);
+          smap.second.reset();
         }
 
         std::shared_ptr<scene> current_scene();
@@ -73,6 +84,15 @@ namespace waifuengine
       we::log::trace(ss.str());
       
       impl::smanager->load<Scene>();
+    }
+
+    template<typename Scene>
+    void queue_load()
+    {
+      std::stringstream ss;
+      ss << "Queueing scene " << Scene::NAME;
+      we::log::trace(ss.str());
+      impl::smanager->queue_load<Scene>();
     }
 
     template<typename Scene>
