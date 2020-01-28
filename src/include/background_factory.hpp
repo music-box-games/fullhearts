@@ -7,7 +7,7 @@
 
 namespace waifuengine
 {
-  namespace graphics
+  namespace factory
   {
     typedef we::object_management::gameobject background;
 

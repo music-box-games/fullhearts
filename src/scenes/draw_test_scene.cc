@@ -15,7 +15,6 @@
 #include <space.hpp>
 #include <gameobject.hpp>
 #include <component.hpp>
-#include <background.hpp>
 
 namespace we = ::waifuengine;
 
@@ -25,16 +24,10 @@ namespace scenes
 {
 draw_test_scene::draw_test_scene() : scene(std::string(NAME))
 {
-  manager.add_space("Character Space");
-  manager.add_space("FX Space");
-  manager.add_space("UI Space");
-  std::shared_ptr<::waifuengine::object_management::space> sp = manager.add_space("Background Space");
-  we::graphics::background_factory::build_background("test background", "./assets/images/test/wallpaper.bmp", sp);
 }
 
 draw_test_scene::~draw_test_scene()
 {
-  manager.remove_object("test object");
 }
 } // namespace scenes
 } // namespace waifuengine

@@ -1,4 +1,4 @@
-#include <background.hpp>
+#include <background_factory.hpp>
 #include <spacemanager.hpp>
 #include <space.hpp>
 #include <scenemanager.hpp>
@@ -8,7 +8,7 @@ namespace we = ::waifuengine;
 
 namespace waifuengine
 {
-namespace graphics
+namespace factory
 {
   std::shared_ptr<background> background_factory::build_background(std::string name, std::string file, std::shared_ptr<we::object_management::space> space)
   {
@@ -20,7 +20,7 @@ namespace graphics
     }
     sp = space;
     auto obj = sp->add_object(name);
-    std::shared_ptr<sprite> spr = obj->add_component<sprite>();
+    std::shared_ptr<we::graphics::sprite> spr = obj->add_component<we::graphics::sprite>();
     spr->load_image(file);
     return obj;
   }

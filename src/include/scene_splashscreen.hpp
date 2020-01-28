@@ -2,6 +2,7 @@
 #define _WE_SCENE_SPLASHSCREEN_HPP_
 
 #include <scenes.hpp>
+#include <events.hpp>
 
 namespace waifuengine
 {
@@ -13,6 +14,8 @@ namespace waifuengine
       SCENE_NAME(scene_splashscreen);
       scene_splashscreen();
       virtual ~scene_splashscreen();
+    private:
+      void input_handler(waifuengine::events::event * ievent);
     };
   }
 }

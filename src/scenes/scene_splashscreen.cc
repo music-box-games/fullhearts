@@ -4,7 +4,7 @@
 #include <space.hpp>
 #include <gameobject.hpp>
 #include <component.hpp>
-#include <background.hpp>
+#include <factories.hpp>
 #include <timer_manager.hpp>
 #include <timer.hpp>
 #include <engine.hpp>
@@ -20,17 +20,34 @@ static void transition()
   we::core::engine::shutdown();
 }
 
+static we::utils::trigger_timer * transition_timer = nullptr;
+
+void scene_splashscreen::input_handler(we::events::event * ievent)
+{
+  we::input::input_event * e = dynamic_cast<we::input::input_event *>(ievent);
+  if(e->type == we::input::input_type::PRESS)
+  {
+    if(transition_timer)
+    {
+      transition_timer->complete();
+    }
+  }
+}
+
 scene_splashscreen::scene_splashscreen() : scene(std::string(NAME))
 {
   auto sp = manager.add_space("Background Space", we::object_management::space_order::BACKGROUND);
   manager.add_space("Character Space", we::object_management::space_order::CHARACTER);
   manager.add_space("FX Space", we::object_management::space_order::FX);
   manager.add_space("UI Space", we::object_management::space_order::UI);
-  we::graphics::background_factory::build_background("test background", "./assets/images/test/wallpaper.bmp", sp);
+  we::factory::background_factory::build_background("test background", "./assets/images/test/wallpaper.bmp", sp);
 
-  we::utils::trigger_timer * t = new we::utils::trigger_timer(false, std::chrono::milliseconds(6000), transition);
-  t->start();
-  we::utils::timers::add_timer("splashscreen end timer", t);
+  transition_timer = new we::utils::trigger_timer(false, std::chrono::milliseconds(6000), transition);
+  transition_timer->start();
+  we::utils::timers::add_timer("splashscreen end timer", transition_timer);
+
+  // hook input events for skipping screen
+
 }
 
 scene_splashscreen::~scene_splashscreen()

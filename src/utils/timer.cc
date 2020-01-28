@@ -91,5 +91,11 @@ namespace waifuengine
         {
             return !repeat_ && (sc::duration_cast<sc::milliseconds>(sc::steady_clock::now() - start_).count() >= limit_.count());
         }
+
+        void trigger_timer::complete()
+        {
+            trigger_();
+            if(!repeat_) { stop(); } else { restart(); }
+        }
     }
 }
