@@ -27,6 +27,8 @@ namespace graphics
 {
 namespace sdl2
 {
+  static SDL_Renderer * renderer = nullptr;
+
   void init()
   {
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -34,6 +36,7 @@ namespace sdl2
       utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not initialize SDL!");
       std::exit(-1);
     }
+
     // init other image loading
     int flags = IMG_INIT_PNG;
     if(!(IMG_Init(flags) & flags))
@@ -45,18 +48,17 @@ namespace sdl2
 
   void clear()
   {
-    auto * window = we::graphics::get_window()->data()->data();
-    SDL_Surface * window_surface = SDL_GetWindowSurface(window);
-    SDL_FillRect(window_surface, NULL, SDL_MapRGB(window_surface->format, 0xF5, 0x42, 0xE3));
+    SDL_RenderClear(we::graphics::get_window()->data()->get_renderer());
   }
 
   void render()
   {
-    SDL_UpdateWindowSurface(we::graphics::get_window()->data()->data());
+    SDL_RenderPresent(we::graphics::get_window()->data()->get_renderer());
   }
 
   void shutdown()
   {
+    IMG_Quit();
     SDL_Quit();
   }
 }

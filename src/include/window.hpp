@@ -22,6 +22,7 @@
 
 #ifdef WE_GRAPHICS_SDL2
 #include <SDL.h>
+#include <SDL_image.h>
 #endif // WE_GRAPHICS_SDL2
 
 namespace waifuengine
@@ -63,11 +64,14 @@ namespace waifuengine
 
         data_type * data();
 
+        SDL_Renderer * get_renderer();
+
         void clear();
         void render();
 
       private:
         data_type * window;
+        SDL_Renderer * renderer;
       };
       #endif // WE_GRAPHICS_SDL2
     } // sdl2

@@ -19,7 +19,7 @@ namespace sdl2
   image_handle::image_handle() : data(nullptr) {}
   image_handle::~image_handle()
   {
-    SDL_FreeSurface(data);
+    SDL_DestroyTexture(data);
     data = nullptr;
   }
 
@@ -32,10 +32,10 @@ namespace sdl2
       std::exit(-1);
     }
     
-    data = SDL_ConvertSurface(load, SDL_GetWindowSurface(we::graphics::get_window()->data()->data())->format, 0);
+    data = SDL_CreateTextureFromSurface(we::graphics::get_window()->data()->get_renderer(), load);
     if(data == NULL)
     {
-      utils::notify(utils::notification_type::mb_ok, "Fatal Error!", "Could not convert SDL_Surface!");
+      utils::notify(utils::notification_type::mb_ok, "Fatal Error!", "Could not create texture!");
       std::exit(-1);
     }
     SDL_FreeSurface(load);
@@ -54,12 +54,12 @@ namespace sdl2
   void image_handle::draw() const
   {
     //if(!data) return;
-    SDL_BlitSurface(data, NULL, SDL_GetWindowSurface(we::graphics::get_window()->data()->data()), NULL);
+    SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, NULL);
   }
 
   void image_handle::release_image()
   {
-    SDL_FreeSurface(data);
+    SDL_DestroyTexture(data);
     data = nullptr;
   }
 }

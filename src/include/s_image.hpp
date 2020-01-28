@@ -16,7 +16,7 @@ namespace waifuengine
       class image_handle
       {
       public:
-        using image_type = SDL_Surface;
+        using image_type = SDL_Texture;
         
         image_handle();
         ~image_handle();

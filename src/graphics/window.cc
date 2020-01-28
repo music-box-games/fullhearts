@@ -63,7 +63,7 @@ namespace opengl
 namespace sdl2
 {
   #ifdef WE_GRAPHICS_SDL2
-  window_handle::window_handle(unsigned width, unsigned height, std::string title) : window(nullptr)
+  window_handle::window_handle(unsigned width, unsigned height, std::string title) : window(nullptr), renderer(nullptr)
   {
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     if(window == NULL)
@@ -71,10 +71,18 @@ namespace sdl2
       utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not create SDL Window!");
       std::exit(-1);
     }
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if(renderer == nullptr)
+    {
+      utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not create SDL renderer");
+      std::exit(-1);
+    }
+    SDL_SetRenderDrawColor(renderer, 0xF5, 0x42, 0xE3, 0xFF);
   }
 
   window_handle::~window_handle()
   {
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
   }
 
@@ -92,6 +100,12 @@ namespace sdl2
   {
     we::graphics::sdl2::render();
   }
+
+  SDL_Renderer * window_handle::get_renderer()
+  {
+    return renderer;
+  }
+
   #endif // WE_GRAPHICS_SDL2
 }
 
