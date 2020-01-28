@@ -4,6 +4,7 @@
 
 #include <utils.hpp>
 #include <graphics.hpp>
+#include <window.hpp>
 
 namespace we = ::waifuengine;
 
@@ -22,12 +23,20 @@ namespace sdl2
 
   void image_handle::load_image(std::string file)
   {
-    data = SDL_LoadBMP(file.c_str());
-    if(data == NULL)
+    SDL_Surface * load = SDL_LoadBMP(file.c_str());
+    if(load == NULL)
     {
       utils::notify(utils::notification_type::mb_ok, "Fatal Error!", "Could not load SDL_Surface from BMP");
       std::exit(-1);
     }
+    
+    data = SDL_ConvertSurface(load, SDL_GetWindowSurface(we::graphics::get_window()->data()->data())->format, 0);
+    if(data == NULL)
+    {
+      utils::notify(utils::notification_type::mb_ok, "Fatal Error!", "Could not convert SDL_Surface!");
+      std::exit(-1);
+    }
+    SDL_FreeSurface(load);
   }
 
   image_handle::image_type * image_handle::get_image()

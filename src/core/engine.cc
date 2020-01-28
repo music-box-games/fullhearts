@@ -37,7 +37,7 @@ namespace waifuengine
         void engine::input_handler(we::events::event * e)
         {
           we::input::input_event* ev = dynamic_cast<we::input::input_event *>(e);
-          if (ev->type == we::input::input_type::PRESS && ev->key == we::input::inputs::ESCAPE)
+          if (ev->type == we::input::input_type::PRESS && ev->key == we::input::keys::ESCAPE)
           {
             shutdown();
           }
@@ -57,8 +57,8 @@ namespace waifuengine
             waifuengine::events::init();
             waifuengine::utils::timers::init();
             // hook into input events
-            auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
-            we::events::subscribe<we::input::input_event>(this, f);
+            //auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
+            // we::events::subscribe<we::input::input_event>(this, f);
             
 
             running = true;

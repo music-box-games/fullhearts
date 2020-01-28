@@ -8,6 +8,7 @@
 #include <timer_manager.hpp>
 #include <timer.hpp>
 #include <engine.hpp>
+#include <event_manager.hpp>
 
 namespace we = ::waifuengine;
 
@@ -47,7 +48,8 @@ scene_splashscreen::scene_splashscreen() : scene(std::string(NAME))
   we::utils::timers::add_timer("splashscreen end timer", transition_timer);
 
   // hook input events for skipping screen
-
+  auto f = std::bind(&scene_splashscreen::input_handler, this, std::placeholders::_1);
+  we::events::subscribe<we::input::input_event>(this, f);
 }
 
 scene_splashscreen::~scene_splashscreen()
