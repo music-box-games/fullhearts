@@ -40,6 +40,10 @@ namespace waifuengine
       void rotate(float degrees);
       void translate(glm::vec3 vec);
       void scale(glm::vec3 vec);
+
+      float rotation() const;
+      glm::vec3 const& translation() const;
+      glm::vec3 const& scale() const;
     };
   }
 }
