@@ -2,6 +2,8 @@
 
 #ifdef WE_GRAPHICS_SDL2
 
+#include <SDL_image.h>
+
 #include <utils.hpp>
 #include <graphics.hpp>
 #include <window.hpp>
@@ -23,10 +25,10 @@ namespace sdl2
 
   void image_handle::load_image(std::string file)
   {
-    SDL_Surface * load = SDL_LoadBMP(file.c_str());
+    SDL_Surface * load = IMG_Load(file.c_str());
     if(load == NULL)
     {
-      utils::notify(utils::notification_type::mb_ok, "Fatal Error!", "Could not load SDL_Surface from BMP");
+      utils::notify(utils::notification_type::mb_ok, "Fatal Error!", "Could not load image");
       std::exit(-1);
     }
     

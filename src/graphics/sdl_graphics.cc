@@ -9,10 +9,11 @@
 */
 /******************************************************************************/
 
-#include <SDL.h>
 
 #ifdef WE_GRAPHICS_SDL2
 
+#include <SDL.h>
+#include <SDL_image.h>
 #include <sdl_graphics.hpp>
 #include <utils.hpp>
 #include <window.hpp>
@@ -31,6 +32,13 @@ namespace sdl2
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
       utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not initialize SDL!");
+      std::exit(-1);
+    }
+    // init other image loading
+    int flags = IMG_INIT_PNG;
+    if(!(IMG_Init(flags) & flags))
+    {
+      utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not init PNG loading!");
       std::exit(-1);
     }
   }
