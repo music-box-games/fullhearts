@@ -39,14 +39,6 @@ namespace sdl2
       }
       else if(e.type == SDL_KEYDOWN)
       {
-        switch(e.key.keysym.sym)
-        {
-        case SDLK_ESCAPE:
-          we::core::engine::shutdown();
-          return;
-        default:
-          break;
-        }
         if(keymap.count(e.key.keysym.sym))
         {
           we::input::input_event ev;

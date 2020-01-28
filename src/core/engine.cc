@@ -20,6 +20,8 @@
 #include <draw_test_scene.hpp>
 #include <input.hpp>
 #include <utils.hpp>
+#include <event_manager.hpp>
+#include <input_event.hpp>
 
 namespace we = ::waifuengine;
 
@@ -30,6 +32,15 @@ namespace waifuengine
         bool engine::running = false;
 
         std::unique_ptr<engine> build_engine() { return std::unique_ptr<engine>(new engine()); }
+
+        void engine::input_handler(we::events::event * e)
+        {
+          we::input::input_event* ev = dynamic_cast<we::input::input_event *>(e);
+          if (ev->type == we::input::input_type::PRESS && ev->key == we::input::inputs::ESCAPE)
+          {
+            shutdown();
+          }
+        }
 
         void engine::shutdown()
         {
@@ -42,11 +53,19 @@ namespace waifuengine
             waifuengine::graphics::init(1920, 1080, "test");
             waifuengine::input::init();
             waifuengine::scenes::init();
+            waifuengine::events::init();
+            // hook into input events
+            auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
+            we::events::subscribe<we::input::input_event>(this, f);
+            
+
             running = true;
         }
 
         engine::~engine()
         {
+          we::events::unsubcribe<we::input::input_event>(this);
+            waifuengine::events::shutdown();
             waifuengine::scenes::shutdown();
             waifuengine::input::shutdown();
             waifuengine::graphics::shutdown();

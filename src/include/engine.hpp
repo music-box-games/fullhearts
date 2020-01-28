@@ -12,6 +12,7 @@
 #ifndef _W_ENGINE_HPP_
 #define _W_ENGINE_HPP_
 
+#include <input_event.hpp>
 #include <memory> // std::unique_ptr
 
 namespace waifuengine
@@ -21,6 +22,7 @@ namespace waifuengine
         class engine
         {
         private:
+          void input_handler(waifuengine::events::event* e);
         public:
             static bool running;
             static void shutdown();
