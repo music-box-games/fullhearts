@@ -6,8 +6,8 @@ branches:
     - integration
 
 image:
-  #- Visual Studio 2019
-  - Ubuntu
+  - Visual Studio 2019
+  #- Ubuntu
 
 install:
   - cmd: pip install conan
