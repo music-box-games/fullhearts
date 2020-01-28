@@ -23,7 +23,7 @@ namespace waifuengine
 {
     namespace object_management
     {
-        space::space(std::string n) : name_(n)
+        space::space(std::string n, space_order o) : name_(n), order_(o)
         {
 
         }
@@ -76,6 +76,11 @@ namespace waifuengine
                 count += obj.second->components();
             });
             return count;
+        }
+
+        bool space::operator<(space const& rhs) const
+        {
+          return order_ < rhs.order_;
         }
     }
 }

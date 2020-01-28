@@ -22,9 +22,9 @@ namespace waifuengine
         space_manager::space_manager() {}
         space_manager::~space_manager() {} // shared_ptrs will automatically be deallocated
 
-        std::shared_ptr<space> space_manager::add_space(std::string n)
+        std::shared_ptr<space> space_manager::add_space(std::string n, space_order o)
         {
-            auto sp = std::shared_ptr<space>(new space(n));
+            auto sp = std::shared_ptr<space>(new space(n, o));
             spaces_[n] = sp;
             return sp;
         }

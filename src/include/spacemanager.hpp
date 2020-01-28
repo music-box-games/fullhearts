@@ -14,24 +14,24 @@
 
 #include <memory>
 #include <string>
-#include <unordered_map>
+#include <map>
+
+#include <space.hpp>
 
 namespace waifuengine
 {
     namespace object_management
     {
-        class space;
-
         class space_manager
         {
         private:
-            std::unordered_map<std::string, std::shared_ptr<space>> spaces_;
+            std::map<std::string, std::shared_ptr<space>> spaces_;
 
         public:
             space_manager();
             ~space_manager();
 
-            std::shared_ptr<space> add_space(std::string n);
+            std::shared_ptr<space> add_space(std::string n, space_order o = space_order::UNORDERED);
             void remove_space(std::string n);
             std::shared_ptr<space> get_space(std::string n);
 

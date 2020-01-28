@@ -17,11 +17,12 @@
 #include <log.hpp>
 #include <graphics.hpp>
 #include <scenemanager.hpp>
-#include <draw_test_scene.hpp>
+#include <scenelist.hpp>
 #include <input.hpp>
 #include <utils.hpp>
 #include <event_manager.hpp>
 #include <input_event.hpp>
+#include <timer_manager.hpp>
 
 namespace we = ::waifuengine;
 
@@ -54,6 +55,7 @@ namespace waifuengine
             waifuengine::input::init();
             waifuengine::scenes::init();
             waifuengine::events::init();
+            waifuengine::utils::timers::init();
             // hook into input events
             auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
             we::events::subscribe<we::input::input_event>(this, f);
@@ -65,6 +67,7 @@ namespace waifuengine
         engine::~engine()
         {
           we::events::unsubcribe<we::input::input_event>(this);
+            waifuengine::utils::timers::shutdown();
             waifuengine::events::shutdown();
             waifuengine::scenes::shutdown();
             waifuengine::input::shutdown();
@@ -82,6 +85,7 @@ namespace waifuengine
             we::graphics::clear();
 
             // update things
+            we::utils::timers::update();
             we::input::update();
             ::waifuengine::scenes::update(static_cast<float>(fw.frame_time()));
 
@@ -95,7 +99,7 @@ namespace waifuengine
         void engine::load_initial_scene()
         {
             we::log::trace("Loading inital scene");
-            ::waifuengine::scenes::load<::waifuengine::scenes::draw_test_scene>();
+            ::waifuengine::scenes::load<::waifuengine::scenes::scene_splashscreen>();
         }
     }
 }
