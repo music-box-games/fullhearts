@@ -43,7 +43,7 @@ namespace sdl2
         {
         case SDLK_ESCAPE:
           we::core::engine::shutdown();
-          break;
+          return;
         default:
           break;
         }

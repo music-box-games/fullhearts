@@ -26,7 +26,7 @@ namespace waifuengine
     draw_test_scene::draw_test_scene() : scene(std::string(NAME))
     {
       std::shared_ptr<::waifuengine::object_management::space> sp = manager.add_space("Background Space");
-      we::graphics::background_factory::build_background("test background", "./assets/images/test/wallpaper.bmp", sp);
+      we::graphics::background_factory::build_background("test background", "./bin/assets/images/test/wallpaper.bmp", sp);
     }
 
     draw_test_scene::~draw_test_scene()
