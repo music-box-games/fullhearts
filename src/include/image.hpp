@@ -40,8 +40,12 @@ namespace waifuengine
 
       void draw() const;
 
+      void set_parent(void * p);
+      void * get_parent();
+
     private:
       std::shared_ptr<handle_type> handle;
+      void * parent;
     };
   }
 }

@@ -7,6 +7,10 @@
 #include <utils.hpp>
 #include <graphics.hpp>
 #include <window.hpp>
+#include <image.hpp>
+#include <sprite.hpp>
+#include <transform.hpp>
+#include <glm/vec3.hpp>
 
 namespace we = ::waifuengine;
 
@@ -16,7 +20,13 @@ namespace graphics
 {
 namespace sdl2
 {
-  image_handle::image_handle() : data(nullptr) {}
+  static SDL_Rect build_rect_from_transform(std::shared_ptr<we::physics::transform> t)
+  {
+    SDL_Rect r;
+    return r;
+  }
+
+  image_handle::image_handle() : data(nullptr), parent(nullptr) {}
   image_handle::~image_handle()
   {
     SDL_DestroyTexture(data);
@@ -54,13 +64,33 @@ namespace sdl2
   void image_handle::draw() const
   {
     //if(!data) return;
-    SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, NULL);
+    auto obj = reinterpret_cast<we::graphics::sprite *>(parent->get_parent())->parent.lock();
+    auto tr = obj->get_component<we::physics::transform>();
+    if(tr.use_count() == 0)
+    {
+      SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, NULL);
+    }
+    else
+    {
+      SDL_Rect r = build_rect_from_transform(tr);
+      SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, &r);
+    }
   }
 
   void image_handle::release_image()
   {
     SDL_DestroyTexture(data);
     data = nullptr;
+  }
+
+  void image_handle::set_parent(image * p)
+  {
+    parent = p;
+  }
+
+  image * image_handle::get_parent()
+  {
+    return parent;
   }
 }
 } // namespace graphics

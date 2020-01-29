@@ -14,6 +14,7 @@
 
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
 #include <component.hpp>
 
@@ -41,9 +42,9 @@ namespace waifuengine
       void translate(glm::vec3 vec);
       void scale(glm::vec3 vec);
 
-      float rotation() const;
-      glm::vec3 const& translation() const;
-      glm::vec3 const& scale() const;
+      float rotation();
+      glm::vec3 translation();
+      glm::vec3 scale();
     };
   }
 }

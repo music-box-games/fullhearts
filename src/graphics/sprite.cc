@@ -15,7 +15,11 @@ namespace waifuengine
 {
   namespace graphics
   {
-    sprite::sprite() : components::component<sprite>() {}
+    sprite::sprite() : components::component<sprite>()
+    {
+      im.set_parent(this);
+    }
+    
     sprite::~sprite() {}
 
     void sprite::update(float)

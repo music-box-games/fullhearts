@@ -61,7 +61,7 @@ namespace waifuengine
             template<class _CType>
             std::shared_ptr<_CType> get_component()
             {
-                return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
+                return (components_.count(_CType::NAME)) ? std::shared_ptr<_CType>(dynamic_cast<_CType *>(components_[_CType::NAME].get())) : nullptr;
             }
 
             void update(float dt);

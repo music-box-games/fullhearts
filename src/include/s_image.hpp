@@ -11,6 +11,8 @@ namespace waifuengine
 {
   namespace graphics
   {
+    class image;
+
     namespace sdl2
     {
       class image_handle
@@ -30,8 +32,12 @@ namespace waifuengine
 
         void draw() const;
 
+        void set_parent(image * p);
+        image * get_parent();
+
       private:
         image_type * data;
+        image * parent;
       };
     }
   }

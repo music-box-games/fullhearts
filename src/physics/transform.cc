@@ -22,23 +22,62 @@ namespace waifuengine
     transform::transform(transform const& other) : matrix(other.matrix) {}
     transform::~transform() {}
 
-    void update(float) {}
+    void transform::update(float) {}
 
-    void draw() const {}
+    void transform::draw() const {}
 
-    void rotate(float rotation)
+    void transform::rotate(float rotation)
     {
       glm::rotate(matrix, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
     }
 
-    void translate(glm::vec3 vec)
+    void transform::translate(glm::vec3 vec)
     {
       glm::translate(matrix, vec);
     }
 
-    void scale(glm::vec3 vec)
+    void transform::scale(glm::vec3 vec)
     {
       glm::scale(matrix, vec);
+    }
+
+    float transform::rotation()
+    {
+      glm::vec3 scale;
+      glm::quat rotation;
+      glm::vec3 translation;
+      glm::vec3 skew;
+      glm::vec4 perspective;
+
+      glm::decompose(matrix, scale, rotation, translation, skew, perspective);
+
+      return 0.0f;
+    }
+
+    glm::vec3 transform::translation()
+    {
+      glm::vec3 scale;
+      glm::quat rotation;
+      glm::vec3 translation;
+      glm::vec3 skew;
+      glm::vec4 perspective;
+
+      glm::decompose(matrix, scale, rotation, translation, skew, perspective);
+
+      return translation;  
+    }
+
+    glm::vec3 transform::scale()
+    {
+      glm::vec3 scale;
+      glm::quat rotation;
+      glm::vec3 translation;
+      glm::vec3 skew;
+      glm::vec4 perspective;
+
+      glm::decompose(matrix, scale, rotation, translation, skew, perspective);
+
+      return scale;
     }
 
   }
