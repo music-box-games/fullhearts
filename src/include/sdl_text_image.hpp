@@ -1,7 +1,7 @@
 #ifndef _WE_SDL_TEXT_IMAGE_HPP_
 #define _WE_SDL_TEXT_IMAGE_HPP_
 
-#ifndef WE_GRAPHICS_SDL2
+#ifdef WE_GRAPHICS_SDL2
 
 #include <string>
 

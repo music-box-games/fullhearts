@@ -2,6 +2,7 @@
 #define _WE_SCENE_MM_HPP_
 
 #include <scenes.hpp>
+#include <events.hpp>
 
 namespace waifuengine
 {
@@ -13,7 +14,8 @@ namespace waifuengine
       SCENE_NAME(scene_mainmenu);
       scene_mainmenu();
       virtual ~scene_mainmenu();
-
+    private:
+      void input_handler(waifuengine::events::event * e);
     };
   }
 }

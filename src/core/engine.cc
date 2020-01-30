@@ -51,27 +51,22 @@ namespace waifuengine
         engine::engine()
         {
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
+            waifuengine::events::init();
             waifuengine::graphics::init(1920, 1080, "test");
             waifuengine::input::init();
             waifuengine::scenes::init();
-            waifuengine::events::init();
             waifuengine::utils::timers::init();
-            // hook into input events
-            //auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
-            // we::events::subscribe<we::input::input_event>(this, f);
-            
 
             running = true;
         }
 
         engine::~engine()
         {
-          we::events::unsubcribe<we::input::input_event>(this);
             waifuengine::utils::timers::shutdown();
-            waifuengine::events::shutdown();
             waifuengine::scenes::shutdown();
             waifuengine::input::shutdown();
             waifuengine::graphics::shutdown();
+            waifuengine::events::shutdown();
             waifuengine::log::shutdown();
         }
 

@@ -1,6 +1,6 @@
 #include <sdl_text_image.hpp>
 
-#ifndef WE_GRAPHICS_SDL2
+#ifdef WE_GRAPHICS_SDL2
 
 namespace we = ::waifuengine;
 
