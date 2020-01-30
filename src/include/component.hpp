@@ -28,7 +28,7 @@ namespace waifuengine
     {
         enum class component_types
         {
-            physics,
+            physics2,
             transform,
             shader,
             texture,

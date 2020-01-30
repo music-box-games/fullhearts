@@ -12,12 +12,10 @@
 #ifndef _WE_TRANSFORM_HPP_
 #define _WE_TRANSFORM_HPP_
 
-#include <glm/mat4x4.hpp>
-#include <glm/vec3.hpp>
-#include <glm/gtx/matrix_decompose.hpp>
+#include <SDL.h>
 
 #include <component.hpp>
-
+// TODO: make this not SDL specific
 namespace waifuengine
 {
   namespace physics
@@ -25,7 +23,7 @@ namespace waifuengine
     class transform : public ::waifuengine::components::component<transform>
     {
     private:
-      glm::mat4 matrix;
+      SDL_Rect r;
 
     public:
       COMPONENT_NAME(transform);
@@ -38,13 +36,9 @@ namespace waifuengine
       virtual void update(float dt) override;
       virtual void draw() const override;
 
-      void rotate(float degrees);
-      void translate(glm::vec3 vec);
-      void scale(glm::vec3 vec);
+      void translate(SDL_Rect r);
 
-      float rotation();
-      glm::vec3 translation();
-      glm::vec3 scale();
+      SDL_Rect translation() const;
     };
   }
 }

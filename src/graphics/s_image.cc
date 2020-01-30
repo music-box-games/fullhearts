@@ -20,12 +20,6 @@ namespace graphics
 {
 namespace sdl2
 {
-  static SDL_Rect build_rect_from_transform(std::shared_ptr<we::physics::transform> t)
-  {
-    SDL_Rect r;
-    return r;
-  }
-
   image_handle::image_handle() : data(nullptr), parent(nullptr) {}
   image_handle::~image_handle()
   {
@@ -72,7 +66,7 @@ namespace sdl2
     }
     else
     {
-      SDL_Rect r = build_rect_from_transform(tr);
+      SDL_Rect r = tr->translation();
       SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, &r);
     }
   }

@@ -32,6 +32,7 @@ add_subdirectory(./src/input)
 add_subdirectory(./src/scenes)
 add_subdirectory(./src/settings)
 add_subdirectory(./src/tests)
+add_subdirectory(./src/physics)
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
@@ -41,9 +42,9 @@ add_executable(${EXENAME} ${SOURCES})
 
 # link subdirs
 if(MSVC)
-target_link_libraries(${EXENAME} components core log utils events graphics input scenes settings tests)
+target_link_libraries(${EXENAME} components core log utils events graphics input scenes settings tests physics)
 else()
-target_link_libraries(${EXENAME} -x -Wl, --start-group components core log utils events graphics input scenes settings tests -Wl, --end-group )
+target_link_libraries(${EXENAME} -x -Wl, --start-group components core log utils events graphics input scenes settings tests physics -Wl, --end-group )
 endif()
 
 # link other libs

@@ -33,6 +33,7 @@ namespace waifuengine
             };
 
             COMPONENT_NAME(physics2);
+            COMPONENT_TYPE(physics2);
 
             physics2();
             virtual ~physics2();
