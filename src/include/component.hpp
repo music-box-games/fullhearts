@@ -33,6 +33,7 @@ namespace waifuengine
             shader,
             texture,
             sprite,
+            textsprite,
             
             // special ones
             basic_shape,
