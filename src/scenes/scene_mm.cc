@@ -25,7 +25,7 @@ namespace scenes
   scene_mainmenu::scene_mainmenu() : scene(std::string(NAME))
   {
     auto sps = manager.build_default_spaces();
-    wef::background_factory::build_background("test background", "./bin/assets/images/test/wallpaper.png", sps.bg);
+    wef::background_factory::build_background("test background", "./assets/images/test/wallpaper.png", sps.bg);
     // TODO: temp
 
     auto f = std::bind(&scene_mainmenu::input_handler, this, std::placeholders::_1);
