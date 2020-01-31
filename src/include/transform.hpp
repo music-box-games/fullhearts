@@ -37,8 +37,13 @@ namespace waifuengine
       virtual void draw() const override;
 
       void translate(SDL_Rect r);
+      void size(SDL_Rect r);
+
+      void set(SDL_Rect r);
+      SDL_Rect get() const;
 
       SDL_Rect translation() const;
+      SDL_Rect size() const;
     };
   }
 }

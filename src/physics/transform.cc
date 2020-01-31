@@ -28,10 +28,32 @@ namespace waifuengine
 
     void transform::translate(SDL_Rect rect)
     {
-      r = rect;
+      r.x = rect.x;
+      r.y = rect.y;
     }
 
     SDL_Rect transform::translation() const
+    {
+      return r;
+    }
+
+    void transform::size(SDL_Rect rect)
+    {
+      r.w = rect.w;
+      r.h = rect.h;
+    }
+
+    SDL_Rect transform::size() const
+    {
+      return r;
+    }
+
+    void transform::set(SDL_Rect rect)
+    {
+      r = rect;
+    }
+
+    SDL_Rect transform::get() const
     {
       return r;
     }
