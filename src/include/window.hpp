@@ -69,6 +69,8 @@ namespace waifuengine
         void clear();
         void render();
 
+        void set_draw_color(int r, int g, int b, int a);
+
       private:
         data_type * window;
         SDL_Renderer * renderer;
@@ -94,8 +96,14 @@ namespace waifuengine
       void clear();
       void render();
 
+      unsigned width() const;
+      unsigned height() const;
+
     private:
       std::shared_ptr<window_type> handle;
+
+      unsigned w;
+      unsigned h;
     };
   }
 }

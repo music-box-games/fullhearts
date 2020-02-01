@@ -22,6 +22,7 @@
 #include <shader.hpp>
 #include <texture.hpp>
 #include <window.hpp>
+#include <debug_draw.hpp>
 
 namespace we = ::waifuengine;
 
@@ -54,6 +55,9 @@ public:
   void render()
   {
     we::log::pedantic("graphics_manager: render");
+    //#ifdef DEBUG
+    we::graphics::debug::draw_debug();
+    //#endif
     window->render();
   }
 

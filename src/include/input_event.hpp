@@ -20,6 +20,7 @@ namespace waifuengine
       LSHIFT, Z, X, C, V, B, N, M, COMMA, PERIOD, FORWARDSLASH, RSHIFT,
       LCTRL, FN, WIN, LALT, SPACE, RALT, CONTEXT, RCTRL,
       INSERT, HOME, PGUP, PGDN, DEL, END, UP, LEFT, RIGHT, DOWN,
+      MOUSE1, MOUSE2, 
       // special
       NONE = -1,
     };

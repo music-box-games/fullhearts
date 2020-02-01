@@ -3,6 +3,7 @@
 #ifdef WE_GRAPHICS_SDL2
 
 #include <unordered_map>
+#include <cstdint>
 
 #include <SDL.h>
 #include <input_event.hpp>
@@ -39,6 +40,11 @@ namespace sdl2
     { SDLK_RCTRL, we::input::keys::RCTRL },
   };
 
+  static std::unordered_map<uint8_t, we::input::keys> mousemap = 
+  {
+    { SDL_BUTTON_LEFT, we::input::keys::MOUSE1 }, { SDL_BUTTON_RIGHT, we::input::keys::MOUSE2 },
+  };
+
   void init()
   {
 
@@ -63,12 +69,24 @@ namespace sdl2
           we::events::handle<input_event>(&ev);
         }
       }
+      else if(e.type == SDL_MOUSEBUTTONDOWN)
+      {
+        we::input::input_event ev;
+        ev.key = mousemap[e.button.button];
+        ev.type = we::input::input_type::PRESS;
+        we::events::handle<input_event>(&ev);
+      }
     }
   }
 
   void shutdown()
   {
 
+  }
+
+  void get_mouse_position(int * x, int * y)
+  {
+    SDL_GetMouseState(x, y);
   }
 }
 }

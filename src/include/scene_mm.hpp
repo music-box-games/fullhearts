@@ -16,6 +16,7 @@ namespace waifuengine
       virtual ~scene_mainmenu();
     private:
       void input_handler(waifuengine::events::event * e);
+      void on_quit_click();
     };
   }
 }

@@ -16,6 +16,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <memory>
+#include <mutex>
 
 namespace waifuengine
 {
@@ -38,6 +39,7 @@ namespace waifuengine
             std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>> components_;
 
             std::string name_;
+            std::mutex lock_;
 
         public:
             gameobject(std::string n);
@@ -46,8 +48,9 @@ namespace waifuengine
             template<class _CType>
             std::shared_ptr<_CType> add_component()
             {
+                std::scoped_lock(lock_);
                 auto ptr = std::shared_ptr<_CType>(new _CType);
-                ptr->parent = std::weak_ptr<gameobject>(shared_from_this());
+                ptr->parent = this;
                 components_[_CType::NAME] = ptr; // TODO: handle multiple of one component
                 return ptr;
             }
@@ -55,13 +58,17 @@ namespace waifuengine
             template<class _CType>
             void remove_component()
             {
+              std::scoped_lock(lock_);
+
                 components_.erase(_CType::NAME);
             }
 
             template<class _CType>
-            std::shared_ptr<_CType> get_component()
+            std::shared_ptr<waifuengine::components::_impl::_base_component> get_component()
             {
-                return (components_.count(_CType::NAME)) ? std::shared_ptr<_CType>(dynamic_cast<_CType *>(components_[_CType::NAME].get())) : nullptr;
+                std::scoped_lock(lock_);
+
+                return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
             }
 
             void update(float dt);
@@ -69,7 +76,12 @@ namespace waifuengine
 
             std::string const& name() const;
 
-            std::size_t components() const { return components_.size(); }
+            std::size_t components() const 
+            { 
+              std::scoped_lock(lock_);
+
+              return components_.size(); 
+            }
         };
     }
 }

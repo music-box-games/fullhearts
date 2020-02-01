@@ -19,6 +19,8 @@ namespace waifuengine
     void init();
     void update();
     void shutdown();
+
+    void get_mouse_position(int * x, int * y);
   }
 }
 

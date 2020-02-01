@@ -49,5 +49,13 @@ void update()
   sdl2::update();
   #endif
 }
+
+void get_mouse_position(int * x, int * y)
+{
+  #ifdef WE_GRAPHICS_SDL2
+  sdl2::get_mouse_position(x, y);
+  #endif
+}
+
 } // namespace input
 } // namespace waifuengine

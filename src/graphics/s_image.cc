@@ -57,17 +57,23 @@ namespace sdl2
 
   void image_handle::draw() const
   {
-    //if(!data) return;
-    auto obj = reinterpret_cast<we::graphics::sprite *>(parent->get_parent())->parent.lock();
-    auto tr = obj->get_component<we::physics::transform>();
-    if(tr.use_count() == 0)
+    auto * obj = reinterpret_cast<we::graphics::sprite*>(parent->get_parent())->parent;
+    we::physics::transform * t = dynamic_cast<we::physics::transform *>(obj->get_component<we::physics::transform>().get());
+    if(!t)
     {
       SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, NULL);
     }
     else
     {
-      SDL_Rect r = tr->translation();
-      SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, &r);
+      SDL_Rect r = t->get();
+      // SDL uses top left corner as (0,0), including for the dsrect for SDL_RenderCopy.
+      // So we need to convert the x,y coords stored in transform to that they represent the top left of the object
+      SDL_Rect adjusted_coords;
+      adjusted_coords.x = r.x - (r.w / 2);
+      adjusted_coords.y = r.y - (r.h / 2);
+      adjusted_coords.w = r.w;
+      adjusted_coords.h = r.h;
+      SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, &adjusted_coords);
     }
   }
 

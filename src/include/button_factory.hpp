@@ -3,6 +3,7 @@
 
 #include <gameobject.hpp>
 #include <space.hpp>
+#include <functional>
 
 namespace waifuengine
 {
@@ -13,8 +14,8 @@ namespace waifuengine
     class button_factory
     {
     public:
-      static std::shared_ptr<button> build_textbutton(std::string name, std::string file, std::string text, std::shared_ptr<waifuengine::object_management::space> space = {});
-      static std::shared_ptr<button> build_imagebutton(std::string name, std::string file, std::shared_ptr<waifuengine::object_management::space> space = {});
+      static std::shared_ptr<button> build_textbutton(std::string name, std::string file, std::string text, std::function<void()> f = {},std::shared_ptr<waifuengine::object_management::space> space = {});
+      static std::shared_ptr<button> build_imagebutton(std::string name, std::string file, std::function<void()> f = {}, std::shared_ptr<waifuengine::object_management::space> space = {});
     };
   }
 }

@@ -29,6 +29,9 @@ namespace waifuengine
         enum class component_types
         {
             physics2,
+            collider,
+            box_collider,
+            button_collider,
             transform,
             shader,
             texture,
@@ -48,9 +51,9 @@ namespace waifuengine
             public:
                 std::string name;
                 component_types type;
-                std::weak_ptr<we::object_management::gameobject> parent;
+                we::object_management::gameobject * parent;
 
-                _base_component(std::string n, component_types t) : name(n), type(t) {}
+                _base_component(std::string n, component_types t) : name(n), type(t), parent(nullptr) {}
                 virtual ~_base_component() {}
 
                 virtual void update(float dt) = 0;

@@ -101,6 +101,11 @@ namespace sdl2
     we::graphics::sdl2::render();
   }
 
+  void window_handle::set_draw_color(int r, int g, int b, int a)
+  {
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+  }
+
   SDL_Renderer * window_handle::get_renderer()
   {
     return renderer;
@@ -109,7 +114,7 @@ namespace sdl2
   #endif // WE_GRAPHICS_SDL2
 }
 
-window::window(unsigned width, unsigned height, std::string title)
+window::window(unsigned width, unsigned height, std::string title) : w(width), h(height)
 {
   handle = std::shared_ptr<window_type>(new window_type(width, height, title));
 }
@@ -133,5 +138,16 @@ void window::render()
 {
   handle->render();
 }
+
+unsigned window::width() const
+{
+  return w;
+}
+
+unsigned window::height() const
+{
+  return h;
+}
+
 }
 }

@@ -20,7 +20,7 @@ namespace waifuengine
 {
     namespace object_management
     {
-        enum class space_order
+        enum class space_order : int
         {
             BACKGROUND = 0,
             CHARACTER,

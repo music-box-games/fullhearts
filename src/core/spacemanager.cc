@@ -47,8 +47,10 @@ namespace waifuengine
 
         void space_manager::draw() const
         {
-            static auto const f = [](std::pair<std::string, std::shared_ptr<space>> sp) -> void { sp.second->draw(); };
-            std::for_each(spaces_.begin(), spaces_.end(), f);
+            for (auto& sp : spaces_)
+            {
+              sp.second->draw();
+            }
         }
 
         std::size_t space_manager::spaces() const

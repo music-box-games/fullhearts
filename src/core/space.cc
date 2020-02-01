@@ -60,8 +60,10 @@ namespace waifuengine
 
         void space::draw() const
         {
-            static auto const f = [](std::pair<std::string, std::shared_ptr<gameobject>> obj) -> void { obj.second->draw(); };
-            std::for_each(objects_.begin(), objects_.end(), f);
+          for (auto& obj : objects_)
+          {
+            obj.second->draw();
+          }
         }
 
         std::size_t space::objects() const
