@@ -25,11 +25,15 @@ namespace waifuengine
 
       void set_trigger(std::function<void()> func);
 
+      void set_nonhover_image(std::string name);
+      void set_hover_image(std::string name);
+
     private:
       void input_handler(waifuengine::events::event* e);
       bool check_point_collision(int const& x, int const& y);
       void get_line(int line, int* x1, int* y1, int* x2, int* y2) const;
       bool hover;
+      std::string nhimage, himage;
       std::function<void()> f;
     };
   }

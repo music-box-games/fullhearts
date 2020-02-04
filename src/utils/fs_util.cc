@@ -13,6 +13,7 @@
 
 #include <fs_util.hpp>
 #include <log.hpp>
+#include <boost/dll.hpp>
 
 namespace we = ::waifuengine;
 
@@ -36,6 +37,13 @@ namespace waifuengine
         we::log::warning(ss.str());
       }
       return fs::path("ERROR VALUE");
+    }
+
+    std::string get_exe_path()
+    {
+      std::string p = boost::dll::program_location().string();
+      p = p.substr(0, p.find_last_of("\\"));
+      return p;
     }
   }
 }

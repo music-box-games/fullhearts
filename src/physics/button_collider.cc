@@ -5,6 +5,7 @@
 #include <transform.hpp>
 #include <graphics.hpp>
 #include <debug_draw.hpp>
+#include <sprite.hpp>
 
 // TODO: make this less dependant on SDL
 
@@ -16,7 +17,7 @@ namespace waifuengine
 {
 namespace physics
 {
-  button_collider::button_collider() : collider(), hover(false)
+  button_collider::button_collider() : collider(), hover(false), himage(""), nhimage("")
   {
     auto bound = std::bind(&button_collider::input_handler, this, std::placeholders::_1);
     we::events::subscribe<we::input::input_event>(this, bound);
@@ -36,14 +37,34 @@ namespace physics
     // TODO: check for hover
     int x, y;
     SDL_GetMouseState(&x, &y);
+    auto * sp = dynamic_cast<we::graphics::sprite *>(parent->get_component<we::graphics::sprite>().get());
+    bool prevhover = hover;
     if (check_point_collision(x, y))
     {
       hover = true;
+      if ((!himage.empty()) && prevhover != hover)
+      {
+        sp->link_image(himage); // link hover image
+      }
     }
     else
     {
       hover = false;
+      if (prevhover != hover)
+      {
+        sp->link_image(nhimage);
+      }
     }
+  }
+
+  void button_collider::set_hover_image(std::string name)
+  {
+    himage = name;
+  }
+
+  void button_collider::set_nonhover_image(std::string name)
+  {
+    nhimage = name;
   }
 
   void button_collider::draw() const

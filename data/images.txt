@@ -1,0 +1,4 @@
+blank button|/assets/images/ui/blank_button.png
+blank button hover|/assets/images/ui/blank_button_hover.png
+mm_bg|/assets/images/ui/main_menu_bg.png
+splash screen|/assets/images/test/wallpaper.png

@@ -23,6 +23,7 @@
 #include <texture.hpp>
 #include <window.hpp>
 #include <debug_draw.hpp>
+#include <assets.hpp>
 
 namespace we = ::waifuengine;
 
@@ -73,6 +74,10 @@ void init(unsigned width, unsigned height, std::string title)
 {
   we::log::trace("graphics: init");
   gman = new graphics_manager(width, height, title);
+  we::core::assets::init();
+  std::string path = we::utils::get_exe_path();
+  path.append("\\data\\images.txt");
+  we::core::load_images(path);
 }
 
 void clear()
@@ -90,6 +95,7 @@ void render()
 void shutdown()
 {
   we::log::trace("graphics: shutdown");
+  we::core::assets::shutdown();
   delete gman;
   gman = nullptr;
 }

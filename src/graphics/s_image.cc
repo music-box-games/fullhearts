@@ -11,6 +11,7 @@
 #include <sprite.hpp>
 #include <transform.hpp>
 #include <glm/vec3.hpp>
+#include <gameobject.hpp>
 
 namespace we = ::waifuengine;
 
@@ -20,7 +21,7 @@ namespace graphics
 {
 namespace sdl2
 {
-  image_handle::image_handle() : data(nullptr), parent(nullptr) {}
+  image_handle::image_handle() : data(nullptr) {}
   image_handle::~image_handle()
   {
     SDL_DestroyTexture(data);
@@ -55,10 +56,10 @@ namespace sdl2
     return !(data == nullptr);
   }
 
-  void image_handle::draw() const
+  void image_handle::draw(void * p) const
   {
-    auto * obj = reinterpret_cast<we::graphics::sprite*>(parent->get_parent())->parent;
-    we::physics::transform * t = dynamic_cast<we::physics::transform *>(obj->get_component<we::physics::transform>().get());
+    waifuengine::object_management::gameobject* parent = reinterpret_cast<waifuengine::object_management::gameobject*>(p);
+    we::physics::transform * t = dynamic_cast<we::physics::transform *>(parent->get_component<we::physics::transform>().get());
     if(!t)
     {
       SDL_RenderCopy(we::graphics::get_window()->data()->get_renderer(), data, NULL, NULL);
@@ -81,16 +82,6 @@ namespace sdl2
   {
     SDL_DestroyTexture(data);
     data = nullptr;
-  }
-
-  void image_handle::set_parent(image * p)
-  {
-    parent = p;
-  }
-
-  image * image_handle::get_parent()
-  {
-    return parent;
   }
 }
 } // namespace graphics

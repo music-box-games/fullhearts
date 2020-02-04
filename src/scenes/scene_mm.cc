@@ -33,8 +33,8 @@ namespace scenes
   scene_mainmenu::scene_mainmenu() : scene(std::string(NAME))
   {
     auto sps = manager.build_default_spaces();
-    wef::background_factory::build_background("test background", "./assets/images/ui/main_menu_bg.png", sps.bg);
-    wef::button_factory::build_imagebutton("test button", "./assets/images/ui/load button.png", std::bind(&scene_mainmenu::on_quit_click, this), sps.ui);
+    wef::background_factory::build_background("test background", "mm_bg", sps.bg);
+    wef::button_factory::build_imagebutton("test button", "blank button", "blank button hover", std::bind(&scene_mainmenu::on_quit_click, this), sps.ui);
 
     auto f = std::bind(&scene_mainmenu::input_handler, this, std::placeholders::_1);
     we::events::subscribe<we::input::input_event>(this, f);

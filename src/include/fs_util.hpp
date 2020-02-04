@@ -19,6 +19,7 @@ namespace waifuengine
   namespace utils
   {
     fs::path get_path_relative_to_exe(std::string find);
+    std::string get_exe_path();
   }
 }
 

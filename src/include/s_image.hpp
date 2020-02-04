@@ -30,14 +30,10 @@ namespace waifuengine
 
         bool valid() const;
 
-        void draw() const;
-
-        void set_parent(image * p);
-        image * get_parent();
+        void draw(void * parent) const;
 
       private:
         image_type * data;
-        image * parent;
       };
     }
   }

@@ -33,8 +33,11 @@ namespace waifuengine
 
       void load_image(std::string file);
       void unload_image();
+
+      void link_image(std::string name);
+      void link_image(std::shared_ptr<image> i);
     private:
-      image im;
+      std::shared_ptr<image> im;
     };
   }
 }

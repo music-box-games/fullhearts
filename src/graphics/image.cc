@@ -4,9 +4,9 @@ namespace waifuengine
 {
 namespace graphics
 {
-  image::image() : handle(new handle_type()), parent(nullptr) 
+  image::image() : handle(new handle_type())
   {
-    handle->set_parent(this);
+    
   }
 
   image::~image() {}
@@ -31,19 +31,9 @@ namespace graphics
     return handle->valid();
   }
 
-  void image::draw() const
+  void image::draw(void * p) const
   {
-    handle->draw();
-  }
-
-  void image::set_parent(void * p)
-  {
-    parent = p;
-  }
-
-  void * image::get_parent()
-  {
-    return parent;
+    handle->draw(p);
   }
 
 }
