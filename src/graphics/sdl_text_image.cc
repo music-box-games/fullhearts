@@ -1,6 +1,19 @@
+/******************************************************************************/
+/*!
+\file   sdl_text_image.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  SDL handle for text images
+
+*/
+/******************************************************************************/
+
 #include <sdl_text_image.hpp>
 
 #ifdef WE_GRAPHICS_SDL2
+
+#include <SDL_ttf.h>
 
 namespace we = ::waifuengine;
 
@@ -10,22 +23,17 @@ namespace graphics
 {
 namespace sdl2
 {
-  text_image_handle::text_image_handle() : t_("") {}
-  text_image_handle::text_image_handle(std::string t) : t_(t) {}
-  text_image_handle::text_image_handle(text_image_handle const& other) : t_(other.t_) {}
-  text_image_handle::~text_image_handle() {}
-
-  void text_image_handle::text(std::string t)
+  text_image_handle::text_image_handle(std::string t) : t_(t), data(nullptr)
   {
-    t_ = t;
+    
   }
 
-  std::string text_image_handle::text() const
+  text_image_handle::~text_image_handle()
   {
-    return t_;
+    SDL_DestroyTexture(data);
   }
 
-  void text_image_handle::draw() const
+  void text_image_handle::draw(void * p) const
   {
     // TODO: actually render text
   }

@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   exceptions.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Exception classes
+
+*/
+/******************************************************************************/
+
 #include <exceptions.hpp>
 
 namespace we = ::waifuengine;

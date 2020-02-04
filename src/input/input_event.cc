@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   input_event.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Input event class
+
+*/
+/******************************************************************************/
+
 #include <input_event.hpp>
 
 namespace waifuengine

@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   collider.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Collider component
+
+*/
+/******************************************************************************/
+
 #include <collider.hpp>
 #include <log.hpp>
 #include <transform.hpp>

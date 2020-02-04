@@ -1,13 +1,86 @@
+/******************************************************************************/
+/*!
+\file   assets.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Data driven loading of assets
+
+*/
+/******************************************************************************/
+
 #include <unordered_map>
 
 #include <assets.hpp>
 #include <utils.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/dll.hpp>
+#include <text_image.hpp>
 
 namespace waifuengine
 {
 namespace core
+{
+namespace text_assets
+{
+  using tptr = std::shared_ptr<waifuengine::graphics::text_image>;
+
+  class text_bank
+  {
+  private:
+    std::unordered_map<std::string, tptr> texts;
+  public:
+    text_bank() {}
+    ~text_bank() {}
+
+    void load(std::string t)
+    {
+      tptr ti = tptr(new waifuengine::graphics::text_image());
+      texts[t] = ti;
+    }
+
+    void unload(std::string t)
+    {
+      texts.erase(t);
+    }
+
+    tptr get(std::string t)
+    {
+      if(texts.count(t) == 0)
+      {
+        load(t);
+      }
+      return texts[t];
+    }
+  };
+
+  std::shared_ptr<text_bank> bank;
+
+  tptr get_text(std::string t)
+  {
+    return bank->get(t);
+  }
+
+  void unload_text(std::string t)
+  {
+    bank->unload(t);
+  }
+
+  void init()
+  {
+    if(bank.use_count() == 0)
+    {
+      bank = std::shared_ptr<text_bank>(new text_bank());
+    }
+  }
+
+  void shutdown()
+  {
+    bank.reset();
+  }
+}
+
+namespace assets
 {
   using imgptr = std::shared_ptr<waifuengine::graphics::image>;
 
@@ -67,8 +140,6 @@ namespace core
     bank->remove_image(name);
   }
 
-namespace assets
-{
   void init()
   {
     if (bank.use_count() == 0)

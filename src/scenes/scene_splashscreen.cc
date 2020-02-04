@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   scene_splashscreen.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Splashscreen on load
+
+*/
+/******************************************************************************/
+
 #include <scene_splashscreen.hpp>
 
 #include <spacemanager.hpp>

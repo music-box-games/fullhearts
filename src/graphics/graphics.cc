@@ -77,7 +77,7 @@ void init(unsigned width, unsigned height, std::string title)
   we::core::assets::init();
   std::string path = we::utils::get_exe_path();
   path.append("\\data\\images.txt");
-  we::core::load_images(path);
+  we::core::assets::load_images(path);
 }
 
 void clear()

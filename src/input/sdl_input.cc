@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   sdl_input.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  SDL wrapper with input handling
+
+*/
+/******************************************************************************/
+
 #include <sdl_input.hpp>
 
 #ifdef WE_GRAPHICS_SDL2

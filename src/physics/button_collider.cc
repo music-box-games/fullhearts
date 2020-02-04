@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   button_collider.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Collider component for buttons
+
+*/
+/******************************************************************************/
+
 #include <button_collider.hpp>
 #include <event_manager.hpp>
 #include <input_event.hpp>

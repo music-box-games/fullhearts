@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   background_factory.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Factory for making backgrounds
+
+*/
+/******************************************************************************/
+
 #include <background_factory.hpp>
 #include <spacemanager.hpp>
 #include <space.hpp>

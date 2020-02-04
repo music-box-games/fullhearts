@@ -3,6 +3,8 @@
 
 #ifdef WE_GRAPHICS_SDL2
 
+#include <SDL.h>
+
 #include <string>
 
 namespace waifuengine
@@ -14,18 +16,17 @@ namespace waifuengine
       class text_image_handle
       {
       public:
-        text_image_handle();
+        #ifdef WE_GRAPHICS_SDL2
+        using image_type = SDL_Texture
+        #endif
         text_image_handle(std::string t);
-        text_image_handle(text_image_handle const& other);
         ~text_image_handle();
 
-        void text(std::string t);
-        std::string text() const;
-
-        void draw() const;
+        void draw(void * parent) const;
         
       private:
         std::string t_;
+        image_type * data;
       };
     }
   }

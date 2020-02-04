@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   textsprite.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Special sprite for rendered text
+
+*/
+/******************************************************************************/
+
 #include <textsprite.hpp>
 
 namespace we = ::waifuengine;

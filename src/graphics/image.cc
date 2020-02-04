@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   image.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Image wrapper class to be cross platform.
+
+*/
+/******************************************************************************/
+
 #include <image.hpp>
 
 namespace waifuengine

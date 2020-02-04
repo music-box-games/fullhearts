@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   s_image.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  SDL handle for images
+
+*/
+/******************************************************************************/
+
 #include <s_image.hpp>
 
 #ifdef WE_GRAPHICS_SDL2

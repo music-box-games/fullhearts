@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   scene_mm.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Main menu scene
+
+*/
+/******************************************************************************/
+
 #include <scene_mm.hpp>
 #include <factories.hpp>
 #include <event_manager.hpp>

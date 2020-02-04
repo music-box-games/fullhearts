@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   button_factory.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Factory for making buttons
+
+*/
+/******************************************************************************/
+
 #include <button_factory.hpp>
 #include <scenemanager.hpp>
 #include <sprite.hpp>

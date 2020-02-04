@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   debug_draw.cc
+\author Ryan Hanson
+\par    email: iovita\@musicboxgames.net
+\brief
+  Debug drawing.
+
+*/
+/******************************************************************************/
+
 #include <vector>
 
 #include <debug_draw.hpp>

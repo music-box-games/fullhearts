@@ -16,6 +16,8 @@ namespace waifuengine
     public:
       #ifdef WE_GRAPHICS_SDL2
       using handle_type = sdl2::text_image_handle;
+      #else
+      using handle_type = void *;
       #endif
 
       text_image();
