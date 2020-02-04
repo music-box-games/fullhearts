@@ -2,6 +2,7 @@
 #define _WE_TEXTSPRITE_HPP_
 
 #include <string>
+#include <memory>
 
 #include <component.hpp>
 #include <text_image.hpp>
@@ -19,14 +20,11 @@ namespace waifuengine
       textsprite();
       virtual ~textsprite();
 
-      void text(std::string t);
-      std::string text() const;
-
       virtual void update(float dt);
       virtual void draw() const;
 
     private:
-      text_image ti;
+      std::shared_ptr<text_image> ti;
     };
   }
 }

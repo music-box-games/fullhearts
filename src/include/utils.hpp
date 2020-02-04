@@ -32,6 +32,7 @@ namespace waifuengine
   {
     std::vector<std::string> parse_file_to_vector(std::string f);
     std::string parse_file_to_string(std::string f);
+    int str_to_int(std::string s);
 
     template<typename T>
     std::string to_string()

@@ -2,6 +2,7 @@
 #define _WE_TEXT_IMAGE_HPP_
 
 #include <string>
+#include <memory>
 
 #ifdef WE_GRAPHICS_SDL2
 #include <sdl_text_image.hpp>
@@ -13,25 +14,7 @@ namespace waifuengine
   {
     class text_image
     {
-    public:
-      #ifdef WE_GRAPHICS_SDL2
-      using handle_type = sdl2::text_image_handle;
-      #else
-      using handle_type = void *;
-      #endif
-
-      text_image();
-      text_image(std::string text);
-      text_image(text_image const& other);
-      ~text_image();
-
-      void text(std::string t);
-      std::string text() const;
-
-      void draw() const;
-
-    private:
-      handle_type handle;
+ 
     };
   }
 }

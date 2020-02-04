@@ -51,7 +51,6 @@ namespace factory
   {
     auto obj = build_imagebutton(name, imname, hover_name, f, sp);
     auto tsprite = obj->add_component<we::graphics::textsprite>();
-    tsprite->text(text);
 
     return obj;
   }

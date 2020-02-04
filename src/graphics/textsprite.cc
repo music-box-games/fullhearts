@@ -20,21 +20,14 @@ namespace graphics
   textsprite::textsprite() : we::components::component<textsprite>() {}
   textsprite::~textsprite() {}
 
-  void textsprite::text(std::string t)
+  void textsprite::update(float)
   {
-    ti.text(t);
-  }
 
-  std::string textsprite::text() const
-  {
-    return ti.text();
   }
-
-  void textsprite::update(float) {}
 
   void textsprite::draw() const
   {
-    ti.draw();
+
   }
 }
 } // namespace waifuengine

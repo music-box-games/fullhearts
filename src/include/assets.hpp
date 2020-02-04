@@ -5,12 +5,13 @@
 #include <memory>
 #include <image.hpp>
 #include <text_image.hpp>
+#include <font.hpp>
 
 namespace waifuengine
 {
   namespace core
   {
-    namespace assets
+    namespace image_assets
     {
       void load_images(std::string ilist);
       std::shared_ptr<waifuengine::graphics::image> get_image(std::string name);
@@ -23,6 +24,21 @@ namespace waifuengine
     {
       std::shared_ptr<waifuengine::graphics::text_image> get_text(std::string text);
       void unload_text(std::string text);
+      void init();
+      void shutdown();
+    }
+
+    namespace font_assets
+    {
+      void load_fonts(std::string flist);
+      std::shared_ptr<waifuengine::graphics::font> get_font(std::string name);
+      void unload_font(std::string name);
+      void init();
+      void shutdown();
+    }
+
+    namespace assets
+    {
       void init();
       void shutdown();
     }

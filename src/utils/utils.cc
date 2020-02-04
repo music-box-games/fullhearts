@@ -51,5 +51,10 @@ namespace waifuengine
 
       return ss.str();
     }
+
+    int str_to_int(std::string s)
+    {
+      return std::stoi(s);
+    }
   }
 }

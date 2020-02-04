@@ -14,6 +14,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <sdl_graphics.hpp>
 #include <utils.hpp>
 #include <window.hpp>
@@ -44,6 +45,13 @@ namespace sdl2
       utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not init PNG loading!");
       std::exit(-1);
     }
+
+    // init fonts
+    if(TTF_Init() == -1)
+    {
+      utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not init TTF!");
+      std::exit(-1);
+    }
   }
 
   void clear()
@@ -58,6 +66,7 @@ namespace sdl2
 
   void shutdown()
   {
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
   }

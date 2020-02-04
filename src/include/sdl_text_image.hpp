@@ -17,7 +17,7 @@ namespace waifuengine
       {
       public:
         #ifdef WE_GRAPHICS_SDL2
-        using image_type = SDL_Texture
+        using image_type = SDL_Texture;
         #endif
         text_image_handle(std::string t);
         ~text_image_handle();

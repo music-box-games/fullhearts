@@ -36,7 +36,7 @@ namespace waifuengine
 
     void sprite::link_image(std::string name)
     {
-      link_image(we::core::assets::get_image(name));
+      link_image(we::core::image_assets::get_image(name));
     }
 
     void sprite::link_image(std::shared_ptr<image> i)

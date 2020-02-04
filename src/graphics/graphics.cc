@@ -77,7 +77,10 @@ void init(unsigned width, unsigned height, std::string title)
   we::core::assets::init();
   std::string path = we::utils::get_exe_path();
   path.append("\\data\\images.txt");
-  we::core::assets::load_images(path);
+  we::core::image_assets::load_images(path);
+  path = we::utils::get_exe_path();
+  path.append("\\data\\fonts.txt");
+  we::core::font_assets::load_fonts(path);
 }
 
 void clear()
