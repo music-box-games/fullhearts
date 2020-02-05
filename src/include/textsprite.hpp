@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file   textsprite.hpp
+\author Ryan Hanson
+\par    email: iovita@musicboxgames.net
+\brief
+  Type of sprite for images of rendered text
+
+*/
+/******************************************************************************/
+
 #ifndef _WE_TEXTSPRITE_HPP_
 #define _WE_TEXTSPRITE_HPP_
 
@@ -22,6 +33,8 @@ namespace waifuengine
 
       virtual void update(float dt);
       virtual void draw() const;
+
+      void set_text(std::string s);
 
     private:
       std::shared_ptr<text_image> ti;

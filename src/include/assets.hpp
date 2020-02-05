@@ -4,11 +4,15 @@
 #include <string>
 #include <memory>
 #include <image.hpp>
-#include <text_image.hpp>
 #include <font.hpp>
 
 namespace waifuengine
 {
+  namespace graphics
+  {
+    class text_image;
+  }
+
   namespace core
   {
     namespace image_assets
@@ -35,6 +39,7 @@ namespace waifuengine
       void unload_font(std::string name);
       void init();
       void shutdown();
+      std::shared_ptr<waifuengine::graphics::font> default_font();
     }
 
     namespace assets

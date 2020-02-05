@@ -36,7 +36,8 @@ public:
 
   void load(std::string t)
   {
-    tptr ti = tptr(new waifuengine::graphics::text_image());
+    auto f = waifuengine::core::font_assets::default_font();
+    tptr ti = tptr(new waifuengine::graphics::text_image(t, f));
     texts[t] = ti;
   }
 
@@ -189,6 +190,11 @@ namespace font_assets
   fptr get_font(std::string name)
   {
     return bank->get(name);
+  }
+
+  fptr default_font()
+  {
+    return bank->get("default font");
   }
 
   void unload_font(std::string name)

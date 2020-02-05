@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include <font.hpp>
+
 namespace waifuengine
 {
   namespace graphics
@@ -16,16 +18,15 @@ namespace waifuengine
       class text_image_handle
       {
       public:
-        #ifdef WE_GRAPHICS_SDL2
         using image_type = SDL_Texture;
-        #endif
-        text_image_handle(std::string t);
+        text_image_handle(std::string t, std::shared_ptr<waifuengine::graphics::font> f);
         ~text_image_handle();
 
         void draw(void * parent) const;
         
       private:
         std::string t_;
+        std::shared_ptr<waifuengine::graphics::font> f_;
         image_type * data;
       };
     }

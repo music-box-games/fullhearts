@@ -27,7 +27,13 @@ namespace graphics
 
   void textsprite::draw() const
   {
+    ti->draw(parent);
+  }
 
+  void textsprite::set_text(std::string t)
+  {
+    ti.reset();
+    ti = std::shared_ptr<text_image>(new text_image(t));
   }
 }
 } // namespace waifuengine

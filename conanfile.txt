@@ -11,6 +11,7 @@ frozen/20181020@bincrafters/stable
 sdl2/2.0.10@bincrafters/stable
 sdl2_image/2.0.4@bincrafters/stable
 sdl2_ttf/2.0.15@bincrafters/stable
+imgui/1.74
 
 [generators]
 cmake
