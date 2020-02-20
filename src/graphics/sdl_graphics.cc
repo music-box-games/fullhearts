@@ -16,6 +16,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <sdl_graphics.hpp>
+#include <sdl_audio.hpp>
 #include <utils.hpp>
 #include <window.hpp>
 #include <graphics.hpp>
@@ -32,7 +33,7 @@ namespace sdl2
 
   void init()
   {
-    if(SDL_Init(SDL_INIT_VIDEO) < 0)
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
       utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Could not initialize SDL!");
       std::exit(-1);

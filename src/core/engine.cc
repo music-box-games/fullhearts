@@ -23,6 +23,7 @@
 #include <event_manager.hpp>
 #include <input_event.hpp>
 #include <timer_manager.hpp>
+#include <audio.hpp>
 
 namespace we = ::waifuengine;
 
@@ -53,6 +54,7 @@ namespace waifuengine
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
             waifuengine::events::init();
             waifuengine::graphics::init(1920, 1080, "test");
+            waifuengine::audio::init();
             waifuengine::input::init();
             waifuengine::scenes::init();
             waifuengine::utils::timers::init();
@@ -65,6 +67,7 @@ namespace waifuengine
             waifuengine::utils::timers::shutdown();
             waifuengine::scenes::shutdown();
             waifuengine::input::shutdown();
+            waifuengine::audio::shutdown();
             waifuengine::graphics::shutdown();
             waifuengine::events::shutdown();
             waifuengine::log::shutdown();
@@ -89,6 +92,8 @@ namespace waifuengine
 
             // then render
             ::waifuengine::graphics::render();
+
+            we::audio::update();
         }
 
         void engine::load_initial_scene()
