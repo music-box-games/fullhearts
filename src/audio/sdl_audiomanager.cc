@@ -1,4 +1,6 @@
 
+#ifdef WE_AUDIO_SDL2
+
 #include <sdl_audiomanager.hpp>
 
 namespace waifuengine
@@ -99,3 +101,5 @@ namespace sdl2
 } // namespace sdl2
 } // namespace audio
 } // namespace waifuengine
+
+#endif // WE_AUDIO_SDL2
