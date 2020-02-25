@@ -59,6 +59,8 @@ namespace waifuengine
         audio_manager();
         ~audio_manager();
 
+        void update();
+
         std::optional<sfx_handle_ptr> load_sfx(std::string name, std::string path);
         std::optional<music_handle_ptr> load_music(std::string name, std::string path);
 

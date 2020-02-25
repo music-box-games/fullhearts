@@ -1,3 +1,4 @@
+
 #include <sdl_audiomanager.hpp>
 
 namespace waifuengine
@@ -93,6 +94,8 @@ namespace sdl2
     }
     else return {};
   }
-}
+
+  void audio_manager::update() {}
+} // namespace sdl2
 } // namespace audio
 } // namespace waifuengine
