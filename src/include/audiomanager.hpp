@@ -12,6 +12,18 @@ namespace waifuengine
     typedef sdl2::audio_manager audio_manager;
   }
 }
-
 #endif
+
+#ifdef WE_AUDIO_FMOD_LL
+
+#include <fmod_audiomanager.hpp>
+
+namespace waifuengine
+{
+  namespace audio
+  {
+    typedef fmodll_impl::audio_manager audio_manager;
+  }
+}
+
 #endif
