@@ -16,7 +16,6 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <sdl_graphics.hpp>
-#include <sdl_audio.hpp>
 #include <utils.hpp>
 #include <window.hpp>
 #include <graphics.hpp>

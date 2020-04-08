@@ -33,6 +33,25 @@ namespace waifuengine
       using event_map = std::unordered_map<std::string, std::unordered_map<void *, event_callback>>;
       event_map events_;
 
+      template<typename Event>
+      void handle_st(Event * e, std::string const& ename)
+      {
+        if(events_.count(ename))
+        {
+          auto& eset = events_[ename];
+          for(auto& p : eset)
+          {
+            (p.second)(e);
+          }
+        }
+      }
+
+      template<typename Event>
+      void handle_mt(Event * e, std::string const& ename)
+      {
+
+      }
+
     public:
       event_manager();
       ~event_manager();
@@ -73,14 +92,7 @@ namespace waifuengine
       void handle(Event * e)
       {
         std::string ename(Event::NAME);
-        if(events_.count(ename))
-        {
-          auto& eset = events_[ename];
-          for(auto& p : eset)
-          {
-            (p.second)(e);
-          }
-        }
+        handle_st(e, ename);
       }
     };
 
