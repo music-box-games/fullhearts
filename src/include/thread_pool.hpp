@@ -2,6 +2,7 @@
 #define _WE_THREAD_POOL_HPP_
 
 #include <cstddef> // std::size_t
+#include <functional> // std::function
 
 namespace waifuengine
 {
@@ -9,7 +10,7 @@ namespace waifuengine
   {
     namespace thread_pool
     {
-      typedef void(*task)(void);
+      typedef std::function<void()> task;
 
       void init();
       void update();

@@ -49,11 +49,20 @@ namespace waifuengine
             ("test,t", "Runs engine tests. If this flag is specified, no other flags will be evaluated.")
             ("benchmark,b", "Runs engine benchmark. If this flag is specified, no other flags will be evaluated.")
             ("hardware-dump,hd", "Prints information about the hardware on the current machine.")
-            ("pedantic,p", "Turns on pedantic debug output. Warning: This will be a crazy amount of information");
+            ("pedantic,p", "Turns on pedantic debug output. Warning: This will be a crazy amount of information")
             ("multithreaded-events,mte", "Turns on multithreading for the events system.");
 
         po::variables_map vm;
-        po::store(po::parse_command_line(argc, argv, desc), vm);
+        try
+        {
+          po::store(po::parse_command_line(argc, argv, desc), vm);
+        }
+        catch (boost::program_options::unknown_option const& e)
+        {
+          //we::log::LOGERROR(std::string("Unknown option: ") + e.get_option_name());
+          //std::cerr << "AAAA: " << e.get_option_name() << std::endl;
+        }
+
         po::notify(vm);
 
         if(vm.count("help"))
@@ -77,7 +86,8 @@ namespace waifuengine
         }
         if(vm.count("multithreaded-events"))
         {
-          we::settings::mt_messaging = true;
+          // TODO: make this work
+          //we::settings::mt_messaging = true;
         }
 
         // if no flags require ending the program, return with no value

@@ -30,7 +30,7 @@ namespace waifuengine
 
         static trace_level tlevel;
 
-        namespace impl
+        namespace _impl
         {
             void error_helper(std::string message, std::string file, int line)
             {

@@ -19,6 +19,7 @@
 
 #include <events.hpp>
 #include <settings.hpp>
+#include <thread_pool.hpp>
 
 namespace waifuengine
 {
@@ -39,7 +40,7 @@ namespace waifuengine
       {
         if(events_.count(ename))
         {
-          auto& eset = events_[ename];
+          auto& eset = events_[ename]; // get std::set of events
           for(auto& p : eset)
           {
             (p.second)(e);
@@ -50,8 +51,16 @@ namespace waifuengine
       template<typename Event>
       void handle_mt(Event * e, std::string const& ename)
       {
-        auto thread_message_func = []() -> void { };
-        
+        // get set of events
+        if(events_.count(ename))
+        {
+          auto& eset = events_[ename];
+          // add each callback to a thread task
+          for(auto& p : eset)
+          {
+            core::thread_pool::assign_task(std::bind(p.second, e));
+          }
+        }
       }
 
     public:
