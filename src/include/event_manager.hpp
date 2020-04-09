@@ -18,6 +18,7 @@
 #include <functional>
 
 #include <events.hpp>
+#include <settings.hpp>
 
 namespace waifuengine
 {
@@ -49,7 +50,8 @@ namespace waifuengine
       template<typename Event>
       void handle_mt(Event * e, std::string const& ename)
       {
-
+        auto thread_message_func = []() -> void { };
+        
       }
 
     public:
@@ -92,7 +94,14 @@ namespace waifuengine
       void handle(Event * e)
       {
         std::string ename(Event::NAME);
-        handle_st(e, ename);
+        if(settings::mt_messaging)
+        {
+          handle_mt(e, ename);
+        }
+        else
+        {
+          handle_st(e, ename);
+        }
       }
     };
 

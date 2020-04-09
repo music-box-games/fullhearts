@@ -59,6 +59,8 @@ namespace waifuengine
 
             hardware_info const get_hardware_info();
 
+            int get_cpu_core_count();
+
             unsigned long long total_ram();
 		
 #ifdef DEBUG

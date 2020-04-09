@@ -16,5 +16,6 @@ namespace waifuengine
   namespace settings
   {
     bool pedantic_debug = false;
+    bool mt_messaging = false;
   }
 }

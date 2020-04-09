@@ -147,6 +147,11 @@ hardware_info const get_hardware_info()
     return hi;
 }
 
+int get_cpu_core_count()
+{
+    return get_hardware_info().cpu.cores;
+}
+
 unsigned long long total_ram()
 {
 #ifdef WINDOWS

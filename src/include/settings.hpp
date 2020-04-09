@@ -17,6 +17,7 @@ namespace waifuengine
   namespace settings
   {
     extern bool pedantic_debug;
+    extern bool mt_messaging;
   }
 }
 

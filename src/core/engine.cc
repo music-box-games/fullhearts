@@ -24,6 +24,7 @@
 #include <input_event.hpp>
 #include <timer_manager.hpp>
 #include <audio.hpp>
+#include <thread_pool.hpp>
 
 namespace we = ::waifuengine;
 
@@ -52,6 +53,7 @@ namespace waifuengine
         engine::engine()
         {
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
+            waifuengine::core::thread_pool::init();
             waifuengine::events::init();
             waifuengine::graphics::init(1920, 1080, "test");
             waifuengine::audio::init();
@@ -70,6 +72,7 @@ namespace waifuengine
             waifuengine::audio::shutdown();
             waifuengine::graphics::shutdown();
             waifuengine::events::shutdown();
+            waifuengine::core::thread_pool::shutdown();
             waifuengine::log::shutdown();
         }
 
@@ -78,6 +81,9 @@ namespace waifuengine
             // track frame rate
             static frame_watcher fw;
             fw.hit();
+
+            // check threads
+            core::thread_pool::update();
 
             // clear buffer
             we::graphics::clear();

@@ -50,6 +50,7 @@ namespace waifuengine
             ("benchmark,b", "Runs engine benchmark. If this flag is specified, no other flags will be evaluated.")
             ("hardware-dump,hd", "Prints information about the hardware on the current machine.")
             ("pedantic,p", "Turns on pedantic debug output. Warning: This will be a crazy amount of information");
+            ("multithreaded-events,mte", "Turns on multithreading for the events system.");
 
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -73,6 +74,10 @@ namespace waifuengine
           auto hwi = ::waifuengine::utils::hardware::get_hardware_info();
           ::std::cout << hwi << '\n';
           return ::waifuengine::core::return_values::hardware_dump;
+        }
+        if(vm.count("multithreaded-events"))
+        {
+          we::settings::mt_messaging = true;
         }
 
         // if no flags require ending the program, return with no value
