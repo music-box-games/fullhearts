@@ -50,20 +50,20 @@ void scene_splashscreen::input_handler(we::events::event * ievent)
 
 scene_splashscreen::scene_splashscreen() : scene(std::string(NAME))
 {
-  auto sp = manager.add_space("Background Space", we::object_management::space_order::BACKGROUND);
-  manager.add_space("Character Space", we::object_management::space_order::CHARACTER);
-  manager.add_space("FX Space", we::object_management::space_order::FX);
-  manager.add_space("UI Space", we::object_management::space_order::UI);
-  manager.add_space("Transition Space", we::object_management::space_order::TRANSITION);
-  we::factory::background_factory::build_background("test background", "splash screen", sp);
+  // auto sp = manager.add_space("Background Space", we::object_management::space_order::BACKGROUND);
+  // manager.add_space("Character Space", we::object_management::space_order::CHARACTER);
+  // manager.add_space("FX Space", we::object_management::space_order::FX);
+  // manager.add_space("UI Space", we::object_management::space_order::UI);
+  // manager.add_space("Transition Space", we::object_management::space_order::TRANSITION);
+  // we::factory::background_factory::build_background("test background", "splash screen", sp);
 
-  transition_timer = new we::utils::trigger_timer(false, std::chrono::milliseconds(6000), transition);
-  transition_timer->start();
-  we::utils::timers::add_timer("splashscreen end timer", transition_timer);
+  // transition_timer = new we::utils::trigger_timer(false, std::chrono::milliseconds(6000), transition);
+  // transition_timer->start();
+  // we::utils::timers::add_timer("splashscreen end timer", transition_timer);
 
-  // hook input events for skipping screen
-  auto f = std::bind(&scene_splashscreen::input_handler, this, std::placeholders::_1);
-  we::events::subscribe<we::input::input_event>(this, f);
+  // // hook input events for skipping screen
+  // auto f = std::bind(&scene_splashscreen::input_handler, this, std::placeholders::_1);
+  // we::events::subscribe<we::input::input_event>(this, f);
 }
 
 scene_splashscreen::~scene_splashscreen()

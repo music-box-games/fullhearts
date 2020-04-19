@@ -18,6 +18,11 @@
 #include <memory>
 #include <mutex>
 
+#include <serialization.hpp>
+#include <boost/serialization/unordered_map.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/split_member.hpp>
+
 namespace waifuengine
 {
     namespace components
@@ -26,6 +31,7 @@ namespace waifuengine
         {
             class _base_component;
         }
+        class serializable_component;
     }
 }
 
@@ -33,13 +39,43 @@ namespace waifuengine
 {
     namespace object_management
     {
-        class gameobject : public std::enable_shared_from_this<gameobject>
+        using serialized_map = std::unordered_map<std::string, waifuengine::components::serializable_component>;
+        using unserialized_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
+
+        class gameobject
         {
         private:
+            friend class boost::serialization::access;
+            template<class _CType>
+            std::shared_ptr<_CType> add_component(_CType const& c)
+            {
+                std::scoped_lock(lock_);
+                auto ptr = std::shared_ptr<_CType>(new _CType(c));
+                ptr->parent = this;
+                components_[_CType::NAME] = ptr;
+                return ptr;
+            }           
+
             std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>> components_;
 
             std::string name_;
             std::mutex lock_;
+
+            serialized_map convert_map_to_serializable();
+            void convert_serialized_map(serialized_map const& m);
+
+            template<class Archive>
+            void save(Archive& ar, const unsigned int version)
+            {
+                // convert components to a serializable type
+                serialized_map serialized_components = convert_map_to_serializable();
+            }
+            template<class Archive>
+            void load(Archive& ar, const unsigned int version)
+            {
+
+            }
+            BOOST_SERIALIZATION_SPLIT_MEMBER()
 
         public:
             gameobject(std::string n);
@@ -82,6 +118,8 @@ namespace waifuengine
 
               return components_.size(); 
             }
+
+            bool operator==(gameobject const& rhs);
         };
     }
 }

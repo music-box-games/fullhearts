@@ -14,8 +14,11 @@
 
 #include <string>
 #include <string_view>
+#include <typeinfo>
+#include <typeindex>
 
 #include <gameobject.hpp>
+#include <serialization.hpp>
 
 #define COMPONENT_NAME(x) static constexpr const char * NAME = #x
 #define COMPONENT_TYPE(x) static constexpr ::waifuengine::components::component_types TYPE = ::waifuengine::components::component_types::x
@@ -46,6 +49,8 @@ namespace waifuengine
 
         namespace _impl
         {
+            extern std::unordered_map<component_types, std::type_index> component_index;
+
             class _base_component
             {
             public:
@@ -61,18 +66,46 @@ namespace waifuengine
 
                 operator std::string() { return name; }
                 bool operator<(_base_component const& rhs) { return type < rhs.type; }
+                
+                virtual void operator=(_base_component const& rhs) = 0;
+                virtual bool operator==(_base_component const& rhs) = 0;
             };
         }
 
         template<typename _Derive>
         class component : public _impl::_base_component
         {
+        private:
+            friend class serializable_component;
+
         public:
             component() : _impl::_base_component(_Derive::NAME, _Derive::TYPE) {}
             virtual ~component() {}
 
             virtual void update(float dt) = 0;
             virtual void draw() const = 0;
+            virtual void operator=(_base_component const& rhs) = 0;
+            virtual bool operator==(_base_component const& rhs) = 0;
+        };
+
+        class serializable_component
+        {
+        public:
+            std::string name;
+            component_types type;
+
+            serializable_component(std::string n, component_types t) : name(n), type(t) {}
+            virtual ~serializable_component() {};
+
+        private:
+            friend class boost::serialization::access;
+
+            template<class Archive>
+            void serialize(Archive& ar, unsigned int const version)
+            {
+                ar & name;
+                ar & type;
+            }
         };
     }
 }

@@ -14,18 +14,15 @@
 #include <Windows.h>
 #endif // WINDOWS
 
-#include <frozen/map.h>
-
+#include <map>
 #include <notify.hpp>
-
-namespace fr = ::frozen;
 
 namespace waifuengine
 {
 namespace utils
 {
   #ifdef WINDOWS
-  static constexpr fr::map<int, notify_exit_code, 4> codemap = 
+  static std::map<int, notify_exit_code> codemap = 
   {
     {IDOK, notify_exit_code::OK},
     {IDYES, notify_exit_code::YES},

@@ -12,6 +12,8 @@
 #ifndef _W_TESTS_HPP_
 #define _W_TESTS_HPP_
 
+#include <gtest/gtest.h>
+
 namespace waifuengine
 {
     namespace tests

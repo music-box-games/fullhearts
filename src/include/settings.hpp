@@ -14,10 +14,19 @@
 
 namespace waifuengine
 {
-  namespace settings
+  namespace core
   {
-    extern bool pedantic_debug;
-    extern bool mt_messaging;
+    namespace settings
+    {
+      void load();
+
+      extern bool pedantic_debug;
+      extern bool mt_messaging;
+      extern bool fullscreen;
+
+      extern int window_width;
+      extern int window_height;
+    }
   }
 }
 

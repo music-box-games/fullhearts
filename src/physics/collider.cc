@@ -11,7 +11,7 @@
 
 #include <collider.hpp>
 #include <log.hpp>
-#include <transform.hpp>
+//#include <transform.hpp>
 
 namespace we = ::waifuengine;
 
@@ -32,16 +32,16 @@ namespace physics
 
   void collider::reload_transform()
   {
-    if (!parent) return;
-    auto trans = parent->get_component<transform>();
-    if(trans.use_count() == 0)
-    {
-      // no transform
-    }
-    else
-    {
-      t = dynamic_cast<transform *>(trans.get());
-    }
+    // if (!parent) return;
+    // auto trans = parent->get_component<transform>();
+    // if(trans.use_count() == 0)
+    // {
+    //   // no transform
+    // }
+    // else
+    // {
+    //   t = dynamic_cast<transform *>(trans.get());
+    // }
   }
 }
 } // namespace waifuengine

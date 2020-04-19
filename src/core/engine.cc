@@ -15,7 +15,6 @@
 #include <engine.hpp>
 #include <framewatcher.hpp>
 #include <log.hpp>
-#include <graphics.hpp>
 #include <scenemanager.hpp>
 #include <scenelist.hpp>
 #include <input.hpp>
@@ -55,7 +54,7 @@ namespace waifuengine
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
             waifuengine::core::thread_pool::init();
             waifuengine::events::init();
-            waifuengine::graphics::init(1920, 1080, "test");
+            //waifuengine::graphics::init(1920, 1080, "test");
             waifuengine::audio::init();
             waifuengine::input::init();
             waifuengine::scenes::init();
@@ -70,7 +69,7 @@ namespace waifuengine
             waifuengine::scenes::shutdown();
             waifuengine::input::shutdown();
             waifuengine::audio::shutdown();
-            waifuengine::graphics::shutdown();
+            //waifuengine::graphics::shutdown();
             waifuengine::events::shutdown();
             waifuengine::core::thread_pool::shutdown();
             waifuengine::log::shutdown();
@@ -86,7 +85,7 @@ namespace waifuengine
             core::thread_pool::update();
 
             // clear buffer
-            we::graphics::clear();
+            //we::graphics::clear();
 
             // update things
             we::utils::timers::update();
@@ -97,7 +96,7 @@ namespace waifuengine
             we::scenes::draw();
 
             // then render
-            ::waifuengine::graphics::render();
+            //::waifuengine::graphics::render();
 
             we::audio::update();
         }

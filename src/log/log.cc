@@ -80,7 +80,7 @@ namespace waifuengine
 
         void pedantic(std::string message)
         {
-            if(settings::pedantic_debug)
+            if(core::settings::pedantic_debug)
             {
                 log(message, trace_level::pedantic);
             }

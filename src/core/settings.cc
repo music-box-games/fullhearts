@@ -10,12 +10,26 @@
 /******************************************************************************/
 
 #include <settings.hpp>
+#include <serialization.hpp>
 
 namespace waifuengine
 {
-  namespace settings
-  {
-    bool pedantic_debug = false;
-    bool mt_messaging = false;
-  }
+namespace core
+{
+namespace settings
+{
+void load()
+{
+
 }
+
+bool pedantic_debug = false;
+bool mt_messaging = false;
+bool fullscreen = false;
+
+int window_width = 800;
+int window_height = 600;
+
+} // namespace settings
+} // namespace core
+} // namespace waifuengine

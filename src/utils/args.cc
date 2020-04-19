@@ -57,7 +57,7 @@ namespace waifuengine
         {
           po::store(po::parse_command_line(argc, argv, desc), vm);
         }
-        catch (boost::program_options::unknown_option const& e)
+        catch (boost::program_options::unknown_option const&)
         {
           //we::log::LOGERROR(std::string("Unknown option: ") + e.get_option_name());
           //std::cerr << "AAAA: " << e.get_option_name() << std::endl;
@@ -76,7 +76,7 @@ namespace waifuengine
         }
         if(vm.count("pedantic"))
         {
-          we::settings::pedantic_debug = true;
+          we::core::settings::pedantic_debug = true;
         }
         if(vm.count("hardware-dump"))
         {

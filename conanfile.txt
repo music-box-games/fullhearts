@@ -1,17 +1,7 @@
 [requires]
-zlib/1.2.11@conan/stable
-bzip2/1.0.8@conan/stable
-libpng/1.6.37@bincrafters/stable
-gtest/1.10.0
 boost/1.71.0@conan/stable
-glfw/3.3@bincrafters/stable
-glad/0.1.29@bincrafters/stable
 glm/0.9.9.5@g-truc/stable
-frozen/20181020@bincrafters/stable
-sdl2/2.0.10@bincrafters/stable
-sdl2_image/2.0.4@bincrafters/stable
-sdl2_ttf/2.0.15@bincrafters/stable
-imgui/1.74
+gtest/1.8.1@bincrafters/stable
 
 [generators]
 cmake
