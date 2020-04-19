@@ -69,6 +69,8 @@ namespace waifuengine
                 
                 virtual void operator=(_base_component const& rhs) = 0;
                 virtual bool operator==(_base_component const& rhs) = 0;
+
+
             };
         }
 
@@ -84,27 +86,14 @@ namespace waifuengine
 
             virtual void update(float dt) = 0;
             virtual void draw() const = 0;
-            virtual void operator=(_base_component const& rhs) = 0;
-            virtual bool operator==(_base_component const& rhs) = 0;
-        };
-
-        class serializable_component
-        {
-        public:
-            std::string name;
-            component_types type;
-
-            serializable_component(std::string n, component_types t) : name(n), type(t) {}
-            virtual ~serializable_component() {};
-
-        private:
-            friend class boost::serialization::access;
-
-            template<class Archive>
-            void serialize(Archive& ar, unsigned int const version)
+            virtual void operator=(_base_component const& rhs)
             {
-                ar & name;
-                ar & type;
+                name = rhs.name;
+                type = rhs.type;
+            }
+            virtual bool operator==(_base_component const& rhs)
+            {
+                return (name == rhs.name) && (type == rhs.type);
             }
         };
     }

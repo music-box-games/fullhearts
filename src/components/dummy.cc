@@ -17,7 +17,6 @@ namespace waifuengine
   {
     dummy::dummy() : component<dummy>() {}
     dummy::dummy(dummy const& other) : component<dummy>(), dumb(other.dumb) {}
-    dummy::dummy(serializable_dummy const& other) : component<dummy>(), dumb(other.dumb) {}
 
     dummy::~dummy() {}
 
@@ -43,9 +42,5 @@ namespace waifuengine
     {
       return dumb == rhs.dumb;
     }
-
-    serializable_dummy::serializable_dummy() : serializable_component(dummy::NAME, dummy::TYPE) {}
-    serializable_dummy::serializable_dummy(dummy const& other) : serializable_component(dummy::NAME, dummy::TYPE), dumb(other.dumb) {}
-    serializable_dummy::~serializable_dummy() {}
   }
 }

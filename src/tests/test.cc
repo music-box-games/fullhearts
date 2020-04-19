@@ -105,10 +105,5 @@ TEST(SerializationTest, SerlilizeDerivedClass)
     ASSERT_TRUE(o == i);
 }
 
-TEST(SerializationTest, SerializeEmptyGameObject)
-{
-
-}
-
 } // namespace tests
 } // namespace waifuengine

@@ -11,6 +11,7 @@
 
 #include <gameobject.hpp>
 #include <component.hpp>
+#include <dummy.hpp>
 
 namespace waifuengine
 {
@@ -50,18 +51,6 @@ std::string const &gameobject::name() const
 bool gameobject::operator==(gameobject const &rhs)
 {
   return (components_ == rhs.components_) && (name_ == rhs.name_);
-}
-
-serialized_map gameobject::convert_map_to_serializable()
-{
-  // TODO: need some way to go from component_types to a real object. downcast function in base component with just a shitty switch statement?
-
-  return serialized_map();
-}
-
-void gameobject::convert_serialized_map(serialized_map const& m)
-{
-
 }
 
 } // namespace object_management
