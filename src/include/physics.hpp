@@ -45,6 +45,16 @@ namespace waifuengine
 
             static calculation_model model_; // this should be serialized if possible
             static bool model_calculated;
+
+        private:
+            friend class boost::serialization::access;
+            template<class Archive>
+            void serialize(Archive& ar, unsigned int const version)
+            {
+                ar & boost::serialization::base_object<component<physics2>>(*this);
+                ar & model_;
+                ar & model_calculated;
+            }
         };
 
         typedef physics2 physics;

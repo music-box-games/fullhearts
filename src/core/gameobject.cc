@@ -9,9 +9,13 @@
 */
 /******************************************************************************/
 
+#include <sstream>
+#include <iostream>
+
 #include <gameobject.hpp>
 #include <component.hpp>
 #include <dummy.hpp>
+#include <physics.hpp>
 
 namespace waifuengine
 {
@@ -53,16 +57,21 @@ bool gameobject::operator==(gameobject const &rhs)
   return (components_ == rhs.components_) && (name_ == rhs.name_);
 }
 
-void gameobject::register_components_with_archive(boost::archive::text_oarchive& ar)
+std::string gameobject::dump() const
 {
-  using namespace waifuengine::components;
-  ar.template register_type<component<dummy>>();
+  std::stringstream ss;
+  ss << "Gameobject: " << name_ << '\n';
+  ss << "Number of components: " << components_.size() << '\n';
+  for (auto &pair : components_)
+  {
+    ss << '\t' << pair.first << '\n';
+  }
+  return ss.str();
 }
 
-void gameobject::register_components_with_archive(boost::archive::text_iarchive& ar)
+std::string gameobject::get_error() const
 {
-  using namespace waifuengine::components;
-  ar.template register_type<component<dummy>>();
+  return error_;
 }
 
 } // namespace object_management

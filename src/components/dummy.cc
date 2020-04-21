@@ -42,5 +42,7 @@ namespace waifuengine
     {
       return dumb == rhs.dumb;
     }
+
+    
   }
 }

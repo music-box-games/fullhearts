@@ -48,6 +48,7 @@ namespace waifuengine
             component_map components_;
 
             std::string name_;
+            std::string error_;
             std::mutex lock_;
 
             void register_components_with_archive(boost::archive::text_oarchive& ar);
@@ -56,13 +57,12 @@ namespace waifuengine
             template<class Archive>
             void serialize(Archive & ar, unsigned int const version)
             {
-                register_components_with_archive(ar);
                 ar & components_;
                 ar & name_;
             }
 
         public:
-            gameobject(std::string n);
+            gameobject(std::string n = "");
             ~gameobject();
 
             template<class _CType>
@@ -104,7 +104,12 @@ namespace waifuengine
             }
 
             bool operator==(gameobject const& rhs);
+
+            std::string dump() const;
+
+            std::string get_error() const;
         };
+
     }
 }
 

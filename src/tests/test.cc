@@ -18,6 +18,10 @@
 #include <fs_util.hpp>
 #include <serialization.hpp>
 #include <gameobject.hpp>
+#include <spacemanager.hpp>
+#include <space.hpp>
+#include <component.hpp>
+#include <dummy.hpp>
 
 namespace we = ::waifuengine;
 
@@ -79,7 +83,7 @@ TEST(SerializationTest, SerializeBaseClass)
     ASSERT_TRUE(o == i);
 }
 
-TEST(SerializationTest, SerlilizeDerivedClass)
+TEST(SerializationTest, SerializeDerivedClass)
 {
     // create the object
     we::core::serialization::test::derived_test_serialize_object o(1, 2, 3, "Hello", 4);
@@ -103,6 +107,51 @@ TEST(SerializationTest, SerlilizeDerivedClass)
     }
 
     ASSERT_TRUE(o == i);
+}
+
+TEST(SerializationTest, SerializeEmptyObject)
+{
+    we::object_management::space_manager spm;
+    auto sp = spm.add_space("test");
+    auto objo = sp->add_object("test");
+
+    auto ss = create_serialize_test_folder();
+    ss << "\\empty_object";
+    {
+        std::ofstream stream(ss.str());
+        boost::archive::text_oarchive arch(stream);
+        arch << objo;
+    }
+    auto obji = sp->add_object("");
+    {
+        std::ifstream stream(ss.str());
+        boost::archive::text_iarchive arch(stream);
+        arch >> obji;
+    }
+    ASSERT_TRUE(*objo == *obji);
+}
+
+TEST(SerializationTest, SerializeObject)
+{
+    we::object_management::space_manager spm;
+    auto sp = spm.add_space("test");
+    auto objo = sp->add_object("test");
+    auto d = objo->add_component<components::dummy>();
+
+    auto ss = create_serialize_test_folder();
+    ss << "\\object";
+    {
+        std::ofstream stream(ss.str());
+        boost::archive::text_oarchive arch(stream);
+        arch << objo;
+    }
+    auto obji = sp->add_object("");
+    {
+        std::ifstream stream(ss.str());
+        boost::archive::text_iarchive arch(stream);
+        arch >> obji;
+    }
+    ASSERT_TRUE(*objo == *obji);
 }
 
 } // namespace tests

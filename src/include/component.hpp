@@ -68,6 +68,8 @@ namespace waifuengine
                 virtual void operator=(_base_component const& rhs) = 0;
                 virtual bool operator==(_base_component const& rhs) = 0;
 
+
+
             private:
                 friend class boost::serialization::access;
                 template<class Archive>

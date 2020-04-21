@@ -28,7 +28,9 @@ namespace waifuengine
       template<class Archive>
       void serialize(Archive& ar, unsigned int const version)
       {
+        ar.template register_type<dummy>();
         ar & boost::serialization::base_object<component<dummy>>(*this);
+        ar & dumb;
       }
 
     public:
@@ -48,8 +50,9 @@ namespace waifuengine
 
       virtual void operator=(dummy const& rhs);
       virtual bool operator==(dummy const& rhs);
-
     };
+
+    
   }
 }
 
