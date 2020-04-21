@@ -1,5 +1,5 @@
 #include <component.hpp>
-#include <physics.hpp>
+#include <dummy.hpp>
 
 namespace we = ::waifuengine;
 
@@ -10,10 +10,7 @@ namespace components
 namespace _impl
 {
 
-std::unordered_map<component_types, std::type_index> component_index = 
-{
-  {component_types::physics2, typeid(we::components::physics)},
-}
+
 
 }
 } // namespace components

@@ -53,5 +53,17 @@ bool gameobject::operator==(gameobject const &rhs)
   return (components_ == rhs.components_) && (name_ == rhs.name_);
 }
 
+void gameobject::register_components_with_archive(boost::archive::text_oarchive& ar)
+{
+  using namespace waifuengine::components;
+  ar.template register_type<component<dummy>>();
+}
+
+void gameobject::register_components_with_archive(boost::archive::text_iarchive& ar)
+{
+  using namespace waifuengine::components;
+  ar.template register_type<component<dummy>>();
+}
+
 } // namespace object_management
 } // namespace waifuengine

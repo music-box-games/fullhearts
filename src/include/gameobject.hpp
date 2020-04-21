@@ -21,7 +21,7 @@
 #include <serialization.hpp>
 #include <boost/serialization/unordered_map.hpp>
 #include <boost/serialization/string.hpp>
-#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 namespace waifuengine
 {
@@ -31,7 +31,6 @@ namespace waifuengine
         {
             class _base_component;
         }
-        class serializable_component;
     }
 }
 
@@ -43,11 +42,24 @@ namespace waifuengine
         class gameobject
         {
         private:         
+            using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
 
-            std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>> components_;
+            friend class boost::serialization::access;
+            component_map components_;
 
             std::string name_;
             std::mutex lock_;
+
+            void register_components_with_archive(boost::archive::text_oarchive& ar);
+            void register_components_with_archive(boost::archive::text_iarchive& ar);
+
+            template<class Archive>
+            void serialize(Archive & ar, unsigned int const version)
+            {
+                register_components_with_archive(ar);
+                ar & components_;
+                ar & name_;
+            }
 
         public:
             gameobject(std::string n);

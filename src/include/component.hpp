@@ -49,8 +49,6 @@ namespace waifuengine
 
         namespace _impl
         {
-            extern std::unordered_map<component_types, std::type_index> component_index;
-
             class _base_component
             {
             public:
@@ -70,22 +68,27 @@ namespace waifuengine
                 virtual void operator=(_base_component const& rhs) = 0;
                 virtual bool operator==(_base_component const& rhs) = 0;
 
-
+            private:
+                friend class boost::serialization::access;
+                template<class Archive>
+                void serialize(Archive& ar, unsigned int const version)
+                {
+                    ar & name;
+                    ar & type;
+                }
             };
+            BOOST_SERIALIZATION_ASSUME_ABSTRACT(_base_component)
         }
 
         template<typename _Derive>
         class component : public _impl::_base_component
         {
-        private:
-            friend class serializable_component;
-
         public:
             component() : _impl::_base_component(_Derive::NAME, _Derive::TYPE) {}
             virtual ~component() {}
 
-            virtual void update(float dt) = 0;
-            virtual void draw() const = 0;
+            virtual void update(float dt) {}
+            virtual void draw() const {}
             virtual void operator=(_base_component const& rhs)
             {
                 name = rhs.name;
@@ -94,6 +97,13 @@ namespace waifuengine
             virtual bool operator==(_base_component const& rhs)
             {
                 return (name == rhs.name) && (type == rhs.type);
+            }
+        private:
+            friend class boost::serialization::access;
+            template<class Archive>
+            void serialize(Archive& ar, unsigned int const version)
+            {
+                ar & boost::serialization::base_object<_impl::_base_component>(*this);
             }
         };
     }
