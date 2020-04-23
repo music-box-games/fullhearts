@@ -42,7 +42,6 @@ namespace waifuengine
     {
       return dumb == rhs.dumb;
     }
-
-    
   }
 }
+BOOST_CLASS_EXPORT_IMPLEMENT(we::components::dummy);

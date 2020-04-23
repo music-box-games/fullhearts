@@ -29,6 +29,8 @@ namespace waifuengine
 {
     namespace components
     {
+        class dummy;
+
         enum class component_types
         {
             physics2,
@@ -110,5 +112,6 @@ namespace waifuengine
         };
     }
 }
+BOOST_CLASS_EXPORT_KEY(we::components::component<we::components::dummy>);
 
 #endif // !_W_COMPONENT_HPP_

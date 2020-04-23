@@ -1,17 +1,10 @@
 #include <component.hpp>
 #include <dummy.hpp>
 
-namespace we = ::waifuengine;
-
 namespace waifuengine
 {
-namespace components
-{
-namespace _impl
-{
-
-
-
+  namespace components
+  {
+  }
 }
-} // namespace components
-} // namespace waifuengine
+BOOST_CLASS_EXPORT_IMPLEMENT(we::components::component<we::components::dummy>);

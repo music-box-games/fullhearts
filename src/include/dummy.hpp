@@ -52,8 +52,8 @@ namespace waifuengine
       virtual bool operator==(dummy const& rhs);
     };
 
-    
   }
 }
+BOOST_CLASS_EXPORT_KEY(we::components::dummy);
 
 #endif // !_WE_DUMMY_HPP_

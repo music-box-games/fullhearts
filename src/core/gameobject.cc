@@ -54,7 +54,27 @@ std::string const &gameobject::name() const
 
 bool gameobject::operator==(gameobject const &rhs)
 {
-  return (components_ == rhs.components_) && (name_ == rhs.name_);
+  if(name_ != rhs.name_)
+  {
+    return false;
+  }
+  if(components_.size() != rhs.components_.size())
+  {
+    return false;
+  }
+  auto left_iter = components_.begin();
+  auto right_iter = rhs.components_.begin();
+
+  while(left_iter != components_.end() && right_iter != rhs.components_.end())
+  {
+    if(!(*((*left_iter).second) == *((*right_iter).second)))
+    {
+      return false;
+    }
+    ++left_iter;
+    ++right_iter;
+  }
+  return true;
 }
 
 std::string gameobject::dump() const
