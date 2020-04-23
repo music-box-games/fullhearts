@@ -25,6 +25,7 @@
 #include <scenes.hpp>
 #include <scenemanager.hpp>
 #include <scenelist.hpp>
+#include <settings.hpp>
 
 
 namespace we = ::waifuengine;
@@ -186,6 +187,27 @@ TEST(SerializationTest, SerializeSceneManager)
         arch >> sm2;
     }
     EXPECT_TRUE(sm == sm2);
+}
+
+TEST(SerializationTest, SerializeSettings)
+{
+    auto s1 = we::core::settings::impl::settings_state();
+
+    auto ss = create_serialize_test_folder();
+    ss << "\\settings";
+    {
+        std::ofstream stream(ss.str());
+        ::boost::archive::text_oarchive arch(stream);
+        arch << s1;
+    }
+    auto s2 = we::core::settings::impl::settings_state(false);
+    EXPECT_FALSE(s1 == s2);
+    {
+        std::ifstream stream(ss.str());
+        ::boost::archive::text_iarchive arch(stream);
+        arch >> s2;
+    }
+    EXPECT_TRUE(s1 == s2);
 }
 
 } // namespace tests
