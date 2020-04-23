@@ -17,11 +17,15 @@
 #include <tests.hpp>
 #include <fs_util.hpp>
 #include <serialization.hpp>
+#include <component.hpp>
+#include <dummy.hpp>
 #include <gameobject.hpp>
 #include <spacemanager.hpp>
 #include <space.hpp>
-#include <component.hpp>
-#include <dummy.hpp>
+#include <scenes.hpp>
+#include <scenemanager.hpp>
+#include <scenelist.hpp>
+
 
 namespace we = ::waifuengine;
 
@@ -56,6 +60,8 @@ static std::stringstream create_serialize_test_folder()
     }
     return ss;
 }
+
+
 
 TEST(SerializationTest, SerializeBaseClass)
 {
@@ -119,18 +125,20 @@ TEST(SerializationTest, SerializeEmptyObject)
     ss << "\\empty_object";
     {
         std::ofstream stream(ss.str());
-        boost::archive::text_oarchive arch(stream);
+        ::boost::archive::text_oarchive arch(stream);
         arch << objo;
     }
     auto obji = sp->add_object("");
     EXPECT_FALSE(*objo == *obji);
     {
         std::ifstream stream(ss.str());
-        boost::archive::text_iarchive arch(stream);
+        ::boost::archive::text_iarchive arch(stream);
         arch >> obji;
     }
     EXPECT_TRUE(*objo == *obji);
 }
+
+
 
 TEST(SerializationTest, SerializeObject)
 {
@@ -143,17 +151,41 @@ TEST(SerializationTest, SerializeObject)
     ss << "\\object";
     {
         std::ofstream stream(ss.str());
-        boost::archive::text_oarchive arch(stream);
+        ::boost::archive::text_oarchive arch(stream);
         arch << objo;
     }
     auto obji = sp->add_object("");
     EXPECT_FALSE(*objo == *obji);
     {
         std::ifstream stream(ss.str());
-        boost::archive::text_iarchive arch(stream);
+        ::boost::archive::text_iarchive arch(stream);
         arch >> obji;
     }
     EXPECT_TRUE(*objo == *obji);
+}
+
+
+
+TEST(SerializationTest, SerializeSceneManager)
+{
+    we::scenes::impl::scene_manager sm = we::scenes::impl::scene_manager();
+    sm.load<we::scenes::test::scene_serializationtest>();
+
+    auto ss = create_serialize_test_folder();
+    ss << "\\scenemgr";
+    {
+        std::ofstream stream(ss.str());
+        ::boost::archive::text_oarchive arch(stream);
+        arch << sm;
+    }
+    we::scenes::impl::scene_manager sm2 = we::scenes::impl::scene_manager();
+    EXPECT_FALSE(sm == sm2);
+    {
+        std::ifstream stream(ss.str());
+        ::boost::archive::text_iarchive arch(stream);
+        arch >> sm2;
+    }
+    EXPECT_TRUE(sm == sm2);
 }
 
 } // namespace tests

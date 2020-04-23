@@ -53,6 +53,11 @@ namespace waifuengine
       {
         return smap.second;
       }
+
+      bool scene_manager::operator==(scene_manager const& rhs) const
+      {
+        return (smap.first == rhs.smap.first) && (*(smap.second) == *(rhs.smap.second));
+      }
     }
 
     void init()
@@ -87,3 +92,5 @@ namespace waifuengine
     }
   }
 }
+
+BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::impl::scene_manager);

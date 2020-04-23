@@ -16,6 +16,10 @@
 #include <memory>
 #include <string>
 
+#include <serialization.hpp>
+#include <component.hpp>
+#include <gameobject.hpp>
+
 namespace waifuengine
 {
     namespace object_management
@@ -41,8 +45,17 @@ namespace waifuengine
 
             std::map<std::string, std::shared_ptr<gameobject>> objects_;
 
+            friend class boost::serialization::access;
+            template<class Archive>
+            void serialize(Archive& ar, unsigned int const version)
+            {
+                ar & name_;
+                ar & order_;
+                ar & objects_;
+            }
+
         public:
-            space(std::string n, space_order order = space_order::UNORDERED);
+            space(std::string n = "", space_order order = space_order::UNORDERED);
             ~space();
 
             std::shared_ptr<gameobject> add_object(std::string name);
@@ -56,8 +69,11 @@ namespace waifuengine
             std::size_t components() const;
 
             bool operator<(space const& rhs) const;
+            bool operator==(space const& rhs) const;
         };
     }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::object_management::space);
 
 #endif // !_W_SPACE_HPP_

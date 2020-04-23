@@ -3,6 +3,7 @@
 
 #include <scenes.hpp>
 #include <events.hpp>
+#include <serialization.hpp>
 
 namespace waifuengine
 {
@@ -17,8 +18,16 @@ namespace waifuengine
     private:
       void input_handler(waifuengine::events::event * e);
       void on_quit_click();
+      friend class boost::serialization::access;
+      template<class Archive>
+      void serialize(Archive& ar, unsigned int const version)
+      {
+        ar & boost::serialization::base_object<scene>(*this);
+      }
     };
   }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::scene_mainmenu);
 
 #endif

@@ -73,3 +73,5 @@ scene_splashscreen::~scene_splashscreen()
 }
 } // namespace scenes
 } // namespace waifuengine
+
+BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::scene_splashscreen);

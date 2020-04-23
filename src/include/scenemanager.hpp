@@ -20,6 +20,8 @@
 #include <sstream>
 #include <functional>
 
+#include <component.hpp>
+#include <serialization.hpp>
 #include <scenes.hpp>
 #include <log.hpp>
 
@@ -40,6 +42,13 @@ namespace waifuengine
 
         bool queued = false;
         std::function<void()> qf;
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive& ar, unsigned int const version)
+        {
+          ar & smap;
+        }
 
       public:
         scene_manager();
@@ -71,6 +80,8 @@ namespace waifuengine
         }
 
         std::shared_ptr<scene> current_scene();
+
+        bool operator==(scene_manager const& rhs) const;
       };
 
       extern scene_manager * smanager;
@@ -109,5 +120,7 @@ namespace waifuengine
     std::shared_ptr<scene> current_scene();
   }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::impl::scene_manager);
 
 #endif // !_WE_SCENE_MANAGER_HPP_

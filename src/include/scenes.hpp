@@ -14,13 +14,13 @@
 
 #include <unordered_map>
 
+#include <serialization.hpp>
 #include <spacemanager.hpp>
+#include <component.hpp>
 
 #define SCENE_NAME(x) static constexpr std::string_view NAME = #x
 
 namespace we = ::waifuengine;
-
-// TODO: Currently only one instance of each scene allowed
 
 namespace waifuengine
 {
@@ -31,18 +31,31 @@ namespace waifuengine
     protected:
       ::waifuengine::object_management::space_manager manager;
 
+    private:
+      friend class ::boost::serialization::access;
+      template<class Archive>
+      void serialize(Archive& ar, unsigned int const version)
+      {
+        ar & manager;
+        ar & name;
+      }
+
     public:
       std::string name;
 
-      void update(float dt);
-      void draw() const;
+      virtual void update(float dt);
+      virtual void draw() const;
 
-      scene(std::string n);
+      scene(std::string n = "");
       virtual ~scene();
 
       we::object_management::space_manager * get_manager();
+
+      virtual bool operator==(scene const& rhs) const;
     };
   }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::scene);
 
 #endif // !_WE_SCENES_HPP_

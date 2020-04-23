@@ -47,5 +47,12 @@ namespace waifuengine
     {
       return &manager;
     }
+
+    bool scene::operator==(scene const& rhs) const
+    {
+      return (name == rhs.name) && (manager == rhs.manager);
+    }
   }
 }
+
+BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::scene);

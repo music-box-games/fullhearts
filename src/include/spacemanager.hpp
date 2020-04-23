@@ -17,6 +17,7 @@
 #include <map>
 
 #include <space.hpp>
+#include <component.hpp>
 
 namespace waifuengine
 {
@@ -47,6 +48,13 @@ namespace waifuengine
                 { "Transition Space", space_order::TRANSITION },
             };
 
+            friend class boost::serialization::access;
+            template<class Archive>
+            void serialize(Archive& ar, unsigned int const version)
+            {
+                ar & spaces_;
+            }
+
         public:
             space_manager();
             ~space_manager();
@@ -66,8 +74,12 @@ namespace waifuengine
             void remove_object(std::string n);
 
             default_spaces build_default_spaces();
+
+            bool operator==(space_manager const& rhs) const;
         };
     }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::object_management::space_manager);
 
 #endif // !_W_SPACE_MANAGER_HPP_

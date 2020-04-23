@@ -16,8 +16,16 @@ namespace waifuengine
       virtual ~scene_splashscreen();
     private:
       void input_handler(waifuengine::events::event * ievent);
+      friend class boost::serialization::access;
+      template<class Archive>
+      void serialize(Archive& ar, unsigned int const version)
+      {
+        ar & boost::serialization::base_object<scene>(*this);
+      }
     };
   }
 }
+
+BOOST_CLASS_EXPORT_KEY(we::scenes::scene_splashscreen);
 
 #endif // !_WE_SCENE_SPLASHSCREEN_HPP_
