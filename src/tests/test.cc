@@ -123,12 +123,13 @@ TEST(SerializationTest, SerializeEmptyObject)
         arch << objo;
     }
     auto obji = sp->add_object("");
+    EXPECT_FALSE(*objo == *obji);
     {
         std::ifstream stream(ss.str());
         boost::archive::text_iarchive arch(stream);
         arch >> obji;
     }
-    ASSERT_TRUE(*objo == *obji);
+    EXPECT_TRUE(*objo == *obji);
 }
 
 TEST(SerializationTest, SerializeObject)
@@ -146,12 +147,13 @@ TEST(SerializationTest, SerializeObject)
         arch << objo;
     }
     auto obji = sp->add_object("");
+    EXPECT_FALSE(*objo == *obji);
     {
         std::ifstream stream(ss.str());
         boost::archive::text_iarchive arch(stream);
         arch >> obji;
     }
-    ASSERT_TRUE(*objo == *obji);
+    EXPECT_TRUE(*objo == *obji);
 }
 
 } // namespace tests
