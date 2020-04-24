@@ -92,6 +92,7 @@ bool space::operator==(space const& rhs) const
     auto left_iter = objects_.begin();
     auto right_iter = rhs.objects_.begin();
 
+    // this is so ugly please make it not
     while(left_iter != objects_.end() && right_iter != rhs.objects_.end())
     {
         if(!( *((*left_iter).second) == *((*right_iter).second) ))

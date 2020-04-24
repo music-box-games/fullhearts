@@ -27,7 +27,6 @@
 #include <scenelist.hpp>
 #include <settings.hpp>
 
-
 namespace we = ::waifuengine;
 
 namespace waifuengine
@@ -50,7 +49,6 @@ int run_tests(int argc, char **argv)
 }
 
 // serialization tests
-
 static std::stringstream create_serialize_test_folder()
 {
     std::stringstream ss;
@@ -61,8 +59,6 @@ static std::stringstream create_serialize_test_folder()
     }
     return ss;
 }
-
-
 
 TEST(SerializationTest, SerializeBaseClass)
 {
@@ -139,8 +135,6 @@ TEST(SerializationTest, SerializeEmptyObject)
     EXPECT_TRUE(*objo == *obji);
 }
 
-
-
 TEST(SerializationTest, SerializeObject)
 {
     we::object_management::space_manager spm;
@@ -164,8 +158,6 @@ TEST(SerializationTest, SerializeObject)
     }
     EXPECT_TRUE(*objo == *obji);
 }
-
-
 
 TEST(SerializationTest, SerializeSceneManager)
 {

@@ -2,14 +2,22 @@
 #define _WE_COLLIDER_HPP_
 
 #include <component.hpp>
+#include <serialization.hpp>
 
 namespace waifuengine
 {
   namespace physics
   {
-    class transform; // forward declaration
     class collider : public waifuengine::components::component<collider>
     {
+    private:
+      friend class boost::serialization::access;
+      template<class Archive>
+      void serialize(Archive& ar, unsigned int const version)
+      {
+        ar & ::boost::serialization::base_object<waifuengine::components::component<collider>(*this);
+      }
+
     public:
       COMPONENT_NAME(collider);
       COMPONENT_TYPE(collider);
@@ -19,13 +27,10 @@ namespace waifuengine
 
       virtual void update(float dt) = 0;
       virtual void draw() const = 0;
-
-      void reload_transform();
-
-    protected:
-       transform * t;
     };
   }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::physics::collider);
 
 #endif

@@ -49,7 +49,7 @@ namespace waifuengine
         private:
             std::chrono::milliseconds limit_; // time limit to trigger on
             bool repeat_; // if the timer should repeat or just die
-            std::function<void()> trigger_; // trigger to call when timer runs out
+            std::function<void()> on_trigger_; // trigger to call when timer runs out
 
             template<typename _input>
             std::chrono::milliseconds to_ms(_input& value)
@@ -60,7 +60,7 @@ namespace waifuengine
         public:
             trigger_timer(bool repeat);
             trigger_timer(bool repeat, std::chrono::milliseconds limit);
-            trigger_timer(bool repeat, std::chrono::milliseconds limit, std::function<void()> trigger);
+            trigger_timer(bool repeat, std::chrono::milliseconds limit, std::function<void()> on_trigger);
             ~trigger_timer();
 
             void set_limit_us(std::chrono::microseconds limit);

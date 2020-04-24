@@ -49,7 +49,7 @@ namespace waifuengine
 
         trigger_timer::trigger_timer(bool repeat) : limit_(0), repeat_(repeat) {}
         trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit) : limit_(limit), repeat_(repeat) {}
-        trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit, std::function<void()> trigger) : limit_(limit), repeat_(repeat), trigger_(trigger) {}
+        trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit, std::function<void()> trigger) : limit_(limit), repeat_(repeat), on_trigger_(trigger) {}
         trigger_timer::~trigger_timer() {}
 
         void trigger_timer::set_limit_us(sc::microseconds limit)
@@ -74,7 +74,7 @@ namespace waifuengine
 
         void trigger_timer::set_trigger(std::function<void()> t)
         {
-            trigger_ = t;
+            on_trigger_ = t;
         }
 
         void trigger_timer::update()
@@ -82,7 +82,7 @@ namespace waifuengine
             auto tm = sc::steady_clock::now();
             if (sc::duration_cast<sc::milliseconds>(tm - start_).count() >= limit_.count())
             {
-                trigger_();
+                on_trigger_();
                 if(!repeat_) { stop(); } else { restart(); }
             }
         }
@@ -94,7 +94,7 @@ namespace waifuengine
 
         void trigger_timer::complete()
         {
-            trigger_();
+            on_trigger_();
             if(!repeat_) { stop(); } else { restart(); }
         }
     }

@@ -31,6 +31,8 @@ namespace waifuengine
       boost::char_separator<char> delim("/");
       boost::tokenizer<boost::char_separator<char>> tok(find, delim);
 
+      // TODO: recurse a bit maybe perhaps?
+
       {
         std::stringstream ss;
         ss << "Could not find " << find << " relative to cwd (" << fs::current_path() << ')';

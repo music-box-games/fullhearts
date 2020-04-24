@@ -112,6 +112,16 @@ namespace waifuengine
         };
     }
 }
+// forward declarations for components
+namespace waifuengine
+{
+    namespace physics
+    {
+        class collider;
+    }
+}
+
 BOOST_CLASS_EXPORT_KEY(we::components::component<we::components::dummy>);
+BOOST_CLASS_EXPORT_KEY(we::components::component<we::physics::collider>);
 
 #endif // !_W_COMPONENT_HPP_
