@@ -19,6 +19,7 @@
 #include <tests.hpp>
 #include <hardware.hpp>
 
+
 namespace we = ::waifuengine;
 
 int main(int argc, char ** argv)
