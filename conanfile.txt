@@ -2,7 +2,8 @@
 boost/1.71.0@conan/stable
 glm/0.9.9.5@g-truc/stable
 gtest/1.8.1@bincrafters/stable
-glad/0.1.29@bincrafters/stable
+glew/2.1.0@bincrafters/stable
+glfw/3.3.2@bincrafters/stable
 
 [generators]
 cmake

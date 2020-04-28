@@ -12,13 +12,9 @@
 #include <iostream>
 #include <unordered_set>
 
-#include <boost/program_options.hpp>
-
 #include <args.hpp>
 #include <engine.hpp>
 #include <tests.hpp>
-#include <hardware.hpp>
-
 
 namespace we = ::waifuengine;
 

@@ -23,6 +23,7 @@
 #include <timer_manager.hpp>
 #include <timer.hpp>
 #include <notify.hpp>
+#include <generators.hpp>
 
 #define WE_UTIL_STRINGIFY(x) #x
 
