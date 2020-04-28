@@ -24,6 +24,7 @@
 #include <timer_manager.hpp>
 #include <audio.hpp>
 #include <thread_pool.hpp>
+#include <graphics.hpp>
 
 namespace we = ::waifuengine;
 
@@ -54,7 +55,7 @@ namespace waifuengine
             waifuengine::log::init(waifuengine::log::trace_level::pedantic);
             waifuengine::core::thread_pool::init();
             waifuengine::events::init();
-            //waifuengine::graphics::init(1920, 1080, "test");
+            waifuengine::graphics::init("test");
             waifuengine::audio::init();
             waifuengine::input::init();
             waifuengine::scenes::init();

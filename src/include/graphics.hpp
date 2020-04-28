@@ -7,7 +7,7 @@ namespace waifuengine
 {
   namespace graphics
   {
-    void init(int width, int height, std::string title);
+    void init(std::string title);
     void shutdown();
 
     void present();

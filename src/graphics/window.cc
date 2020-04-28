@@ -30,7 +30,7 @@ id_type get_fresh_id()
 }
 } // namespace impl
 
-window::window(std::string title, int w, int h) : title(title), width(w), height(h)
+window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
   glfwWindowHint(GLFW_SAMPLES, 4); // 4x AA
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // 3.
@@ -38,7 +38,7 @@ window::window(std::string title, int w, int h) : title(title), width(w), height
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // make sure to get core profile
 
-  data = glfwCreateWindow(settings::window_width, settings::window_height, "window 1", NULL, NULL);
+  data = glfwCreateWindow(settings::window_width, settings::window_height, title.c_str(), NULL, NULL);
   if(data == NULL) // mmm yum yum c
   {
     // TODO: update to proper logging
