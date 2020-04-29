@@ -70,6 +70,7 @@ public:
 
 static bool show_imgui_window = false;
 static imgui_listener listener;
+static bool imgui_render_ready = false;
 
 void init_imgui()
 {
@@ -105,24 +106,31 @@ void render_imgui()
 {
   if (show_imgui_window)
   {
+
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    // window
-    ImGui::Begin("Debug Tools");
-
-    ImGui::End();
-
-    ImGui::Render();
+    if (!ImGui::Begin("Debug Tools"))
+    {
+      ImGui::End();
+    }
+    else
+    {
+      listener.draw();
+      ImGui::End();
+    }
+    imgui_render_ready = true;
   }
 }
 
 void present_imgui()
 {
-  if (show_imgui_window)
+  if (imgui_render_ready)
   {
+    ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    imgui_render_ready = false;
   }
 }
 } // namespace debug

@@ -61,6 +61,7 @@ window::window(std::string t, int w, int h) : title(t), width(w), height(h)
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // 3
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // make sure to get core profile
+  glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // double buffer
 
   data = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
   if(data == NULL) // mmm yum yum c
@@ -85,6 +86,8 @@ window::~window()
 
 void window::clear()
 {
+  glfwMakeContextCurrent(data);
+  glfwPollEvents();
   // if window should close and it's the only window open,
   // shutdown the game
   // otherwise just marked the class to be deleted on next loop
@@ -99,15 +102,12 @@ void window::clear()
       mark_window_to_close(id);
     }
   }
-  glfwMakeContextCurrent(data);
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void window::present() const
 {
-  glfwMakeContextCurrent(data);
-  glfwPollEvents();
   glfwSwapBuffers(data);
 }
 
@@ -121,6 +121,7 @@ void window::process_input()
     e.w = id;
     we::events::handle(&e);
   }
+  queued_inputs.clear();
 }
 
 void window::resize(int w, int h)
