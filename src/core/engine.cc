@@ -43,6 +43,10 @@ namespace waifuengine
           {
             shutdown();
           }
+          else if(ev->a == we::graphics::input::action::press && ev->k == we::graphics::input::key::grave_accent)
+          {
+            we::core::debug::toggle_imgui_window();
+          }
         }
 
         void engine::shutdown()

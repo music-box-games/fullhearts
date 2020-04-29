@@ -18,6 +18,7 @@ namespace waifuengine
     private:
       void input_handler(waifuengine::events::event * e);
       void on_quit_click();
+      friend class waifuengine::core::debug::imgui_listener;
       friend class boost::serialization::access;
       template<class Archive>
       void serialize(Archive& ar, unsigned int const version)

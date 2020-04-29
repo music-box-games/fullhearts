@@ -35,12 +35,23 @@ id_type get_fresh_id()
   }
   return id_type();
 }
+
+static void key_callback(window::window_ptr window, int key, int scancode, int action, int mods)
+{
+  impl::underlying_windows.at(window)->queue_input(key, action);
+}
+
 } // namespace impl
 
 void framebuffer_size_callback(window::window_ptr w, int width, int height)
 {
   // TODO: maybe a flag to switch between using .at and [] and also exception handling
   impl::underlying_windows.at(w)->resize(width, height);
+}
+
+void window::queue_input(int key, int action)
+{
+  queued_inputs.push_back({key, action});
 }
 
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
@@ -102,9 +113,12 @@ void window::present() const
 
 void window::process_input()
 {
-  if(glfwGetKey(data, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  for(auto& pair : queued_inputs)
   {
-    input::input_event e(input::key::escape, input::action::press, id);
+    we::graphics::input::input_event e;
+    e.k = input::impl::keyset[pair.first];
+    e.a = input::impl::actionset[pair.second];
+    e.w = id;
     we::events::handle(&e);
   }
 }
@@ -200,6 +214,7 @@ std::shared_ptr<window> create_window(std::string title, int width, int height)
   impl::windows[ptr->id] = ptr;
   impl::underlying_windows[ptr->data] = ptr;
   impl::last_window = ptr->id;
+  glfwSetKeyCallback(ptr->data, impl::key_callback);
   return ptr;
 }
 

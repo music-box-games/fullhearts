@@ -19,6 +19,7 @@
 #include <serialization.hpp>
 #include <component.hpp>
 #include <gameobject.hpp>
+#include <debug.hpp>
 
 namespace waifuengine
 {
@@ -45,6 +46,7 @@ namespace waifuengine
 
             std::map<std::string, std::shared_ptr<gameobject>> objects_;
 
+            friend class waifuengine::core::debug::imgui_listener;
             friend class boost::serialization::access;
             template<class Archive>
             void serialize(Archive& ar, unsigned int const version)

@@ -17,6 +17,7 @@
 #include <serialization.hpp>
 #include <spacemanager.hpp>
 #include <component.hpp>
+#include <debug.hpp>
 
 #define SCENE_NAME(x) static constexpr std::string_view NAME = #x
 
@@ -32,6 +33,7 @@ namespace waifuengine
       ::waifuengine::object_management::space_manager manager;
 
     private:
+      friend class waifuengine::core::debug::imgui_listener;
       friend class ::boost::serialization::access;
       template<class Archive>
       void serialize(Archive& ar, unsigned int const version)

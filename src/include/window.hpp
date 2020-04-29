@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 
 #include <memory>
+#include <queue>
+#include <utility> //std::pair
 
 #include <settings.hpp>
 
@@ -36,10 +38,10 @@ namespace waifuengine
       static void present_all();
       static void process_all_input();
 
-      static void framebuffer_size_callback(window_ptr w, int width, int height);
+      void queue_input(int key, int action);
+
     private:
       friend std::shared_ptr<window> create_window(std::string, int, int);
-      friend void framebuffer_size_callback(window_ptr, int, int);
 
       window_ptr data;
       window_id_type id;
@@ -47,6 +49,8 @@ namespace waifuengine
       std::string title;
       int width;
       int height;
+
+      std::deque<std::pair<int, int>> queued_inputs;
     };
 
 

@@ -24,6 +24,7 @@
 #include <serialization.hpp>
 #include <scenes.hpp>
 #include <log.hpp>
+#include <debug.hpp>
 
 namespace we = ::waifuengine;
 
@@ -43,6 +44,7 @@ namespace waifuengine
         bool queued = false;
         std::function<void()> qf;
 
+        friend class waifuengine::core::debug::imgui_listener;  
         friend class boost::serialization::access;
         template<class Archive>
         void serialize(Archive& ar, unsigned int const version)

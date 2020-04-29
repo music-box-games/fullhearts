@@ -3,6 +3,14 @@
 
 namespace waifuengine
 {
+  namespace scenes
+  {
+    namespace impl
+    {
+      class scene_manager;
+    }
+  }
+
   namespace core
   {
     namespace debug
@@ -13,6 +21,8 @@ namespace waifuengine
 
       void render_imgui();
       void present_imgui();
+
+      class imgui_listener;
     }
   }
 }

@@ -18,6 +18,7 @@
 
 #include <space.hpp>
 #include <component.hpp>
+#include <debug.hpp>
 
 namespace waifuengine
 {
@@ -48,6 +49,7 @@ namespace waifuengine
                 { "Transition Space", space_order::TRANSITION },
             };
 
+            friend class waifuengine::core::debug::imgui_listener;
             friend class boost::serialization::access;
             template<class Archive>
             void serialize(Archive& ar, unsigned int const version)

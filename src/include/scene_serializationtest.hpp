@@ -13,6 +13,7 @@ namespace waifuengine
       class scene_serializationtest : public ::waifuengine::scenes::scene
       {
       private:
+        friend class waifuengine::core::debug::imgui_listener;
         friend class boost::serialization::access;
         template<class Archive>
         void serialize(Archive& ar, unsigned int const version)

@@ -16,6 +16,7 @@ namespace waifuengine
       virtual ~scene_splashscreen();
     private:
       void input_handler(waifuengine::events::event * ievent);
+      friend class waifuengine::core::debug::imgui_listener;
       friend class boost::serialization::access;
       template<class Archive>
       void serialize(Archive& ar, unsigned int const version)
