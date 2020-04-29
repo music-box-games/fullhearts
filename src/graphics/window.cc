@@ -87,6 +87,9 @@ void window::clear()
       mark_window_to_close(id);
     }
   }
+  glfwMakeContextCurrent(data);
+  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void window::present() const
