@@ -1,7 +1,7 @@
 #ifndef _WE_WINDOW_HPP_
 #define _WE_WINDOW_HPP_
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <memory>
@@ -21,15 +21,26 @@ namespace waifuengine
       window(std::string title, window_ptr w); // TODO: this is uhhhhhhhhhhh
       ~window();
 
-      void update(float dt);
-      void draw() const;
+      void clear();
+      void present() const;
+      void process_input();
 
       window_ptr get();
       window_id_type get_id() const;
 
+      void resize(int width, int height);
+
       explicit operator bool() const;
 
+      static void clear_all();
+      static void present_all();
+      static void process_all_input();
+
+      static void framebuffer_size_callback(window_ptr w, int width, int height);
     private:
+      friend std::shared_ptr<window> create_window(std::string, int, int);
+      friend void framebuffer_size_callback(window_ptr, int, int);
+
       window_ptr data;
       window_id_type id;
 
@@ -43,6 +54,10 @@ namespace waifuengine
     std::shared_ptr<window> get_window_by_id(window_id_type id);
 
     std::shared_ptr<window> create_window(std::string title, int width = waifuengine::core::settings::window_width, int height = waifuengine::core::settings::window_height);
+
+    void mark_window_to_close(window_id_type id);
+    void mark_all_windows_to_close();
+    void close_all_windows();
   }
 }
 

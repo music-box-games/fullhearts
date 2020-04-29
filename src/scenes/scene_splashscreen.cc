@@ -15,13 +15,13 @@
 #include <space.hpp>
 #include <gameobject.hpp>
 #include <component.hpp>
-//#include <factories.hpp>
 #include <timer_manager.hpp>
 #include <timer.hpp>
 #include <engine.hpp>
 #include <event_manager.hpp>
 #include <scenemanager.hpp>
 #include <scenelist.hpp>
+#include <input.hpp>
 
 namespace we = ::waifuengine;
 
@@ -38,8 +38,8 @@ static we::utils::trigger_timer * transition_timer = nullptr;
 
 void scene_splashscreen::input_handler(we::events::event * ievent)
 {
-  we::input::input_event * e = dynamic_cast<we::input::input_event *>(ievent);
-  if(e->type == we::input::input_type::PRESS)
+  we::graphics::input::input_event * e = dynamic_cast<we::graphics::input::input_event *>(ievent);
+  if(e->a == we::graphics::input::action::press)
   {
     if(transition_timer)
     {
@@ -61,14 +61,14 @@ scene_splashscreen::scene_splashscreen() : scene(std::string(NAME))
   // transition_timer->start();
   // we::utils::timers::add_timer("splashscreen end timer", transition_timer);
 
-  // // hook input events for skipping screen
-  // auto f = std::bind(&scene_splashscreen::input_handler, this, std::placeholders::_1);
-  // we::events::subscribe<we::input::input_event>(this, f);
+  // hook input events for skipping screen
+  auto f = std::bind(&scene_splashscreen::input_handler, this, std::placeholders::_1);
+  we::events::subscribe<we::graphics::input::input_event>(this, f);
 }
 
 scene_splashscreen::~scene_splashscreen()
 {
-  we::events::unsubcribe<we::input::input_event>(this);
+  we::events::unsubcribe<we::graphics::input::input_event>(this);
   manager.clear();
 }
 } // namespace scenes

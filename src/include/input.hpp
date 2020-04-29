@@ -1,27 +1,45 @@
-/******************************************************************************/
-/*!
-\file   input.hpp
-\author Ryan Hanson
-\par    email: iovita\@musicboxgames.net
-\brief
-  Handles user input.
+#ifndef _WE_INPUT_HPP_
+#define _WE_INPUT_HPP_
 
-*/
-/******************************************************************************/
-
-#ifndef _W_INPUT_HPP_
-#define _W_INPUT_HPP_
+#include <events.hpp>
+#include <window.hpp>
 
 namespace waifuengine
 {
-  namespace input
+  namespace graphics
   {
-    void init();
-    void update();
-    void shutdown();
+    namespace input
+    {
+      void process();
 
-    void get_mouse_position(int * x, int * y);
+      enum class key
+      {
+        escape,
+        default,
+      };
+
+      enum class action
+      {
+        press,
+        release,
+        default,
+      };
+
+      class input_event : public waifuengine::events::event
+      {
+      public:
+        EVENT_NAME(input_event);
+
+        input_event();
+        input_event(key, action, window_id_type);
+        ~input_event();
+
+        key k;
+        action a;
+        waifuengine::graphics::window_id_type w;
+      };
+    }
   }
 }
 
-#endif // _W_INPUT_HPP_
+#endif

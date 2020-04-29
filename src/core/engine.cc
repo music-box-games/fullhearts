@@ -20,7 +20,6 @@
 #include <input.hpp>
 #include <utils.hpp>
 #include <event_manager.hpp>
-#include <input_event.hpp>
 #include <timer_manager.hpp>
 #include <audio.hpp>
 #include <thread_pool.hpp>
@@ -38,8 +37,8 @@ namespace waifuengine
 
         void engine::input_handler(we::events::event * e)
         {
-          we::input::input_event* ev = dynamic_cast<we::input::input_event *>(e);
-          if (ev->type == we::input::input_type::PRESS && ev->key == we::input::keys::ESCAPE)
+          we::graphics::input::input_event* ev = dynamic_cast<we::graphics::input::input_event *>(e);
+          if (ev->a == we::graphics::input::action::press && ev->k == we::graphics::input::key::escape)
           {
             shutdown();
           }
@@ -57,9 +56,12 @@ namespace waifuengine
             waifuengine::events::init();
             waifuengine::graphics::init("test");
             waifuengine::audio::init();
-            waifuengine::input::init();
             waifuengine::scenes::init();
             waifuengine::utils::timers::init();
+
+            // register for input events
+            auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
+            we::events::subscribe<we::graphics::input::input_event>(this, f);
 
             running = true;
         }
@@ -68,9 +70,8 @@ namespace waifuengine
         {
             waifuengine::utils::timers::shutdown();
             waifuengine::scenes::shutdown();
-            waifuengine::input::shutdown();
             waifuengine::audio::shutdown();
-            //waifuengine::graphics::shutdown();
+            waifuengine::graphics::shutdown();
             waifuengine::events::shutdown();
             waifuengine::core::thread_pool::shutdown();
             waifuengine::log::shutdown();
@@ -85,19 +86,21 @@ namespace waifuengine
             // check threads
             core::thread_pool::update();
 
+            // update input
+            we::graphics::input::process();
+
             // clear buffer
-            //we::graphics::clear();
+            we::graphics::clear();
 
             // update things
             we::utils::timers::update();
-            we::input::update();
             ::waifuengine::scenes::update(static_cast<float>(fw.frame_time()));
 
             // now draw
             we::scenes::draw();
 
-            // then render
-            //::waifuengine::graphics::render();
+            // then present on screen
+            ::waifuengine::graphics::present();
 
             we::audio::update();
         }

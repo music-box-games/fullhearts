@@ -1,9 +1,13 @@
 #include <iostream>
 #include <unordered_map>
+#include <set>
 
 #include <window.hpp>
 #include <settings.hpp>
 #include <utils.hpp>
+#include <engine.hpp>
+#include <input.hpp>
+#include <event_manager.hpp>
 
 namespace we = ::waifuengine;
 namespace settings = we::core::settings;
@@ -15,7 +19,9 @@ namespace graphics
 
 namespace impl
 {
+static std::set<we::graphics::window_id_type> marked_for_close;
 static std::unordered_map<we::graphics::window_id_type, std::shared_ptr<we::graphics::window>> windows;
+static std::unordered_map<we::graphics::window::window_ptr, std::shared_ptr<we::graphics::window>> underlying_windows;
 
 template<class id_type>
 id_type get_fresh_id()
@@ -30,6 +36,12 @@ id_type get_fresh_id()
 }
 } // namespace impl
 
+void framebuffer_size_callback(window::window_ptr w, int width, int height)
+{
+  // TODO: maybe a flag to switch between using .at and [] and also exception handling
+  impl::underlying_windows.at(w)->resize(width, height);
+}
+
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
   glfwWindowHint(GLFW_SAMPLES, 4); // 4x AA
@@ -38,7 +50,7 @@ window::window(std::string t, int w, int h) : title(t), width(w), height(h)
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // make sure to get core profile
 
-  data = glfwCreateWindow(settings::window_width, settings::window_height, title.c_str(), NULL, NULL);
+  data = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
   if(data == NULL) // mmm yum yum c
   {
     // TODO: update to proper logging
@@ -56,17 +68,82 @@ window::window(std::string title, window::window_ptr w)
 
 window::~window()
 {
-
+  //glfwWindowShouldClose(data);
 }
 
-void window::update(float)
+void window::clear()
 {
-
+  // if window should close and it's the only window open,
+  // shutdown the game
+  // otherwise just marked the class to be deleted on next loop
+  if(glfwWindowShouldClose(data))
+  {
+    if(impl::windows.size() == 1)
+    {
+      we::core::engine::shutdown();
+    }
+    else
+    {
+      mark_window_to_close(id);
+    }
+  }
 }
 
-void window::draw() const
+void window::present() const
 {
+  glfwMakeContextCurrent(data);
+  glfwPollEvents();
+  glfwSwapBuffers(data);
+}
 
+void window::process_input()
+{
+  if(glfwGetKey(data, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  {
+    input::input_event e(input::key::escape, input::action::press, id);
+    we::events::handle(&e);
+  }
+}
+
+void window::resize(int w, int h)
+{
+  width = w;
+  height = h;
+  glfwMakeContextCurrent(data);
+  glViewport(0, 0, width, height);
+}
+
+// also deletes windows that are marked
+void window::clear_all()
+{
+  // delete windows marked to close
+  for(auto id : impl::marked_for_close)
+  {
+    impl::underlying_windows.erase(impl::windows[id]->data);
+    impl::windows.erase(id);
+  }
+  impl::marked_for_close.clear();
+
+  for(auto w : impl::windows)
+  {
+    w.second->clear();
+  }
+}
+
+void window::present_all()
+{
+  for(auto w : impl::windows)
+  {
+    w.second->present();
+  }
+}
+
+void window::process_all_input()
+{
+  for(auto w : impl::windows)
+  {
+    w.second->process_input();
+  }
 }
 
 window::window_ptr window::get()
@@ -105,7 +182,27 @@ std::shared_ptr<window> create_window(std::string title, int width, int height)
 {
   std::shared_ptr<window> ptr {new window(title, width, height)};
   impl::windows[ptr->get_id()] = ptr;
+  impl::underlying_windows[ptr->data] = ptr;
   return ptr;
+}
+
+void mark_window_to_close(window_id_type id)
+{
+  impl::marked_for_close.insert(id);
+}
+
+void mark_all_windows_to_close()
+{
+  for(auto& pair : impl::windows)
+  {
+    mark_window_to_close(pair.first);
+  }
+}
+
+void close_all_windows()
+{
+  impl::underlying_windows.clear();
+  impl::windows.clear();
 }
 
 

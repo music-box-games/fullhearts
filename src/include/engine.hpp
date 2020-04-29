@@ -12,8 +12,9 @@
 #ifndef _W_ENGINE_HPP_
 #define _W_ENGINE_HPP_
 
-#include <input_event.hpp>
 #include <memory> // std::unique_ptr
+
+#include <events.hpp>
 
 namespace waifuengine
 {

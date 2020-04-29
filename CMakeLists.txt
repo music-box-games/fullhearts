@@ -28,7 +28,6 @@ add_subdirectory(./src/log)
 add_subdirectory(./src/utils)
 add_subdirectory(./src/events)
 add_subdirectory(./src/graphics)
-add_subdirectory(./src/input)
 add_subdirectory(./src/scenes)
 add_subdirectory(./src/tests)
 add_subdirectory(./src/physics)
@@ -43,9 +42,9 @@ add_executable(${EXENAME} ${SOURCES})
 
 # link subdirs
 if(MSVC)
-target_link_libraries(${EXENAME} components core log utils events graphics input scenes tests physics factory audio)
+target_link_libraries(${EXENAME} components core log utils events graphics scenes tests physics factory audio)
 else()
-target_link_libraries(${EXENAME} -x -Wl, --start-group components core log utils events graphics input scenes tests physics factory audio -Wl, --end-group )
+target_link_libraries(${EXENAME} -x -Wl, --start-group components core log utils events graphics scenes tests physics factory audio -Wl, --end-group )
 endif()
 
 # link other libs
