@@ -52,6 +52,7 @@ namespace waifuengine
 
     std::shared_ptr<window> get_current_window();
     std::shared_ptr<window> get_window_by_id(window_id_type id);
+    std::shared_ptr<window> get_last_window_created();
 
     std::shared_ptr<window> create_window(std::string title, int width = waifuengine::core::settings::window_width, int height = waifuengine::core::settings::window_height);
 

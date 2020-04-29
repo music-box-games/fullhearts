@@ -20,6 +20,7 @@ conan_basic_setup()
 
 # add include paths
 include_directories(./src/include)
+include_directories(./ext_src)
 
 # add subdirs
 add_subdirectory(./src/components)
@@ -36,9 +37,10 @@ add_subdirectory(./src/audio)
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
+file(GLOB EXTSOURCES "./ext_src/*.*")
 
 # set ouput
-add_executable(${EXENAME} ${SOURCES})
+add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 
 # link subdirs
 if(MSVC)

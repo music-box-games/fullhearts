@@ -24,6 +24,7 @@
 #include <audio.hpp>
 #include <thread_pool.hpp>
 #include <graphics.hpp>
+#include <debug.hpp>
 
 namespace we = ::waifuengine;
 
@@ -58,6 +59,7 @@ namespace waifuengine
             waifuengine::audio::init();
             waifuengine::scenes::init();
             waifuengine::utils::timers::init();
+            waifuengine::core::debug::init_imgui();
 
             // register for input events
             auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
@@ -68,6 +70,7 @@ namespace waifuengine
 
         engine::~engine()
         {
+            waifuengine::core::debug::shutdown_imgui();
             waifuengine::utils::timers::shutdown();
             waifuengine::scenes::shutdown();
             waifuengine::audio::shutdown();
@@ -86,11 +89,14 @@ namespace waifuengine
             // check threads
             core::thread_pool::update();
 
-            // update input
-            we::graphics::input::process();
-
             // clear buffer
             we::graphics::clear();
+            
+            // prep imgui
+            we::core::debug::render_imgui();
+
+            // update input
+            we::graphics::input::process();
 
             // update things
             we::utils::timers::update();
@@ -98,6 +104,9 @@ namespace waifuengine
 
             // now draw
             we::scenes::draw();
+
+            // draw imgui on top
+            we::core::debug::present_imgui();
 
             // then present on screen
             ::waifuengine::graphics::present();

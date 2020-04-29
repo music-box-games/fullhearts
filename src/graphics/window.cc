@@ -22,6 +22,7 @@ namespace impl
 static std::set<we::graphics::window_id_type> marked_for_close;
 static std::unordered_map<we::graphics::window_id_type, std::shared_ptr<we::graphics::window>> windows;
 static std::unordered_map<we::graphics::window::window_ptr, std::shared_ptr<we::graphics::window>> underlying_windows;
+static we::graphics::window_id_type last_window = we::graphics::window_id_type{};
 
 template<class id_type>
 id_type get_fresh_id()
@@ -68,7 +69,7 @@ window::window(std::string title, window::window_ptr w)
 
 window::~window()
 {
-  //glfwWindowShouldClose(data);
+  glfwDestroyWindow(data);
 }
 
 void window::clear()
@@ -181,11 +182,24 @@ std::shared_ptr<window> get_window_by_id(window_id_type id)
   }
 }
 
+std::shared_ptr<window> get_last_window_created()
+{
+  if(impl::windows.count(impl::last_window))
+  {
+    return impl::windows[impl::last_window];
+  }
+  else
+  {
+    return {};
+  }
+}
+
 std::shared_ptr<window> create_window(std::string title, int width, int height)
 {
   std::shared_ptr<window> ptr {new window(title, width, height)};
-  impl::windows[ptr->get_id()] = ptr;
+  impl::windows[ptr->id] = ptr;
   impl::underlying_windows[ptr->data] = ptr;
+  impl::last_window = ptr->id;
   return ptr;
 }
 

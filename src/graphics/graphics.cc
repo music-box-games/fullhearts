@@ -3,6 +3,7 @@
 
 #include <graphics.hpp>
 #include <window.hpp>
+#include <debug.hpp>
 
 namespace we = ::waifuengine;
 
@@ -30,6 +31,8 @@ namespace graphics
     {
       // TODO error and shutdown
     }
+
+    // setup imgui context on main window
   }
 
   void shutdown()
