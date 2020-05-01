@@ -31,8 +31,6 @@ namespace graphics
     {
       // TODO error and shutdown
     }
-
-    // setup imgui context on main window
   }
 
   void shutdown()
