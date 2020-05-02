@@ -29,6 +29,7 @@ static bool edit_mode_enabled = false;
 static bool show_imgui_window = false;
 static bool imgui_render_ready = false;
 static bool fps_widget = false;
+static bool show_menu_bar = true;
 
 
 class imgui_listener
@@ -39,6 +40,19 @@ public:
 private:
   static const std::size_t HISTOGRAM_LEN = 300;
   std::deque<float> fps_histogram;
+
+  void show_helper(const char * tip)
+  {
+    ImGui::TextDisabled("(?)");
+    if(ImGui::IsItemHovered())
+    {
+      ImGui::BeginTooltip();
+      ImGui::PushTextWrapPos(450.0f);
+      ImGui::TextUnformatted(tip);
+      ImGui::PopTextWrapPos();
+      ImGui::EndTooltip();
+    }
+  }
 
   void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>>& obj, std::shared_ptr<we::object_management::space> sp)
   {
@@ -59,13 +73,6 @@ private:
   {
     if(ImGui::TreeNode(sp.first.c_str()))
     {
-      if(edit_mode_enabled)
-      {
-        if(ImGui::Button("Delete Space"))
-        {
-          spm->remove_space(sp.first);
-        }
-      }
       auto& obj = sp.second->objects_;
       for(auto& o : obj)
       {
@@ -90,6 +97,19 @@ private:
     }
   }
 
+  void menu_bar()
+  {
+    if(ImGui::BeginMainMenuBar())
+    {
+      if(ImGui::BeginMenu("Editor"))
+      {
+        if(ImGui::MenuItem("New Scene")) {}
+        ImGui::EndMenu();
+      }
+      ImGui::EndMainMenuBar();
+    }
+  }
+
   void fps()
   {
     auto fps_impl_func = [this]() -> void
@@ -107,7 +127,7 @@ private:
       ImGui::PlotLines(ss.str().c_str(), values.data(), HISTOGRAM_LEN, 0, NULL, 0, 144, ImVec2(0,0), 4);
       //ImGui::PlotHistogram("Framerate", values.data(), static_cast<int>(HISTOGRAM_LEN), 0, NULL, 0.0f, 1.0f, ImVec2(300,80));
       // slider for max frame rate
-      ImGui::DragScalar("Frame Limit", ImGuiDataType_::ImGuiDataType_U8, &we::core::settings::frame_limit, 1.0f);
+      ImGui::DragScalar("Frame Limit", ImGuiDataType_::ImGuiDataType_U16, &we::core::settings::frame_limit, 1.0f);
     };
 
     if(fps_widget)
@@ -138,30 +158,27 @@ public:
 
   void tree()
   {
+    menu_bar();
     fps();
     // toggle to put frame rate in separate window
     ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
     // toggle for edit mode
     ImGui::Checkbox("Enable Editing", &edit_mode_enabled);
-    if(edit_mode_enabled)
-    {
-      if(ImGui::Button("Save"))
-      {
-        s->save();
-      }
-      if(ImGui::Button("New Scene"))
-      {
-        
-      }
-    }
 
     // make a tree for each scene present in the attached scene_manager
     // right now there's always one
     auto sc = s->current_scene();
     scene_tree(sc);
   }
-};
 
+  void draw()
+  {
+    ImGui::Begin("Debug");
+    menu_bar();
+    tree();
+    ImGui::End();
+  }
+};
 
 static imgui_listener listener;
 
@@ -199,20 +216,11 @@ void render_imgui()
 {
   if (show_imgui_window)
   {
-
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    if (!ImGui::Begin("Debug Tools"))
-    {
-      ImGui::End();
-    }
-    else
-    {
-      listener.tree();
-      ImGui::End();
-    }
+    listener.draw();
     imgui_render_ready = true;
   }
 }

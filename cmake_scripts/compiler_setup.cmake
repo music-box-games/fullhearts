@@ -35,6 +35,11 @@ add_compile_options(-Wno-unused-function)
 add_compile_options(-Wno-unused-private-field)
 endif()
 
+# thread safe init for msvc
+if(MSVC)
+add_compile_options(/Zc:threadSafeInit-)
+endif()
+
 add_compile_definitions(WE_GRAPHICS_SDL2)
 #add_compile_definitions(WE_AUDIO_SDL2)
 add_compile_definitions(WE_AUDIO_FMOD_LL)
