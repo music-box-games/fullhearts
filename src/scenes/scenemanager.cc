@@ -28,9 +28,27 @@ namespace waifuengine
 
       scene_manager * smanager = nullptr;
 
+      std::unordered_map<std::string, fs::path>& scene_manager::get_scene_list()
+      {
+        return scene_data;
+      }
+
+      void scene_manager::update_scene_saves()
+      {
+        scene_data.clear(); // TODO: can probably be optimized
+        auto folder = we::utils::get_game_save_data_folder().append("scenes");
+        for(auto& f : fs::directory_iterator(folder))
+        {
+          scene_data[f.path().filename().string()] = f.path();
+        }
+      }
+
       scene_manager::scene_manager() : smap({})
       {
         we::log::trace("scene manager construction");
+        // navigate to the scenes save data folder and check for existing archives
+        // add them to impl::scene_data if found, then update on each loop
+        update_scene_saves();
       }
 
       scene_manager::~scene_manager()
@@ -40,6 +58,7 @@ namespace waifuengine
 
       void scene_manager::update(float dt)
       {
+        update_scene_saves();
         if(queued_for_load)
         {
           unload_scene();
@@ -51,7 +70,10 @@ namespace waifuengine
           unload_scene();
           queued_for_unload = false;
         }
-        smap.second->update(dt);
+        if (smap.second.use_count())
+        {
+          smap.second->update(dt);
+        }
       }
 
       void scene_manager::load(std::string name)
@@ -69,7 +91,7 @@ namespace waifuengine
       {
         // get path to save folder
         auto pt = utils::get_game_save_data_folder();
-        pt.append("\\scenes");
+        pt.append("scenes");
         pt.append(smap.first);
         std::ofstream stream(pt);
         boost::archive::text_oarchive arch(stream);
@@ -78,7 +100,10 @@ namespace waifuengine
 
       void scene_manager::draw() const
       {
-        smap.second->draw();
+        if (smap.second.use_count())
+        {
+          smap.second->draw();
+        }
       }
 
       std::shared_ptr<scene> scene_manager::blank_scene(std::string name)
@@ -115,16 +140,6 @@ namespace waifuengine
 
     void init()
     {
-      // build path to where scene data is stored
-      // get scene save data folder
-      auto folder = we::utils::get_game_save_data_folder(); // should get us to ..\{user}\%appdata%\roaming\fullhearts
-      folder.append("\\scenes"); // move to scene folder
-      // get list of files and full paths
-      for(auto& f : fs::directory_iterator(folder))
-      {
-        // save to impl::scene_data
-        impl::scene_data[f.path().filename().generic_string()] = f.path();
-      }
       if(!impl::smanager)
       {
         impl::smanager = new impl::scene_manager();

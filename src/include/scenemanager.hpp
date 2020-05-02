@@ -25,6 +25,7 @@
 #include <scenes.hpp>
 #include <log.hpp>
 #include <debug.hpp>
+#include <utils.hpp>
 
 namespace we = ::waifuengine;
 
@@ -55,6 +56,7 @@ namespace waifuengine
 
         void unload_scene();
         void load_scene();
+        void update_scene_saves();
 
       public:
         scene_manager();
@@ -72,6 +74,8 @@ namespace waifuengine
         std::shared_ptr<scene> current_scene();
 
         bool operator==(scene_manager const& rhs) const;
+
+        static std::unordered_map<std::string, fs::path>& get_scene_list();
       };
 
       extern scene_manager * smanager;

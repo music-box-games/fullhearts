@@ -79,7 +79,7 @@ namespace waifuengine
     fs::path get_game_save_data_folder()
     {
       auto pt = get_save_data_folder_root();
-      pt.append("\\fullhearts");
+      pt.append("fullhearts");
       return pt;
     }
 
@@ -95,7 +95,7 @@ namespace waifuengine
     void build_scene_save_folder()
     {
       auto pt = get_game_save_data_folder();
-      pt.append("\\scenes");
+      pt.append("scenes");
       if(!fs::exists(pt))
       {
         fs::create_directory(pt);

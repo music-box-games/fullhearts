@@ -56,21 +56,21 @@ private:
 
   void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>>& obj, std::shared_ptr<we::object_management::space> sp)
   {
+    if (obj.second.use_count())
+    {
+
     if(ImGui::TreeNode(obj.first.c_str()))
     {
-      if(edit_mode_enabled)
-      {
-        if(ImGui::Button("Delete Object"))
-        {
-          sp->remove_object(obj.first);
-        }
-      }
       ImGui::TreePop();
+    }
     }
   }
 
   void space_tree(std::pair<std::string const, std::shared_ptr<we::object_management::space>>& sp,  we::object_management::space_manager * spm)
   {
+    if (sp.second.use_count())
+    {
+
     if(ImGui::TreeNode(sp.first.c_str()))
     {
       auto& obj = sp.second->objects_;
@@ -80,10 +80,13 @@ private:
       }
       ImGui::TreePop();
     }
+    }
   }
 
   void scene_tree(std::shared_ptr<we::scenes::scene> sc)
   {
+    if (sc.use_count())
+    {
     if(ImGui::TreeNode(sc->name.c_str()))
     {
       auto * spmanager = sc->get_manager();
@@ -95,6 +98,7 @@ private:
       }
       ImGui::TreePop();
     }
+    }
   }
 
   void menu_bar()
@@ -103,7 +107,13 @@ private:
     {
       if(ImGui::BeginMenu("Editor"))
       {
-        if(ImGui::MenuItem("New Scene")) {}
+        char new_scene_buf[256] {'\0'};
+        if (ImGui::InputText("New Scene", new_scene_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+          s->blank_scene(new_scene_buf);
+          edit_mode_enabled = true;
+        }
+
         ImGui::EndMenu();
       }
       ImGui::EndMainMenuBar();
@@ -148,6 +158,31 @@ private:
     }
   }
 
+  void scene_list()
+  {
+    auto sc_list = we::scenes::impl::scene_manager::get_scene_list();
+    std::vector<const char *> names;
+    for(auto& p : sc_list)
+    {
+      names.push_back(p.first.c_str());
+    }
+    static int current_scene_index = 0;
+    if(current_scene_index > names.size()) current_scene_index = 0;
+    ImGui::ListBox("Scenes", &current_scene_index, names.data(), static_cast<int>(names.size()));
+    if(ImGui::Button("Load Scene"))
+    {
+      s->load(names[current_scene_index]);
+    }
+    if (ImGui::Button("Unload Scene"))
+    {
+      s->unload();
+    }
+    if (ImGui::Button("Delete Scene"))
+    {
+      fs::remove(sc_list[names[current_scene_index]]);
+    }
+  }
+
 public:
 
   imgui_listener() : s(nullptr) {}
@@ -158,12 +193,17 @@ public:
 
   void tree()
   {
-    menu_bar();
+    scene_list();
     fps();
     // toggle to put frame rate in separate window
     ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
     // toggle for edit mode
     ImGui::Checkbox("Enable Editing", &edit_mode_enabled);
+    // save current scene
+    if(ImGui::Button("Save"))
+    {
+      s->save();
+    }
 
     // make a tree for each scene present in the attached scene_manager
     // right now there's always one
