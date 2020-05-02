@@ -37,6 +37,8 @@ bool fullscreen = false;
 int window_width = 800;
 int window_height = 600;
 
+std::size_t frame_limit = 0;
+
 namespace impl
 {
 
@@ -53,6 +55,7 @@ settings_state::settings_state(bool load_current)
     fullscreen = false;
     window_width = 0;
     window_height = 0;
+    frame_limit = 0;
   }
 }
 
@@ -65,6 +68,7 @@ void settings_state::load_current_settings()
   fullscreen = we::core::settings::fullscreen;
   window_width = we::core::settings::window_width;
   window_height = we::core::settings::window_height;
+  frame_limit = we::core::settings::frame_limit;
 }
 
 void settings_state::apply() const
@@ -74,6 +78,7 @@ void settings_state::apply() const
   we::core::settings::fullscreen = fullscreen;
   we::core::settings::window_width = window_width;
   we::core::settings::window_height = window_height;
+  we::core::settings::frame_limit = frame_limit;
 }
 
 bool settings_state::operator==(settings_state const& rhs) const
@@ -82,7 +87,8 @@ bool settings_state::operator==(settings_state const& rhs) const
   (mt_messaging == rhs.mt_messaging) &&
   (fullscreen == rhs.fullscreen) &&
   (window_width == rhs.window_width) &&
-  (window_height == rhs.window_height);
+  (window_height == rhs.window_height) &&
+  (frame_limit == rhs.frame_limit);
 }
 
 } // namespace impl

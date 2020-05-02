@@ -44,6 +44,16 @@ namespace waifuengine
             }
         };
 
+        class frame_timer : public timer
+        {
+        public:
+            frame_timer();
+            ~frame_timer();
+
+            float delta_time();
+            float delta_time_reset();
+        };
+
         class trigger_timer : public timer
         {
         private:

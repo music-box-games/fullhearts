@@ -20,6 +20,12 @@ namespace waifuengine
   {
     fs::path get_path_relative_to_exe(std::string find);
     std::string get_exe_path();
+    fs::path get_save_data_folder_root();
+    fs::path get_temp_folder();
+    fs::path get_game_save_data_folder();
+    void build_save_folder();
+
+    void fs_init();
   }
 }
 

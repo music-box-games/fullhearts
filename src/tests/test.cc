@@ -162,7 +162,7 @@ TEST(SerializationTest, SerializeObject)
 TEST(SerializationTest, SerializeSceneManager)
 {
     we::scenes::impl::scene_manager sm = we::scenes::impl::scene_manager();
-    sm.load<we::scenes::test::scene_serializationtest>();
+    //sm.load<we::scenes::test::scene_serializationtest>();
 
     auto ss = create_serialize_test_folder();
     ss << "\\scenemgr";

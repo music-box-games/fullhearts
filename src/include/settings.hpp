@@ -29,6 +29,8 @@ namespace waifuengine
 
       extern int window_width;
       extern int window_height;
+
+      extern std::size_t frame_limit;
       
       namespace impl
       {
@@ -45,6 +47,9 @@ namespace waifuengine
           int window_width;
           int window_height;
 
+          // size_t
+          std::size_t frame_limit;
+
           friend class ::boost::serialization::access;
           template<class Archive>
           void serialize(Archive& ar, unsigned int const version)
@@ -54,6 +59,7 @@ namespace waifuengine
             ar & fullscreen;
             ar & window_width;
             ar & window_height;
+            ar & frame_limit;
           }
         public:
           settings_state(bool load_current = true);

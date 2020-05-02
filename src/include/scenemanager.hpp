@@ -41,8 +41,9 @@ namespace waifuengine
         using scene_container = std::pair<std::string, std::shared_ptr<::waifuengine::scenes::scene>>;
         scene_container smap;
 
-        bool queued = false;
-        std::function<void()> qf;
+        bool queued_for_load = false;
+        bool queued_for_unload = false;
+        std::string queued_scene = "";
 
         friend class waifuengine::core::debug::imgui_listener;  
         friend class boost::serialization::access;
@@ -52,35 +53,22 @@ namespace waifuengine
           ar & smap;
         }
 
+        void unload_scene();
+        void load_scene();
+
       public:
         scene_manager();
         ~scene_manager();
 
         void update(float dt);
+
         void draw() const;
 
-        template<typename Scene>
-        void load()
-        {
-          std::string sname(Scene::NAME);
-          smap.first = sname;
-          smap.second = std::shared_ptr<::waifuengine::scenes::scene>(new Scene());
-        }
+        void load(std::string name);
+        void unload();
+        void save();
 
-        template<typename Scene>
-        void queue_load()
-        {
-          qf = std::bind(&scene_manager::load<Scene>, this);
-          queued = true;
-        }
-
-        template<typename Scene>
-        void unload()
-        {
-          smap.first = "";
-          smap.second.reset();
-        }
-
+        std::shared_ptr<scene> blank_scene(std::string name);
         std::shared_ptr<scene> current_scene();
 
         bool operator==(scene_manager const& rhs) const;
@@ -89,36 +77,17 @@ namespace waifuengine
       extern scene_manager * smanager;
     }
 
-    template<typename Scene>
-    void load()
-    {
-      std::stringstream ss;
-      ss << "loading scene: " << Scene::NAME;
-      we::log::trace(ss.str());
-      
-      impl::smanager->load<Scene>();
-    }
-
-    template<typename Scene>
-    void queue_load()
-    {
-      std::stringstream ss;
-      ss << "Queueing scene " << Scene::NAME;
-      we::log::trace(ss.str());
-      impl::smanager->queue_load<Scene>();
-    }
-
-    template<typename Scene>
-    void unload()
-    {
-      impl::smanager->unload<Scene>();
-    }
+    void load(std::string name);
+    void unload();
+    void save();
 
     void init();
     void shutdown();
     void update(float dt);
     void draw();
 
+
+    std::shared_ptr<scene> blank_scene(std::string name);
     std::shared_ptr<scene> current_scene();
   }
 }

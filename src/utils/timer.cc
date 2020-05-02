@@ -47,9 +47,24 @@ namespace waifuengine
             start();
         }
 
-        trigger_timer::trigger_timer(bool repeat) : limit_(0), repeat_(repeat) {}
-        trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit) : limit_(limit), repeat_(repeat) {}
-        trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit, std::function<void()> trigger) : limit_(limit), repeat_(repeat), on_trigger_(trigger) {}
+        frame_timer::frame_timer() : timer() {start();}
+        frame_timer::~frame_timer() {}
+
+        float frame_timer::delta_time()
+        {
+            return static_cast<float>(time_elapsed<std::chrono::milliseconds>().count());
+        }
+
+        float frame_timer::delta_time_reset()
+        {
+            float dt = delta_time();
+            restart();
+            return dt;
+        }
+
+        trigger_timer::trigger_timer(bool repeat) : timer(), limit_(0), repeat_(repeat) {}
+        trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit) : timer(), limit_(limit), repeat_(repeat) {}
+        trigger_timer::trigger_timer(bool repeat, sc::milliseconds limit, std::function<void()> trigger) : timer(), limit_(limit), repeat_(repeat), on_trigger_(trigger) {}
         trigger_timer::~trigger_timer() {}
 
         void trigger_timer::set_limit_us(sc::microseconds limit)

@@ -31,7 +31,7 @@ namespace scenes
 {
 static void transition()
 {
-  we::scenes::queue_load<scene_mainmenu>();
+  //we::scenes::queue_load<scene_mainmenu>();
 }
 
 static we::utils::trigger_timer * transition_timer = nullptr;

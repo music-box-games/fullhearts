@@ -1,3 +1,6 @@
+#include <queue>
+#include <array>
+
 #include <imgui.h>
 
 #include <debug.hpp>
@@ -22,11 +25,110 @@ namespace core
 {
 namespace debug
 {
+static bool edit_mode_enabled = false;
+static bool show_imgui_window = false;
+static bool imgui_render_ready = false;
+static bool fps_widget = false;
+
 
 class imgui_listener
 {
 public:
   waifuengine::scenes::impl::scene_manager *s;
+
+private:
+  static const std::size_t HISTOGRAM_LEN = 300;
+  std::deque<float> fps_histogram;
+
+  void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>>& obj, std::shared_ptr<we::object_management::space> sp)
+  {
+    if(ImGui::TreeNode(obj.first.c_str()))
+    {
+      if(edit_mode_enabled)
+      {
+        if(ImGui::Button("Delete Object"))
+        {
+          sp->remove_object(obj.first);
+        }
+      }
+      ImGui::TreePop();
+    }
+  }
+
+  void space_tree(std::pair<std::string const, std::shared_ptr<we::object_management::space>>& sp,  we::object_management::space_manager * spm)
+  {
+    if(ImGui::TreeNode(sp.first.c_str()))
+    {
+      if(edit_mode_enabled)
+      {
+        if(ImGui::Button("Delete Space"))
+        {
+          spm->remove_space(sp.first);
+        }
+      }
+      auto& obj = sp.second->objects_;
+      for(auto& o : obj)
+      {
+        object_tree(o, sp.second);
+      }
+      ImGui::TreePop();
+    }
+  }
+
+  void scene_tree(std::shared_ptr<we::scenes::scene> sc)
+  {
+    if(ImGui::TreeNode(sc->name.c_str()))
+    {
+      auto * spmanager = sc->get_manager();
+      auto& sps = spmanager->spaces_;
+      
+      for(auto& sp : sps)
+      {
+        space_tree(sp, spmanager);
+      }
+      ImGui::TreePop();
+    }
+  }
+
+  void fps()
+  {
+    auto fps_impl_func = [this]() -> void
+    {
+      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+      fps_histogram.push_back(ImGui::GetIO().Framerate);
+      if(fps_histogram.size() > HISTOGRAM_LEN)
+      {
+        fps_histogram.pop_front();
+      }
+      static std::array<float, HISTOGRAM_LEN> values;
+      std::copy(fps_histogram.begin(), fps_histogram.end(), values.begin());
+      std::stringstream ss;
+      ss << "Framerate\n(Last " << HISTOGRAM_LEN << " frames)\nLimit: " << we::core::settings::frame_limit;
+      ImGui::PlotLines(ss.str().c_str(), values.data(), HISTOGRAM_LEN, 0, NULL, 0, 144, ImVec2(0,0), 4);
+      //ImGui::PlotHistogram("Framerate", values.data(), static_cast<int>(HISTOGRAM_LEN), 0, NULL, 0.0f, 1.0f, ImVec2(300,80));
+      // slider for max frame rate
+      ImGui::DragScalar("Frame Limit", ImGuiDataType_::ImGuiDataType_U8, &we::core::settings::frame_limit, 1.0f);
+    };
+
+    if(fps_widget)
+    {
+      if(!ImGui::Begin("FPS"))
+      {
+        ImGui::End();
+      }
+      else
+      {
+        fps_impl_func();
+        ImGui::End();
+      }
+    }
+    else
+    {
+      fps_impl_func();
+    }
+  }
+
+public:
 
   imgui_listener() : s(nullptr) {}
   ~imgui_listener() {}
@@ -34,43 +136,34 @@ public:
   void attach(waifuengine::scenes::impl::scene_manager *sm) { s = sm; }
   void detach() { s = nullptr; }
 
-  void draw()
+  void tree()
   {
+    fps();
+    // toggle to put frame rate in separate window
+    ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
+    // toggle for edit mode
+    ImGui::Checkbox("Enable Editing", &edit_mode_enabled);
+    if(edit_mode_enabled)
+    {
+      if(ImGui::Button("Save"))
+      {
+        s->save();
+      }
+      if(ImGui::Button("New Scene"))
+      {
+        
+      }
+    }
+
     // make a tree for each scene present in the attached scene_manager
     // right now there's always one
     auto sc = s->current_scene();
-    if (ImGui::TreeNode(sc->name.c_str()))
-    {
-      // get space manager
-      auto *spmanager = sc->get_manager();
-      // get spaces
-      auto &sps = spmanager->spaces_;
-      //  tree node for each space
-      for (auto &sp : sps)
-      {
-        if (ImGui::TreeNode(sp.first.c_str()))
-        {
-          // get each object
-          auto &objects = sp.second->objects_;
-          // tree node for each object
-          for (auto &obj : objects)
-          {
-            if (ImGui::TreeNode(obj.first.c_str()))
-            {
-              ImGui::TreePop();
-            }
-          }
-          ImGui::TreePop();
-        }
-      }
-      ImGui::TreePop();
-    }
+    scene_tree(sc);
   }
 };
 
-static bool show_imgui_window = false;
+
 static imgui_listener listener;
-static bool imgui_render_ready = false;
 
 void init_imgui()
 {
@@ -117,7 +210,7 @@ void render_imgui()
     }
     else
     {
-      listener.draw();
+      listener.tree();
       ImGui::End();
     }
     imgui_render_ready = true;

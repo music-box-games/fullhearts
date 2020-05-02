@@ -2,6 +2,7 @@
 #define _WE_SERIALIZATION_HPP_
 
 #include <string>
+#include <fstream>
 
 #include <boost/serialization/export.hpp>
 #include <boost/archive/text_iarchive.hpp>

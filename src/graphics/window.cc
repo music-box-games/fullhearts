@@ -64,6 +64,8 @@ window::window(std::string t, int w, int h) : title(t), width(w), height(h)
   glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // double buffer
 
   data = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+  glfwMakeContextCurrent(data);
+  glfwSwapInterval(0); // turn off frame limit
   if(data == NULL) // mmm yum yum c
   {
     // TODO: update to proper logging

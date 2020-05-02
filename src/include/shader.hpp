@@ -21,8 +21,6 @@ namespace waifuengine
       {
       public:
         vertex_shader(fs::path file);
-        vertex_shader(std::string src);
-        vertex_shader(const char * src);
         ~vertex_shader();
 
       private:
@@ -30,14 +28,13 @@ namespace waifuengine
         void compile();
         const char * source;
         unsigned int shader_id;
+        fs::path filepath;
       };
 
       class fragment_shader
       {
       public:
         fragment_shader(fs::path file);
-        fragment_shader(std::string src);
-        fragment_shader(const char * src);
         ~fragment_shader();
 
       private:
@@ -45,6 +42,7 @@ namespace waifuengine
         void compile();
         const char * source;
         unsigned int shader_id;
+        fs::path filepath;
       };
 
       // represents a fully linked shader program
@@ -59,6 +57,7 @@ namespace waifuengine
       private:
         void link(vertex_shader& v, fragment_shader& f);
         unsigned int program_id;
+        std::pair<fs::path, fs::path> files; // shader sources used to make this program
       };
     }
   }
