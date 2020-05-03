@@ -13,6 +13,7 @@
 #include <scenes.hpp>
 #include <scenelist.hpp>
 #include <gameobject.hpp>
+#include <scripting.hpp>
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
@@ -31,20 +32,28 @@ static bool imgui_render_ready = false;
 static bool fps_widget = false;
 static bool show_menu_bar = true;
 
-
 class imgui_listener
 {
 public:
   waifuengine::scenes::impl::scene_manager *s;
 
 private:
+  enum class edit_modes
+  {
+    scene_editor,
+    object_editor,
+    none,
+  };
+
+  edit_modes editor_mode = edit_modes::none;
+
   static const std::size_t HISTOGRAM_LEN = 300;
   std::deque<float> fps_histogram;
 
-  void show_helper(const char * tip)
+  void show_helper(const char *tip)
   {
     ImGui::TextDisabled("(?)");
-    if(ImGui::IsItemHovered())
+    if (ImGui::IsItemHovered())
     {
       ImGui::BeginTooltip();
       ImGui::PushTextWrapPos(450.0f);
@@ -54,32 +63,79 @@ private:
     }
   }
 
-  void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>>& obj, std::shared_ptr<we::object_management::space> sp)
+  void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>> &obj, std::shared_ptr<we::object_management::space> sp)
   {
     if (obj.second.use_count())
     {
-
-    if(ImGui::TreeNode(obj.first.c_str()))
-    {
-      ImGui::TreePop();
-    }
+      if (ImGui::TreeNode(obj.first.c_str()))
+      {
+        if (edit_mode_enabled && editor_mode != edit_modes::object_editor)
+        {
+          if (ImGui::Button("Unload"))
+          {
+            sp->mark_object_for_removal(obj.first);
+          }
+        }
+        else if (edit_mode_enabled && editor_mode == edit_modes::object_editor)
+        {
+          // TODO: listbox of types of components that can be added to the object
+          if (ImGui::Button("Add Component"))
+          {
+            // get index of listbox and add that component
+          }
+        }
+        ImGui::TreePop();
+      }
     }
   }
 
-  void space_tree(std::pair<std::string const, std::shared_ptr<we::object_management::space>>& sp,  we::object_management::space_manager * spm)
+  void object_list(std::shared_ptr<we::object_management::space> &sp)
+  {
+    auto pt = we::utils::get_game_save_data_folder().append("objects");
+    auto obj_list = we::object_management::gameobject::get_object_list();
+    std::vector<const char *> names;
+    for (auto &pair : obj_list)
+    {
+      names.push_back(pair.first.c_str());
+    }
+    static int current_object_index = 0;
+    if (current_object_index > names.size())
+      current_object_index = 0;
+    ImGui::ListBox("Objects", &current_object_index, names.data(), static_cast<int>(names.size()));
+    if (ImGui::Button("Load"))
+    {
+      sp->load_object(names[current_object_index]);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Delete"))
+    {
+      fs::remove(pt.append(names[current_object_index]));
+    }
+  }
+
+  void space_tree(std::pair<std::string const, std::shared_ptr<we::object_management::space>> &sp, we::object_management::space_manager *spm)
   {
     if (sp.second.use_count())
     {
 
-    if(ImGui::TreeNode(sp.first.c_str()))
-    {
-      auto& obj = sp.second->objects_;
-      for(auto& o : obj)
+      if (ImGui::TreeNode(sp.first.c_str()))
       {
-        object_tree(o, sp.second);
+        if (edit_mode_enabled && editor_mode != edit_modes::object_editor)
+        {
+          char new_obj_buf[256]{'\0'};
+          if (ImGui::InputText("New Object", new_obj_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
+          {
+            sp.second->add_object(new_obj_buf);
+          }
+          object_list(sp.second);
+        }
+        auto &obj = sp.second->objects_;
+        for (auto &o : obj)
+        {
+          object_tree(o, sp.second);
+        }
+        ImGui::TreePop();
       }
-      ImGui::TreePop();
-    }
     }
   }
 
@@ -87,33 +143,50 @@ private:
   {
     if (sc.use_count())
     {
-    if(ImGui::TreeNode(sc->name.c_str()))
-    {
-      auto * spmanager = sc->get_manager();
-      auto& sps = spmanager->spaces_;
-      
-      for(auto& sp : sps)
+      if (ImGui::TreeNode(sc->name.c_str()))
       {
-        space_tree(sp, spmanager);
+        auto *spmanager = sc->get_manager();
+        auto &sps = spmanager->spaces_;
+        // input to add new space
+        if (edit_mode_enabled && editor_mode != edit_modes::object_editor)
+        {
+          char new_space_buf[256]{'\0'};
+          if (ImGui::InputText("New Space", new_space_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
+          {
+            spmanager->add_space(new_space_buf);
+            editor_mode = edit_modes::scene_editor;
+          }
+        }
+
+        for (auto &sp : sps)
+        {
+          space_tree(sp, spmanager);
+        }
+        ImGui::TreePop();
       }
-      ImGui::TreePop();
-    }
     }
   }
 
   void menu_bar()
   {
-    if(ImGui::BeginMainMenuBar())
+    if (ImGui::BeginMainMenuBar())
     {
-      if(ImGui::BeginMenu("Editor"))
+      if (ImGui::BeginMenu("Editor"))
       {
-        char new_scene_buf[256] {'\0'};
+        char new_scene_buf[256]{'\0'};
         if (ImGui::InputText("New Scene", new_scene_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
         {
           s->blank_scene(new_scene_buf);
           edit_mode_enabled = true;
         }
-
+        char new_obj_buf[256]{'\0'};
+        if (ImGui::InputText("New Object", new_obj_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+          auto sc = s->current_scene();
+          auto *spmanager = sc->get_manager();
+          spmanager->add_space("object editor")->add_object(new_obj_buf);
+          editor_mode = edit_modes::object_editor;
+        }
         ImGui::EndMenu();
       }
       ImGui::EndMainMenuBar();
@@ -122,11 +195,10 @@ private:
 
   void fps()
   {
-    auto fps_impl_func = [this]() -> void
-    {
+    auto fps_impl_func = [this]() -> void {
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
       fps_histogram.push_back(ImGui::GetIO().Framerate);
-      if(fps_histogram.size() > HISTOGRAM_LEN)
+      if (fps_histogram.size() > HISTOGRAM_LEN)
       {
         fps_histogram.pop_front();
       }
@@ -134,15 +206,15 @@ private:
       std::copy(fps_histogram.begin(), fps_histogram.end(), values.begin());
       std::stringstream ss;
       ss << "Framerate\n(Last " << HISTOGRAM_LEN << " frames)\nLimit: " << we::core::settings::frame_limit;
-      ImGui::PlotLines(ss.str().c_str(), values.data(), HISTOGRAM_LEN, 0, NULL, 0, 144, ImVec2(0,0), 4);
+      ImGui::PlotLines(ss.str().c_str(), values.data(), HISTOGRAM_LEN, 0, NULL, 0, 144, ImVec2(0, 0), 4);
       //ImGui::PlotHistogram("Framerate", values.data(), static_cast<int>(HISTOGRAM_LEN), 0, NULL, 0.0f, 1.0f, ImVec2(300,80));
       // slider for max frame rate
       ImGui::DragScalar("Frame Limit", ImGuiDataType_::ImGuiDataType_U16, &we::core::settings::frame_limit, 1.0f);
     };
 
-    if(fps_widget)
+    if (fps_widget)
     {
-      if(!ImGui::Begin("FPS"))
+      if (!ImGui::Begin("FPS"))
       {
         ImGui::End();
       }
@@ -162,21 +234,24 @@ private:
   {
     auto sc_list = we::scenes::impl::scene_manager::get_scene_list();
     std::vector<const char *> names;
-    for(auto& p : sc_list)
+    for (auto &p : sc_list)
     {
       names.push_back(p.first.c_str());
     }
     static int current_scene_index = 0;
-    if(current_scene_index > names.size()) current_scene_index = 0;
+    if (current_scene_index > names.size())
+      current_scene_index = 0;
     ImGui::ListBox("Scenes", &current_scene_index, names.data(), static_cast<int>(names.size()));
-    if(ImGui::Button("Load Scene"))
+    if (ImGui::Button("Load Scene"))
     {
       s->load(names[current_scene_index]);
     }
+    ImGui::SameLine();
     if (ImGui::Button("Unload Scene"))
     {
       s->unload();
     }
+    ImGui::SameLine();
     if (ImGui::Button("Delete Scene"))
     {
       fs::remove(sc_list[names[current_scene_index]]);
@@ -184,7 +259,6 @@ private:
   }
 
 public:
-
   imgui_listener() : s(nullptr) {}
   ~imgui_listener() {}
 
@@ -193,6 +267,10 @@ public:
 
   void tree()
   {
+    if(ImGui::Button("TEST SCRIPT"))
+    {
+      we::core::scripting::interpret("add_space");
+    }
     scene_list();
     fps();
     // toggle to put frame rate in separate window
@@ -200,9 +278,44 @@ public:
     // toggle for edit mode
     ImGui::Checkbox("Enable Editing", &edit_mode_enabled);
     // save current scene
-    if(ImGui::Button("Save"))
+    if (ImGui::Button("Save"))
     {
-      s->save();
+      switch (editor_mode)
+      {
+      case edit_modes::scene_editor:
+        s->save();
+        break;
+      case edit_modes::object_editor:
+        // grab object and write to archive
+        // object editor mode will only allow 1 space and 1 object to be
+        // present so we can just go to the first
+        { // THIS WONT COMPILE IF YOU TAKE OUT THIS SCOPE I DON"T KNOW WHY
+
+          auto cur_scene = s->current_scene();
+          auto spmgr = cur_scene->get_manager();
+          auto spce = (*(spmgr->spaces_.begin())).second;
+          auto obj = (*(spce->objects_.begin())).second;
+          we::object_management::gameobject::save(obj);
+        }
+        break;
+      case edit_modes::none:
+        if (edit_mode_enabled)
+        {
+          s->save();
+        }
+        break;
+      default:
+        break;
+      }
+    }
+    if (editor_mode == edit_modes::object_editor || editor_mode == edit_modes::scene_editor)
+    {
+      if (ImGui::Button("Cancel"))
+      {
+        s->unload();
+        editor_mode = edit_modes::none;
+        edit_mode_enabled = false;
+      }
     }
 
     // make a tree for each scene present in the attached scene_manager

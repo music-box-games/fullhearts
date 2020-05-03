@@ -102,10 +102,21 @@ namespace waifuengine
       }
     }
 
+    void build_object_save_folder()
+    {
+      auto pt = get_game_save_data_folder();
+      pt.append("objects");
+      if(!fs::exists(pt))
+      {
+        fs::create_directory(pt);
+      }
+    }
+
     void fs_init()
     {
       build_save_folder();
       build_scene_save_folder();
+      build_object_save_folder();
     }
   }
 }

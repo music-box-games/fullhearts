@@ -15,6 +15,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <set>
 
 #include <serialization.hpp>
 #include <component.hpp>
@@ -45,6 +46,7 @@ namespace waifuengine
             space_order order_;
 
             std::map<std::string, std::shared_ptr<gameobject>> objects_;
+            std::set<std::string> objects_to_remove;
 
             friend class waifuengine::core::debug::imgui_listener;
             friend class boost::serialization::access;
@@ -62,6 +64,7 @@ namespace waifuengine
 
             std::shared_ptr<gameobject> add_object(std::string name);
             void remove_object(std::string name);
+            void mark_object_for_removal(std::string name);
             std::shared_ptr<gameobject> get_object(std::string name);
 
             void update(float dt);
@@ -72,6 +75,8 @@ namespace waifuengine
 
             bool operator<(space const& rhs) const;
             bool operator==(space const& rhs) const;
+
+            std::shared_ptr<gameobject> load_object(std::string name);
         };
     }
 }

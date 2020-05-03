@@ -42,6 +42,7 @@ namespace waifuengine
             texture,
             sprite,
             textsprite,
+            script_object,
             
             // special ones
             basic_shape,
@@ -119,9 +120,17 @@ namespace waifuengine
     {
         class collider;
     }
+    namespace core
+    {
+      namespace scripting
+      {
+        class script_object;
+      }
+    }
 }
 
 BOOST_CLASS_EXPORT_KEY(we::components::component<we::components::dummy>);
 BOOST_CLASS_EXPORT_KEY(we::components::component<we::physics::collider>);
+BOOST_CLASS_EXPORT_KEY(we::components::component<we::core::scripting::script_object>);
 
 #endif // !_W_COMPONENT_HPP_

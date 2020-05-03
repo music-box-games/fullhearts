@@ -27,6 +27,7 @@
 #include <graphics.hpp>
 #include <debug.hpp>
 #include <settings.hpp>
+#include <scripting.hpp>
 
 namespace we = ::waifuengine;
 
@@ -58,6 +59,7 @@ void engine::shutdown()
 
 engine::engine()
 {
+  waifuengine::core::scripting::init();
   waifuengine::utils::fs_init();
   waifuengine::log::init(waifuengine::log::trace_level::pedantic);
   waifuengine::core::thread_pool::init();
@@ -85,6 +87,7 @@ engine::~engine()
   waifuengine::events::shutdown();
   waifuengine::core::thread_pool::shutdown();
   waifuengine::log::shutdown();
+  waifuengine::core::scripting::shutdown();
 }
 
 void engine::update()

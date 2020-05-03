@@ -45,6 +45,11 @@ void space::remove_object(std::string n)
     objects_.erase(n);
 }
 
+void space::mark_object_for_removal(std::string n)
+{
+  objects_to_remove.insert(n);
+}
+
 std::shared_ptr<gameobject> space::get_object(std::string n)
 {
     return (objects_.count(n)) ? objects_[n] : nullptr;
@@ -52,6 +57,11 @@ std::shared_ptr<gameobject> space::get_object(std::string n)
 
 void space::update(float dt)
 {
+  for(auto& n : objects_to_remove)
+  {
+    objects_.erase(n);
+  }
+  objects_to_remove.clear();
     static auto const f = [&dt](std::pair<std::string, std::shared_ptr<gameobject>> obj) -> void { obj.second->update(dt); };
     std::for_each(objects_.begin(), objects_.end(), f);
 }
@@ -103,6 +113,14 @@ bool space::operator==(space const& rhs) const
         ++right_iter;
     }
     return true;
+}
+
+std::shared_ptr<gameobject> space::load_object(std::string name)
+{
+  std::shared_ptr<gameobject> obj {new gameobject(name)};
+  gameobject::load(obj, name);
+  objects_[name] = obj;
+  return obj;
 }
 
 } // namespace object_management

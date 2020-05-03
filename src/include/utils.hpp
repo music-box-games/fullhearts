@@ -24,6 +24,7 @@
 #include <timer.hpp>
 #include <notify.hpp>
 #include <generators.hpp>
+#include <str_util.hpp>
 
 #define WE_UTIL_STRINGIFY(x) #x
 

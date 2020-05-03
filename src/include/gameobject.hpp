@@ -23,6 +23,8 @@
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
+#include <fs_util.hpp>
+
 namespace waifuengine
 {
     namespace components
@@ -108,6 +110,14 @@ namespace waifuengine
             std::string dump() const;
 
             std::string get_error() const;
+
+            static void save(std::shared_ptr<gameobject> obj);
+
+            static void load(std::shared_ptr<gameobject> obj, std::string name);
+
+            static std::unordered_map<std::string, fs::path>& get_object_list();
+
+            static void update_object_list();
         };
 
     }

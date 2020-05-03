@@ -59,6 +59,7 @@ namespace waifuengine
       void scene_manager::update(float dt)
       {
         update_scene_saves();
+        we::object_management::gameobject::update_object_list();
         if(queued_for_load)
         {
           unload_scene();

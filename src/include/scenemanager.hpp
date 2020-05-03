@@ -56,7 +56,7 @@ namespace waifuengine
 
         void unload_scene();
         void load_scene();
-        void update_scene_saves();
+        void update_scene_saves(); 
 
       public:
         scene_manager();
@@ -79,7 +79,7 @@ namespace waifuengine
       };
 
       extern scene_manager * smanager;
-    }
+    } // namespace impl
 
     void load(std::string name);
     void unload();

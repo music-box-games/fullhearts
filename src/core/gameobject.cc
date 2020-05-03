@@ -16,11 +16,32 @@
 #include <component.hpp>
 #include <dummy.hpp>
 #include <physics.hpp>
+#include <utils.hpp>
 
 namespace waifuengine
 {
 namespace object_management
 {
+namespace impl
+{
+  static std::unordered_map<std::string, fs::path> object_data;
+} // namespace impl
+
+std::unordered_map<std::string, fs::path>& gameobject::get_object_list()
+{
+  return impl::object_data;
+}
+
+void gameobject::update_object_list()
+{
+  auto pt = we::utils::get_game_save_data_folder().append("objects");
+  impl::object_data.clear();
+  for(auto& f : fs::directory_iterator(pt))
+  {
+    impl::object_data[f.path().filename().string()] = f.path();
+  }
+}
+
 gameobject::gameobject(std::string n) : name_(n) {}
 gameobject::~gameobject()
 {
@@ -92,6 +113,24 @@ std::string gameobject::dump() const
 std::string gameobject::get_error() const
 {
   return error_;
+}
+
+void gameobject::save(std::shared_ptr<gameobject> obj)
+{
+  auto pt = we::utils::get_game_save_data_folder().append("objects");
+  pt.append(obj->name_);
+  std::ofstream stream(pt);
+  boost::archive::text_oarchive arch(stream);
+  arch << obj;
+}
+
+void gameobject::load(std::shared_ptr<gameobject> obj, std::string name)
+{
+  auto pt = we::utils::get_game_save_data_folder().append("objects");
+  pt.append(name);
+  std::ifstream stream(pt);
+  boost::archive::text_iarchive arch(stream);
+  arch >> obj;
 }
 
 } // namespace object_management
