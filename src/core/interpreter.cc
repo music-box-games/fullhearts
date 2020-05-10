@@ -18,6 +18,9 @@ namespace core
 namespace scripting
 {
 
+static void help();
+static std::optional<std::string> add_space(std::string name);
+
 static std::optional<std::string> add_space(std::string name)
 {
   auto spm = we::scenes::impl::smanager->current_scene()->get_manager();
@@ -33,6 +36,7 @@ static std::optional<std::string> add_space(std::string name)
 
 std::unordered_set<std::string> recognized_commands =
 {
+  "help",
   "add_space",
 };
 
