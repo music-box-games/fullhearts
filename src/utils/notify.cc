@@ -21,24 +21,24 @@ namespace waifuengine
 {
 namespace utils
 {
-  #ifdef WINDOWS
   static std::map<int, notify_exit_code> codemap = 
   {
+  #ifdef WINDOWS
     {IDOK, notify_exit_code::OK},
     {IDYES, notify_exit_code::YES},
     {IDNO, notify_exit_code::NO},
     {IDCANCEL, notify_exit_code::CANCEL},
-  };
   #endif // WINDOWS
+  };
 
   static notify_exit_code mb_okay_notify(std::string title, std::string message)
   {
+    int notify_return = 0;
     #ifdef WINDOWS
     unsigned int mb_flags = MB_OK | MB_SETFOREGROUND;
     int ret = MessageBox(NULL, message.c_str(), title.c_str(), mb_flags); // 0 means error
-
-    return codemap.at(ret);
     #endif // WINDOWS
+    return codemap.at(notify_return);
   }
 
   notify_exit_code notify(notification_type type, std::string title, std::string message)
