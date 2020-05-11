@@ -70,7 +70,7 @@ namespace waifuengine
             template<class _CType>
             std::shared_ptr<_CType> add_component()
             {
-                std::scoped_lock(lock_);
+                std::scoped_lock lock(lock_);
                 auto ptr = std::shared_ptr<_CType>(new _CType);
                 ptr->parent = this;
                 components_[_CType::NAME] = ptr; // TODO: handle multiple of one component
@@ -80,7 +80,7 @@ namespace waifuengine
             template<class _CType>
             void remove_component()
             {
-              std::scoped_lock(lock_);
+              std::scoped_lock lock(lock_);
 
                 components_.erase(_CType::NAME);
             }
@@ -88,7 +88,7 @@ namespace waifuengine
             template<class _CType>
             std::shared_ptr<waifuengine::components::_impl::_base_component> get_component()
             {
-                std::scoped_lock(lock_);
+                std::scoped_lock lock(lock_);
 
                 return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
             }
