@@ -11,7 +11,9 @@ jobs:
     steps:
     - checkout
     - run: "mkdir build"
-    - run: "choco install conan; cd build; conan install .. --build missing -s build_type=Debug"
+    - run: "choco install conan" 
+    - run: "refreshenv"
+    - run: "cd build; conan install .. --build missing -s build_type=Debug"
     - run: "cmake .."
     - run: "cmake --build . --config Debug --parallel"
     - run: ".\bin\fh.exe -t"
