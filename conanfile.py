@@ -5,7 +5,7 @@ class FullheartsConan(ConanFile):
   settings = "os", "compiler", "build_type", "arch"
 
   def requirements(self):
-    self.requires("boost/1.70.0@conan/stable")
+    self.requires("boost/1.69.0@conan/stable")
     self.requires("glm/0.9.9.5@g-truc/stable")
     self.requires("gtest/1.8.1@bincrafters/stable")
     self.requires("glad/0.1.29@bincrafters/stable")
