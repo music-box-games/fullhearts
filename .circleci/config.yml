@@ -1,13 +1,13 @@
 version: 2.1
 
 orbs:
-  win: circleci/windows@2.2.0
+  win: circleci/windows@2.3.0
 
 jobs:
   build:
     executor:
       name: win/default
-
+      size: "large"
     steps:
     - checkout
     - run:
@@ -39,7 +39,3 @@ jobs:
         cd build
         cmake ..
         cmake --build . --config Debug --parallel
-    - run:
-      name: Tests
-      command: |
-        .\bin\fh.exe -t
