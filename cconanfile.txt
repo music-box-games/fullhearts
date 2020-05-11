@@ -8,3 +8,6 @@ glfw/3.3.2@bincrafters/stable
 
 [generators]
 cmake
+
+[options]
+ninja:compiler=clang
