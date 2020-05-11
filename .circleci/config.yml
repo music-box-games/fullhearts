@@ -1,0 +1,29 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
+jobs:
+  build-windows:
+    executor:
+      name: win/default
+      size: "medium"
+
+    steps:
+    - checkout
+    - run: mkdir build
+    - run:
+      name: "Install Dependancies"
+      command: choco install conan
+      command: cd build; conan install .. --build missing -s build_type=Debug; cd ..
+    - run:
+      name: "Generate CMAKE file"
+      command: cmake ..
+    - run:
+      name: "Build"
+      command: cmake --build . --config Debug --parallel
+    - run:
+      name: "Test"
+      command: 
+    - store_artifacts:
+      path: .\build\bin\fh.exe

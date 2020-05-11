@@ -8,6 +8,7 @@
 #include <space.hpp>
 #include <gameobject.hpp>
 #include <component.hpp>
+#include <exception.hpp>
 
 namespace we = ::waifuengine;
 
@@ -20,6 +21,7 @@ namespace scripting
 
 static void help();
 static std::optional<std::string> add_space(std::string name);
+static std::optional<std::string> remove_space(std::string name);
 
 static std::optional<std::string> add_space(std::string name)
 {
@@ -32,6 +34,11 @@ static std::optional<std::string> add_space(std::string name)
     return {std::string("Error: Could not add space {" + name + "}")};
   }
   else return {};
+}
+
+static void help()
+{
+  throw UNIMPLEMENTED_EXCEPTION();
 }
 
 std::unordered_set<std::string> recognized_commands =
@@ -54,9 +61,7 @@ interpreter::~interpreter()
 
 std::optional<std::string> interpreter::parse(std::string line)
 {
-  std::string command = "add_space";
-  auto f = std::any_cast<std::optional<std::string>(*)(std::string)>(cmd_map[command]);
-  return f("test");
+  throw UNIMPLEMENTED_EXCEPTION();
 }
 
 } // namespace scripting
