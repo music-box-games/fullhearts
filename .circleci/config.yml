@@ -10,7 +10,9 @@ jobs:
 
     steps:
     - checkout
-    - run: mkdir build
+    - run:
+      name: "Make Build Folder"
+      command: mkdir build
     - run:
       name: "Install Dependancies"
       command: choco install conan; cd build; conan install .. --build missing -s build_type=Debug; cd ..
