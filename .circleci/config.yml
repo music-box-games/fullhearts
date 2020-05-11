@@ -10,13 +10,36 @@ jobs:
 
     steps:
     - checkout
-    - run: "mkdir build"
-    - run: "choco install conan" 
-    - run: "choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'"
-    - run: "refreshenv"
-    - run: "conan remote add conan-bintray https://api.bintray.com/conan/bincrafters/public-conan"
-    - run: "conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim"
-    - run: "cd build; conan install .. --build missing -s build_type=Debug"
-    - run: "cmake .."
-    - run: "cmake --build . --config Debug --parallel"
-    - run: ".\bin\fh.exe -t"
+    - run:
+      name: Make Build Directory
+      command: |
+        mkdir build
+    - run:
+      name: Install Dependancies From Chocolately
+      command: |
+        choco install conan
+        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+    - run:
+      name: Refresh Enviroment So $PATH updates
+      command: |
+        refreshenv
+    - run:
+      name: Add Repositories To Conan
+      command: |
+        conan remote add conan-bintray https://api.bintray.com/conan/bincrafters/public-conan
+        conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
+    - run:
+      name: Build Libraries From Conan
+      command: |
+        cd build
+        conan install .. --build missing -s build_type=Debug
+    - run:
+      name: Build
+      command: |
+        cd build
+        cmake ..
+        cmake --build . --config Debug --parallel
+    - run:
+      name: Run Tests
+      command: |
+        .\bin\fh.exe -t
