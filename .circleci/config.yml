@@ -10,20 +10,8 @@ jobs:
 
     steps:
     - checkout
-    - run:
-      name: "Make Build Folder"
-      command: mkdir build
-    - run:
-      name: "Install Dependancies"
-      command: choco install conan; cd build; conan install .. --build missing -s build_type=Debug; cd ..
-    - run:
-      name: "Generate CMAKE file"
-      command: cmake ..
-    - run:
-      name: "Build"
-      command: cmake --build . --config Debug --parallel
-    - run:
-      name: "Test"
-      command: 
-    - store_artifacts:
-      path: .\build\bin\fh.exe
+    - run: mkdir build
+    - run: choco install conan; cd build; conan install .. --build missing -s build_type=Debug;
+    - run: cmake ..
+    - run: cmake --build . --config Debug --parallel
+    - run: .\bin\fh.exe -t
