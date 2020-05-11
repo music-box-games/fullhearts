@@ -14,11 +14,11 @@
 #include <fstream>
 #include <sstream>
 
+#include <dummy.hpp>
 #include <tests.hpp>
 #include <fs_util.hpp>
 #include <serialization.hpp>
 #include <component.hpp>
-#include <dummy.hpp>
 #include <gameobject.hpp>
 #include <spacemanager.hpp>
 #include <space.hpp>

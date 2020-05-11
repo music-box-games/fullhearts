@@ -18,6 +18,7 @@
 #include <memory>
 #include <mutex>
 
+#include <dummy.hpp>
 #include <serialization.hpp>
 #include <boost/serialization/unordered_map.hpp>
 #include <boost/serialization/string.hpp>

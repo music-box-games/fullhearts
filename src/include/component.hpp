@@ -130,7 +130,6 @@ namespace waifuengine
 }
 
 BOOST_CLASS_EXPORT_KEY(we::components::component<we::components::dummy>);
-BOOST_CLASS_EXPORT_KEY(we::components::component<we::physics::collider>);
 BOOST_CLASS_EXPORT_KEY(we::components::component<we::core::scripting::script_object>);
 
 #endif // !_W_COMPONENT_HPP_
