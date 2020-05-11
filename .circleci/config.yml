@@ -14,8 +14,7 @@ jobs:
     - run: mkdir build
     - run:
       name: "Install Dependancies"
-      command: choco install conan
-      command: cd build; conan install .. --build missing -s build_type=Debug; cd ..
+      command: choco install conan; cd build; conan install .. --build missing -s build_type=Debug; cd ..
     - run:
       name: "Generate CMAKE file"
       command: cmake ..
