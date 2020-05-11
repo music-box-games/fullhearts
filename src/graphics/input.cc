@@ -12,7 +12,7 @@ namespace impl
 
 std::unordered_map<decltype(GLFW_KEY_UNKNOWN), key> keyset = 
 {
-  {GLFW_KEY_UNKNOWN, key::default},
+  {GLFW_KEY_UNKNOWN, key::Default},
   {GLFW_KEY_SPACE, key::space},
   {GLFW_KEY_APOSTROPHE, key::apostrophe},
   {GLFW_KEY_COMMA, key::comma},
@@ -51,7 +51,7 @@ std::unordered_map<decltype(GLFW_PRESS), action> actionset =
 
 } // namespace impl
 
-input_event::input_event() : event(std::string(NAME)), k(key::default), a(action::default), w(window_id_type{}) {}
+input_event::input_event() : event(std::string(NAME)), k(key::Default), a(action::Default), w(window_id_type{}) {}
 input_event::input_event(key k, action a, window_id_type w) : event(std::string(NAME)), k(k), a(a), w(w) {}
 input_event::~input_event() {}
 

@@ -35,6 +35,8 @@ else()
 add_compile_options(-Wno-unused-function)
 add_compile_options(-Wno-unused-private-field)
 add_compile_options(-Wno-unused-parameter)
+add_compile_options(-Wno-unused-variable)
+add_compile_options(-Wno-sign-compare)
 endif()
 
 # thread safe init for msvc

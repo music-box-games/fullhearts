@@ -57,14 +57,14 @@ namespace waifuengine
         menu, 
 
         // special 
-        default,
+        Default,
       };
 
       enum class action
       {
         press,
         release,
-        default,
+        Default,
       };
 
       namespace impl
