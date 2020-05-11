@@ -79,7 +79,7 @@ namespace waifuengine
 
     fs::path get_temp_folder()
     {
-      return std::filesystem::temp_directory_path();
+      return fs::temp_directory_path();
     }
 
     fs::path get_game_save_data_folder()
