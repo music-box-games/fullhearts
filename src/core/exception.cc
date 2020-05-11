@@ -16,7 +16,7 @@ _unimplemented_exception::_unimplemented_exception(const char * func)
 
 _unimplemented_exception::~_unimplemented_exception() {}
 
-const char * _unimplemented_exception::what() const
+const char * _unimplemented_exception::what() const noexcept
 {
   return message;
 }

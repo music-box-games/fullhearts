@@ -17,7 +17,7 @@ namespace waifuengine
       _unimplemented_exception(const char * func);
       virtual ~_unimplemented_exception();
 
-      virtual const char * what() const;
+      virtual const char * what() const noexcept override;
     };
   }
 }
