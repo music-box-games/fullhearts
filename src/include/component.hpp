@@ -17,13 +17,20 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include <gameobject.hpp>
 #include <serialization.hpp>
 
 #define COMPONENT_NAME(x) static constexpr const char * NAME = #x
 #define COMPONENT_TYPE(x) static constexpr ::waifuengine::components::component_types TYPE = ::waifuengine::components::component_types::x
 
 namespace we = ::waifuengine;
+
+namespace waifuengine
+{
+  namespace object_management
+  {
+    class gameobject;
+  }
+}
 
 namespace waifuengine
 {
