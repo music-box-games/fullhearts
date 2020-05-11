@@ -15,6 +15,8 @@
 #include <component.hpp>
 #include <serialization.hpp>
 
+namespace we = ::waifuengine;
+
 namespace waifuengine
 {
   namespace components
