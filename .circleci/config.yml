@@ -7,7 +7,6 @@ jobs:
   build-windows:
     executor:
       name: win/default
-      size: "medium"
 
     steps:
     - checkout
