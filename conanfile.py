@@ -20,8 +20,7 @@ class FullheartsConan(ConanFile):
       self.settings.compiler = "Visual Studio"
       self.settings.compiler.version = "16"
     else:
-      self.options["ninja"].compiler = "clang"
-      self.options["ninja"].compiler.version = "16"
+      pass
 
   def build(self):
     cmake = CMake(self)
