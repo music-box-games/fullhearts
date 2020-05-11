@@ -23,8 +23,6 @@ jobs:
     - run: |
         cd build
         conan install .. --build missing -s build_type=Debug
-    - store_artifacts:
-      path: C:/users/circle-ci/.conan
     - run: |
         cd build
         cmake ..
