@@ -40,6 +40,6 @@ jobs:
         cmake ..
         cmake --build . --config Debug --parallel
     - run:
-      name: Run Tests
+      name: Tests
       command: |
         .\bin\fh.exe -t
