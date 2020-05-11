@@ -23,6 +23,9 @@ class FullheartsConan(ConanFile):
       pass
 
   def build(self):
+    if self.settings.os == "Linux":
+      self.env_info.CXX = "clang++-9"
+    
     cmake = CMake(self)
     cmake.configure()
     cmake.build()

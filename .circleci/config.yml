@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   win: circleci/windows@2.3.0
-  codecov: codecov/codecov@1.0.2
+  #codecov: codecov/codecov@1.0.2
 
 jobs:
   build:
@@ -32,5 +32,5 @@ jobs:
         cd build
         cmake ..
         cmake --build . --config Debug --parallel
-    - codecov/upload:
-      file: {{ coverage_report_filepath }}
+    #- codecov/upload:
+      #file: {{ coverage_report_filepath }}
