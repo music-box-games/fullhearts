@@ -10,32 +10,20 @@ jobs:
       size: "large"
     steps:
     - checkout
-    - run:
-      name: Make Build Directory
-      command: |
+    - run: |
         mkdir build
-    - run:
-      name: Install Dependancies From Chocolately
-      command: |
-        choco install conan
+    - run: |
+        choco install conan 
         choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-    - run:
-      name: Refresh Enviroment So $PATH updates
-      command: |
+    - run: |
         refreshenv
-    - run:
-      name: Add Repositories To Conan
-      command: |
+    - run: |
         conan remote add conan-bintray https://api.bintray.com/conan/bincrafters/public-conan
         conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
-    - run:
-      name: Build Libraries From Conan
-      command: |
+    - run: |
         cd build
         conan install .. --build missing -s build_type=Debug
-    - run:
-      name: Build
-      command: |
+    - run: |
         cd build
         cmake ..
         cmake --build . --config Debug --parallel
