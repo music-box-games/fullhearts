@@ -61,21 +61,21 @@ public:
       return *this;
     }
     template <>
-    script_proxy& script_proxy::operator<<(std::stringstream &ss)
+    script_proxy& operator<<(std::stringstream &ss)
     {
       v->push_back(ss.str());
       return *this;
     }
 
     template <>
-    script_proxy& script_proxy::operator<<(std::wstring &s)
+    script_proxy& operator<<(std::wstring &s)
     {
       v->push_back(we::utils::wide_string_to_mb(s));
       return *this;
     }
 
     template <>
-    script_proxy& script_proxy::operator<<(std::wstringstream &ss)
+    script_proxy& operator<<(std::wstringstream &ss)
     {
       v->push_back(we::utils::wide_string_to_mb(ss.str()));
       return *this;
