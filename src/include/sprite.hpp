@@ -13,7 +13,7 @@ namespace waifuengine
     private:
       friend class boost::serialization::access;
       template<class Archive>
-      void serialize(Archive& ar, unsigned int const version)
+      void serialize(Archive& ar, unsigned int const)
       {
         ar & boost::serialization::base_object<component<sprite>>(*this);
       }

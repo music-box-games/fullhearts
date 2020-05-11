@@ -26,9 +26,8 @@ namespace waifuengine
       int dumb;
 
       template<class Archive>
-      void serialize(Archive& ar, unsigned int const version)
+      void serialize(Archive& ar, unsigned int const)
       {
-        ar.template register_type<dummy>();
         ar & boost::serialization::base_object<component<dummy>>(*this);
         ar & dumb;
       }

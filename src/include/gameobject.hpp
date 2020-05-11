@@ -57,7 +57,7 @@ namespace waifuengine
             void register_components_with_archive(boost::archive::text_iarchive& ar);
 
             template<class Archive>
-            void serialize(Archive & ar, unsigned int const version)
+            void serialize(Archive & ar, unsigned int const)
             {
                 ar & components_;
                 ar & name_;

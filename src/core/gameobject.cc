@@ -15,7 +15,6 @@
 #include <gameobject.hpp>
 #include <component.hpp>
 #include <dummy.hpp>
-#include <physics.hpp>
 #include <utils.hpp>
 
 namespace waifuengine

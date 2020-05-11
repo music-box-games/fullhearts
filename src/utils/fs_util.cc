@@ -9,10 +9,12 @@
 */
 /******************************************************************************/
 
+#ifdef WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #define VC_EXTRALEAN
 #include <Windows.h>
 #include <ShlObj.h>
+#endif
 
 #include <boost/tokenizer.hpp>
 
@@ -55,6 +57,7 @@ namespace waifuengine
 
     fs::path get_save_data_folder_root()
     {
+      #ifdef WINDOWS
       PWSTR p = NULL;
       auto result = SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, NULL, &p);
       if(result != S_OK)
@@ -69,6 +72,9 @@ namespace waifuengine
       fs::path pt(mbp);
       CoTaskMemFree(p);
       return pt;
+      #else
+      return {};
+      #endif
     }
 
     fs::path get_temp_folder()

@@ -32,7 +32,7 @@ private:
   std::vector<std::string> shutdown_script;
   friend class boost::serialization::access;
   template <class Archive>
-  void serialize(Archive &ar, unsigned int const v)
+  void serialize(Archive &ar, unsigned int const)
   {
     ar.template register_type<script_object>();
     ar & boost::serialization::base_object <waifuengine::components::component<script_object>>(*this);
