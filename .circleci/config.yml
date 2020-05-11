@@ -11,29 +11,35 @@ workflows:
       only:
         - master
         - integration
-  jobs:
-    build:
-      executor:
-        name: win/default
-        size: "medium"
-      steps:
-      - checkout
-      - run: |
-          mkdir build
-      - run: |
-          choco install conan 
-          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-      - run: |
-          refreshenv
-      - run: |
-          conan remote add conan-bintray https://api.bintray.com/conan/bincrafters/public-conan
-          conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
-      - run: |
-          cd build
-          conan install .. --build missing -s build_type=Debug
-      - run: |
-          cd build
-          cmake ..
-          cmake --build . --config Debug --parallel
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - integration
+        executor:
+          name: win/default
+          size: "medium"
+        steps:
+        - checkout
+        - run: |
+            mkdir build
+        - run: |
+            choco install conan 
+            choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+        - run: |
+            refreshenv
+        - run: |
+            conan remote add conan-bintray https://api.bintray.com/conan/bincrafters/public-conan
+            conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
+        - run: |
+            cd build
+            conan install .. --build missing -s build_type=Debug
+        - run: |
+            cd build
+            cmake ..
+            cmake --build . --config Debug --parallel
       #- codecov/upload:
         #file: {{ coverage_report_filepath }}
