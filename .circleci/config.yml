@@ -12,6 +12,7 @@ jobs:
     - checkout
     - run: "mkdir build"
     - run: "choco install conan" 
+    - run: "choco install cmake"
     - run: "refreshenv"
     - run: "conan remote add conan-bintray https://api.bintray.com/conan/bincrafters/public-conan"
     - run: "conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim"
