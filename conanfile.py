@@ -5,7 +5,7 @@ class FullheartsConan(ConanFile):
   settings = "os", "compiler", "build_type", "arch"
 
   def requirements(self):
-    self.requires("boost/1.71.0@conan/stable")
+    self.requires("boost/1.70.0@conan/stable")
     self.requires("glm/0.9.9.5@g-truc/stable")
     self.requires("gtest/1.8.1@bincrafters/stable")
     self.requires("glad/0.1.29@bincrafters/stable")
@@ -23,9 +23,6 @@ class FullheartsConan(ConanFile):
       pass
 
   def build(self):
-    if self.settings.os == "Linux":
-      self.env_info.CXX = "clang++-9"
-    
     cmake = CMake(self)
     cmake.configure()
     cmake.build()
