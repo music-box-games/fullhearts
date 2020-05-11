@@ -28,7 +28,7 @@ namespace waifuengine
         public:
           test_serialize_object(int a, int b, int c, std::string text);
 
-          bool operator==(test_serialize_object const& rhs);
+          virtual bool operator==(test_serialize_object const& rhs);
 
           int a, b, c;
           std::string text;
@@ -49,14 +49,14 @@ namespace waifuengine
         {
         public:
           derived_test_serialize_object(int a, int b, int c, std::string text, int d);
-          bool operator==(derived_test_serialize_object const& rhs);
+          virtual bool operator==(derived_test_serialize_object const& rhs) override;
 
         protected:
           friend class boost::serialization::access;
           int d;
 
           template<class Archive>
-          void serialize(Archive& ar, unsigned int const v)
+          void serialize(Archive& ar, unsigned int const)
           {
             ar & boost::serialization::base_object<test_serialize_object>(*this);
             ar & d;
