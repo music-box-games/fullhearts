@@ -168,7 +168,28 @@ shader::shader(vertex_shader& v, fragment_shader& f) : program_id(0), files({v.f
   link(v, f);
 }
 
+shader::shader(vertex_shader&& v, fragment_shader&& f) : program_id(0), files({v.filepath, f.filepath})
+{
+  link(v, f);
+}
+
 void shader::link(vertex_shader& v, fragment_shader& f)
+{
+  program_id = glCreateProgram();
+  glAttachShader(program_id, v.shader_id);
+  glAttachShader(program_id, f.shader_id);
+  glLinkProgram(program_id);
+  int success;
+  glGetProgramiv(program_id, GL_LINK_STATUS, &success);
+  if(!success)
+  {
+    char infolog[512];
+    glGetProgramInfoLog(program_id, 512, NULL, infolog);
+    // ERROR
+  }
+}
+
+void shader::link(vertex_shader&& v, fragment_shader&& f)
 {
   program_id = glCreateProgram();
   glAttachShader(program_id, v.shader_id);

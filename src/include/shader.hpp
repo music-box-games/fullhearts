@@ -50,12 +50,14 @@ namespace waifuengine
       {
       public:
         shader(vertex_shader& v, fragment_shader& f);
+        shader(vertex_shader&& v, fragment_shader&& f);
         ~shader();
 
         void use();
 
       private:
         void link(vertex_shader& v, fragment_shader& f);
+        void link(vertex_shader&& v, fragment_shader&& f);
         unsigned int program_id;
         std::pair<fs::path, fs::path> files; // shader sources used to make this program
       };
