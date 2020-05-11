@@ -1,6 +1,7 @@
 
 jobs:
   build:
+    platform: windows
     filters:
       branches:
         only:
@@ -20,6 +21,5 @@ jobs:
 
 workflows:
   version: 2
-  platform: windows
   build-win:
     - build
