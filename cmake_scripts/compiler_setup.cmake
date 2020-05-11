@@ -12,6 +12,7 @@ endif()
 if(WIN32)
 add_compile_definitions(WINDOWS)
 else()
+add_compile_definitions(LINUX)
 endif()
 
 # set debug mode
@@ -33,6 +34,7 @@ if(MSVC)
 else()
 add_compile_options(-Wno-unused-function)
 add_compile_options(-Wno-unused-private-field)
+add_compile_options(-Wno-unused-parameter)
 endif()
 
 # thread safe init for msvc

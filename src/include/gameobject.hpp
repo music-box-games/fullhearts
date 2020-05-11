@@ -100,8 +100,6 @@ namespace waifuengine
 
             std::size_t components() const 
             { 
-              std::scoped_lock lock(lock_);
-
               return components_.size(); 
             }
 

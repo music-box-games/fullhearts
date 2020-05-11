@@ -44,13 +44,13 @@ void gameobject::update_object_list()
 gameobject::gameobject(std::string n) : name_(n) {}
 gameobject::~gameobject()
 {
-  std::scoped_lock(lock_);
+  std::scoped_lock lock(lock_);
   components_.clear();
 }
 
 void gameobject::update(float dt)
 {
-  std::scoped_lock(lock_);
+  std::scoped_lock lock(lock_);
 
   static auto const f = [&dt](std::pair<std::string, std::shared_ptr<::waifuengine::components::_impl::_base_component>> c) -> void { c.second->update(dt); };
   std::for_each(components_.begin(), components_.end(), f);
@@ -58,7 +58,6 @@ void gameobject::update(float dt)
 
 void gameobject::draw() const
 {
-  std::scoped_lock(lock_);
   for (auto &c : components_)
   {
     c.second->draw();
@@ -67,8 +66,6 @@ void gameobject::draw() const
 
 std::string const &gameobject::name() const
 {
-  std::scoped_lock(lock_);
-
   return name_;
 }
 
