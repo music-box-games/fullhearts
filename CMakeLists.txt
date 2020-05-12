@@ -65,6 +65,7 @@ execute_process(COMMAND ${CMAKE_SOURCE_DIR}/tools/ccperm ${WLIBS} OUTPUT_VARIABL
 else()
 execute_process(COMMAND python ${CMAKE_SOURCE_DIR}/scripts/perm.py ${WLIBS} OUTPUT_VARIABLE LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
 endif()
+string(STRIP ${LIBS} LIBS)
 #target_link_libraries(${EXENAME} -Wl, --start-group ${WLIBS} -Wl, --end-group)
 target_link_libraries(${EXENAME} ${LIBS})
 endif()
