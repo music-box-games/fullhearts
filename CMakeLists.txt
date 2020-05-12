@@ -22,7 +22,7 @@ elseif(EXISTS "./conanbuildinfo.cmake")
 message(STATUS "Found conanbuildinfo at ./conanbuildinfo.cmake")
 include(./conanbuildinfo.cmake)
 else()
-message(STATUS "Could not find conanbuildinfo")
+message(ERROR "Could not find conanbuildinfo")
 endif()
 conan_basic_setup()
 
