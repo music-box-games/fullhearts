@@ -18,7 +18,7 @@ class FullheartsConan(ConanFile):
   def configure(self):
     if self.settings.os == "Windows":
       self.settings.compiler = "Visual Studio"
-      self.settings.compiler.version = "14"
+      self.settings.compiler.version = "16"
     else:
       pass
 
