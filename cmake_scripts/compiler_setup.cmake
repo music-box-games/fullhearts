@@ -5,7 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 if(MSVC)
 add_compile_options(/W3)
 else()
-add_compile_options(-Wall -Wextra -lm)
+add_compile_options(-Wall -Wextra)
+endif()
+
+# link with math on linux
+if(MSVC)
+else()
+add_link_options(-lm -ldl)
 endif()
 
 # add definitions for OS
