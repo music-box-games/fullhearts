@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 if(MSVC)
 add_compile_options(/W3)
 else()
-add_compile_options(-Wall -Wextra)
+add_compile_options(-Wall -Wextra -lm)
 endif()
 
 # add definitions for OS
