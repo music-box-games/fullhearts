@@ -18,7 +18,7 @@ jobs:
       - name: Refresh Environment
         run: refreshenv # refresh env so that path is updated
       - name: Check Conan Install Works
-        run: if((Get-Command "conan") -eq $null) {Write-Host "REEEEEEEEE";}
+        run: if((Get-Command "conan") -eq $null) {echo "::error::REEEEE";}
       - name: Add Bincrafters To Remotes
         run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
       - name: Add Darcamo To Remotes
