@@ -23,8 +23,8 @@ jobs:
         run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
       - name: Add Darcamo To Remotes
         run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
-      #- name: Create Build Folder
-      #  run: mkdir build
+      - name: Create Build Folder
+        run: mkdir build
       - name: CWD
         run: |
           ls
