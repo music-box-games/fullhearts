@@ -21,9 +21,16 @@ bool test_serialize_object::operator==(test_serialize_object const& rhs)
 
 derived_test_serialize_object::derived_test_serialize_object(int a, int b, int c, std::string t, int d) : test_serialize_object(a, b, c, t), d(d) {}
 
-bool derived_test_serialize_object::operator==(derived_test_serialize_object const& rhs)
+bool derived_test_serialize_object::operator==(test_serialize_object const& r)
 {
-  return (a == rhs.a) && (b == rhs.b) && (c == rhs.c) && (d == rhs.d) && (text == rhs.text);
+  test_serialize_object& c_removed = const_cast<test_serialize_object&>(r);
+  derived_test_serialize_object * rh = dynamic_cast<derived_test_serialize_object*>(&c_removed);
+  if(rh)
+  {
+    auto rhs = *rh;
+    return (a == rhs.a) && (b == rhs.b) && (c == rhs.c) && (d == rhs.d) && (text == rhs.text);
+  }
+  else return false;
 }
 
 } // namespace test

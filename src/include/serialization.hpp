@@ -49,7 +49,7 @@ namespace waifuengine
         {
         public:
           derived_test_serialize_object(int a, int b, int c, std::string text, int d);
-          virtual bool operator==(derived_test_serialize_object const& rhs) override;
+          virtual bool operator==(test_serialize_object const& rhs) override;
 
         protected:
           friend class boost::serialization::access;
