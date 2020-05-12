@@ -60,7 +60,7 @@ add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 if(MSVC)
 target_link_libraries(${EXENAME} ${WLIBS})
 else()
-target_link_libraries(${EXENAME} -Wl, --start-group ${WLIBS} -Wl, --end-group)
+target_link_libraries(${EXENAME} ${WLIBS} ${WLIBS})
 endif()
 
 # link other libs
