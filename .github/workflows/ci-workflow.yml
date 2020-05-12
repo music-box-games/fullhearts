@@ -28,6 +28,6 @@ jobs:
       - name : Install Conan Libraries
         run: cd build; conan install .. --build missing -s build_type=Debug -if ./build
       - name: Generate CMake Files
-        run: cmake cmake ..
+        run: cmake ..
       - name: Build
         run: cmake --build . --config Debug --parallel
