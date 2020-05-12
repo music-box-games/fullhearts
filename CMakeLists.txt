@@ -47,18 +47,7 @@ add_subdirectory(./src/tests)
 add_subdirectory(./src/factory)
 add_subdirectory(./src/audio)
 
-set(WLIBS 
-components
-core
-log
-utils
-events
-graphics
-scenes
-tests
-factory
-audio
-)
+set(WLIBS components core log utils events graphics scenes tests factory audio)
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
