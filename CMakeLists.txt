@@ -15,15 +15,19 @@ include(./cmake_scripts/compiler_setup.cmake)
 include(./cmake_scripts/postbuild_copy.cmake)
 
 # load conan cmake file
-
-if(EXISTS "${ROOT}/build/conanbuildinfo.cmake")
-message(STATUS "Found conanbuildinfo at ${ROOT}/build/conanbuildinfo.cmake")
-include(./build/conanbuildinfo.cmake)
-elseif(EXISTS "${ROOT}/conanbuildinfo.cmake")
-message(STATUS "Found conanbuildinfo at ${ROOT}/conanbuildinfo.cmake")
-include(./conanbuildinfo.cmake)
+set(CONAN_DISABLE_CHECK_COMPILER) # don't check compiler
+message(STATUS "${CMAKE_SOURCE_DIR}")
+if(EXISTS "${CMAKE_SOURCE_DIR}/build/conanbuildinfo.cmake")
+message(STATUS "Found conanbuildinfo at ${CMAKE_SOURCE_DIR}/build/conanbuildinfo.cmake")
+include(${CMAKE_SOURCE_DIR}/build/conanbuildinfo.cmake)
+elseif(EXISTS "${CMAKE_SOURCE_DIR}/conanbuildinfo.cmake")
+message(STATUS "Found conanbuildinfo at ${CMAKE_SOURCE_DIR}/conanbuildinfo.cmake")
+include(${CMAKE_SOURCE_DIR}/conanbuildinfo.cmake)
+elseif(EXISTS "${CMAKE_SOURCE_DIR}/build/build/conanbuildinfo.cmake")
+message(STATUS "Found conanbuildinfo at ${CMAKE_SOURCE_DIR}/build/build/conanbuildinfo.cmake")
+include(${CMAKE_SOURCE_DIR}/build/build/conanbuildinfolcmake)
 else()
-message(ERROR "Could not find conanbuildinfo")
+message(ERROR " -- Could not find conanbuildinfo")
 endif()
 conan_basic_setup()
 
