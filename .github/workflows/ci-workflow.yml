@@ -12,14 +12,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Conan Setup
-        run: choco install conan
+      - name: Install Conan
+        run: choco install conan |
         # run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'       # uneeded for windows-2019, v3.17.2 is installed by default
+      - name: Refresh Environment
         run: refreshenv # refresh env so that path is updated
+      - name: Add Bincrafters To Remotes
         run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+      - name: Add Darcamo To Remotes
         run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
-      - name : Build
-        run: cd build
-        run: conan install .. --build missing -s build_type=Debug
-        run: cmake ..
-        run: cmake --build . --config Debug --parallel
+      - name : Install Conan Libraries
+        run: conan install .. --build missing -s build_type=Debug -if ./build
+      - name: Generate CMake Files
+        run: cmake -E chdir ./build cmake ..
+      - name: Build
+        run: cmake -E chdir ./build cmake --build . --config Debug --parallel
