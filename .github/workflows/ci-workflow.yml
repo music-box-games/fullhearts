@@ -25,15 +25,17 @@ jobs:
         run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
       - name: Create Build Folder
         run: mkdir build
-      - name : Install Conan Libraries
+      - name: Install Conan Libraries
         run: |
           cd build 
           conan install .. --build missing -s build_type=Debug -if ./build
+      - name: CWD
+        run: echo (Get-Location)
       - name: Generate CMake Files
         run: |
-          Get-Location
+          echo (Get-Location)
           cd build
-          Get-Location
+          echo (Get-Location)
           cmake ..
       - name: Build
         run: |
