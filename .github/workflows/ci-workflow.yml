@@ -26,8 +26,14 @@ jobs:
       - name: Create Build Folder
         run: mkdir build
       - name : Install Conan Libraries
-        run: cd build; conan install .. --build missing -s build_type=Debug -if ./build
+        run: |
+          cd build 
+          conan install .. --build missing -s build_type=Debug -if ./build
       - name: Generate CMake Files
-        run: cmake ..
+        run: |
+          cd build
+          cmake ..
       - name: Build
-        run: cmake --build . --config Debug --parallel
+        run: |
+          cd build
+          cmake --build . --config Debug --parallel
