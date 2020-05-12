@@ -25,7 +25,7 @@ message(STATUS "Found conanbuildinfo at ${CMAKE_SOURCE_DIR}/conanbuildinfo.cmake
 include(${CMAKE_SOURCE_DIR}/conanbuildinfo.cmake)
 elseif(EXISTS "${CMAKE_SOURCE_DIR}/build/build/conanbuildinfo.cmake")
 message(STATUS "Found conanbuildinfo at ${CMAKE_SOURCE_DIR}/build/build/conanbuildinfo.cmake")
-include(${CMAKE_SOURCE_DIR}/build/build/conanbuildinfolcmake)
+include(${CMAKE_SOURCE_DIR}/build/build/conanbuildinfo.cmake)
 else()
 message(ERROR " -- Could not find conanbuildinfo")
 endif()
