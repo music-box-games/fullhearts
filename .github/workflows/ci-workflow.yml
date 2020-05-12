@@ -31,7 +31,9 @@ jobs:
           conan install .. --build missing -s build_type=Debug -if ./build
       - name: Generate CMake Files
         run: |
+          Get-Location
           cd build
+          Get-Location
           cmake ..
       - name: Build
         run: |
