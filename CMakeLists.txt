@@ -15,7 +15,11 @@ include(./cmake_scripts/compiler_setup.cmake)
 include(./cmake_scripts/postbuild_copy.cmake)
 
 # load conan cmake file
+if(EXISTS "./build/conanbuildinfo.cmake")
 include(./build/conanbuildinfo.cmake)
+elseif(EXISTS "./conanbuildinfo.cmake")
+include(./conanbuildinfo.cmake)
+endif()
 conan_basic_setup()
 
 # add include paths
