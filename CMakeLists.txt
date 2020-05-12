@@ -71,7 +71,9 @@ add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 if(MSVC)
 target_link_libraries(${EXENAME} ${WLIBS})
 else()
-target_link_libraries(${EXENAME} -Wl, --start-group ${WLIBS} -Wl, --end-group)
+execute_process(COMMAND python ${CMAKE_SOURCE_DIR}/scripts/perm.py ${WLIBS} OUTPUT_VARIABLE LIBS)
+#target_link_libraries(${EXENAME} -Wl, --start-group ${WLIBS} -Wl, --end-group)
+target_link_libraries(${EXENAME} ${LIBS})
 endif()
 
 # link other libs
