@@ -47,6 +47,19 @@ add_subdirectory(./src/tests)
 add_subdirectory(./src/factory)
 add_subdirectory(./src/audio)
 
+set(WLIBS 
+components
+core
+log
+utils
+events
+graphics
+scenes
+tests
+factory
+audio
+)
+
 # add root src
 file(GLOB SOURCES "./src/*.cc")
 file(GLOB EXTSOURCES "./ext_src/*.*")
@@ -56,11 +69,9 @@ add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 
 # link subdirs
 if(MSVC)
-target_link_libraries(${EXENAME} components core log utils events graphics scenes tests factory audio)
+target_link_libraries(${EXENAME} ${WLIBS})
 else()
-add_link_options(-Wl, --start-group)
-target_link_libraries(${EXENAME} components core log utils events graphics scenes tests factory audio)
-add_link_options(-Wl, --end-group)
+target_link_libraries(${EXENAME} -Wl, --start-group ${WLIBS} -Wl, --end-group)
 endif()
 
 # link other libs
