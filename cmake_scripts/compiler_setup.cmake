@@ -11,7 +11,7 @@ endif()
 # link with math on linux
 if(MSVC)
 else()
-add_link_options(-lm -ldl -llibm -v)
+add_link_options(-lm -ldl -v)
 endif()
 
 # add definitions for OS
