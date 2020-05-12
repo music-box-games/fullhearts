@@ -58,7 +58,9 @@ add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 if(MSVC)
 target_link_libraries(${EXENAME} components core log utils events graphics scenes tests factory audio)
 else()
+add_link_options(-Wl, --start-group)
 target_link_libraries(${EXENAME} components core log utils events graphics scenes tests factory audio)
+add_link_options(-Wl, --end-group)
 endif()
 
 # link other libs

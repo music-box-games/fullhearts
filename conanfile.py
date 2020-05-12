@@ -20,6 +20,8 @@ class FullheartsConan(ConanFile):
       self.settings.compiler = "Visual Studio"
       self.settings.compiler.version = "16"
     else:
+      self.settings.compiler = "clang"
+      self.settings.compiler.version = "9"
       pass
 
   def build(self):
