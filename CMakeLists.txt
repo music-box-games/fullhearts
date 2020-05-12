@@ -15,11 +15,12 @@ include(./cmake_scripts/compiler_setup.cmake)
 include(./cmake_scripts/postbuild_copy.cmake)
 
 # load conan cmake file
-if(EXISTS "./build/conanbuildinfo.cmake")
-message(STATUS "Found conanbuildinfo at ./build/conanbuildinfo.cmake")
+
+if(EXISTS "${ROOT}/build/conanbuildinfo.cmake")
+message(STATUS "Found conanbuildinfo at ${ROOT}/build/conanbuildinfo.cmake")
 include(./build/conanbuildinfo.cmake)
-elseif(EXISTS "./conanbuildinfo.cmake")
-message(STATUS "Found conanbuildinfo at ./conanbuildinfo.cmake")
+elseif(EXISTS "${ROOT}/conanbuildinfo.cmake")
+message(STATUS "Found conanbuildinfo at ${ROOT}/conanbuildinfo.cmake")
 include(./conanbuildinfo.cmake)
 else()
 message(ERROR "Could not find conanbuildinfo")

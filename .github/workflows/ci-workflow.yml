@@ -28,7 +28,6 @@ jobs:
       - name: CWD
         run: |
           ls
-          ls build
       - name: Install Conan Libraries
         run: |
           cd build 
