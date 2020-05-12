@@ -30,7 +30,7 @@ jobs:
           cd build 
           conan install .. --build missing -s build_type=Debug -if ./build
       - name: CWD
-        run: ls build #echo (Get-Location)
+        run: ls build/build #echo (Get-Location)
       - name: Generate CMake Files
         run: |
           cd build
