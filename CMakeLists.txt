@@ -60,7 +60,8 @@ add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 if(MSVC)
 target_link_libraries(${EXENAME} ${WLIBS} ${CONAN_LIBS})
 else()
-target_link_libraries(${EXENAME} -lm -ldl ${WLIBS} ${WLIBS} ${CONAN_LIBS})
+add_link_options(-lm)
+target_link_libraries(${EXENAME} ${WLIBS} ${WLIBS} ${CONAN_LIBS})
 endif()
 
 # copy files to build folder
