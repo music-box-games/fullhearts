@@ -1,0 +1,25 @@
+name: CI
+# triggers on push
+on:
+  push:
+    branches:
+      - master
+      - integration
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Conan Setup
+        run: choco install conan
+        # run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'       # uneeded for windows-2019, v3.17.2 is installed by default
+        run: refreshenv # refresh env so that path is updated
+        run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+        run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
+      - name : Build
+        run: cd build
+        run: conan install .. --build missing -s build_type=Debug
+        run: cmake ..
+        run: cmake --build . --config Debug --parallel
