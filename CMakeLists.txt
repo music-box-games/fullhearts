@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10.2) # cmake version
 set(PRJ fullhearts) # project (solution) name
 set(EXENAME fh) # exe name
 set(DBG TRUE) # debug mode
-set(LINK_TYPE STATIC)
+set(LINK_TYPE)
 
 # project name
 project(${PRJ})
@@ -58,13 +58,10 @@ add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 
 # link subdirs
 if(MSVC)
-target_link_libraries(${EXENAME} ${WLIBS})
+target_link_libraries(${EXENAME} ${WLIBS} ${CONAN_LIBS})
 else()
-target_link_libraries(${EXENAME} ${WLIBS} ${WLIBS})
+target_link_libraries(${EXENAME} ${CONAN_LIBS} ${WLIBS} ${WLIBS} ${CONAN_LIBS})
 endif()
-
-# link other libs
-target_link_libraries(${EXENAME} ${CONAN_LIBS})
 
 # copy files to build folder
 if(MSVC)
