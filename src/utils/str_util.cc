@@ -6,6 +6,8 @@
 #include <Windows.h>
 #endif
 
+#include <boost/tokenizer.hpp>
+
 namespace we = ::waifuengine;
 
 namespace waifuengine
@@ -23,5 +25,19 @@ namespace waifuengine
       return "";
       #endif
     }
+
+    std::vector<std::string> tokenize_string(std::string s, std::string delim)
+    {
+      boost::char_separator<char> sep(delim.c_str());
+      boost::tokenizer<boost::char_separator<char>> tok(s, sep);
+      std::vector<std::string> tokens;
+      std::for_each(tok.begin(), tok.end(), [&tokens](auto s) -> void {
+        tokens.push_back(s);
+      });
+      return tokens;
+    }
+
+    // taxed from https://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c/16388594
+
   }
 }

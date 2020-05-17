@@ -15,11 +15,14 @@
 #include <args.hpp>
 #include <engine.hpp>
 #include <tests.hpp>
+#include <utils.hpp>
 
 namespace we = ::waifuengine;
 
 int main(int argc, char ** argv)
 {
+  try
+  {
     auto ret = waifuengine::utils::args::parse(argc, argv);
     if(ret.has_value())
     {
@@ -34,6 +37,13 @@ int main(int argc, char ** argv)
     {
         e->update();
     }
-
     return 0;
+  }
+  catch(const std::exception& e)
+  {
+    // notify
+    we::utils::notify(we::utils::notification_type::mb_ok, "Uncaught Exception", e.what());
+    we::core::engine::shutdown();
+    return -1;
+  }
 }

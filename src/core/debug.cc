@@ -269,7 +269,7 @@ public:
   {
     if(ImGui::Button("TEST SCRIPT"))
     {
-      we::core::scripting::interpret("add_space");
+      we::core::scripting::interpret("add_space test");
     }
     scene_list();
     fps();

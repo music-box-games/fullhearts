@@ -1,6 +1,8 @@
 #include <any>
 #include <unordered_map>
 #include <functional>
+#include <string_view>
+#include <boost/assign/list_of.hpp>
 
 #include <interpreter.hpp>
 #include <scenemanager.hpp>
@@ -9,6 +11,7 @@
 #include <gameobject.hpp>
 #include <component.hpp>
 #include <exception.hpp>
+#include <utils.hpp>
 
 namespace we = ::waifuengine;
 
@@ -18,10 +21,28 @@ namespace core
 {
 namespace scripting
 {
-
-static void help();
+static std::optional<std::string> help();
 static std::optional<std::string> add_space(std::string name);
 static std::optional<std::string> remove_space(std::string name);
+
+class cmd_map
+{
+public:
+  std::optional<std::string> operator()(std::string s)
+  {
+    std::vector<std::string> tokens = utils::tokenize_string(s);
+    switch(utils::string_to_int(tokens.at(0).c_str()))
+    {
+      case utils::string_to_int("add_space"):
+        return add_space(tokens.at(1));
+      case utils::string_to_int("help"):
+        return help();
+      default:
+        return {};
+    }
+  }
+};
+
 
 static std::optional<std::string> add_space(std::string name)
 {
@@ -36,22 +57,15 @@ static std::optional<std::string> add_space(std::string name)
   else return {};
 }
 
-static void help()
+static std::optional<std::string> help()
 {
   throw UNIMPLEMENTED_EXCEPTION();
+  return {};
 }
-
-std::unordered_set<std::string> recognized_commands =
-{
-  "help",
-  "add_space",
-};
-
-static std::unordered_map<std::string, std::any> cmd_map;
 
 interpreter::interpreter()
 {
-  cmd_map["add_space"] = std::any(add_space);
+
 }
 
 interpreter::~interpreter()
@@ -61,7 +75,9 @@ interpreter::~interpreter()
 
 std::optional<std::string> interpreter::parse(std::string line)
 {
-  throw UNIMPLEMENTED_EXCEPTION();
+  // tokenize
+  return cmd_map()(line);
+  
 }
 
 } // namespace scripting
