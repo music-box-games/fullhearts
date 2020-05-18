@@ -66,6 +66,7 @@ namespace waifuengine
             void remove_object(std::string name);
             void mark_object_for_removal(std::string name);
             std::shared_ptr<gameobject> get_object(std::string name);
+            bool has(std::string name);
 
             void update(float dt);
             void draw() const;

@@ -55,6 +55,11 @@ std::shared_ptr<gameobject> space::get_object(std::string n)
     return (objects_.count(n)) ? objects_[n] : nullptr;
 }
 
+bool space::has(std::string n)
+{
+  return objects_.count(n);
+}
+
 void space::update(float dt)
 {
   for(auto& n : objects_to_remove)

@@ -94,6 +94,15 @@ namespace waifuengine
                 return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
             }
 
+            template<class _CType>
+            bool has_component() const
+            {
+              std::scoped_lock lock(lock_);
+              return components_.count(_CType::NAME);
+            }
+
+            bool has_component(std::string name) const;
+
             void update(float dt);
             void draw() const;
 

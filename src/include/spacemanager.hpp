@@ -64,6 +64,7 @@ namespace waifuengine
             std::shared_ptr<space> add_space(std::string n, space_order o = space_order::UNORDERED);
             void remove_space(std::string n);
             std::shared_ptr<space> get_space(std::string n);
+            bool has_space(std::string n);
 
             void update(float dt);
             void draw() const;

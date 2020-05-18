@@ -29,7 +29,6 @@ namespace core
 {
 namespace debug
 {
-static bool edit_mode_enabled = false;
 static bool show_imgui_window = false;
 static bool imgui_render_ready = false;
 static bool fps_widget = false;
@@ -37,7 +36,6 @@ static bool show_menu_bar = true;
 static bool use_console = false;
 
 constexpr int INPUT_BUFFER_LEN = 512;
-
 static char input_buffer[INPUT_BUFFER_LEN];
 
 class imgui_listener
@@ -77,14 +75,14 @@ private:
     {
       if (ImGui::TreeNode(obj.first.c_str()))
       {
-        if (edit_mode_enabled && editor_mode != edit_modes::object_editor)
+        if (editor_mode != edit_modes::object_editor)
         {
           if (ImGui::Button("Unload"))
           {
             sp->mark_object_for_removal(obj.first);
           }
         }
-        else if (edit_mode_enabled && editor_mode == edit_modes::object_editor)
+        else if (editor_mode == edit_modes::object_editor)
         {
           // TODO: listbox of types of components that can be added to the object
           if (ImGui::Button("Add Component"))
@@ -128,7 +126,7 @@ private:
 
       if (ImGui::TreeNode(sp.first.c_str()))
       {
-        if (edit_mode_enabled && editor_mode != edit_modes::object_editor)
+        if (editor_mode != edit_modes::object_editor)
         {
           char new_obj_buf[256]{'\0'};
           if (ImGui::InputText("New Object", new_obj_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -156,7 +154,7 @@ private:
         auto *spmanager = sc->get_manager();
         auto &sps = spmanager->spaces_;
         // input to add new space
-        if (edit_mode_enabled && editor_mode != edit_modes::object_editor)
+        if (editor_mode != edit_modes::object_editor)
         {
           char new_space_buf[256]{'\0'};
           if (ImGui::InputText("New Space", new_space_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -185,7 +183,6 @@ private:
         if (ImGui::InputText("New Scene", new_scene_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
         {
           s->blank_scene(new_scene_buf);
-          edit_mode_enabled = true;
         }
         char new_obj_buf[256]{'\0'};
         if (ImGui::InputText("New Object", new_obj_buf, 256, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -297,7 +294,7 @@ private:
 
     if(use_console)
     {
-      ImGui::SetNextWindowSize(ImVec2(520, 300), ImGuiCond_FirstUseEver);
+      ImGui::SetNextWindowSize(ImVec2(520, 400), ImGuiCond_FirstUseEver);
       if(!ImGui::Begin("Console"))
       {
         ImGui::End();
@@ -311,10 +308,6 @@ private:
           ImGui::TextWrapped(s.c_str());
 
         }
-        // std::for_each(log.begin(), log.end(), [](std::string const& s) -> void
-        // {
-        //   ImGui::TextWrapped(s.c_str());
-        // });
         if(scroll_lock)
         {
           ImGui::SetScrollHereY(1.0f);
@@ -335,9 +328,15 @@ private:
         if(ImGui::InputText("Input", input_buffer, INPUT_BUFFER_LEN, ImGuiInputTextFlags_EnterReturnsTrue))
         {
           push_command(input_buffer);
+          // pass command to interpreter and print output
+          auto result = we::core::scripting::interpret(input_buffer);
+          if(result)
+          {
+            push_log(result.value());
+          }
           std::memset(input_buffer, 0, INPUT_BUFFER_LEN);
-        }
-        
+          ImGui::SetKeyboardFocusHere(0);
+        }  
         ImGui::End();
       }
     }
@@ -356,17 +355,11 @@ public:
 
   void tree()
   {
-    if(ImGui::Button("TEST SCRIPT"))
-    {
-      we::core::scripting::interpret("add_space test");
-    }
     scene_list();
     fps();
     console();
     // toggle to put frame rate in separate window
     ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
-    // toggle for edit mode
-    ImGui::Checkbox("Enable Editing", &edit_mode_enabled);
     // console
     ImGui::Checkbox("Show Console", &use_console);
     // save current scene
@@ -382,7 +375,6 @@ public:
         // object editor mode will only allow 1 space and 1 object to be
         // present so we can just go to the first
         { // THIS WONT COMPILE IF YOU TAKE OUT THIS SCOPE I DON"T KNOW WHY
-
           auto cur_scene = s->current_scene();
           auto spmgr = cur_scene->get_manager();
           auto spce = (*(spmgr->spaces_.begin())).second;
@@ -391,10 +383,7 @@ public:
         }
         break;
       case edit_modes::none:
-        if (edit_mode_enabled)
-        {
           s->save();
-        }
         break;
       default:
         break;
@@ -406,7 +395,6 @@ public:
       {
         s->unload();
         editor_mode = edit_modes::none;
-        edit_mode_enabled = false;
       }
     }
 

@@ -57,6 +57,11 @@ void engine::shutdown()
   running = false;
 }
 
+void engine::_unsafe_immediate_shutdown(engine* e)
+{
+  delete e;
+}
+
 engine::engine()
 {
   waifuengine::core::scripting::init();

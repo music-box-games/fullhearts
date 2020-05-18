@@ -27,6 +27,7 @@ namespace waifuengine
         public:
             static bool running;
             static void shutdown();
+            static void _unsafe_immediate_shutdown(engine * e);
 
             engine();
             ~engine();

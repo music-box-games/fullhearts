@@ -17,11 +17,16 @@
 #include <tests.hpp>
 #include <utils.hpp>
 
+#define CATCH
+
 namespace we = ::waifuengine;
 
 int main(int argc, char ** argv)
 {
+  std::unique_ptr<waifuengine::core::engine> e;
+  #ifdef CATCH
   try
+  #endif
   {
     auto ret = waifuengine::utils::args::parse(argc, argv);
     if(ret.has_value())
@@ -29,7 +34,7 @@ int main(int argc, char ** argv)
         return ret.value();
     }
 
-    std::unique_ptr<waifuengine::core::engine> e = waifuengine::core::build_engine();
+    e = waifuengine::core::build_engine();
     e->load_initial_scene();
 
 
@@ -39,11 +44,12 @@ int main(int argc, char ** argv)
     }
     return 0;
   }
-  catch(const std::exception& e)
+  #ifdef CATCH
+  catch(const std::exception& ex)
   {
-    // notify
-    we::utils::notify(we::utils::notification_type::mb_ok, "Uncaught Exception", e.what());
-    we::core::engine::shutdown();
-    return -1;
+   // notify
+   we::utils::notify(we::utils::notification_type::mb_ok, "Uncaught Exception", ex.what());
+   return -1;
   }
+  #endif
 }

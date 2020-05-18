@@ -69,6 +69,11 @@ std::string const &gameobject::name() const
   return name_;
 }
 
+bool gameobject::has_component(std::string name) const
+{
+  return components_.count(name);
+}
+
 bool gameobject::operator==(gameobject const &rhs)
 {
   if(name_ != rhs.name_)
