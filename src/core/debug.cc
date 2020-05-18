@@ -1,6 +1,9 @@
-#include <queue>
+#include <deque>
 #include <array>
+#include <string>
+#include <cstring>
 
+#include <boost/range/adaptor/reversed.hpp>
 #include <imgui.h>
 
 #include <debug.hpp>
@@ -31,6 +34,11 @@ static bool show_imgui_window = false;
 static bool imgui_render_ready = false;
 static bool fps_widget = false;
 static bool show_menu_bar = true;
+static bool use_console = false;
+
+constexpr int INPUT_BUFFER_LEN = 512;
+
+static char input_buffer[INPUT_BUFFER_LEN];
 
 class imgui_listener
 {
@@ -258,8 +266,89 @@ private:
     }
   }
 
+  void console()
+  {
+    static std::deque<std::string> history;
+    static std::deque<std::string> log;
+
+    static bool scroll_lock = true;
+
+    constexpr int HISTORY_LEN = 100;
+    constexpr int LOG_LEN = 100;
+
+    auto push_log = [&LOG_LEN](std::string const& s) -> void
+    {
+      if(log.size() == LOG_LEN)
+      {
+        log.pop_back();
+      }
+      log.push_front(s);
+    };
+
+    auto push_command = [&push_log](std::string const& s) -> void
+    {
+      push_log(std::string(">") + s);
+    };
+
+    auto clear_log = []() -> void
+    {
+      log.clear();
+    };
+
+    if(use_console)
+    {
+      ImGui::SetNextWindowSize(ImVec2(520, 300), ImGuiCond_FirstUseEver);
+      if(!ImGui::Begin("Console"))
+      {
+        ImGui::End();
+      }
+      else
+      {
+        // scroll box
+        ImGui::BeginChild("Scrolling Region", ImVec2(0, 200), false, ImGuiWindowFlags_HorizontalScrollbar);
+        for(std::string const& s : boost::adaptors::reverse(log))
+        {
+          ImGui::TextWrapped(s.c_str());
+
+        }
+        // std::for_each(log.begin(), log.end(), [](std::string const& s) -> void
+        // {
+        //   ImGui::TextWrapped(s.c_str());
+        // });
+        if(scroll_lock)
+        {
+          ImGui::SetScrollHereY(1.0f);
+        }
+        ImGui::EndChild();
+        ImGui::Separator();
+        ImGui::Checkbox("Lock To Bottom", &scroll_lock);
+        if(ImGui::Button("Test"))
+        {
+          push_log("test");
+        }
+        ImGui::SameLine();
+        if(ImGui::Button("Clear"))
+        {
+          clear_log();
+        }
+        // text input
+        if(ImGui::InputText("Input", input_buffer, INPUT_BUFFER_LEN, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+          push_command(input_buffer);
+          std::memset(input_buffer, 0, INPUT_BUFFER_LEN);
+        }
+        
+        ImGui::End();
+      }
+    }
+  }
+
 public:
-  imgui_listener() : s(nullptr) {}
+  imgui_listener() : s(nullptr) 
+  {
+    std::memset(input_buffer, 0, INPUT_BUFFER_LEN);
+  }
+
   ~imgui_listener() {}
 
   void attach(waifuengine::scenes::impl::scene_manager *sm) { s = sm; }
@@ -273,10 +362,13 @@ public:
     }
     scene_list();
     fps();
+    console();
     // toggle to put frame rate in separate window
     ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
     // toggle for edit mode
     ImGui::Checkbox("Enable Editing", &edit_mode_enabled);
+    // console
+    ImGui::Checkbox("Show Console", &use_console);
     // save current scene
     if (ImGui::Button("Save"))
     {
@@ -340,7 +432,7 @@ void init_imgui()
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
-  (void)io;
+  io.IniFilename = NULL;
 
   ImGui::StyleColorsDark(); // dark mode ayo
 
