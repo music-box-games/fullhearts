@@ -8,7 +8,7 @@ namespace waifuengine
 {
   namespace graphics
   {
-    class sprite : public component<sprite>
+    class sprite : public components::component<sprite>
     {
     private:
       friend class boost::serialization::access;
@@ -19,6 +19,9 @@ namespace waifuengine
       }
 
     public:
+      COMPONENT_NAME(sprite);
+      COMPONENT_TYPE(sprite);
+      
       sprite();
       ~sprite();
 
@@ -27,5 +30,7 @@ namespace waifuengine
     };
   }
 }
+
+BOOST_CLASS_EXPORT_KEY(waifuengine::graphics::sprite);
 
 #endif

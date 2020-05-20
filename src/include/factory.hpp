@@ -2,14 +2,15 @@
 #define _WE_FACTORY_HPP_
 
 #include <space.hpp>
-
-// TODO: Figure out serparating this from serialization and how it should be different/is even needed
+#include <background_factory.hpp>
 
 namespace waifuengine
 {
   namespace factory
   {
-
+    // loads
+    void init();
+    void shutdown();
   }
 }
 

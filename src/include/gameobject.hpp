@@ -41,7 +41,6 @@ namespace waifuengine
 {
     namespace object_management
     {
-
         class gameobject
         {
         private:         
@@ -53,6 +52,8 @@ namespace waifuengine
             std::string name_;
             std::string error_;
             std::mutex lock_;
+
+            bool disabled_;
 
             void register_components_with_archive(boost::archive::text_oarchive& ar);
             void register_components_with_archive(boost::archive::text_iarchive& ar);
@@ -119,6 +120,10 @@ namespace waifuengine
 
             std::string get_error() const;
 
+            // disables the object
+            // Set to false to re-enable
+            void disable(bool set = true);
+
             static void save(std::shared_ptr<gameobject> obj);
 
             static void load(std::shared_ptr<gameobject> obj, std::string name);
@@ -127,7 +132,7 @@ namespace waifuengine
 
             static void update_object_list();
         };
-
+        using objectptr = std::shared_ptr<gameobject>;
     }
 }
 

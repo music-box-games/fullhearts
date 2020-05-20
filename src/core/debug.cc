@@ -329,7 +329,7 @@ private:
         {
           push_command(input_buffer);
           // pass command to interpreter and print output
-          auto result = we::core::scripting::interpret(input_buffer);
+          auto result = we::core::scripting::interpret(input_buffer, we::core::scripting::interpreter_mode::debug);
           if(result)
           {
             push_log(result.value());

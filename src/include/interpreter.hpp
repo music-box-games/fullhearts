@@ -11,6 +11,12 @@ namespace waifuengine
   {
     namespace scripting
     {
+      enum class interpreter_mode
+      {
+        debug,
+        script,
+      };
+
       extern std::unordered_set<std::string> recognized_commands;
 
       class interpreter
@@ -19,7 +25,7 @@ namespace waifuengine
         interpreter();
         ~interpreter();
 
-        std::optional<std::string> parse(std::string line);
+        std::optional<std::string> parse(std::string line, interpreter_mode mode = interpreter_mode::script);
       private:
       };
     }

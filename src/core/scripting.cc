@@ -29,9 +29,9 @@ void shutdown()
   impl::interp.reset();
 }
 
-std::optional<std::string> interpret(std::string command)
+std::optional<std::string> interpret(std::string command, interpreter_mode mode)
 {
-  return impl::interp->parse(command);
+  return impl::interp->parse(command, mode);
 }
 
 } // namespace scripting

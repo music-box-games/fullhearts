@@ -22,6 +22,11 @@
 #define ASSERT_SPACE(spm, name) if(!spm->has_space(name)) { return { std::string("No space\"" + space + "\" found") };}
 #define ASSERT_OBJECT(space, space_name, name) if(!space->has(name)) { return { std::string("No object \"" + name + "\" found in space \"" + space_name + "\"") };}
 #define ASSERT_ARG_COUNT(args, count) if(args.size() != count) { return { std::string("Improper usage") };}
+#define ASSERT_USAGE(args, count) \
+if(args.size() != count) \
+{ \
+  return { std::string("Usage: " + cmd_map.at(__func__).usage) }; \
+}
 
 namespace we = ::waifuengine;
 
@@ -31,16 +36,46 @@ namespace core
 {
 namespace scripting
 {
-static std::optional<std::string> help();
-static std::optional<std::string> add_space(std::string name);
-static std::optional<std::string> remove_space(std::string name);
-static std::optional<std::string> add_object(std::string space, std::string name);
-static std::optional<std::string> remove_object(std::string space, std::string name);
-static std::optional<std::string> add_component(std::string space, std::string object, std::string name);
-static std::optional<std::string> remove_component(std::string space, std::string object, std::string name);
+using argvec = std::vector<std::string>;
+using script_func = std::function<std::optional<std::string>(std::vector<std::string>)>;
+using script_ret = std::optional<std::string>;
 
-static std::optional<std::string> add_component(std::string space, std::string object, std::string name)
+#pragma region DebugMode
+
+struct dbgfuncs
 {
+  script_func func;
+  std::string usage;
+};
+
+static std::optional<std::string> help(argvec args);
+static std::optional<std::string> add_space(argvec args);
+static std::optional<std::string> remove_space(argvec args);
+static std::optional<std::string> add_object(argvec args);
+static std::optional<std::string> remove_object(argvec args);
+static std::optional<std::string> add_component(argvec args);
+static std::optional<std::string> remove_component(argvec args);
+
+std::unordered_map<std::string, dbgfuncs> cmd_map =
+{
+  {"help", dbgfuncs{help, "help"}},
+  {"add_space", dbgfuncs{add_space, "add_space <name>"}},
+  {"remove_space", dbgfuncs{remove_space, "remove_space<name>"}},
+  {"add_object", dbgfuncs{add_object, "add_object <space> <name>"}},
+  {"remove_object", dbgfuncs{remove_object, "remove_object <space> <name>"}},
+  {"add_component", dbgfuncs{add_component, "add_component <space> <object> <name>"}},
+  {"remove_component", dbgfuncs{remove_component, "remove_component <space> <object> <name>"}},
+};
+
+#pragma region DbgScriptFunctions
+
+static std::optional<std::string> add_component(argvec args)
+{
+  ASSERT_USAGE(args, 3);
+  std::string space = args.at(0);
+  std::string object = args.at(1);
+  std::string name = args.at(2);
+
   static const std::unordered_map<std::string, std::function<void(std::shared_ptr<we::object_management::gameobject>, std::string)>> add_comps =
   {
     {we::components::dummy::NAME, [](std::shared_ptr<we::object_management::gameobject> g, std::string comp_name) -> void
@@ -67,8 +102,13 @@ static std::optional<std::string> add_component(std::string space, std::string o
   }
 }
 
-static std::optional<std::string> remove_component(std::string space, std::string object, std::string name)
+static std::optional<std::string> remove_component(argvec args)
 {
+  ASSERT_USAGE(args, 3);
+  std::string space = args.at(0);
+  std::string object = args.at(1);
+  std::string name = args.at(2);
+
   static const std::unordered_map<std::string, std::function<void(std::shared_ptr<we::object_management::gameobject>, std::string)>> remove_comps =
   {
     {we::components::dummy::NAME, [](std::shared_ptr<we::object_management::gameobject> g, std::string comp_name) -> void
@@ -94,8 +134,12 @@ static std::optional<std::string> remove_component(std::string space, std::strin
   }
 }
 
-static std::optional<std::string> add_object(std::string space, std::string name)
+static std::optional<std::string> add_object(argvec args)
 {
+  ASSERT_USAGE(args, 2);
+  std::string space = args.at(0);
+  std::string name = args.at(1);
+
   SPACE_MANAGER(spm);
   ASSERT_SPACE(spm, space);
   auto sp = spm->get_space(space);
@@ -110,8 +154,12 @@ static std::optional<std::string> add_object(std::string space, std::string name
   }
 }
 
-static std::optional<std::string> remove_object(std::string space, std::string name)
+static std::optional<std::string> remove_object(argvec args)
 {
+  ASSERT_USAGE(args, 2);
+  std::string space = args.at(0);
+  std::string name = args.at(1);
+
   SPACE_MANAGER(spm);
   ASSERT_SPACE(spm, space);
   auto sp = spm->get_space(space);
@@ -120,8 +168,10 @@ static std::optional<std::string> remove_object(std::string space, std::string n
   return { std::string("Removed object \"" + name + "\" from space \"" + space + "\"") };
 }
 
-static std::optional<std::string> add_space(std::string name)
+static std::optional<std::string> add_space(argvec args)
 {
+  ASSERT_USAGE(args, 1);
+  std::string name = args.at(0);
   auto spm = we::scenes::impl::smanager->current_scene()->get_manager();
   auto sp = spm->add_space(name);
   // check if a valid space was returned
@@ -136,8 +186,10 @@ static std::optional<std::string> add_space(std::string name)
   }
 }
 
-static std::optional<std::string> remove_space(std::string name)
+static std::optional<std::string> remove_space(argvec args)
 {
+  ASSERT_USAGE(args, 1);
+  std::string name = args.at(0);
   auto spm = we::scenes::impl::smanager->current_scene()->get_manager();
   if(spm->has_space(name))
   {
@@ -150,71 +202,70 @@ static std::optional<std::string> remove_space(std::string name)
   }
 }
 
-static std::optional<std::string> help()
+static std::optional<std::string> help(argvec)
 {
   std::stringstream ss;
   ss << "Recognized Commands:\n";
-  ss << "\tadd_space\n";
-  ss << "\tremove_space\n";
-  ss << "\tadd_object\n";
-  ss << "\tremove_object\n";
-  ss << "\tadd_component\n";
-  ss << "\tremove_component\n";
-
-  ss << "\thelp\n";
+  
+  std::for_each(cmd_map.begin(), cmd_map.end(), [&ss](auto pair) -> void {
+    ss << "\t" << pair.first << "\n";
+  });
 
   return {ss.str()};
 }
 
-class cmd_map
+#pragma endregion DbgScriptFunctions
+#pragma endregion DebugMode
+
+#pragma region ScriptMode
+
+static script_ret background(argvec args)
 {
-public:
-  std::optional<std::string> operator()(std::string s)
-  {
-    std::vector<std::string> tokens = utils::tokenize_string(s);
-    switch(utils::string_to_int(tokens.at(0).c_str()))
-    {
-      case utils::string_to_int("add_space"):
-        ASSERT_ARG_COUNT(tokens, 2);
-        return add_space(tokens.at(1));
-      case utils::string_to_int("remove_space"):
-        ASSERT_ARG_COUNT(tokens, 2);
-        return remove_space(tokens.at(1));
-      case utils::string_to_int("help"):
-        return help();
-      case utils::string_to_int("add_object"):
-        ASSERT_ARG_COUNT(tokens, 3);
-        return add_object(tokens.at(1), tokens.at(2));
-      case utils::string_to_int("remove_object"):
-        ASSERT_ARG_COUNT(tokens, 3);
-        return remove_object(tokens.at(1), tokens.at(2));
-      case utils::string_to_int("add_component"):
-        ASSERT_ARG_COUNT(tokens, 4);
-        return add_component(tokens.at(1), tokens.at(2), tokens.at(3));
-      case utils::string_to_int("remove_component"):
-        ASSERT_ARG_COUNT(tokens, 4);
-        return remove_component(tokens.at(1), tokens.at(2), tokens.at(3));
-      default:
-        return { std::string("Unknown Command: " + tokens[0]) };
-    }
-  }
+  return {};
+}
+
+struct scptfunc
+{
+  script_func func;
+  std::string usage;
 };
 
-interpreter::interpreter()
+std::unordered_map<std::string, scptfunc> scpt_cmd_map =
 {
+  {"background", scptfunc{background, "PUT USAGE HERE"}},
+};
 
-}
+#pragma endregion ScriptMode
 
-interpreter::~interpreter()
+interpreter::interpreter(){}
+
+interpreter::~interpreter(){}
+
+std::optional<std::string> interpreter::parse(std::string line, interpreter_mode mode)
 {
-
-}
-
-std::optional<std::string> interpreter::parse(std::string line)
-{
+  if(line.empty())
+  {
+    return {};
+  }
   // tokenize
-  return cmd_map()(line);
-  
+  auto tokens = we::utils::tokenize_string(line);
+  switch(mode)
+  {
+    case interpreter_mode::debug:
+      {
+        auto cmd = cmd_map.at(tokens.at(0));
+        tokens.erase(tokens.begin());
+        return cmd.func(tokens);
+      }
+    case interpreter_mode::script:
+      {
+        return {};
+      }
+    default:
+      {
+        return {};
+      }
+  }
 }
 
 } // namespace scripting

@@ -79,6 +79,8 @@ namespace waifuengine
 
             std::shared_ptr<gameobject> load_object(std::string name);
         };
+
+        using spaceptr = std::shared_ptr<space>;
     }
 }
 

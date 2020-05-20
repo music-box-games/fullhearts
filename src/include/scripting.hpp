@@ -16,7 +16,7 @@ namespace waifuengine
       void shutdown();
 
       // returns any sort of response or message from the command
-      std::optional<std::string> interpret(std::string command);
+      std::optional<std::string> interpret(std::string command, interpreter_mode mode = interpreter_mode::script);
     }
   }
 }

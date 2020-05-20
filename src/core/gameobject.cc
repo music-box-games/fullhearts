@@ -41,7 +41,7 @@ void gameobject::update_object_list()
   }
 }
 
-gameobject::gameobject(std::string n) : name_(n) {}
+gameobject::gameobject(std::string n) : name_(n), disabled_(false) {}
 gameobject::~gameobject()
 {
   std::scoped_lock lock(lock_);
@@ -50,17 +50,24 @@ gameobject::~gameobject()
 
 void gameobject::update(float dt)
 {
+  if(!disabled_)
+  {
+
   std::scoped_lock lock(lock_);
 
   static auto const f = [&dt](std::pair<std::string, std::shared_ptr<::waifuengine::components::_impl::_base_component>> c) -> void { c.second->update(dt); };
   std::for_each(components_.begin(), components_.end(), f);
+  }
 }
 
 void gameobject::draw() const
 {
-  for (auto &c : components_)
+  if(!disabled_)
   {
-    c.second->draw();
+    for (auto &c : components_)
+    {
+      c.second->draw();
+    }
   }
 }
 
@@ -114,6 +121,11 @@ std::string gameobject::dump() const
 std::string gameobject::get_error() const
 {
   return error_;
+}
+
+void gameobject::disable(bool set)
+{
+  disabled_ = set;
 }
 
 void gameobject::save(std::shared_ptr<gameobject> obj)
