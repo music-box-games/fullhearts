@@ -42,7 +42,7 @@ jobs:
           cmake --build . --config Debug --parallel
 
   build-mint:
-    runs-on: self-hosted
+    runs-on: desu
 
     steps:
       - uses: actions/checkout@v2
