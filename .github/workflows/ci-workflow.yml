@@ -55,6 +55,7 @@ jobs:
       - name: Install Conan Package Manager
         run: pip3 install conan
       - name: Refresh So Conan Appears in PATH
+        run: source ~/.profile
       - name: Add Bincrafters To Remotes
         run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
       - name: Add Darcamo To Remotes
