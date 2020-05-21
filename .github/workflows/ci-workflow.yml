@@ -41,7 +41,6 @@ jobs:
           cd build
           cmake --build . --config Debug --parallel
 
-          
   build-mint:
     runs-on: desu
 
@@ -51,6 +50,8 @@ jobs:
         run: sudo apt install -y python3
       - name: Install Python3 Setuptools
         run: sudo apt install -y python3-setuptools
+      - name: Install Python3 Wheel
+        run: sudo pip3 install wheel
       - name: Install Conan Package Manager
         run: pip3 install conan
       - name: Add Bincrafters To Remotes
