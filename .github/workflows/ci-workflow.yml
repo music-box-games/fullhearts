@@ -8,12 +8,17 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - os: windows-2019
+          - os: self-hosted
 
     steps:
       - uses: actions/checkout@v2
       - name: Install Conan
-        run: pip install conan #choco install conan
+        run: pip3 install conan #choco install conan
         # run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'       # uneeded for windows-2019, v3.17.2 is installed by default
       - name: Refresh Environment
         run: refreshenv # refresh env so that path is updated
