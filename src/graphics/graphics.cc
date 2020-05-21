@@ -4,6 +4,7 @@
 #include <graphics.hpp>
 #include <window.hpp>
 #include <debug.hpp>
+#include "notify.hpp"
 
 namespace we = ::waifuengine;
 
@@ -30,6 +31,7 @@ namespace graphics
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
       // TODO error and shutdown
+      we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Fail to init GLAD!");
     }
   }
 
