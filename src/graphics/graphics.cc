@@ -24,6 +24,7 @@ namespace graphics
     if(!bool(w))
     {
       // TODO error
+      we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Failed to create window!");
     }
     glfwMakeContextCurrent(w.get()->get()); // set the created window to the active window
     
