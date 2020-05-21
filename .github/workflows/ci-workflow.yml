@@ -7,13 +7,8 @@ on:
       - integration
 
 jobs:
-  build:
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      matrix:
-        config:
-          - os: windows-2019
-          - os: self-hosted
+  build-win:
+    runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v2
@@ -45,3 +40,34 @@ jobs:
         run: |
           cd build
           cmake --build . --config Debug --parallel
+
+  build-mint:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Python3
+        run: sudo apt install -y python3
+      - name: Install Python3 Setuptools
+        run: sudo apt install -y python3-setuptools
+      - name: Install Conan Package Manager
+        run: pip3 install conan
+      - name: Add Bincrafters To Remotes
+        run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+      - name: Add Darcamo To Remotes
+        run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
+      - name: Create Build Folder
+        run: mkdir build
+      - name: Install Conna Libraries
+        run: |
+          cd build
+          conan install .. --build missing -s build_type=Debug -if ./build
+      - name: Generate CMake Files
+        run: |
+          cd build
+          cmake ..
+      - name: Build
+        run: |
+          cd build
+          cmake --build . --config Debug --parallel
+
