@@ -33,6 +33,8 @@ jobs:
         run: |
           cd build
           cmake --build . --config Debug --parallel
+      - name: Test
+        run: ./build/bin/fh.exe -t
 
   build-mint:
     runs-on: desu
