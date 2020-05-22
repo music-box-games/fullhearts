@@ -78,3 +78,5 @@ endif()
 pbcopy(${EXENAME} ${CMAKE_SOURCE_DIR}/shaders ${EXE_OUT_PATH}/shaders)
 pbcopy(${EXENAME} ${CMAKE_SOURCE_DIR}/assets ${EXE_OUT_PATH}/assets)
 pbcopy(${EXENAME} ${CMAKE_SOURCE_DIR}/data ${EXE_OUT_PATH}/data)
+
+message(INFO "${EXE_OUT_PATH}")
