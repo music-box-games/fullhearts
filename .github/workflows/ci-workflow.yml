@@ -12,17 +12,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Conan
-        run: pip3 install conan #choco install conan
-        # run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'       # uneeded for windows-2019, v3.17.2 is installed by default
-      - name: Refresh Environment
-        run: refreshenv # refresh env so that path is updated
-      - name: Echo PATH # test
-        run: echo $env:PATH
-      - name: Add Bincrafters To Remotes
-        run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-      - name: Add Darcamo To Remotes
-        run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
+      - name: Run Setup Script
+        run: |
+          git clone https://github.com/music-box-games/fullhearts_runner_setup
+          chmod +x ./fullhearts_runner_setup/setup.sh
+          sudo ./fullhearts_runner_setup/setup.sh
       - name: Create Build Folder
         run: mkdir build
       - name: CWD
@@ -46,22 +40,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Python3
-        run: sudo apt install -y python3
-      - name: Install Python3 Setuptools
-        run: sudo apt install -y python3-setuptools
-      - name: Install Python3 Wheel
-        run: sudo pip3 install wheel
-      - name: Install Conan Package Manager
-        run: pip3 install conan
-      - name: Refresh So Conan Appears in PATH
-        run: source ~/.profile
-      - name: Add Symlink For Conan
-        run: sudo ln -s ~/.local/bin/conan /usr/bin/conan
-      - name: Add Bincrafters To Remotes
-        run: conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-      - name: Add Darcamo To Remotes
-        run: conan remote add darcamo-bintray https://api.bintray.com/conan/darcamo/cppsim
+      - name: Run Setup Script
+        run: |
+          git clone https://github.com/music-box-games/fullhearts_runner_setup
+          ./fullhearts_runner_setup/setup.ps1
       - name: Create Build Folder
         run: mkdir build
       - name: Install Conan Libraries
