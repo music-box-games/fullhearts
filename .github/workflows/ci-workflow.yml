@@ -62,5 +62,5 @@ jobs:
         run: |
           ls
           ls build
-          ./build/fh -t
+          ./bin/fh -t
 
