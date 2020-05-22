@@ -60,6 +60,6 @@ jobs:
           cmake --build . --config Debug --parallel
       - name: Test
         run: |
-          ls ./bin
+          ls ./build/bin
           ./bin/fh -t
 
