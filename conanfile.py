@@ -23,7 +23,7 @@ class FullheartsConan(ConanFile):
     else:
       self.settings.compiler = "clang"
       self.settings.compiler.version = "9"
-      pass
+      self.settings.compiler.libstdcxx = "libstdc++11"
 
   def build(self):
     cmake = CMake(self)
