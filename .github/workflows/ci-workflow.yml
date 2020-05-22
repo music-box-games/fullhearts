@@ -59,5 +59,8 @@ jobs:
           cd build
           cmake --build . --config Debug --parallel
       - name: Test
-        run: ls
+        run: |
+          ls
+          ls build
+          ./build/fh -t
 
