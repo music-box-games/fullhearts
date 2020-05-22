@@ -15,8 +15,7 @@ jobs:
       - name: Run Setup Script
         run: |
           git clone https://github.com/music-box-games/fullhearts_runner_setup
-          chmod +x ./fullhearts_runner_setup/setup.sh
-          sudo ./fullhearts_runner_setup/setup.sh
+          ./fullhearts_runner_setup/setup.ps1
       - name: Create Build Folder
         run: mkdir build
       - name: CWD
@@ -43,7 +42,8 @@ jobs:
       - name: Run Setup Script
         run: |
           git clone https://github.com/music-box-games/fullhearts_runner_setup
-          ./fullhearts_runner_setup/setup.ps1
+          chmod +x ./fullhearts_runner_setup/setup.sh
+          ./fullhearts_runner_setup/setup.sh
       - name: Create Build Folder
         run: mkdir build
       - name: Install Conan Libraries
