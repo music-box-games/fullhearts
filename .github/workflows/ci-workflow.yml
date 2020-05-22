@@ -7,32 +7,32 @@ on:
       - integration
 
 jobs:
-  build-win:
-    runs-on: windows-2019
+  # build-win:
+  #   runs-on: windows-2019
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run Setup Script
-        run: |
-          git clone https://github.com/music-box-games/fullhearts_runner_setup
-          ./fullhearts_runner_setup/setup.ps1
-      - name: Create Build Folder
-        run: mkdir build
-      - name: CWD
-        run: |
-          ls
-      - name: Install Conan Libraries
-        run: |
-          cd build 
-          conan install .. --build missing -s build_type=Debug -if ./build
-      - name: Generate CMake Files
-        run: |
-          cd build
-          cmake ..
-      - name: Build
-        run: |
-          cd build
-          cmake --build . --config Debug --parallel
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Run Setup Script
+  #       run: |
+  #         git clone https://github.com/music-box-games/fullhearts_runner_setup
+  #         ./fullhearts_runner_setup/setup.ps1
+  #     - name: Create Build Folder
+  #       run: mkdir build
+  #     - name: CWD
+  #       run: |
+  #         ls
+  #     - name: Install Conan Libraries
+  #       run: |
+  #         cd build 
+  #         conan install .. --build missing -s build_type=Debug -if ./build
+  #     - name: Generate CMake Files
+  #       run: |
+  #         cd build
+  #         cmake ..
+  #     - name: Build
+  #       run: |
+  #         cd build
+  #         cmake --build . --config Debug --parallel
 
   build-mint:
     runs-on: desu
