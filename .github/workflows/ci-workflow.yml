@@ -61,5 +61,5 @@ jobs:
       - name: Test
         run: |
           ls ./build/bin
-          ./bin/fh -t
+          ./build/bin/fh -t
 
