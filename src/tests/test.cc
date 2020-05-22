@@ -159,28 +159,6 @@ TEST(SerializationTest, SerializeObject)
     EXPECT_TRUE(*objo == *obji);
 }
 
-TEST(SerializationTest, SerializeSceneManager)
-{
-    we::scenes::impl::scene_manager sm = we::scenes::impl::scene_manager();
-    //sm.load<we::scenes::test::scene_serializationtest>();
-
-    auto ss = create_serialize_test_folder();
-    ss << "\\scenemgr";
-    {
-        std::ofstream stream(ss.str());
-        ::boost::archive::text_oarchive arch(stream);
-        arch << sm;
-    }
-    we::scenes::impl::scene_manager sm2 = we::scenes::impl::scene_manager();
-    EXPECT_FALSE(sm == sm2);
-    {
-        std::ifstream stream(ss.str());
-        ::boost::archive::text_iarchive arch(stream);
-        arch >> sm2;
-    }
-    EXPECT_TRUE(sm == sm2);
-}
-
 TEST(SerializationTest, SerializeSettings)
 {
     auto s1 = we::core::settings::impl::settings_state();
