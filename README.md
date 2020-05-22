@@ -4,7 +4,7 @@ Development repo for full hearts
 <!---
 build status badge
 -->
-![CI](https://github.com/music-box-games/fullhearts/workflows/CI/badge.svg)
+![CI](https://github.com/music-box-games/fullhearts/workflows/CI/badge.svg?branch=master)
 <!---
 code quality
 -->
