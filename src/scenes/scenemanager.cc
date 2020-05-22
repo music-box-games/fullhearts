@@ -94,7 +94,7 @@ namespace waifuengine
         auto pt = utils::get_game_save_data_folder();
         pt.append("scenes");
         pt.append(smap.first);
-        std::ofstream stream(pt);
+        std::ofstream stream(pt.string());
         boost::archive::text_oarchive arch(stream);
         arch << smap;
       }
@@ -127,7 +127,7 @@ namespace waifuengine
 
       void scene_manager::load_scene()
       {
-        std::ifstream stream(scene_data[queued_scene]);
+        std::ifstream stream(scene_data[queued_scene].string());
         boost::archive::text_iarchive arch(stream);
         arch >> smap;
       }
