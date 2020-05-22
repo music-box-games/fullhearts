@@ -83,7 +83,7 @@ public:
   };
 
   script_object();
-  ~script_object();
+  virtual ~script_object();
 
   void update(float dt);
   void draw() const;
