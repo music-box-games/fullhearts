@@ -5,6 +5,7 @@ Development repo for full hearts
 build status badge
 -->
 ![CI](https://github.com/music-box-games/fullhearts/workflows/CI/badge.svg?branch=master)
+![CI](https://github.com/music-box-games/fullhearts/workflows/CI/badge.svg?branch=integration)
 <!---
 code quality
 -->
