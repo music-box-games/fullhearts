@@ -25,6 +25,7 @@
 #include <notify.hpp>
 #include <generators.hpp>
 #include <str_util.hpp>
+#include <graphic_utils.hpp>
 
 #define WE_UTIL_STRINGIFY(x) #x
 

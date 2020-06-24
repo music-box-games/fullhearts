@@ -167,6 +167,16 @@ void window::process_all_input()
   }
 }
 
+void window::width() const
+{
+  return width;
+}
+
+void window::height() const
+{
+  return height;
+}
+
 window::window_ptr window::get()
 {
   return data;

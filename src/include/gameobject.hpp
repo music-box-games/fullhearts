@@ -67,7 +67,7 @@ namespace waifuengine
 
         public:
             gameobject(std::string n = "");
-            ~gameobject();
+            virtual ~gameobject();
 
             template<class _CType>
             std::shared_ptr<_CType> add_component()
@@ -104,8 +104,8 @@ namespace waifuengine
 
             bool has_component(std::string name) const;
 
-            void update(float dt);
-            void draw() const;
+            virtual void update(float dt);
+            virtual void draw() const;
 
             std::string const& name() const;
 
