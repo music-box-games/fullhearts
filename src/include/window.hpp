@@ -40,8 +40,8 @@ namespace waifuengine
 
       void queue_input(int key, int action);
 
-      void width() const;
-      void height() const;
+      float get_width() const;
+      float get_height() const;
 
     private:
       friend std::shared_ptr<window> create_window(std::string, int, int);

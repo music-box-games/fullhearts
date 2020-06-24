@@ -41,7 +41,7 @@ public:
 };
 
 static const char *default_vertex_shader_source =
-    "#version 330core\n"
+    "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
     "{\n"
@@ -66,10 +66,10 @@ void load_shaders()
   {
     impl::loaded_shaders[pair.first] = std::shared_ptr<shader>(new shader(vertex_shader(pair.second.first), fragment_shader(pair.second.second)));
   }
-  std::string temp;
-  std::ifstream stream(temp);
-  boost::archive::text_iarchive arch(stream);
-  arch >> m;
+  // std::string temp;
+  // std::ifstream stream(temp);
+  // boost::archive::text_iarchive arch(stream);
+  // arch >> m;
 }
 
 void generate_default_shaders()
@@ -120,6 +120,7 @@ void vertex_shader::compile()
     char infolog[512];
     glGetShaderInfoLog(shader_id, 512, NULL, infolog);
     // ERROR HERE
+    throw std::exception(infolog);
   }
 }
 
@@ -155,6 +156,7 @@ void fragment_shader::compile()
     char infolog[512];
     glGetShaderInfoLog(shader_id, 512, NULL, infolog);
     // ERROR HERE
+    throw std::exception(infolog);
   }
 }
 
@@ -186,6 +188,7 @@ void shader::link(vertex_shader& v, fragment_shader& f)
     char infolog[512];
     glGetProgramInfoLog(program_id, 512, NULL, infolog);
     // ERROR
+    throw std::exception(infolog);
   }
 }
 
@@ -202,6 +205,7 @@ void shader::link(vertex_shader&& v, fragment_shader&& f)
     char infolog[512];
     glGetProgramInfoLog(program_id, 512, NULL, infolog);
     // ERROR
+    throw std::exception(infolog);
   }
 }
 

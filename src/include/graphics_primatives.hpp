@@ -2,9 +2,11 @@
 #define _WE_GRAPHICS_PRIMATIVES_HPP_
 
 #include <array>
+#include <glm/glm.hpp>
 
 #include "serialization.hpp"
 #include "gameobject.hpp"
+#include "shader.hpp"
 
 namespace waifuengine
 {
@@ -34,7 +36,10 @@ namespace waifuengine
       class triangle : public base_primative
       {
       private:
-        std::array<glm::vec2, 3> vertices;
+        float vertices[9];
+        shaders::shader * shd;
+        unsigned int VAO;
+        unsigned int VBO;
 
         friend class boost::serialization::access;
         template<class Archive>
@@ -45,11 +50,13 @@ namespace waifuengine
         }
 
       public:
-        triangle(std::string name, std::array<glm::vec2, 3> verts);
+        triangle(std::string name);
         virtual ~triangle();
 
         virtual void update(float dt) override;
         virtual void draw() const override;
+
+        void set_vertices(float verts[9]);
       };
     }
   }

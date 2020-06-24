@@ -167,12 +167,12 @@ void window::process_all_input()
   }
 }
 
-void window::width() const
+float window::get_width() const
 {
   return width;
 }
 
-void window::height() const
+float window::get_height() const
 {
   return height;
 }

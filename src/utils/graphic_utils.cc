@@ -13,8 +13,8 @@ namespace waifuengine
     {
       auto window = we::graphics::get_current_window();
       glm::vec2 vec { 
-        static_cast<float>(pos.x) / static_cast<float>(window->width()),
-        static_cast<float>(pos.y) / static_cast<float>(window->height())
+        static_cast<float>(pos[0]) / static_cast<float>(window->get_width()),
+        static_cast<float>(pos[1]) / static_cast<float>(window->get_height())
       };
 
       return vec;
@@ -24,8 +24,8 @@ namespace waifuengine
     {
       auto window = we::graphics::get_current_window();
       glm::vec2 vec {
-        static_cast<float>(window->width()) / static_cast<float>(pos.x),
-        static_cast<float>(windows->height()) / static_cast<float>(pos.y)
+        static_cast<float>(window->get_width()) / static_cast<float>(pos[0]),
+        static_cast<float>(window->get_height()) / static_cast<float>(pos[1])
       };
       return vec;
     }

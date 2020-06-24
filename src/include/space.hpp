@@ -22,6 +22,8 @@
 #include <gameobject.hpp>
 #include <debug.hpp>
 
+#include "graphics_primatives.hpp"
+
 namespace waifuengine
 {
     namespace object_management
@@ -61,6 +63,15 @@ namespace waifuengine
         public:
             space(std::string n = "", space_order order = space_order::UNORDERED);
             ~space();
+
+            // MUST be derived from gameobject
+            template<class ObjectType>
+            std::shared_ptr<gameobject> add_object_t(std::string name)
+            {
+              auto obj = std::shared_ptr<gameobject>(new ObjectType(name));
+              objects_[name] = obj;
+              return obj;
+            }
 
             std::shared_ptr<gameobject> add_object(std::string name);
             void remove_object(std::string name);
