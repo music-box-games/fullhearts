@@ -76,7 +76,7 @@ namespace waifuengine
         }
         if(vm.count("pedantic"))
         {
-          we::core::settings::pedantic_debug = true;
+          we::core::settings::write_t<bool>("pedantic_debug", true);
         }
         if(vm.count("hardware-dump"))
         {

@@ -89,6 +89,13 @@ namespace waifuengine
       return pt;
     }
 
+    fs::path get_settings_save_folder()
+    {
+      auto pt = get_game_save_data_folder();
+      //pt.append("settings");
+      return pt;
+    }
+
     void build_save_folder()
     {
       auto pt = get_game_save_data_folder();

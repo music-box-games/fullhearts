@@ -103,7 +103,7 @@ namespace waifuengine
       void handle(Event * e)
       {
         std::string ename(Event::NAME);
-        if(::waifuengine::core::settings::mt_messaging)
+        if(::waifuengine::core::settings::read_t<bool>("mt_messaging"))
         {
           handle_mt(e, ename);
         }

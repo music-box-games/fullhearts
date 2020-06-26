@@ -27,7 +27,15 @@ namespace waifuengine
 
       void triangle::update(float)
       {
+        if(!disabled_ && calculating_vertices)
+        {
+          
+        }
+      }
 
+      void triangle::calculate_vertices(bool set)
+      {
+        calculating_vertices = set;
       }
 
       void triangle::draw() const
@@ -70,6 +78,36 @@ namespace waifuengine
         {
           shd = s.value();
         }
+      }
+
+      void triangle::set_width(float w)
+      {
+        width = w;
+      }
+
+      void triangle::set_height(float h)
+      {
+        height = h;
+      }
+
+      void triangle::set_center(glm::vec2 c)
+      {
+        center = c;
+      }
+
+      float triangle::get_width() const
+      {
+        return width;
+      }
+
+      float triangle::get_height() const
+      {
+        return height;
+      }
+
+      glm::vec2 triangle::get_center() const
+      {
+        return center;
       }
     } // namespace primatives
 

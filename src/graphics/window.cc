@@ -10,7 +10,7 @@
 #include <event_manager.hpp>
 
 namespace we = ::waifuengine;
-namespace settings = we::core::settings;
+using settings = we::core::settings;
 
 namespace waifuengine
 {

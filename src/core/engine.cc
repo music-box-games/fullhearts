@@ -131,9 +131,9 @@ void engine::update()
   we::audio::update();
 
   // apply frame limiter if applicable
-  if (we::core::settings::frame_limit)
+  if (we::core::settings::read_t<std::size_t>("frame_limit"))
   {
-    float diff = (1000.0f / static_cast<float>(we::core::settings::frame_limit)) - ft.delta_time();
+    float diff = (1000.0f / static_cast<float>(we::core::settings::read_t<std::size_t>("frame_limit"))) - ft.delta_time();
     if (diff > 0)
     {
       std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(diff)));

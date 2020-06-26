@@ -11,6 +11,9 @@
 
 #include <settings.hpp>
 #include <serialization.hpp>
+#include "utils.hpp"
+#include "events.hpp"
+#include "event_manager.hpp"
 
 namespace we = ::waifuengine;
 
@@ -18,82 +21,55 @@ namespace waifuengine
 {
 namespace core
 {
-namespace settings
-{
 
-void load()
+settings::settings_change_event::settings_change_event() : we::events::event(std::string(NAME)), name(std::string()), old_value(0), new_value(0) {}
+settings::settings_change_event::settings_change_event(std::string n, std::any o_value, std::any n_value) : we::events::event(std::string(NAME)), name(n), old_value(o_value), new_value(n_value) {}
+void settings::settings_change_event::reset()
 {
-
-}
-void save()
-{
-
+  old_value.reset();
+  new_value.reset();
+  name = std::string();
 }
 
-bool pedantic_debug = false;
-bool mt_messaging = false;
-bool fullscreen = false;
-
-int window_width = 800;
-int window_height = 600;
-
-std::size_t frame_limit = 0;
-
-namespace impl
+void settings::send_change_event(std::string n, std::any o_value, std::any n_value)
 {
+  settings_change_event e(n, o_value, n_value);
+  we::events::handle<settings_change_event>(&e);
+}
 
-settings_state::settings_state(bool load_current)
+std::unordered_map<std::string, settings::setting_value> settings::values =
 {
-  if(load_current)
+  {"pedantic_debug", settings::setting_value("pedantic_debug", false)},
+  {"mt_messaging", settings::setting_value("mt_messaging", false)},
+  {"fullscreen", settings::setting_value("fullscreen", false)},
+  {"window_width", settings::setting_value("window_width", int(1280))},
+  {"window_height", settings::setting_value("window_height", int(720))},
+  {"frame_limit", settings::setting_value("frame_limit", std::size_t(0))},
+};
+
+void settings::save(settings const& s)
+{
+  fs::path settings_save_folder = we::utils::get_settings_save_folder();
+  settings_save_folder.append("settings");
+  std::ofstream stream(settings_save_folder.string());
+  boost::archive::text_oarchive arch(stream);
+  arch << s;
+}
+
+void settings::load()
+{
+  fs::path settings_save_folder = we::utils::get_settings_save_folder();
+  settings_save_folder.append("settings");
+  if(fs::exists(settings_save_folder))
   {
-    load_current_settings();
-  }
-  else
-  {
-    pedantic_debug = false;
-    mt_messaging = false;
-    fullscreen = false;
-    window_width = 0;
-    window_height = 0;
-    frame_limit = 0;
+    settings s;
+    std::ifstream stream(settings_save_folder.string());
+    boost::archive::text_iarchive arch(stream);
+    arch >> s;
   }
 }
 
-settings_state::~settings_state() {}
+settings::setting_value::setting_value(std::string n, std::any v) : name(n), value(v) {}
 
-void settings_state::load_current_settings()
-{
-  pedantic_debug = we::core::settings::pedantic_debug;
-  mt_messaging = we::core::settings::mt_messaging;
-  fullscreen = we::core::settings::fullscreen;
-  window_width = we::core::settings::window_width;
-  window_height = we::core::settings::window_height;
-  frame_limit = we::core::settings::frame_limit;
-}
-
-void settings_state::apply() const
-{
-  we::core::settings::pedantic_debug = pedantic_debug;
-  we::core::settings::mt_messaging = mt_messaging;
-  we::core::settings::fullscreen = fullscreen;
-  we::core::settings::window_width = window_width;
-  we::core::settings::window_height = window_height;
-  we::core::settings::frame_limit = frame_limit;
-}
-
-bool settings_state::operator==(settings_state const& rhs) const
-{
-  return (pedantic_debug == rhs.pedantic_debug) &&
-  (mt_messaging == rhs.mt_messaging) &&
-  (fullscreen == rhs.fullscreen) &&
-  (window_width == rhs.window_width) &&
-  (window_height == rhs.window_height) &&
-  (frame_limit == rhs.frame_limit);
-}
-
-} // namespace impl
 } // namespace core
-} // namespace settings
 } // namespace waifuengine
-
-BOOST_CLASS_EXPORT_IMPLEMENT(waifuengine::core::settings::impl::settings_state);

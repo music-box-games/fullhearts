@@ -26,6 +26,7 @@ namespace waifuengine
     fs::path get_save_data_folder_root();
     fs::path get_temp_folder();
     fs::path get_game_save_data_folder();
+    fs::path get_settings_save_folder();
     void build_save_folder();
     std::vector<fs::path> list_files_in_folder(fs::path path);
     std::vector<fs::path> recursive_list_files_in_folder(fs::path path);

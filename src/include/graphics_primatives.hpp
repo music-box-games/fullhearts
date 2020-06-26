@@ -42,6 +42,11 @@ namespace waifuengine
         unsigned int VAO;
         unsigned int VBO;
 
+        float width; // width in pixels
+        float height; // height in pixels
+        glm::vec2 center; // center point, in pixels
+        bool calculating_vertices = true;
+
         friend class boost::serialization::access;
         template<class Archive>
         void serialize(Archive& ar, unsigned int const v)
@@ -59,6 +64,15 @@ namespace waifuengine
 
         void set_vertices(float * verts, int length);
         void set_shader(std::string name);
+
+        void set_width(float w); // in pixels
+        void set_height(float h);
+        void set_center(glm::vec2 c);
+        float get_width() const;
+        float get_height() const;
+        glm::vec2 get_center() const;
+
+        void calculate_vertices(bool set = true);
       };
     }
 
@@ -86,7 +100,7 @@ namespace waifuengine
         protected:
           friend class boost::serialization::access;
           template<class Archive>
-          void serialization(Archive& ar, unsigned int const v)
+          void serialize(Archive& ar, unsigned int const v)
           {
             ar & boost::serialization::base_object<primatives::triangle>(*this);
           }

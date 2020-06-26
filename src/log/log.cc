@@ -96,7 +96,7 @@ namespace waifuengine
 
         void pedantic(std::string message)
         {
-            if(core::settings::pedantic_debug)
+            if(core::settings::read_t<bool>("pedantic_debug"))
             {
                 log(message, trace_level::pedantic);
             }
