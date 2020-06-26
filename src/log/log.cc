@@ -28,7 +28,11 @@ namespace waifuengine
             {trace_level::warnings, "[WARNING] "},
         };
 
-        static trace_level tlevel;
+        static trace_level tlevel =
+#ifdef DEBUG
+          trace_level::debug;
+#endif
+        trace_level::errors;
 
         namespace _impl
         {
@@ -44,6 +48,20 @@ namespace waifuengine
                 std::stringstream ss;
                 ss << '[' << file << ':' << line << "] " << message;
                 ::waifuengine::log::warning(ss.str());
+            }
+
+            void info_helper(std::string message, std::string file, int line)
+            {
+              std::stringstream ss;
+              ss << "[INFO]" << '[' << file << ':' << line << "] " << message;
+              ::waifuengine::log::info(ss.str());
+            }
+
+            void debug_helper(std::string message, std::string file, int line)
+            {
+              std::stringstream ss;
+              ss << "[DEBUG][" << file << ':' << line << "] " << message;
+              ::waifuengine::log::debug(ss.str());
             }
         }
 
@@ -71,10 +89,8 @@ namespace waifuengine
         {
             if(level >= tlevel)
             {
-#ifdef DEBUG
                 std::cout << levels[level] << message << '\n';
                 if(level == trace_level::errors) { std::cerr << levels[level] << message << '\n';}
-#endif // DEBUG
             }
         }
 
@@ -104,6 +120,11 @@ namespace waifuengine
         void warning(std::string message)
         {
             log(message, trace_level::warnings);
+        }
+
+        void info(std::string message)
+        {
+          log(message, trace_level::debug);
         }
     }
 }

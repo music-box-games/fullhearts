@@ -189,7 +189,7 @@ namespace waifuengine
     {
       return impl::smanager->blank_scene(name);
     }
-  }
+  } // namespace scenes
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::impl::scene_manager);

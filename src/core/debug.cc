@@ -18,6 +18,8 @@
 #include <gameobject.hpp>
 #include <scripting.hpp>
 
+#include "shader.hpp"
+
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
 
@@ -263,6 +265,19 @@ private:
     }
   }
 
+  void shader_list()
+  {
+    if(ImGui::TreeNode("Shaders"))
+    {
+      std::vector<std::string> list = we::graphics::shaders::list_loaded_shaders();
+      for(auto const& s : list)
+      {
+        ImGui::Text(s.c_str());
+      }
+      ImGui::TreePop();
+    }
+  }
+
   void console()
   {
     static std::deque<std::string> history;
@@ -402,6 +417,8 @@ public:
     // right now there's always one
     auto sc = s->current_scene();
     scene_tree(sc);
+
+    shader_list();
   }
 
   void draw()

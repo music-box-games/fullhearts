@@ -43,6 +43,8 @@ namespace waifuengine
     {
         class gameobject
         {
+        protected:
+            bool disabled_;
         private:         
             using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
 
@@ -53,7 +55,6 @@ namespace waifuengine
             std::string error_;
             std::mutex lock_;
 
-            bool disabled_;
 
             void register_components_with_archive(boost::archive::text_oarchive& ar);
             void register_components_with_archive(boost::archive::text_iarchive& ar);

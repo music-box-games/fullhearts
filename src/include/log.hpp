@@ -24,6 +24,10 @@ namespace waifuengine
             void error_helper(std::string message, std::string file, int line);
 
             void warning_helper(std::string message, std::string file, int line);
+
+            void info_helper(std::string message, std::string file, int line);
+
+            void debug_helper(std::string message, std::string file, int line);
         }
 
         enum class trace_level
@@ -48,11 +52,14 @@ namespace waifuengine
         void debug(std::string message);
         void error(std::string message);
         void warning(std::string message);
+        void info(std::string message);
 
     } // namespace trace
 } // namespace waifuengine
 
 #define LOGERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
 #define LOGWARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
+#define LOGINFO(x) _impl::info_helper(x, __FILE__, __LINE__)
+#define LOGDEBUG(x) _impl::debug_helper(x, __FILE__, __LINE__)
 
 #endif // !_W_TRACE_HPP_

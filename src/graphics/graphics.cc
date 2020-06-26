@@ -5,6 +5,7 @@
 #include <window.hpp>
 #include <debug.hpp>
 #include "notify.hpp"
+#include "shader.hpp"
 
 namespace we = ::waifuengine;
 
@@ -34,6 +35,8 @@ namespace graphics
       // TODO error and shutdown
       we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Fail to init GLAD!");
     }
+    // load shaders
+    we::graphics::shaders::load_shaders();
   }
 
   void shutdown()

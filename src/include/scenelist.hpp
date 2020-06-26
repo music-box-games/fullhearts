@@ -5,5 +5,6 @@
 #include <scene_splashscreen.hpp>
 #include <scene_mm.hpp>
 #include <scene_serializationtest.hpp>
+#include "scene_sandbox.hpp"
 
 #endif 

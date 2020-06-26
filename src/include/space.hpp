@@ -88,6 +88,8 @@ namespace waifuengine
             bool operator<(space const& rhs) const;
             bool operator==(space const& rhs) const;
 
+            void disable_all(bool disable = true);
+
             std::shared_ptr<gameobject> load_object(std::string name);
         };
 

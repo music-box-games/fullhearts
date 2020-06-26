@@ -120,6 +120,13 @@ bool space::operator==(space const& rhs) const
     return true;
 }
 
+void space::disable_all(bool dis)
+{
+  std::for_each(objects_.begin(), objects_.end(), [&dis](auto obj) {
+    obj.second->disable(dis);
+  });
+}
+
 std::shared_ptr<gameobject> space::load_object(std::string name)
 {
   std::shared_ptr<gameobject> obj {new gameobject(name)};

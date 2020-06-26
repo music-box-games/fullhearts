@@ -10,6 +10,9 @@
 #include <utils.hpp>
 #include <serialization.hpp>
 
+#include "fs_util.hpp"
+#include "log.hpp"
+
 namespace we = ::waifuengine;
 
 namespace waifuengine
@@ -40,6 +43,32 @@ public:
   }
 };
 
+class shader_file
+{
+public:
+  std::string v_shader;
+  std::string f_shader;
+
+  shader_file(fs::path path)
+  {
+    std::vector<std::string> lines = we::utils::parse_file_to_vector(path.string());
+    for(auto const& s : lines)
+    {
+      std::vector<std::string> tokens = we::utils::tokenize_string(s, ":");
+      if(tokens.at(0) == "vertex")
+      {
+        v_shader = tokens.at(1);
+      }
+      else if(tokens.at(0) == "fragment")
+      {
+        f_shader = tokens.at(1);
+      }
+    }
+  }
+
+  ~shader_file() = default;
+};
+
 static const char *default_vertex_shader_source =
     "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -61,15 +90,47 @@ void load_shaders()
 {
   // find the archive that contains the map of filenames for shaders and their names or something like that
   impl::shader_map m;
+  std::string exe_path = we::utils::get_exe_path();
+  std::string shaders_path = exe_path + std::string("\\shaders");
+  std::vector<fs::path> shader_files = we::utils::list_files_in_folder(fs::path(shaders_path));
+  for(auto const& p : shader_files)
+  {
+    impl::shader_file s(p);
+    std::string v_shader_path = utils::get_exe_path() + "\\shaders" + s.v_shader;
+    std::string f_shader_path = utils::get_exe_path() + "\\shaders" + s.f_shader;
+    m.m[we::utils::strip_filename(p)] = {v_shader_path, f_shader_path};
+  }
+
+
   // using that data, recompile and link all shaders
   for(auto pair : m)
   {
     impl::loaded_shaders[pair.first] = std::shared_ptr<shader>(new shader(vertex_shader(pair.second.first), fragment_shader(pair.second.second)));
   }
+  impl::loaded_shaders["default"] = std::shared_ptr<shader>(new shader(vertex_shader("default"), fragment_shader("default")));
   // std::string temp;
   // std::ifstream stream(temp);
   // boost::archive::text_iarchive arch(stream);
   // arch >> m;
+}
+
+std::optional<std::shared_ptr<shader>> get_shader(std::string name)
+{
+  if(impl::loaded_shaders.count(name))
+  {
+    return impl::loaded_shaders[name];
+  }
+  else return {};
+}
+
+std::vector<std::string> list_loaded_shaders()
+{
+  std::vector<std::string> list;
+  for(auto const& p: impl::loaded_shaders)
+  {
+    list.push_back(p.first);
+  }
+  return list;
 }
 
 void generate_default_shaders()
@@ -93,6 +154,7 @@ void save_shader_map()
 
 vertex_shader::vertex_shader(fs::path file) : source(nullptr), shader_id(0), filepath(file)
 {
+  std::string s = "";
   if(filepath == fs::path{} || filepath == "default")
   {
     source = impl::default_vertex_shader_source;
@@ -100,13 +162,21 @@ vertex_shader::vertex_shader(fs::path file) : source(nullptr), shader_id(0), fil
   }
   else
   {
-    source = we::utils::parse_file_to_string(file.generic_string()).c_str();
+    s = we::utils::parse_file_to_string(file.generic_string()).c_str();
+    source = s.c_str();
   }
   compile();
 }
 
 void vertex_shader::compile()
 {
+#ifndef DEBUG
+  {
+    std::stringstream ss;
+    ss << "Compiling vertex shader:" << filepath << ":\n" << source;
+    we::log::LOGDEBUG(ss.str());
+  }
+#endif
   shader_id = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(shader_id, 1, &source, NULL);
   glCompileShader(shader_id);
@@ -120,7 +190,8 @@ void vertex_shader::compile()
     char infolog[512];
     glGetShaderInfoLog(shader_id, 512, NULL, infolog);
     // ERROR HERE
-    throw std::exception(infolog);
+    we::log::LOGERROR(infolog);
+    throw std::exception((const char*)infolog);
   }
 }
 
@@ -131,6 +202,7 @@ vertex_shader::~vertex_shader()
 
 fragment_shader::fragment_shader(fs::path file) : source(nullptr), shader_id(0), filepath(file)
 {
+  std::string s = "";
   if(filepath == fs::path{} || filepath == "default")
   {
     source = impl::default_fragment_shader_source;
@@ -138,13 +210,22 @@ fragment_shader::fragment_shader(fs::path file) : source(nullptr), shader_id(0),
   }
   else
   {
-    source = we::utils::parse_file_to_string(file.generic_string()).c_str();
+    s = we::utils::parse_file_to_string(file.generic_string());
+    source = s.c_str();
   }
   compile();
 }
 
 void fragment_shader::compile()
 {
+#ifndef DEBUG
+  {
+    std::stringstream ss;
+    
+    ss << "Compiling fragment shader:" << filepath << ":\n" << source;
+    we::log::LOGDEBUG(ss.str());
+  }
+#endif
   shader_id = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(shader_id, 1, &source, NULL);
   glCompileShader(shader_id);
@@ -156,7 +237,8 @@ void fragment_shader::compile()
     char infolog[512];
     glGetShaderInfoLog(shader_id, 512, NULL, infolog);
     // ERROR HERE
-    throw std::exception(infolog);
+    we::log::LOGERROR(infolog);
+    throw std::exception((const char*)infolog);
   }
 }
 
@@ -188,7 +270,7 @@ void shader::link(vertex_shader& v, fragment_shader& f)
     char infolog[512];
     glGetProgramInfoLog(program_id, 512, NULL, infolog);
     // ERROR
-    throw std::exception(infolog);
+    throw std::exception((const char*)infolog);
   }
 }
 
@@ -205,7 +287,8 @@ void shader::link(vertex_shader&& v, fragment_shader&& f)
     char infolog[512];
     glGetProgramInfoLog(program_id, 512, NULL, infolog);
     // ERROR
-    throw std::exception(infolog);
+    we::log::LOGERROR(infolog);
+    throw std::exception((const char*)infolog);
   }
 }
 
@@ -214,9 +297,14 @@ void shader::use()
   glUseProgram(program_id);
 }
 
+unsigned int shader::get_id() const
+{
+  return program_id;
+}
+
 shader::~shader()
 {
-  glDeleteProgram(program_id);
+  glDeleteProgram(program_id); // TODO: being called twice
 }
 
 } // namespace shaders

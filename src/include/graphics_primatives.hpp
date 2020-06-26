@@ -35,9 +35,10 @@ namespace waifuengine
 
       class triangle : public base_primative
       {
-      private:
-        float vertices[9];
-        shaders::shader * shd;
+      protected:
+        float * vertices;
+        int vert_count = 0;
+        std::shared_ptr<shaders::shader> shd;
         unsigned int VAO;
         unsigned int VBO;
 
@@ -56,8 +57,48 @@ namespace waifuengine
         virtual void update(float dt) override;
         virtual void draw() const override;
 
-        void set_vertices(float verts[9]);
+        void set_vertices(float * verts, int length);
+        void set_shader(std::string name);
       };
+    }
+
+    namespace shaders
+    {
+      namespace test
+      {
+        class test_triangle0 : public primatives::triangle
+        {
+        protected:
+          friend class boost::serialization::access;
+          template<class Archive>
+          void serialize(Archive& ar, unsigned int const v)
+          {
+            ar & boost::serialization::base_object<primatives::triangle>(*this);
+          }
+
+        public:
+          test_triangle0(std::string name);
+          virtual ~test_triangle0() = default;
+        };
+
+        class test_triangle1 : public primatives::triangle
+        {
+        protected:
+          friend class boost::serialization::access;
+          template<class Archive>
+          void serialization(Archive& ar, unsigned int const v)
+          {
+            ar & boost::serialization::base_object<primatives::triangle>(*this);
+          }
+
+        public:
+          test_triangle1(std::string name);
+          virtual ~test_triangle1() = default;
+
+          virtual void draw() const override;
+
+        };
+      }
     }
   }
 }

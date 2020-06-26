@@ -124,5 +124,30 @@ namespace waifuengine
       build_scene_save_folder();
       build_object_save_folder();
     }
+
+    std::vector<fs::path> list_files_in_folder(fs::path path)
+    {
+      std::vector<fs::path> list;
+      for(auto const& f : fs::directory_iterator(path))
+      {
+        if (f.is_regular_file())
+        {
+          list.push_back(f.path());
+        }
+      }
+      return list;
+    }
+
+    std::string strip_filename(fs::path path)
+    {
+      std::string filename = path.filename().string();
+      filename = filename.substr(0, filename.find_last_of('.'));
+      return filename;
+    }
+
+    std::string get_extension(fs::path path)
+    {
+      return path.extension().string();
+    }
   }
 }

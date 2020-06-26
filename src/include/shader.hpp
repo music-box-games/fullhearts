@@ -1,6 +1,8 @@
 #ifndef _WE_SHADER_HPP_
 #define _WE_SHADER_HPP_
 
+#include <optional>
+
 #include <fs_util.hpp>
 
 namespace waifuengine
@@ -15,7 +17,11 @@ namespace waifuengine
 
       void save_shader_map();
 
+      std::vector<std::string> list_loaded_shaders();
+
       class shader;
+
+      std::optional<std::shared_ptr<shader>> get_shader(std::string name);
 
       class vertex_shader
       {
@@ -54,6 +60,8 @@ namespace waifuengine
         ~shader();
 
         void use();
+
+        unsigned int get_id() const;
 
       private:
         void link(vertex_shader& v, fragment_shader& f);

@@ -144,15 +144,7 @@ void engine::update()
 void engine::load_initial_scene()
 {
   we::log::trace("Loading inital scene");
-  auto scn = ::waifuengine::scenes::blank_scene("test");
-  auto * sc_manager = scn->get_manager();
-  auto sp = sc_manager->add_space("test_space");
-  auto obj = sp->add_object_t<we::graphics::primatives::triangle>("test_triangle");
-  float verts[] = {-0.5f, -0.5f, 0.0f,
-  0.5f, -0.5f, 0.0f,
-  0.0f, 0.5f, 0.0f
-  };
-  (dynamic_cast<we::graphics::primatives::triangle *>((obj.get())))->set_vertices(verts);
+  we::scenes::build_sandbox_scene();
 }
 } // namespace core
 } // namespace waifuengine
