@@ -19,6 +19,7 @@
 #include <scripting.hpp>
 
 #include "shader.hpp"
+#include "texture.hpp"
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
@@ -270,6 +271,19 @@ private:
     if(ImGui::TreeNode("Shaders"))
     {
       std::vector<std::string> list = we::graphics::shaders::list_loaded_shaders();
+      for(auto const& s : list)
+      {
+        ImGui::Text(s.c_str());
+      }
+      ImGui::TreePop();
+    }
+  }
+
+  void texture_list()
+  {
+    if(ImGui::TreeNode("Textures"))
+    {
+      std::vector<std::string> list = we::graphics::textures::list_loaded_textures();
       for(auto const& s : list)
       {
         ImGui::Text(s.c_str());

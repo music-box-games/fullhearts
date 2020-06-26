@@ -6,6 +6,7 @@
 #include <debug.hpp>
 #include "notify.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
 
 namespace we = ::waifuengine;
 
@@ -37,6 +38,7 @@ namespace graphics
     }
     // load shaders
     we::graphics::shaders::load_shaders();
+    we::graphics::textures::load_textures();
   }
 
   void shutdown()

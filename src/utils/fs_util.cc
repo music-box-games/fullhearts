@@ -138,6 +138,19 @@ namespace waifuengine
       return list;
     }
 
+    std::vector<fs::path> recursive_list_files_in_folder(fs::path path)
+    {
+      std::vector<fs::path> list;
+      for(auto const& f : fs::recursive_directory_iterator(path))
+      {
+        if(f.is_regular_file())
+        {
+          list.push_back(f.path());
+        }
+      }
+      return list;
+    }
+
     std::string strip_filename(fs::path path)
     {
       std::string filename = path.filename().string();

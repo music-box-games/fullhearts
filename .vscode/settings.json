@@ -94,6 +94,7 @@
       "any": "cpp",
       "concepts": "cpp",
       "xstddef": "cpp",
-      "xtr1common": "cpp"
+      "xtr1common": "cpp",
+      "*.rh": "cpp"
     }
 }

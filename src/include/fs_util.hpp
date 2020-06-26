@@ -28,6 +28,7 @@ namespace waifuengine
     fs::path get_game_save_data_folder();
     void build_save_folder();
     std::vector<fs::path> list_files_in_folder(fs::path path);
+    std::vector<fs::path> recursive_list_files_in_folder(fs::path path);
     std::string strip_filename(fs::path path);
     std::string get_extension(fs::path path);
 

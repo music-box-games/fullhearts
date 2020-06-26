@@ -34,11 +34,6 @@ conan_basic_setup()
 # add include paths
 include_directories(./src/include)
 include_directories(./ext_src/imgui)
-include_directories(./ext_src/stb)
-include_directories(./ext_src/soil/inc)
-
-file(GLOB SOILSRC "./ext_src/soil/src/*.c")
-ADD_LIBRARY(soil STATIC ${SOILSRC})
 
 # add subdirs
 add_subdirectory(./src/components)
@@ -52,20 +47,21 @@ add_subdirectory(./src/tests)
 add_subdirectory(./src/factory)
 add_subdirectory(./src/audio)
 
+
 set(WLIBS components core log utils events graphics scenes tests factory audio)
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
-file(GLOB EXTSOURCES "./ext_src/imgui/*.cpp" "./ext_src/stb/*.c")
+file(GLOB EXTSOURCES "./ext_src/imgui/*.cpp")
 
 # set ouput
 add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})
 
 # link subdirs
 if(MSVC)
-target_link_libraries(${EXENAME} ${WLIBS} ${CONAN_LIBS} soil)
+target_link_libraries(${EXENAME} ${WLIBS} ${CONAN_LIBS})
 else()
-target_link_libraries(${EXENAME} ${WLIBS} ${WLIBS} ${CONAN_LIBS} soil)
+target_link_libraries(${EXENAME} ${WLIBS} ${WLIBS} ${CONAN_LIBS})
 endif()
 
 # copy files to build folder

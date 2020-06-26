@@ -9,7 +9,7 @@ class FullheartsConan(ConanFile):
     self.requires("gtest/1.8.1@bincrafters/stable")
     self.requires("glad/0.1.29@bincrafters/stable")
     self.requires("glfw/3.3.2@bincrafters/stable")
-    self.requires("glm/0.9.9.5@g-truc/stable")
+    self.requires("soil2/1.20@bincrafters/stable")
     if self.settings.os == "Windows":
       self.requires("boost/1.71.0@conan/stable")
     else:

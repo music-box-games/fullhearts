@@ -307,6 +307,66 @@ shader::~shader()
   glDeleteProgram(program_id); // TODO: being called twice
 }
 
+void shader::set_bool_1(std::string const& name, bool value) const
+{
+  glUniform1i(glGetUniformLocation(program_id, name.c_str()), (int)value);
+}
+
+void shader::set_int_1(std::string const& name, int value) const
+{
+  glUniform1i(glGetUniformLocation(program_id, name.c_str()), value);
+}
+
+void shader::set_float_1(std::string const& name, float value) const
+{
+  glUniform1f(glGetUniformLocation(program_id, name.c_str()), value);
+}
+
+void shader::set_bool_2(std::string const& name, bool value0, bool value1) const
+{
+  glUniform2i(glGetUniformLocation(program_id, name.c_str()), (int)value0, (int)value1);
+}
+
+void shader::set_int_2(std::string const& name, int value0, int value1) const
+{
+  glUniform2i(glGetUniformLocation(program_id, name.c_str()), value0, value1);
+}
+
+void shader::set_float_2(std::string const& name, float value0, float value1) const
+{
+  glUniform2f(glGetUniformLocation(program_id, name.c_str()), value0, value1);
+}
+
+void shader::set_bool_3(std::string const& name, bool value0, bool value1, bool value2) const
+{
+  glUniform3i(glGetUniformLocation(program_id, name.c_str()), (int)value0, (int)value1, (int)value2);
+}
+
+void shader::set_int_3(std::string const& name, int value0, int value1, int value2) const
+{
+  glUniform3i(glGetUniformLocation(program_id, name.c_str()), value0, value1, value2);
+}
+
+void shader::set_float_3(std::string const& name, float value0, float value1, float value2) const
+{
+  glUniform3f(glGetUniformLocation(program_id, name.c_str()), value0, value1, value2);
+}
+
+void shader::set_bool_4(std::string const& name, bool value0, bool value1, bool value2, bool value3) const
+{
+  glUniform4i(glGetUniformLocation(program_id, name.c_str()), (int)value0, (int)value1, (int)value2, (int)value3);
+}
+
+void shader::set_int_4(std::string const& name, int value0, int value1, int value2, int value3) const
+{
+  glUniform4i(glGetUniformLocation(program_id, name.c_str()), value0, value1, value2, value3);
+}
+
+void shader::set_float_4(std::string const& name, float value0, float value1, float value2, float value3) const
+{
+  glUniform4f(glGetUniformLocation(program_id, name.c_str()), value0, value1, value2, value3);
+}
+
 } // namespace shaders
 } // namespace graphics
 } // namespace waifuengine

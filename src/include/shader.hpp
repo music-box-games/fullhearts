@@ -4,7 +4,7 @@
 #include <optional>
 
 #include <fs_util.hpp>
-
+#include "utils.hpp"
 namespace waifuengine
 {
   namespace graphics
@@ -60,8 +60,24 @@ namespace waifuengine
         ~shader();
 
         void use();
-
         unsigned int get_id() const;
+
+        // uniform setters
+        void set_bool_1(std::string const& name, bool value) const;
+        void set_int_1(std::string const& name, int value) const;
+        void set_float_1(std::string const& name, float value) const;
+
+        void set_bool_2(std::string const& name, bool value0, bool value1) const;
+        void set_int_2(std::string const& name, int value0, int value1) const;
+        void set_float_2(std::string const& name, float value0, float value1) const;
+
+        void set_bool_3(std::string const& name, bool value0, bool value1, bool value2) const;
+        void set_int_3(std::string const& name, int value0, int value1, int value2) const;
+        void set_float_3(std::string const& name, float value0, float value1, float value2) const;
+
+        void set_bool_4(std::string const& name, bool value0, bool value1, bool value2, bool value3) const;
+        void set_int_4(std::string const& name, int value0, int value1, int value2, int value3) const;
+        void set_float_4(std::string const& name, float value0, float value1, float value2, float value3) const;
 
       private:
         void link(vertex_shader& v, fragment_shader& f);
