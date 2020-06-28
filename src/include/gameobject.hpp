@@ -55,10 +55,6 @@ namespace waifuengine
             std::string error_;
             std::mutex lock_;
 
-
-            void register_components_with_archive(boost::archive::text_oarchive& ar);
-            void register_components_with_archive(boost::archive::text_iarchive& ar);
-
             template<class Archive>
             void serialize(Archive & ar, unsigned int const)
             {

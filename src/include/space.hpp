@@ -65,11 +65,11 @@ namespace waifuengine
             ~space();
 
             // MUST be derived from gameobject
-            template<class ObjectType>
-            std::shared_ptr<gameobject> add_object_t(std::string name)
+            template<class ObjectType, class ... Types>
+            std::shared_ptr<gameobject> add_object_t(Types ... args)
             {
-              auto obj = std::shared_ptr<gameobject>(new ObjectType(name));
-              objects_[name] = obj;
+              auto obj = std::shared_ptr<gameobject>(new ObjectType(args...));
+              objects_[obj->name()] = obj;
               return obj;
             }
 

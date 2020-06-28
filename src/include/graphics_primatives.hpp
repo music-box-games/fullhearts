@@ -33,6 +33,44 @@ namespace waifuengine
       };
       BOOST_SERIALIZATION_ASSUME_ABSTRACT(base_primative);
 
+      class sized_rectangle : public base_primative
+      {
+      protected:
+        float width = 0.0; // ratio of object_width : window_width
+        float height = 0.0; // object_height : window_height
+        glm::vec2 center = {0.0f, 0.0f};
+        std::shared_ptr<shaders::shader> shd;
+
+
+        unsigned int VAO;
+        unsigned int VBO;
+        unsigned int EBO;
+
+        friend class boost::serialization::access;
+        template<class Archive>
+        void serialize(Archive& ar, unsigned int const v)
+        {
+          ar & boost::serialization::base_object<base_primative>(*this);
+          ar & width;
+          ar & height;
+          ar & center[0];
+          ar & center[1];
+        }
+
+      public:
+        sized_rectangle(std::string name);
+        virtual ~sized_rectangle() = default;
+
+        virtual void update(float) override;
+        virtual void draw() const override;
+
+        void set_width(float w);
+        void set_height(float h);
+        void set_center(glm::vec2 c);
+
+        void set_shader(std::string name);
+      };
+
       class triangle : public base_primative
       {
       protected:
@@ -41,10 +79,11 @@ namespace waifuengine
         std::shared_ptr<shaders::shader> shd;
         unsigned int VAO;
         unsigned int VBO;
+        unsigned int EBO;
 
-        float width; // width in pixels
-        float height; // height in pixels
-        glm::vec2 center; // center point, in pixels
+        float width; // width ratio
+        float height; // height ratio
+        glm::vec2 center; // center point, ratios
         bool calculating_vertices = true;
 
         friend class boost::serialization::access;
@@ -65,7 +104,7 @@ namespace waifuengine
         void set_vertices(float * verts, int length);
         void set_shader(std::string name);
 
-        void set_width(float w); // in pixels
+        void set_width(float w); // width compared against total width of window (0-1)
         void set_height(float h);
         void set_center(glm::vec2 c);
         float get_width() const;

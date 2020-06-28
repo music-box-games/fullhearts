@@ -23,7 +23,6 @@ namespace waifuengine
 {
   namespace core
   {
-
     class settings
     {
     public:

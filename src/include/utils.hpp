@@ -27,6 +27,8 @@
 #include <str_util.hpp>
 #include <graphic_utils.hpp>
 
+#include "num_utils.hpp"
+
 #define WE_UTIL_STRINGIFY(x) #x
 
 namespace waifuengine

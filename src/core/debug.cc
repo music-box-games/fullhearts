@@ -223,6 +223,19 @@ private:
     }
   }
 
+  void image_list()
+  {
+    if(ImGui::TreeNode("Images"))
+    {
+      auto list = we::graphics::textures::list_loaded_images();
+      for(auto const& s : list)
+      {
+        ImGui::Text(s.c_str());
+      }
+      ImGui::TreePop();
+    }
+  }
+
   void texture_list()
   {
     if(ImGui::TreeNode("Textures"))
@@ -343,6 +356,7 @@ public:
     scene_tree(sc);
 
     shader_list();
+    image_list();
     texture_list();
   }
 

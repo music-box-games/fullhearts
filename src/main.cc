@@ -11,15 +11,33 @@
 
 #include <iostream>
 #include <unordered_set>
+#include <exception>
 
 #include <args.hpp>
 #include <engine.hpp>
 #include <tests.hpp>
 #include <utils.hpp>
 
-//#define CATCH
+#define CATCH
 
 namespace we = ::waifuengine;
+    std::exception_ptr eptr;
+
+    auto handle_eptr = [](std::exception_ptr e) -> void
+    {
+      try
+      {
+        if(e)
+        {
+          std::rethrow_exception(e);
+        }
+      }
+      catch(const std::exception& e)
+      {
+        we::utils::notify(we::utils::notification_type::mb_ok, "Exception", e.what());
+        std::exit(-3);
+      }  
+    };
 
 int main(int argc, char ** argv)
 {
@@ -45,11 +63,24 @@ int main(int argc, char ** argv)
     return 0;
   }
   #ifdef CATCH
+  catch(std::runtime_error const& r)
+  {
+    we::utils::notify(we::utils::notification_type::mb_ok, "Runtime Error", r.what());
+    return -2;
+  }
   catch(const std::exception& ex)
   {
    // notify
    we::utils::notify(we::utils::notification_type::mb_ok, "Uncaught Exception", ex.what());
    return -1;
   }
-  #endif
+
+    catch(...)
+    {
+      eptr = std::current_exception();
+    }
+    handle_eptr(eptr);
+  
 }
+  #endif
+

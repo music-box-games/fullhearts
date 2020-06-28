@@ -367,6 +367,11 @@ void shader::set_float_4(std::string const& name, float value0, float value1, fl
   glUniform4f(glGetUniformLocation(program_id, name.c_str()), value0, value1, value2, value3);
 }
 
+int shader::get_attribute(std::string const& name)
+{
+  return glGetAttribLocation(program_id, name.c_str());
+}
+
 } // namespace shaders
 } // namespace graphics
 } // namespace waifuengine

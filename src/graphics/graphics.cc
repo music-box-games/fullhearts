@@ -38,7 +38,7 @@ namespace graphics
     }
     // load shaders
     we::graphics::shaders::load_shaders();
-    we::graphics::textures::load_textures();
+    we::graphics::textures::load_images();
   }
 
   void shutdown()
