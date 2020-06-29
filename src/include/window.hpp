@@ -43,6 +43,8 @@ namespace waifuengine
       float get_width() const;
       float get_height() const;
 
+      static void apply_imgui_restriction(bool set);
+
     private:
       friend std::shared_ptr<window> create_window(std::string, int, int);
 
@@ -52,6 +54,8 @@ namespace waifuengine
       std::string title;
       int width;
       int height;
+
+      static bool imgui_restriction;
 
       std::deque<std::pair<int, int>> queued_inputs;
     };

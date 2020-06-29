@@ -6,11 +6,41 @@ namespace waifuengine
 {
   namespace graphics
   {
-    sprite::sprite() {}
+    sprite::sprite(std::string const& tex_name) : components::component<sprite>()
+    {
+      tex = textures::get_texture(tex_name).value();
+    }
     sprite::~sprite() {}
 
-    void sprite::update(float) {}
-    void sprite::draw() const {}
+    void sprite::update(float dt)
+    {
+      trans.update(dt);
+      tex->update(dt);
+    }
+    void sprite::draw() const
+    {
+      tex->draw(trans);
+    }
+
+    void sprite::set_texture(std::string const& name)
+    {
+      tex = textures::get_texture(name).value();
+    }
+
+    void sprite::rotate(float degrees)
+    {
+      trans.rotate(degrees);
+    }
+
+    void sprite::translate(glm::vec2 d)
+    {
+      trans.translate(d);
+    }
+
+    void sprite::scale(glm::vec2 s)
+    {
+      trans.scale(s);
+    }
   }
 }
 

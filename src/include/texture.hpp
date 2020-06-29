@@ -11,6 +11,8 @@
 #include "image.hpp"
 #include "shader.hpp"
 #include "gameobject.hpp"
+#include "texture.hpp"
+#include "transform.hpp"
 
 namespace waifuengine
 {
@@ -46,8 +48,11 @@ namespace waifuengine
         texture(imageptr image, std::string const& name, unsigned int id, std::string shader_name);
         ~texture();
 
-        void draw() const;
+        void draw(transform t = transform()) const;
         void update(float dt);
+        void set_transform();
+        
+
       };
 
       using textureptr = std::shared_ptr<texture>;

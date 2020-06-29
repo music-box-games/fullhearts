@@ -146,5 +146,20 @@ void gameobject::load(std::shared_ptr<gameobject> obj, std::string name)
   arch >> obj;
 }
 
+void gameobject::rotate(float)
+{
+
+}
+
+void gameobject::translate(glm::vec2)
+{
+
+}
+
+void gameobject::scale(glm::vec2)
+{
+  
+}
+
 } // namespace object_management
 } // namespace waifuengine

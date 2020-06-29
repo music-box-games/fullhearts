@@ -1,6 +1,9 @@
 #include <unordered_map>
 #include <algorithm>
 #include <SOIL2/SOIL2.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "texture.hpp"
 #include "log.hpp"
@@ -138,10 +141,6 @@ namespace waifuengine
         glEnableVertexAttribArray(position_attribute);
         glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
 
-        //int color_attribute = shd->get_attribute("color");
-        //glEnableVertexAttribArray(color_attribute);
-        //glVertexAttribPointer(color_attribute, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(2 * sizeof(float)));
-
         int tex_attribute = shd->get_attribute("texcoord");
         glEnableVertexAttribArray(tex_attribute);
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
@@ -167,7 +166,7 @@ namespace waifuengine
       }
 
 #define TUNIT(x) (GL_TEXTURE0 + x)
-      void texture::draw() const
+      void texture::draw(transform t) const
       {
         glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -180,15 +179,15 @@ namespace waifuengine
         glEnableVertexAttribArray(position_attribute);
         glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
 
-        //int color_attribute = glGetAttribLocation(shd->get_id(), "color");
-        //glEnableVertexAttribArray(color_attribute);
-        //glVertexAttribPointer(color_attribute, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(2 * sizeof(float)));
-
         int tex_attribute = glGetAttribLocation(shd->get_id(), "texcoord");
         glEnableVertexAttribArray(tex_attribute);
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
 
+        int transform_attribute = glGetUniformLocation(shd->get_id(), "transform");
+        glm::vec4 result = (*(t.data())) * glm::vec4(1.0, 0.0, 0.0, 1.0f);
+
         shd->use();
+        glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(t.data())));
 
         glDrawElements(GL_TRIANGLES, elements.size(), GL_UNSIGNED_INT, 0);
       }

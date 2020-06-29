@@ -11,8 +11,11 @@
 
 #include <fstream>
 
+#include <boost/math/constants/constants.hpp>
+
 #include <utils.hpp>
 #include <log.hpp>
+
 
 namespace we = ::waifuengine;
 
@@ -55,6 +58,16 @@ namespace waifuengine
     int str_to_int(std::string s)
     {
       return std::stoi(s);
+    }
+
+    float degrees_to_radians(float d)
+    {
+      return d * (boost::math::constants::pi<float>() / 180.0f);
+    }
+
+    float radians_to_degrees(float r)
+    {
+      return r * (180.0f / boost::math::constants::pi<float>());
     }
   }
 }

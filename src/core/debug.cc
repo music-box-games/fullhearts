@@ -22,6 +22,7 @@
 #include "texture.hpp"
 #include "events.hpp"
 #include "event_manager.hpp"
+#include "sprite.hpp"
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
@@ -68,12 +69,66 @@ private:
     }
   }
 
+  template<class Comp>
+  void component_tree_t(Comp *, std::string name);
+
+  template<>
+  void component_tree_t(we::graphics::sprite * s, std::string name)
+  {
+    if(s)
+    {
+      if(ImGui::TreeNode(name.c_str()))
+      {
+        float rot = s->trans.rot_deg;
+        if(ImGui::DragFloat("Rotation", &rot, 0.1f))
+        {
+          s->rotate(rot);
+        }
+        float trans_x = s->trans.pos_[0];
+        float trans_y = s->trans.pos_[1];
+        if(ImGui::DragFloat("Translation X", &trans_x, 0.001f, -10.0f, 10.0f))
+        {
+          s->translate(glm::vec2(trans_x, trans_y));
+        }
+        if(ImGui::DragFloat("Translation Y", &trans_y, 0.001f, -10.0f, 10.0f))
+        {
+          s->translate(glm::vec2(trans_x, trans_y));
+        }
+        float scale_x = s->trans.scale_[0];
+        float scale_y = s->trans.scale_[1];
+        if(ImGui::DragFloat("Scale X", &scale_x, 0.01f))
+        {
+          s->scale(glm::vec2(scale_x, scale_y));
+        }
+        if(ImGui::DragFloat("Scale Y", &scale_y, 0.01f))
+        {
+          s->scale(glm::vec2(scale_x, scale_y));
+        }
+        ImGui::TreePop();
+      }
+    }
+  }
+
+  void component_tree(std::pair<std::string const, std::shared_ptr<we::components::_impl::_base_component>> c)
+  {
+    we::graphics::sprite * sp = dynamic_cast<we::graphics::sprite *>(c.second.get());
+    if(sp)
+    {
+      component_tree_t(sp, c.first);
+    }
+  }
+
   void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>> &obj, std::shared_ptr<we::object_management::space> sp)
   {
     if (obj.second.use_count())
     {
       if (ImGui::TreeNode(obj.first.c_str()))
       {
+        auto& comps = obj.second->components_;
+        for(auto c : comps)
+        {
+          component_tree(c);
+        }
         ImGui::TreePop();
       }
     }
@@ -399,6 +454,8 @@ void shutdown_imgui()
 void toggle_imgui_window()
 {
   show_imgui_window = !show_imgui_window;
+  we::graphics::window::apply_imgui_restriction(show_imgui_window);
+
 }
 
 void render_imgui()

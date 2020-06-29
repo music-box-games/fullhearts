@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <memory>
 #include <mutex>
+#include <glm/glm.hpp>
 
 #include <dummy.hpp>
 #include <serialization.hpp>
@@ -25,6 +26,7 @@
 #include <boost/serialization/shared_ptr.hpp>
 
 #include <fs_util.hpp>
+#include "debug.hpp"
 
 namespace waifuengine
 {
@@ -47,7 +49,7 @@ namespace waifuengine
             bool disabled_;
         private:         
             using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
-
+            friend class waifuengine::core::debug::imgui_listener;
             friend class boost::serialization::access;
             component_map components_;
 
@@ -74,6 +76,16 @@ namespace waifuengine
                 ptr->parent = this;
                 components_[_CType::NAME] = ptr; // TODO: handle multiple of one component
                 return ptr;
+            }
+
+            template<class _CType, class ... Types>
+            std::shared_ptr<_CType> add_component_v(Types ... args)
+            {
+              std::scoped_lock lock(lock_);
+              auto ptr = std::shared_ptr<_CType>(new _CType(args...));
+              ptr->parent = this;
+              components_[_CType::NAME] = ptr;
+              return ptr;
             }
 
             template<class _CType>
@@ -128,6 +140,13 @@ namespace waifuengine
             static std::unordered_map<std::string, fs::path>& get_object_list();
 
             static void update_object_list();
+
+            // rotates all components with a transform
+            void rotate(float degrees);
+            // translates all components with a transform
+            void translate(glm::vec2 dist);
+            // scales all comopnents with a transform
+            void scale(glm::vec2 s);
         };
         using objectptr = std::shared_ptr<gameobject>;
     }

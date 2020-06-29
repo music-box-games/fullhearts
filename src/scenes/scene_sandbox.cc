@@ -2,6 +2,7 @@
 #include "scenemanager.hpp"
 #include "input_listener.hpp"
 #include "texture.hpp"
+#include "sprite.hpp"
 
 namespace we = ::waifuengine;
 
@@ -13,11 +14,14 @@ namespace waifuengine
     std::string triangle1_name = "test_triangle1";
     std::string rect0_name = "test_rectangle0";
     std::string textureobj0_name = "test_textureobj0";
+    std::string spriteobj0_name = "test_spriteobj0";
 
     std::string shader0_name = "testshader0";
     std::string shader1_name = "testshader1";
     std::string rect0_shadername = "rectangle_primative_shader";
     std::string textureshader0_name = "default_texture_shader";
+
+    std::string sprite0_name = "wallpaper";
 
     static void enable_only(std::string name)
     {
@@ -53,6 +57,9 @@ namespace waifuengine
           case we::graphics::input::key::three:
             enable_only(textureobj0_name);
             break;
+          case we::graphics::input::key::four:
+            enable_only(spriteobj0_name);
+            break;
           }
         }
       };
@@ -83,6 +90,9 @@ namespace waifuengine
       (dynamic_cast<we::graphics::primatives::sized_rectangle *>((obj2.get())))->set_shader(rect0_shadername);
 
       auto obj3 = sp->add_object_t<we::graphics::textures::test::texture_test_object>(textureobj0_name, "wallpaper", textureshader0_name);
+
+      auto obj4 = sp->add_object(spriteobj0_name);
+      auto obj4_s = obj4->add_component_v<we::graphics::sprite>(sprite0_name);
 
       sp->disable_all();
       obj1->disable(false);

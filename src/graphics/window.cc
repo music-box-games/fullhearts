@@ -24,6 +24,8 @@ static std::unordered_map<we::graphics::window_id_type, std::shared_ptr<we::grap
 static std::unordered_map<we::graphics::window::window_ptr, std::shared_ptr<we::graphics::window>> underlying_windows;
 static we::graphics::window_id_type last_window = we::graphics::window_id_type{};
 
+
+
 template<class id_type>
 id_type get_fresh_id()
 {
@@ -42,6 +44,8 @@ static void key_callback(window::window_ptr window, int key, int scancode, int a
 }
 
 } // namespace impl
+
+bool window::imgui_restriction = false;
 
 void framebuffer_size_callback(window::window_ptr w, int width, int height)
 {
@@ -113,6 +117,11 @@ void window::present() const
   glfwSwapBuffers(data);
 }
 
+void window::apply_imgui_restriction(bool set)
+{
+  imgui_restriction = set;
+}
+
 void window::process_input()
 {
   for(auto& pair : queued_inputs)
@@ -121,7 +130,17 @@ void window::process_input()
     e.k = input::impl::keyset[pair.first];
     e.a = input::impl::actionset[pair.second];
     e.w = id;
-    we::events::handle(&e);
+    if(imgui_restriction)
+    {
+    if(e.k == input::key::grave_accent)
+    {
+      we::events::handle(&e);
+    }
+    }
+    else
+    {
+      we::events::handle(&e);
+    }
   }
   queued_inputs.clear();
 }

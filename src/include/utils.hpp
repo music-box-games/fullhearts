@@ -50,6 +50,9 @@ namespace waifuengine
     {
       return static_cast<std::underlying_type<T>>(obj);
     }
+
+    float degrees_to_radians(float d);
+    float radians_to_degrees(float r);
   }
 }
 
