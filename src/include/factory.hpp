@@ -2,7 +2,6 @@
 #define _WE_FACTORY_HPP_
 
 #include <space.hpp>
-#include <background_factory.hpp>
 
 namespace waifuengine
 {

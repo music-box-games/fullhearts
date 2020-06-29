@@ -16,6 +16,7 @@
 #include <component.hpp>
 #include <dummy.hpp>
 #include <utils.hpp>
+#include "log.hpp"
 
 namespace waifuengine
 {
@@ -41,10 +42,14 @@ void gameobject::update_object_list()
   }
 }
 
-gameobject::gameobject(std::string n) : name_(n), disabled_(false) {}
+gameobject::gameobject(std::string n) : name_(n), disabled_(false) 
+{
+  waifuengine::log::LOGTRACE(std::string("Constructing gameobject: " + n));
+}
 gameobject::~gameobject()
 {
   std::scoped_lock lock(lock_);
+  waifuengine::log::LOGTRACE(std::string("Destructing gameobject: " + name_));
   components_.clear();
 }
 

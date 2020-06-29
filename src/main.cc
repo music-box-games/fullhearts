@@ -18,7 +18,7 @@
 #include <tests.hpp>
 #include <utils.hpp>
 
-#define CATCH
+//#define CATCH
 
 namespace we = ::waifuengine;
     std::exception_ptr eptr;
@@ -81,6 +81,6 @@ int main(int argc, char ** argv)
     }
     handle_eptr(eptr);
   
-}
   #endif
+}
 

@@ -144,7 +144,7 @@ void engine::update()
 void engine::load_initial_scene()
 {
   we::log::trace("Loading inital scene");
-  we::scenes::build_sandbox_scene();
+  we::scenes::build_splashscreen_scene();
 }
 } // namespace core
 } // namespace waifuengine

@@ -48,13 +48,10 @@ namespace waifuengine
         }
         else
         {
-          // create texture if image exists
-          // return {} if image doesn't exist
-          if (impl::loaded_images.count(name))
-          {
-            return load_texture(name, "default_texture_shader");
-          }
+          get_image(name);
+          return load_texture(name, "default_texture_shader");
         }
+
         return {};
       }
 
@@ -64,7 +61,10 @@ namespace waifuengine
         {
           return impl::loaded_images.at(name);
         }
-        else return {};
+        else
+        {
+          return load_image(name);
+        }
       }
 
       void load_images()
@@ -77,10 +77,44 @@ namespace waifuengine
         }
       }
 
+      std::set<std::string> list_image_files()
+      {
+        std::string images_path = we::utils::get_exe_path() + "\\assets\\images";
+        std::vector<fs::path> paths = we::utils::recursive_list_files_in_folder(images_path);
+        std::set<std::string> names;
+        std::for_each(paths.begin(), paths.end(), [&names](fs::path const& p) -> void {
+          names.insert(we::utils::strip_filename(p));
+        });
+        return names;
+      }
+
+      std::unordered_map<std::string, fs::path> list_image_paths()
+      {
+        std::string images_path = we::utils::get_exe_path() + "\\assets\\images";
+        auto paths = we::utils::recursive_list_files_in_folder(images_path);
+        std::unordered_map<std::string, fs::path> p;
+        for(fs::path const& f : paths)
+        {
+          p[we::utils::strip_filename(f)] = f;
+        }
+        return p;
+      }
+
+      imageptr load_image(std::string const& name)
+      {
+        auto img_names = list_image_paths();
+        if(img_names.count(name))
+        {
+          impl::loaded_images[name] = std::shared_ptr<image>(new image(img_names[name]));
+          return impl::loaded_images.at(name);
+        }
+        return {};
+      }
+
       textureptr load_texture(std::string const& image_name, std::string const& shader_name)
       {
-        if (impl::loaded_textures.count(image_name)) return {};
-        std::shared_ptr<image> i = impl::loaded_images.at(image_name);
+        if (impl::loaded_textures.count(image_name)) return impl::loaded_textures.at(image_name);
+        std::shared_ptr<image> i = get_image(image_name).value();
         impl::loaded_textures[image_name] = std::make_shared<texture>(i, image_name, impl::loaded_textures.size(), shader_name);
         return impl::loaded_textures[image_name];
       }

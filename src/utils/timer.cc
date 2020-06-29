@@ -97,8 +97,7 @@ namespace waifuengine
             auto tm = sc::steady_clock::now();
             if (sc::duration_cast<sc::milliseconds>(tm - start_).count() >= limit_.count())
             {
-                on_trigger_();
-                if(!repeat_) { stop(); } else { restart(); }
+                complete();
             }
         }
 
@@ -109,8 +108,12 @@ namespace waifuengine
 
         void trigger_timer::complete()
         {
+          if(running_)
+          {
+            
             on_trigger_();
             if(!repeat_) { stop(); } else { restart(); }
+          }
         }
     }
 }

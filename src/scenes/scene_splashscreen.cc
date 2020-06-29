@@ -1,77 +1,31 @@
-/******************************************************************************/
-/*!
-\file   scene_splashscreen.cc
-\author Ryan Hanson
-\par    email: iovita\@musicboxgames.net
-\brief
-  Splashscreen on load
-
-*/
-/******************************************************************************/
-
-#include <scene_splashscreen.hpp>
-
-#include <spacemanager.hpp>
-#include <space.hpp>
-#include <gameobject.hpp>
-#include <component.hpp>
-#include <timer_manager.hpp>
-#include <timer.hpp>
-#include <engine.hpp>
-#include <event_manager.hpp>
-#include <scenemanager.hpp>
-#include <scenelist.hpp>
-#include <input.hpp>
+#include "scene_splashscreen.hpp"
+#include "scenemanager.hpp"
+#include "gameobject.hpp"
+#include "spacemanager.hpp"
+#include "space.hpp"
+#include "background.hpp"
+#include "sprite.hpp"
+#include "scenes.hpp"
+#include "transitions.hpp"
 
 namespace we = ::waifuengine;
 
 namespace waifuengine
 {
-namespace scenes
-{
-static void transition()
-{
-  //we::scenes::queue_load<scene_mainmenu>();
-}
-
-static we::utils::trigger_timer * transition_timer = nullptr;
-
-void scene_splashscreen::input_handler(we::events::event * ievent)
-{
-  we::graphics::input::input_event * e = dynamic_cast<we::graphics::input::input_event *>(ievent);
-  if(e->a == we::graphics::input::action::press)
+  namespace scenes
   {
-    if(transition_timer)
+
+    std::shared_ptr<scene> build_splashscreen_scene()
     {
-      transition_timer->complete();
+      auto scn = blank_scene("Splashscreen");
+      auto sp_manager = scn->get_manager();
+      sp_manager->build_default_spaces();
+      auto obj = graphics::background::add_background("splashscreen_bg", "wallpaper");
+      auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
+      sprt->scale(glm::vec2(2.0f, 2.0f));
+      graphics::transitions::add_transition(graphics::transitions::transition_list::fade);
+      
+      return scn;
     }
   }
 }
-
-scene_splashscreen::scene_splashscreen() : scene(std::string(NAME))
-{
-  // auto sp = manager.add_space("Background Space", we::object_management::space_order::BACKGROUND);
-  // manager.add_space("Character Space", we::object_management::space_order::CHARACTER);
-  // manager.add_space("FX Space", we::object_management::space_order::FX);
-  // manager.add_space("UI Space", we::object_management::space_order::UI);
-  // manager.add_space("Transition Space", we::object_management::space_order::TRANSITION);
-  // we::factory::background_factory::build_background("test background", "splash screen", sp);
-
-  // transition_timer = new we::utils::trigger_timer(false, std::chrono::milliseconds(6000), transition);
-  // transition_timer->start();
-  // we::utils::timers::add_timer("splashscreen end timer", transition_timer);
-
-  // hook input events for skipping screen
-  auto f = std::bind(&scene_splashscreen::input_handler, this, std::placeholders::_1);
-  we::events::subscribe<we::graphics::input::input_event>(this, f);
-}
-
-scene_splashscreen::~scene_splashscreen()
-{
-  we::events::unsubcribe<we::graphics::input::input_event>(this);
-  manager.clear();
-}
-} // namespace scenes
-} // namespace waifuengine
-
-BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::scene_splashscreen);

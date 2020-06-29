@@ -49,7 +49,7 @@ namespace waifuengine
             void update();
 
             void add_timer(std::string name, trigger_timer * timer);
-            void remote_timer(std::string name);
+            void remove_timer(std::string name);
         }
     }
 }

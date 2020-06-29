@@ -47,13 +47,13 @@ namespace waifuengine
         {
         protected:
             bool disabled_;
+            std::string name_;
         private:         
             using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
             friend class waifuengine::core::debug::imgui_listener;
             friend class boost::serialization::access;
             component_map components_;
 
-            std::string name_;
             std::string error_;
             std::mutex lock_;
 

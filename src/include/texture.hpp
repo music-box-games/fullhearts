@@ -6,6 +6,7 @@
 #include <memory>
 #include <optional>
 #include <array>
+#include <set>
 
 #include "filesystem.hpp"
 #include "image.hpp"
@@ -59,11 +60,14 @@ namespace waifuengine
 
       std::vector<std::string> list_loaded_textures();
       std::vector<std::string> list_loaded_images();
+      std::set<std::string> list_image_files();
+      std::unordered_map<std::string, fs::path> list_image_paths();
       std::optional<std::shared_ptr<texture>> get_texture(std::string const& name);
       std::optional<std::shared_ptr<image>> get_image(std::string const& name);
       void load_textures();
       textureptr load_texture(std::string const& image_name, std::string const& shader_name);
       void load_images();
+      imageptr load_image(std::string const& name);
 
       namespace test
       {

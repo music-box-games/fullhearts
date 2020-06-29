@@ -63,6 +63,13 @@ namespace waifuengine
               ss << "[DEBUG][" << file << ':' << line << "] " << message;
               ::waifuengine::log::debug(ss.str());
             }
+
+            void trace_helper(std::string message, std::string file, int line)
+            {
+              std::stringstream ss;
+              ss << "[TRACE][" << file << ':' << line << "] " << message;
+              ::waifuengine::log::trace(ss.str());
+            }
         }
 
         void init(trace_level l)
