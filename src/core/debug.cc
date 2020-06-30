@@ -52,7 +52,6 @@ public:
 
 private:
 
-
   static const std::size_t HISTOGRAM_LEN = 300;
   std::deque<float> fps_histogram;
 
@@ -69,6 +68,73 @@ private:
     }
   }
 
+  void window_tree(we::graphics::window_map const& ws)
+  {
+    if(ImGui::TreeNode("Windows"))
+    {
+      for(auto w : ws)
+      {
+        if(ImGui::TreeNode(w.second->title.c_str()))
+        {
+          ImGui::Text("Window Width: %f", w.second->get_width());
+          ImGui::Text("Window Height: %f", w.second->get_height());
+          ImGui::TreePop();
+        }
+      }
+      ImGui::TreePop();
+    }
+  }
+
+  void texture_tree(we::graphics::textures::textureptr const& t)
+  {
+    if(ImGui::TreeNode("Texture"))
+    {
+      ImGui::Text("Texture Unit: %d", t->unit_id);
+      ImGui::Text("glTexture Name: %d", t->txtr);
+      ImGui::Text("Name: %s", t->name.c_str());
+      ImGui::Text("Texture Width: %d", t->width);
+      ImGui::Text("Texture Height: %d", t->height);
+
+      ImGui::TreePop();
+    }
+  }
+
+  void transform_tree(we::graphics::transform *t)
+  {
+    if (t)
+    {
+      if (ImGui::TreeNode("Transform"))
+      {
+        float rot = t->rot_deg;
+        if (ImGui::DragFloat("Rotation", &rot, 0.1f))
+        {
+          t->rotate(rot);
+        }
+        float trans_x = t->pos_[0];
+        float trans_y = t->pos_[1];
+        if (ImGui::DragFloat("Translation X", &trans_x, 0.001f, -10.0f, 10.0f))
+        {
+          t->translate(glm::vec2(trans_x, trans_y));
+        }
+        if (ImGui::DragFloat("Translation Y", &trans_y, 0.001f, -10.0f, 10.0f))
+        {
+          t->translate(glm::vec2(trans_x, trans_y));
+        }
+        float scale_x = t->scale_[0];
+        float scale_y = t->scale_[1];
+        if (ImGui::DragFloat("Scale X", &scale_x, 0.01f))
+        {
+          t->scale(glm::vec2(scale_x, scale_y));
+        }
+        if (ImGui::DragFloat("Scale Y", &scale_y, 0.01f))
+        {
+          t->scale(glm::vec2(scale_x, scale_y));
+        }
+        ImGui::TreePop();
+      }
+    }
+  }
+
   template<class Comp>
   void component_tree_t(Comp *, std::string name);
 
@@ -79,31 +145,8 @@ private:
     {
       if(ImGui::TreeNode(name.c_str()))
       {
-        float rot = s->trans.rot_deg;
-        if(ImGui::DragFloat("Rotation", &rot, 0.1f))
-        {
-          s->rotate(rot);
-        }
-        float trans_x = s->trans.pos_[0];
-        float trans_y = s->trans.pos_[1];
-        if(ImGui::DragFloat("Translation X", &trans_x, 0.001f, -10.0f, 10.0f))
-        {
-          s->translate(glm::vec2(trans_x, trans_y));
-        }
-        if(ImGui::DragFloat("Translation Y", &trans_y, 0.001f, -10.0f, 10.0f))
-        {
-          s->translate(glm::vec2(trans_x, trans_y));
-        }
-        float scale_x = s->trans.scale_[0];
-        float scale_y = s->trans.scale_[1];
-        if(ImGui::DragFloat("Scale X", &scale_x, 0.01f))
-        {
-          s->scale(glm::vec2(scale_x, scale_y));
-        }
-        if(ImGui::DragFloat("Scale Y", &scale_y, 0.01f))
-        {
-          s->scale(glm::vec2(scale_x, scale_y));
-        }
+        texture_tree(s->tex);
+        transform_tree(&s->trans);
         ImGui::TreePop();
       }
     }
@@ -404,6 +447,9 @@ public:
     ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
     // console
     ImGui::Checkbox("Show Console", &use_console);
+
+    // window info
+    window_tree(we::graphics::get_window_list());
 
     // make a tree for each scene present in the attached scene_manager
     // right now there's always one

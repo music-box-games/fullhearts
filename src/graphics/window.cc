@@ -20,7 +20,7 @@ namespace graphics
 namespace impl
 {
 static std::set<we::graphics::window_id_type> marked_for_close;
-static std::unordered_map<we::graphics::window_id_type, std::shared_ptr<we::graphics::window>> windows;
+static window_map windows;
 static std::unordered_map<we::graphics::window::window_ptr, std::shared_ptr<we::graphics::window>> underlying_windows;
 static we::graphics::window_id_type last_window = we::graphics::window_id_type{};
 
@@ -51,6 +51,7 @@ void framebuffer_size_callback(window::window_ptr w, int width, int height)
 {
   // TODO: maybe a flag to switch between using .at and [] and also exception handling
   impl::underlying_windows.at(w)->resize(width, height);
+
 }
 
 void window::queue_input(int key, int action)
@@ -76,6 +77,8 @@ window::window(std::string t, int w, int h) : title(t), width(w), height(h)
     std::cerr << "Failed to open GLFW window" << std::endl;
   }
   id = impl::get_fresh_id<window_id_type>();
+  glfwSetWindowSizeCallback(data, framebuffer_size_callback);
+  
 }
 
 window::window(std::string title, window::window_ptr w)
@@ -213,7 +216,7 @@ window::operator bool() const
 
 std::shared_ptr<window> get_current_window() 
 {
-  return {};
+  return (*impl::windows.begin()).second;
 }
 
 std::shared_ptr<window> get_window_by_id(window_id_type id)
@@ -267,6 +270,11 @@ void close_all_windows()
 {
   impl::underlying_windows.clear();
   impl::windows.clear();
+}
+
+window_map const& get_window_list()
+{
+  return impl::windows;
 }
 
 

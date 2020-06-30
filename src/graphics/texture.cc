@@ -135,13 +135,37 @@ namespace waifuengine
 
         glGenBuffers(1, &vbo);
 
+        auto wind = get_current_window();
+
+        float top_left_x =     we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) -1.0f);
+        float top_left_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height()));
+        float top_right_x = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width()));
+        float top_right_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height()));
+        float bottom_right_x = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width()));
+        float bottom_right_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f);
+        float bottom_left_x = we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f);
+        float bottom_left_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f);
+
+        glm::vec2 top_left = {top_left_x, top_left_y};
+        glm::vec2 top_right = {top_right_x, top_right_y};
+        glm::vec2 bottom_right = {bottom_right_x, bottom_right_y};
+        glm::vec2 bottom_left = {bottom_left_x, bottom_left_y};
+
         vert_array v = {
-          // position     // color          // tex coord
-          -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,  0.0f, 0.0f, // top left
-           0.5f,  0.5f,    0.0f, 1.0f, 0.0f,  1.0f, 0.0f,  // top right
-           0.5f, -0.5f,    0.0f, 0.0f, 1.0f,  1.0f, 1.0f, // bottom right
-          -0.5f, -0.5f,    1.0f, 1.0f, 1.0f,  0.0f, 1.0f // bottom left
+          // position                           // color              // tex coord
+           top_left[0],  top_left[1],           1.0f, 0.0f, 0.0f,  0.0f, 0.0f, // top left
+           top_right[0], top_right[1],          0.0f, 1.0f, 0.0f,  1.0f, 0.0f,  // top right
+           bottom_right[0], bottom_right[1],    0.0f, 0.0f, 1.0f,  1.0f, 1.0f, // bottom right
+           bottom_left[0], bottom_left[1],      1.0f, 1.0f, 1.0f,  0.0f, 1.0f // bottom left
         };
+
+        // vert_array v = {
+        //   // position                // color              // tex coord
+        //    -1.0f,  1.0f,           1.0f, 0.0f, 0.0f,   0.0f, 0.0f, // top left
+        //    1.0f, 1.0f,             0.0f, 1.0f, 0.0f,   1.0f, 0.0f,  // top right
+        //    1.0f, -1.0f,            0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // bottom right
+        //    -1.0f, -1.0f,           1.0f, 1.0f, 1.0f,   0.0f, 1.0f // bottom left
+        // };
         vertices = v;
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -197,6 +221,11 @@ namespace waifuengine
         glDeleteBuffers(1, &vbo);
         glDeleteBuffers(1, &ebo);
         glDeleteVertexArrays(1, &vao);
+      }
+
+      glm::vec2 texture::texture_dimensions() const
+      {
+        return {width, height};
       }
 
 #define TUNIT(x) (GL_TEXTURE0 + x)

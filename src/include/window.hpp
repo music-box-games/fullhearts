@@ -10,6 +10,8 @@
 
 #include <settings.hpp>
 
+#include "debug.hpp"
+
 namespace waifuengine
 {
   namespace graphics
@@ -47,6 +49,7 @@ namespace waifuengine
 
     private:
       friend std::shared_ptr<window> create_window(std::string, int, int);
+      friend class waifuengine::core::debug::imgui_listener;
 
       window_ptr data;
       window_id_type id;
@@ -59,11 +62,14 @@ namespace waifuengine
 
       std::deque<std::pair<int, int>> queued_inputs;
     };
+    using window_map = std::unordered_map<waifuengine::graphics::window_id_type, std::shared_ptr<waifuengine::graphics::window>>;
 
 
     std::shared_ptr<window> get_current_window();
     std::shared_ptr<window> get_window_by_id(window_id_type id);
     std::shared_ptr<window> get_last_window_created();
+
+    window_map const& get_window_list();
 
     std::shared_ptr<window> create_window(std::string title, int width = waifuengine::core::settings::read_t<int>("window_width"), int height = waifuengine::core::settings::read_t<int>("window_height"));
 

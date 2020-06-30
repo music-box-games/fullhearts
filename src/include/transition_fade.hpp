@@ -18,7 +18,7 @@ namespace waifuengine
       private:
         void time_up();
       public:
-        fade(std::string const& name);
+        fade(std::string const& name, int ms);
         ~fade() = default;
       };
     }

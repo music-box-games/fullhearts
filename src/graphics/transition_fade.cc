@@ -19,7 +19,7 @@ namespace waifuengine
         auto scn = we::scenes::current_scene();
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
-        auto obj = tr_sp->add_object_t<fade>("fade_transition");
+        auto obj = tr_sp->add_object_t<fade>("fade_transition", 3000);
         return obj;
       }
 

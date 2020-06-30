@@ -1,4 +1,5 @@
 #include "sprite.hpp"
+#include "window.hpp"
 
 namespace we = ::waifuengine;
 
@@ -40,6 +41,15 @@ namespace waifuengine
     void sprite::scale(glm::vec2 s)
     {
       trans.scale(s);
+    }
+
+    void sprite::scale_to_window()
+    {
+      auto w = get_current_window();
+      auto d = tex->texture_dimensions();
+      glm::vec2 w_d{w->get_width(), w->get_height()};
+      glm::vec2 s{w_d.x / d.x, w_d.y / d.y};
+      scale(s);
     }
   }
 }

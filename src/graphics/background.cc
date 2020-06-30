@@ -23,6 +23,7 @@ namespace waifuengine
       auto sp = sp_manager->get_space("Background Space");
       auto obj = sp->add_object(obj_name);
       obj->add_component_v<sprite>(sprite_name);
+      
       return obj;
     }
   }

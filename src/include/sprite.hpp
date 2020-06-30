@@ -41,6 +41,8 @@ namespace waifuengine
       void translate(glm::vec2 dist);
       void scale(glm::vec2 s);
 
+      void scale_to_window();
+
       
     };
     typedef std::shared_ptr<sprite> spriteptr;

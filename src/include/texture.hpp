@@ -7,6 +7,7 @@
 #include <optional>
 #include <array>
 #include <set>
+#include <glm/glm.hpp>
 
 #include "filesystem.hpp"
 #include "image.hpp"
@@ -14,6 +15,7 @@
 #include "gameobject.hpp"
 #include "texture.hpp"
 #include "transform.hpp"
+#include "debug.hpp"
 
 namespace waifuengine
 {
@@ -24,6 +26,8 @@ namespace waifuengine
       class texture
       {
       private:
+        friend class waifuengine::core::debug::imgui_listener;
+
         static constexpr int VERT_COUNT = 28;
         static constexpr int ELEMENT_COUNT = 6;
 
@@ -51,9 +55,9 @@ namespace waifuengine
 
         void draw(transform t = transform()) const;
         void update(float dt);
-        void set_transform();
-        
+        void set_transform();   
 
+        glm::vec2 texture_dimensions() const;  
       };
 
       using textureptr = std::shared_ptr<texture>;

@@ -22,9 +22,7 @@ namespace waifuengine
       sp_manager->build_default_spaces();
       auto obj = graphics::background::add_background("splashscreen_bg", "wallpaper");
       auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
-      sprt->scale(glm::vec2(2.0f, 2.0f));
-      graphics::transitions::add_transition(graphics::transitions::transition_list::fade);
-      
+      //sprt->scale_to_window();      
       return scn;
     }
   }
