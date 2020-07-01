@@ -33,6 +33,7 @@ namespace waifuengine
       auto obj = graphics::background::add_background("splashscreen_bg", "wallpaper");
       auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
       sprt->scale_to_window();   
+      start_fade_in();
       return scn;
     }
   }

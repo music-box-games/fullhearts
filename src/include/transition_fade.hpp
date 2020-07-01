@@ -1,6 +1,8 @@
 #ifndef _WE_TRANSITION_FADE_HPP_
 #define _WE_TRANSITION_FADE_HPP_
 
+#include <vector>
+
 #include "gameobject.hpp"
 #include "timer_manager.hpp"
 #include "timer.hpp"
@@ -13,6 +15,7 @@ namespace waifuengine
   {
     namespace transitions
     {
+      enum class transition_list;
       class fade_in : public primatives::sized_rectangle
       {
       private:
