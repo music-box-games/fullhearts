@@ -191,7 +191,7 @@ void vertex_shader::compile()
     glGetShaderInfoLog(shader_id, 512, NULL, infolog);
     // ERROR HERE
     we::log::LOGERROR(infolog);
-    throw std::exception((const char*)infolog);
+    throw std::runtime_error((const char*)infolog);
   }
 }
 
@@ -238,7 +238,7 @@ void fragment_shader::compile()
     glGetShaderInfoLog(shader_id, 512, NULL, infolog);
     // ERROR HERE
     we::log::LOGERROR(infolog);
-    throw std::exception((const char*)infolog);
+    throw std::runtime_error((const char*)infolog);
   }
 }
 
@@ -270,7 +270,7 @@ void shader::link(vertex_shader& v, fragment_shader& f)
     char infolog[512];
     glGetProgramInfoLog(program_id, 512, NULL, infolog);
     // ERROR
-    throw std::exception((const char*)infolog);
+    throw std::runtime_error((const char*)infolog);
   }
 }
 
@@ -288,7 +288,7 @@ void shader::link(vertex_shader&& v, fragment_shader&& f)
     glGetProgramInfoLog(program_id, 512, NULL, infolog);
     // ERROR
     we::log::LOGERROR(infolog);
-    throw std::exception((const char*)infolog);
+    throw std::runtime_error((const char*)infolog);
   }
 }
 

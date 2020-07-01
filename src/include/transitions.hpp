@@ -1,5 +1,5 @@
 #ifndef _WE_TRANSITIONS_HPP_
-#define _WE_TRANSISTIONS_HPP_
+#define _WE_TRANSITIONS_HPP_
 
 #include "gameobject.hpp"
 #include "transition_fade.hpp"

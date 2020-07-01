@@ -137,7 +137,7 @@ namespace waifuengine
       std::vector<fs::path> list;
       for(auto const& f : fs::directory_iterator(path))
       {
-        if (!f.is_directory())
+        if (!fs::is_directory(f.path()))
         {
           list.push_back(f.path());
         }
@@ -150,7 +150,7 @@ namespace waifuengine
       std::vector<fs::path> list;
       for(auto const& f : fs::recursive_directory_iterator(path))
       {
-        if(!f.is_directory())
+        if(!fs::is_directory(f.path()))
         {
           list.push_back(f.path());
         }

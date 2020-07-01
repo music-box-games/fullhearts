@@ -32,7 +32,10 @@ void timer_manager::add_timer(std::string name, trigger_timer *timer)
 
 void timer_manager::remove_timer(std::string name)
 {
+  if (timers_.count(name))
+  {
     timers_.erase(name);
+  }
 }
 
 std::shared_ptr<trigger_timer> timer_manager::emplace_timer(std::string name, bool repeat)
@@ -111,17 +114,28 @@ void shutdown()
 
 void add_timer(std::string name, trigger_timer *timer)
 {
+  if (impl::man)
+  {
     impl::man->add_timer(name, timer);
+  }
+
 }
 
 void remove_timer(std::string name)
 {
+  if (impl::man)
+  {
     impl::man->remove_timer(name);
+  }
 }
 
 void update()
 {
+  if (impl::man)
+  {
     impl::man->update();
+  }
+
 }
 } // namespace timers
 
