@@ -31,9 +31,9 @@ namespace waifuengine
         static trace_level tlevel =
 #ifdef DEBUG
           trace_level::debug;
-#endif
+#else
         trace_level::errors;
-
+#endif
         namespace _impl
         {
             void error_helper(std::string message, std::string file, int line)
