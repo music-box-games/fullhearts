@@ -4,6 +4,8 @@
 #include "gameobject.hpp"
 #include "timer_manager.hpp"
 #include "timer.hpp"
+#include "graphics_primatives.hpp"
+#include "machinegun_call.hpp"
 
 namespace waifuengine
 {
@@ -11,16 +13,36 @@ namespace waifuengine
   {
     namespace transitions
     {
-      object_management::objectptr build_transition_fade();
-
-      class fade : public object_management::gameobject
+      class fade_in : public primatives::sized_rectangle
       {
       private:
-        void time_up();
+        void timeup();
+        void subtract_alpha(float a);
+        utils::machinegun_call mg;
+        std::vector<transition_list> queued_transitions;
+
       public:
-        fade(std::string const& name, int ms);
-        ~fade() = default;
+        fade_in(std::string const& name, float ms);
+        ~fade_in() = default;
+
+        virtual void update(float dt) override;
+
+        fade_in& add_after(transition_list t);
       };
+      using fade_in_ptr = std::shared_ptr<fade_in>;
+
+      class fade_out : public primatives::sized_rectangle
+      {
+      private:
+        void timeup();
+      public:
+        fade_out(std::string const& name, int ms);
+        ~fade_out() = default;
+      };
+      using fade_out_ptr = std::shared_ptr<fade_out>;
+
+      fade_in_ptr build_transition_fadein();
+      fade_out_ptr build_transition_fadeout();
     }
   }
 }

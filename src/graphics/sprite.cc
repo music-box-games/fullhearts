@@ -45,6 +45,7 @@ namespace waifuengine
 
     void sprite::scale_to_window()
     {
+      // TODO maybe need to calc this differently
       auto w = get_current_window();
       auto d = tex->texture_dimensions();
       glm::vec2 w_d{w->get_width(), w->get_height()};

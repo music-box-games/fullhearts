@@ -12,7 +12,8 @@ namespace waifuengine
     {
       enum class transition_list
       {
-        fade,
+        fade_in,
+        fade_out,
       };
       object_management::objectptr add_transition(transition_list t);
 

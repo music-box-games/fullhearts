@@ -31,7 +31,7 @@ namespace waifuengine
         trans = glm::mat4(1.0f);
         trans = glm::scale(trans, glm::vec3(scale_, 1.0f));
         trans = glm::rotate(trans, glm::radians(rot_deg), glm::vec3(0.0f, 0.0f, 1.0f));
-        trans = glm::translate(trans, glm::vec3(pos_, 1.0f));
+        trans = glm::translate(trans, glm::vec3(pos_, 0.0f));
         dirty = false;
       }
     }
@@ -63,15 +63,13 @@ namespace waifuengine
 
     void transform::scale(glm::vec2 s)
     {
-      scale_[0] = s[0];
-      scale_[1] = s[1];
+      scale_ = s;
       dirty = true;
     }
 
     void transform::uniform_scale(float s)
     {
-      scale_[0] = s;
-      scale_[1] = s;
+      scale_ = { s, s };
       dirty = true;
     }
 

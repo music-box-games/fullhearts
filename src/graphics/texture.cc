@@ -137,14 +137,14 @@ namespace waifuengine
 
         auto wind = get_current_window();
 
-        float top_left_x =     we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) -1.0f);
-        float top_left_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height()));
-        float top_right_x = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width()));
-        float top_right_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height()));
-        float bottom_right_x = we::utils::clamp<float>(-1.0f, 1.0f, 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width()));
-        float bottom_right_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f);
-        float bottom_left_x = we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f);
-        float bottom_left_y = we::utils::clamp<float>(-1.0f, 1.0f, 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f);
+        float top_left_x =      0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) -1.0f;
+        float top_left_y =      0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
+        float top_right_x =     0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
+        float top_right_y =     0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
+        float bottom_right_x =  0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
+        float bottom_right_y =  0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
+        float bottom_left_x =   0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f;
+        float bottom_left_y =   0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
 
         glm::vec2 top_left = {top_left_x, top_left_y};
         glm::vec2 top_right = {top_right_x, top_right_y};
@@ -159,13 +159,6 @@ namespace waifuengine
            bottom_left[0], bottom_left[1],      1.0f, 1.0f, 1.0f,  0.0f, 1.0f // bottom left
         };
 
-        // vert_array v = {
-        //   // position                // color              // tex coord
-        //    -1.0f,  1.0f,           1.0f, 0.0f, 0.0f,   0.0f, 0.0f, // top left
-        //    1.0f, 1.0f,             0.0f, 1.0f, 0.0f,   1.0f, 0.0f,  // top right
-        //    1.0f, -1.0f,            0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // bottom right
-        //    -1.0f, -1.0f,           1.0f, 1.0f, 1.0f,   0.0f, 1.0f // bottom left
-        // };
         vertices = v;
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -214,6 +207,7 @@ namespace waifuengine
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
       }
 
+      
       texture::~texture()
       {
         // release texture

@@ -2,6 +2,7 @@
 #include "window.hpp"
 #include "shader.hpp"
 #include "num_utils.hpp"
+#include "log.hpp"
 
 namespace we = ::waifuengine;
 
@@ -150,58 +151,47 @@ namespace waifuengine
         }
       }
 
+      void sized_rectangle::set_alpha(float a)
+      {
+        alpha = we::utils::clamp<float>(0.f, 1.f, a);
+      }
+
+      float sized_rectangle::get_alpha() const
+      {
+        return alpha;
+      }
+
       void sized_rectangle::draw() const
       {
         if (!disabled_)
         {
-          static float vertices[20] = { 0.0f };
           int screen_width = we::core::settings::read_t<int>("window_width");
           int screen_height = we::core::settings::read_t<int>("window_height");
           float half_width = (width * screen_width) / 2.0f; // half rectangle width in pixels
           float half_height = (height  * screen_height) / 2.0f; // half rectangle height in pixels
 
-          float left_x = (screen_width * (center[0] + 0.5f)) - half_width; // left x value in pixels
-          float right_x = (screen_width * (center[0] + 0.5f)) + half_width; // right x value in pixels
-          float top_y = (screen_height * (center[1] + 0.5f)) + half_height; // top y value in pixels
-          float bottom_y = (screen_height * (center[1] + 0.5f)) - half_height; // bottom y value in pixels
+        float top_left_x =      center.x - half_width;
+        float top_left_y =      center.y + half_height;
+        float top_right_x =     center.x + half_width;
+        float top_right_y =     center.y + + half_height;
+        float bottom_right_x =  center.x + half_width;
+        float bottom_right_y =  center.y - half_height;
+        float bottom_left_x =   center.x - half_width;
+        float bottom_left_y =   center.y - half_height;
 
-          // convert values to screen coords
-          left_x = utils::clamp<float>(-1.0f, 1.0f, left_x / float(screen_width));
-          right_x = utils::clamp<float>(-1.0f, 1.0f, right_x / float(screen_width));
-          top_y = utils::clamp<float>(-1.0f, 1.0f, top_y / float(screen_height));
-          bottom_y = utils::clamp<float>(-1.0f, 1.0f, bottom_y / float(screen_height));
+        glm::vec2 top_left = {top_left_x, top_left_y};
+        glm::vec2 top_right = {top_right_x, top_right_y};
+        glm::vec2 bottom_right = {bottom_right_x, bottom_right_y};
+        glm::vec2 bottom_left = {bottom_left_x, bottom_left_y};
 
-          vertices[0] = left_x;   // top left x
-          vertices[1] = top_y; // top left y
-          vertices[2] = 1.0f; // top left r
-          vertices[3] = 0.0f; // top left g
-          vertices[4] = 0.0f; // top left b
+        std::array<float, 20> vertices = {
+          // position                           // color        
+           top_left[0],  top_left[1],           0.0f, 0.0f, 0.0f,  
+           top_right[0], top_right[1],          0.0f, 0.0f, 0.0f,  
+           bottom_right[0], bottom_right[1],    0.0f, 0.0f, 0.0f,  
+           bottom_left[0], bottom_left[1],      0.0f, 0.0f, 0.0f,  
+        };
 
-          vertices[5] = right_x;   // top right x
-          vertices[6] = top_y; // top right y
-          vertices[7] = 0.0f; // top right r
-          vertices[8] = 1.0f; // top right g
-          vertices[9] = 0.0f; // top right b
-
-          vertices[10] = right_x;   // bottom right x
-          vertices[11] = bottom_y; // bottom right y
-          vertices[12] = 0.0f; // bottom right r
-          vertices[13] = 0.0f; // bottom right g
-          vertices[14] = 1.0f; // bottom right b
-
-          vertices[15] = left_x;  // bottom left x
-          vertices[16] = bottom_y; // bottom left y
-          vertices[17] = 1.0f; // bottom left r
-          vertices[18] = 1.0f; // bottom left g
-          vertices[19] = 1.0f; // bottom left b
-
-          float vert[20] =
-          {
-            -0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 1.0f, 1.0f, 1.0f
-          };
 
           unsigned int elements[] =
           {
@@ -209,9 +199,13 @@ namespace waifuengine
             2,3,0
           };
 
+          shd->use();
+          shd->set_float_4("color", 0.f, 0.f, 0.f, 1.f);
+          shd->set_float_1("c_alpha", alpha);
+
           glBindVertexArray(VAO);
           glBindBuffer(GL_ARRAY_BUFFER, VBO);
-          glBufferData(GL_ARRAY_BUFFER, sizeof(vert), vert, GL_STATIC_DRAW);
+          glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 
           glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
           glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
@@ -223,7 +217,6 @@ namespace waifuengine
           int color_attribute = glGetAttribLocation(shd->get_id(), "color");
           glEnableVertexAttribArray(color_attribute);
           glVertexAttribPointer(color_attribute, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
-
           glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
       }

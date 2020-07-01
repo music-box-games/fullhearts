@@ -20,6 +20,7 @@ namespace waifuengine
 
       float rot_deg;
 
+
     public:
       transform();
       ~transform();

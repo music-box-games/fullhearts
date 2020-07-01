@@ -18,8 +18,10 @@ namespace waifuengine
       {
         switch(t)
         {
-          case transition_list::fade:
-            return build_transition_fade();
+          case transition_list::fade_in:
+            return build_transition_fadein();
+          case transition_list::fade_out:
+            return build_transition_fadeout();
           default:
             return {};
         }

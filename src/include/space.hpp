@@ -66,9 +66,9 @@ namespace waifuengine
 
             // MUST be derived from gameobject
             template<class ObjectType, class ... Types>
-            std::shared_ptr<gameobject> add_object_t(Types ... args)
+            std::shared_ptr<ObjectType> add_object_t(Types ... args)
             {
-              auto obj = std::shared_ptr<gameobject>(new ObjectType(args...));
+              auto obj = std::shared_ptr<ObjectType>(new ObjectType(args...));
               objects_[obj->name()] = obj;
               return obj;
             }

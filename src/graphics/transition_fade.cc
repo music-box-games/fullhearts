@@ -5,6 +5,7 @@
 #include "scenemanager.hpp"
 #include "scenes.hpp"
 #include "sprite.hpp"
+#include "settings.hpp"
 
 namespace we = ::waifuengine;
 
@@ -14,16 +15,58 @@ namespace waifuengine
   {
     namespace transitions
     {
-      object_management::objectptr build_transition_fade()
+      fade_in_ptr build_transition_fadein()
       {
         auto scn = we::scenes::current_scene();
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
-        auto obj = tr_sp->add_object_t<fade>("fade_transition", 3000);
+        auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", 4000);
         return obj;
       }
 
-      void fade::time_up()
+      fade_out_ptr build_transition_fadeout()
+      {
+        auto scn = we::scenes::current_scene();
+        auto sp_manager = scn->get_manager();
+        auto tr_sp = sp_manager->get_space("Transition Space");
+        auto obj = tr_sp->add_object_t<fade_out>("fade_out_transition", 3000);
+        return obj;
+      }
+
+      fade_in::fade_in(std::string const& name, float ms) : primatives::sized_rectangle(name)
+      {
+        set_alpha(1.f);
+        set_width(we::core::settings::read_t<int>("window_width"));
+        set_height(we::core::settings::read_t<int>("window_height"));
+        set_shader("rectangle_primative_shader");
+
+
+        mg.start(name, ms, ms / 1000.0f, std::bind(&fade_in::subtract_alpha, this, 0.001f));
+
+      }
+
+      void fade_in::update(float dt)
+      {
+        if (!disabled_)
+        {
+          if(!mg.update(dt))
+          {
+            timeup();
+          }
+
+          std::scoped_lock lock(lock_);
+
+          static auto const f = [&dt](std::pair<std::string, std::shared_ptr<::waifuengine::components::_impl::_base_component>> c) -> void { c.second->update(dt); };
+          std::for_each(components_.begin(), components_.end(), f);
+        }
+      }
+
+      void fade_in::subtract_alpha(float a)
+      {
+        set_alpha(get_alpha() - a);
+      }
+
+      void fade_in::timeup()
       {
         auto scn = we::scenes::current_scene();
         auto sp_manager = scn->get_manager();
@@ -31,11 +74,30 @@ namespace waifuengine
         tr_sp->mark_object_for_removal(name_);
       }
 
-      fade::fade(std::string const& name, int ms) : object_management::gameobject(name)
+      fade_in& fade_in::add_after(transition_list t)
       {
-        we::utils::trigger_timer * tmr = new we::utils::trigger_timer(false, std::chrono::milliseconds(ms), std::bind(&fade::time_up, this));
+        queued_transitions.push_back(t);
+        return *this;
+      }
+
+      fade_out::fade_out(std::string const& name, int ms) : primatives::sized_rectangle(name)
+      {
+        set_alpha(0.f);
+        we::utils::trigger_timer * tmr = new we::utils::trigger_timer(false, std::chrono::milliseconds(ms), std::bind(&fade_out::timeup, this));
+        
+        set_width(we::core::settings::read_t<int>("window_width"));
+        set_height(we::core::settings::read_t<int>("window_height"));
+        set_shader("rectangle_primative_shader");
         tmr->start();
-        we::utils::timers::add_timer("splashscreen fade transition timer", tmr);
+        we::utils::timers::add_timer("Fade out timer", tmr);
+      }
+
+      void fade_out::timeup()
+      {
+        auto scn = we::scenes::current_scene();
+        auto sp_manager = scn->get_manager();
+        auto tr_sp = sp_manager->get_space("Transition Space");
+        tr_sp->mark_object_for_removal(name_);
       }
     }
   }

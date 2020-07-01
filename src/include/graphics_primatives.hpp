@@ -7,6 +7,7 @@
 #include "serialization.hpp"
 #include "gameobject.hpp"
 #include "shader.hpp"
+#include "transform.hpp"
 
 namespace waifuengine
 {
@@ -39,6 +40,7 @@ namespace waifuengine
         float width = 0.0; // ratio of object_width : window_width
         float height = 0.0; // object_height : window_height
         glm::vec2 center = {0.0f, 0.0f};
+        float alpha = 0.5f;
         std::shared_ptr<shaders::shader> shd;
 
 
@@ -55,6 +57,7 @@ namespace waifuengine
           ar & height;
           ar & center[0];
           ar & center[1];
+          ar & alpha;
         }
 
       public:
@@ -69,6 +72,9 @@ namespace waifuengine
         void set_center(glm::vec2 c);
 
         void set_shader(std::string name);
+
+        void set_alpha(float a);
+        float get_alpha() const;
       };
 
       class triangle : public base_primative

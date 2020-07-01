@@ -111,7 +111,7 @@ void window::clear()
       mark_window_to_close(id);
     }
   }
-  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -245,6 +245,8 @@ std::shared_ptr<window> get_last_window_created()
 
 std::shared_ptr<window> create_window(std::string title, int width, int height)
 {
+  we::core::settings::write_t<int>("window_width", width);
+  we::core::settings::write_t<int>("window_height", height);
   std::shared_ptr<window> ptr {new window(title, width, height)};
   impl::windows[ptr->id] = ptr;
   impl::underlying_windows[ptr->data] = ptr;

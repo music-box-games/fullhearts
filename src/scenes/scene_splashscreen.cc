@@ -15,6 +15,16 @@ namespace waifuengine
   namespace scenes
   {
 
+    static void start_fade_in()
+    {
+      graphics::transitions::add_transition(graphics::transitions::transition_list::fade_in);   
+    }
+
+    static void start_fade_out()
+    {
+      graphics::transitions::add_transition(graphics::transitions::transition_list::fade_out);
+    }
+
     std::shared_ptr<scene> build_splashscreen_scene()
     {
       auto scn = blank_scene("Splashscreen");
@@ -22,7 +32,7 @@ namespace waifuengine
       sp_manager->build_default_spaces();
       auto obj = graphics::background::add_background("splashscreen_bg", "wallpaper");
       auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
-      //sprt->scale_to_window();      
+      sprt->scale_to_window();   
       return scn;
     }
   }

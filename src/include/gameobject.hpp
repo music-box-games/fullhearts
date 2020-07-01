@@ -46,16 +46,16 @@ namespace waifuengine
         class gameobject
         {
         protected:
+            using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
+            component_map components_;
             bool disabled_;
             std::string name_;
+            std::mutex lock_;
         private:         
-            using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
             friend class waifuengine::core::debug::imgui_listener;
             friend class boost::serialization::access;
-            component_map components_;
 
             std::string error_;
-            std::mutex lock_;
 
             template<class Archive>
             void serialize(Archive & ar, unsigned int const)
