@@ -1,4 +1,5 @@
 #include "machinegun_call.hpp"
+
 #include "timer_manager.hpp"
 #include "timer.hpp"
 #include "log.hpp"
@@ -47,8 +48,6 @@ namespace waifuengine
       trigger_timer * tmr = new trigger_timer(true, std::chrono::milliseconds(ms), f);
       tmr->start();
       timers::add_timer(name, tmr);
-    }
-
-    
+    } 
   }
 }
