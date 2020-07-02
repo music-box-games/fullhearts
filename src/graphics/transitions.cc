@@ -14,14 +14,14 @@ namespace waifuengine
   {
     namespace transitions
     {
-      object_management::objectptr add_transition(transition_list t)
+      object_management::objectptr add_transition(transition_list t, int length_ms)
       {
         switch(t)
         {
           case transition_list::fade_in:
-            return build_transition_fadein();
+            return build_transition_fadein(length_ms);
           case transition_list::fade_out:
-            return build_transition_fadeout();
+            return build_transition_fadeout(length_ms);
           default:
             return {};
         }

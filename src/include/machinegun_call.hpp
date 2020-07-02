@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <string>
+#include <chrono>
 
 #include "timer_manager.hpp"
 
@@ -18,12 +19,14 @@ namespace waifuengine
       bool running;
 
       float delta;
+      std::chrono::system_clock::time_point start_time;
 
     public:
       machinegun_call();
       ~machinegun_call();
 
       bool update(float dt);
+      void stop();
 
       void start(std::string const &n, int length_in_ms, int trigger_every_ms, std::function<void()> f);
     };

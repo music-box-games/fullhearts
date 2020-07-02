@@ -53,8 +53,8 @@ namespace waifuengine
       };
       using fade_out_ptr = std::shared_ptr<fade_out>;
 
-      fade_in_ptr build_transition_fadein();
-      fade_out_ptr build_transition_fadeout();
+      fade_in_ptr build_transition_fadein(int length_ms);
+      fade_out_ptr build_transition_fadeout(int length_ms);
     }
   }
 }

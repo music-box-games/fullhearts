@@ -16,21 +16,21 @@ namespace waifuengine
   {
     namespace transitions
     {
-      fade_in_ptr build_transition_fadein()
+      fade_in_ptr build_transition_fadein(int ms)
       {
         auto scn = we::scenes::current_scene();
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
-        auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", 4000);
+        auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", ms);
         return obj;
       }
 
-      fade_out_ptr build_transition_fadeout()
+      fade_out_ptr build_transition_fadeout(int ms)
       {
         auto scn = we::scenes::current_scene();
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
-        auto obj = tr_sp->add_object_t<fade_out>("fade_out_transition", 3000);
+        auto obj = tr_sp->add_object_t<fade_out>("fade_out_transition", ms);
         return obj;
       }
 
@@ -89,7 +89,6 @@ namespace waifuengine
       fade_out::fade_out(std::string const &name, int ms) : primatives::sized_rectangle(name)
       {
         set_alpha(0.f);
-        we::utils::trigger_timer *tmr = new we::utils::trigger_timer(false, std::chrono::milliseconds(ms), std::bind(&fade_out::timeup, this));
 
         set_width(we::core::settings::read_t<int>("window_width"));
         set_height(we::core::settings::read_t<int>("window_height"));
@@ -99,10 +98,7 @@ namespace waifuengine
 
       void fade_out::timeup()
       {
-        auto scn = we::scenes::current_scene();
-        auto sp_manager = scn->get_manager();
-        auto tr_sp = sp_manager->get_space("Transition Space");
-        tr_sp->mark_object_for_removal(name_);
+
       }
 
       void fade_out::update(float dt)

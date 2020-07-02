@@ -15,7 +15,7 @@ namespace waifuengine
         fade_in,
         fade_out,
       };
-      object_management::objectptr add_transition(transition_list t);
+      object_management::objectptr add_transition(transition_list t, int length_ms);
 
     }
   }
