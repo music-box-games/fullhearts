@@ -11,15 +11,15 @@ namespace waifuengine
 {
   namespace utils
   {
-    machinegun_call::machinegun_call() : length_ms(0), name(""), running(false), delta(0.f)
-    {
+    // machinegun_call::machinegun_call() : length_ms(0), name(""), running(false), delta(0.f)
+    // {
 
-    }
+    // }
 
-    machinegun_call::~machinegun_call()
-    {
-      timers::remove_timer(name);
-    }
+    // machinegun_call::~machinegun_call()
+    // {
+    //   timers::remove_timer(name);
+    // }
 
     bool machinegun_call::update(float dt)
     {
