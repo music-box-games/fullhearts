@@ -17,7 +17,7 @@ namespace waifuengine
 
     static void start_fade_in()
     {
-      graphics::transitions::add_transition(graphics::transitions::transition_list::fade_in);   
+      graphics::transitions::add_transition(graphics::transitions::transition_list::fade_in);
     }
 
     static void start_fade_out()

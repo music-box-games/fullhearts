@@ -16,6 +16,9 @@ namespace waifuengine
     namespace transitions
     {
       enum class transition_list;
+
+      
+
       class fade_in : public primatives::sized_rectangle
       {
       private:
@@ -23,14 +26,14 @@ namespace waifuengine
         void subtract_alpha(float a);
         utils::machinegun_call mg;
         std::vector<transition_list> queued_transitions;
+        std::function<void()> post_transition_script;
 
       public:
         fade_in(std::string const& name, float ms);
-        ~fade_in() = default;
-
+        virtual ~fade_in() = default;
         virtual void update(float dt) override;
-
         fade_in& add_after(transition_list t);
+        fade_in& add_post_transition_script(std::function<void()> s);
       };
       using fade_in_ptr = std::shared_ptr<fade_in>;
 
@@ -38,9 +41,15 @@ namespace waifuengine
       {
       private:
         void timeup();
+        void add_alpha(float a);
+        utils::machinegun_call mg;
+        std::vector<transition_list> queued_transitions;
       public:
         fade_out(std::string const& name, int ms);
-        ~fade_out() = default;
+        virtual ~fade_out() = default;
+
+        virtual void update(float dt) override;
+        fade_out& add_after(transition_list t);
       };
       using fade_out_ptr = std::shared_ptr<fade_out>;
 

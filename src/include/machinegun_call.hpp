@@ -20,13 +20,8 @@ namespace waifuengine
       float delta;
 
     public:
-      machinegun_call() : length_ms(0), name(""), running(false), delta(0.f)
-      {
-      }
-      ~machinegun_call()
-      {
-        timers::remove_timer(name);
-      }
+      machinegun_call();
+      ~machinegun_call();
 
       bool update(float dt);
 
