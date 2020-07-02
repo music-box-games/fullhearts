@@ -43,6 +43,12 @@ namespace waifuengine
         }
       }
 
+      void scene_manager::queue_scene(std::function<void()> sl)
+      {
+        scene_loader = sl;
+        queued_for_load = true;
+      }
+
       scene_manager::scene_manager() : smap({})
       {
         we::log::trace("scene manager construction");
@@ -127,9 +133,7 @@ namespace waifuengine
 
       void scene_manager::load_scene()
       {
-        std::ifstream stream(scene_data[queued_scene].string());
-        boost::archive::text_iarchive arch(stream);
-        arch >> smap;
+        scene_loader();
       }
 
       void scene_manager::unload_scene()
@@ -151,6 +155,11 @@ namespace waifuengine
     void load(std::string name)
     {
       impl::smanager->load(name);
+    }
+
+    void queue_scene(std::function<void()> sl)
+    {
+      impl::smanager->queue_scene(sl);
     }
 
     void unload()

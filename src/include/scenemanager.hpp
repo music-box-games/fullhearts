@@ -45,18 +45,19 @@ namespace waifuengine
         bool queued_for_load = false;
         bool queued_for_unload = false;
         std::string queued_scene = "";
+        std::function<void()> scene_loader;
 
-        friend class waifuengine::core::debug::imgui_listener;  
+        friend class waifuengine::core::debug::imgui_listener;
         friend class boost::serialization::access;
-        template<class Archive>
-        void serialize(Archive& ar, unsigned int const)
+        template <class Archive>
+        void serialize(Archive &ar, unsigned int const)
         {
-          ar & smap;
+          ar &smap;
         }
 
         void unload_scene();
         void load_scene();
-        void update_scene_saves(); 
+        void update_scene_saves();
 
       public:
         scene_manager();
@@ -73,28 +74,30 @@ namespace waifuengine
         std::shared_ptr<scene> blank_scene(std::string name);
         std::shared_ptr<scene> current_scene();
 
-        bool operator==(scene_manager const& rhs) const;
+        bool operator==(scene_manager const &rhs) const;
 
-        static std::unordered_map<std::string, fs::path>& get_scene_list();
+        void queue_scene(std::function<void()> sl);
+
+        static std::unordered_map<std::string, fs::path> &get_scene_list();
       };
 
-      extern scene_manager * smanager;
+      extern scene_manager *smanager;
     } // namespace impl
 
     void load(std::string name);
     void unload();
     void save();
+    void queue_scene(std::function<void()> sl);
 
     void init();
     void shutdown();
     void update(float dt);
     void draw();
 
-
     std::shared_ptr<scene> blank_scene(std::string name);
     std::shared_ptr<scene> current_scene();
-  }
-}
+  } // namespace scenes
+} // namespace waifuengine
 
 BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::impl::scene_manager);
 
