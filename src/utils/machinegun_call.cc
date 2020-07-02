@@ -1,5 +1,5 @@
-#include "machinegun_call.hpp"
 
+#include "machinegun_call.hpp"
 #include "timer_manager.hpp"
 #include "timer.hpp"
 #include "log.hpp"
