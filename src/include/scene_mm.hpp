@@ -9,26 +9,8 @@ namespace waifuengine
 {
   namespace scenes
   {
-    class scene_mainmenu : public scene
-    {
-    public:
-      SCENE_NAME(scene_mainmenu);
-      scene_mainmenu();
-      virtual ~scene_mainmenu();
-    private:
-      void input_handler(waifuengine::events::event * e);
-      void on_quit_click();
-      friend class waifuengine::core::debug::imgui_listener;
-      friend class boost::serialization::access;
-      template<class Archive>
-      void serialize(Archive& ar, unsigned int const)
-      {
-        ar & boost::serialization::base_object<scene>(*this);
-      }
-    };
+    sceneptr build_scene_mainmenu();
   }
-}
-
-BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::scene_mainmenu);
+} // namespace waifuengine
 
 #endif

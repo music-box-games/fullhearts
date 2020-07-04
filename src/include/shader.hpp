@@ -12,6 +12,7 @@ namespace waifuengine
     namespace shaders
     {
       void load_shaders();
+      void release_shaders();
 
       void generate_default_shaders();
 

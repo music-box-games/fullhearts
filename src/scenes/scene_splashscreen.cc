@@ -9,6 +9,7 @@
 #include "transitions.hpp"
 #include "timer_manager.hpp"
 #include "timer.hpp"
+#include "scene_mm.hpp"
 
 namespace we = ::waifuengine;
 
@@ -36,12 +37,15 @@ namespace waifuengine
       auto sp_manager = scn->get_manager();
       sp_manager->build_default_spaces();
       auto obj = graphics::background::add_background("splashscreen_bg", "wallpaper");
-      auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
-      sprt->scale_to_window();   
-      utils::trigger_timer * tmr = new utils::trigger_timer(false, std::chrono::milliseconds(FADE_IN_LENGTH + 3000), start_fade_out);
+   
+      utils::trigger_timer * fadeout_tmr = new utils::trigger_timer(false, std::chrono::milliseconds(FADE_IN_LENGTH + 3000), start_fade_out);
       start_fade_in();
-      tmr->start();
-      utils::timers::add_timer("Fade out delay timer", tmr);
+      fadeout_tmr->start();
+      utils::timers::add_timer("Fade out delay timer", fadeout_tmr);
+      auto sl = []() -> void { build_scene_mainmenu(); };
+      utils::trigger_timer * scene_tmr = new utils::trigger_timer(false, std::chrono::milliseconds(FADE_IN_LENGTH + 3000 + FADE_OUT_LENGTH + 1500), std::bind(queue_scene, sl));
+      scene_tmr->start();
+      utils::timers::add_timer("Scene change delay tiemr", scene_tmr);
 
       return scn;
     }

@@ -7,6 +7,7 @@
 #include "notify.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
+#include "log.hpp"
 
 namespace we = ::waifuengine;
 
@@ -14,8 +15,16 @@ namespace waifuengine
 {
 namespace graphics
 {
+  static void release_graphics_assets()
+  {
+    textures::release_textures();
+    textures::release_images();
+    shaders::release_shaders();
+  }
+
   void init(std::string title)
   {
+    glfwSetErrorCallback(log::_impl::glfw_error_cb);
     // init glfw
     if(!glfwInit())
     {
@@ -45,6 +54,8 @@ namespace graphics
 
   void shutdown()
   {
+    // release shaders, textures, and images
+    release_graphics_assets();
     close_all_windows();
     glfwTerminate();
   }

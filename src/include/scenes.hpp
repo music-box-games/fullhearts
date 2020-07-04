@@ -13,6 +13,7 @@
 #define _WE_SCENES_HPP_
 
 #include <unordered_map>
+#include <memory>
 
 #include <serialization.hpp>
 #include <spacemanager.hpp>
@@ -55,6 +56,7 @@ namespace waifuengine
 
       virtual bool operator==(scene const& rhs) const;
     };
+    using sceneptr = std::shared_ptr<scene>;
   }
 }
 

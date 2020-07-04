@@ -15,6 +15,7 @@
 #include <string>
 #include <sstream>
 
+
 namespace waifuengine
 {
     namespace log
@@ -30,6 +31,9 @@ namespace waifuengine
             void debug_helper(std::string message, std::string file, int line);
 
             void trace_helper(std::string message, std::string file, int line);
+            
+            void glfw_error_cb(int ec, const char * desc);
+
         }
 
         enum class trace_level

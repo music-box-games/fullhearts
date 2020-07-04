@@ -14,40 +14,38 @@
 #include <input.hpp>
 
 #include <engine.hpp>
+#include "scenemanager.hpp"
+#include "gameobject.hpp"
+#include "spacemanager.hpp"
+#include "space.hpp"
+#include "background.hpp"
+#include "sprite.hpp"
+#include "scenes.hpp"
+#include "transitions.hpp"
+#include "timer_manager.hpp"
+#include "timer.hpp"
 
 namespace we = ::waifuengine;
 //namespace wef = we::factory;
 
 namespace waifuengine
 {
-namespace scenes
-{
-  void scene_mainmenu::on_quit_click()
+  namespace scenes
   {
-    we::core::engine::shutdown();
-  }
+    static void on_quit_click()
+    {
+      we::core::engine::shutdown();
+    }
 
-  void scene_mainmenu::input_handler(we::events::event *)
-  {
+    sceneptr build_scene_mainmenu()
+    {
+      auto scn = blank_scene("Main Menu");
+      auto sp_manager = scn->get_manager();
+      sp_manager->build_default_spaces();
+      auto bg_obj = graphics::background::add_background("mainmenu_bg", "School entrance");
 
-  }
 
-  scene_mainmenu::scene_mainmenu() : scene(std::string(NAME))
-  {
-    // auto sps = manager.build_default_spaces();
-    // wef::background_factory::build_background("test background", "mm_bg", sps.bg);
-    // wef::button_factory::build_imagebutton("test button", "blank button", "blank button hover", std::bind(&scene_mainmenu::on_quit_click, this), sps.ui);
-
-    auto f = std::bind(&scene_mainmenu::input_handler, this, std::placeholders::_1);
-    we::events::subscribe<we::graphics::input::input_event>(this, f);
-  }
-
-  scene_mainmenu::~scene_mainmenu()
-  {
-    manager.clear();
-    we::events::unsubcribe<we::graphics::input::input_event>(this);
-  }
-}
+      return scn;
+    }
+  } // namespace scenes
 } // namespace waifuengine
-
-BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::scene_mainmenu);

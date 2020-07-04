@@ -70,6 +70,13 @@ namespace waifuengine
               ss << "[TRACE][" << file << ':' << line << "] " << message;
               ::waifuengine::log::trace(ss.str());
             }
+
+            void glfw_error_cb(int ec, const char * desc)
+            {
+              std::stringstream ss;
+              ss << "[GLFW][" << ec << "]: " << desc;
+              LOGERROR(ss.str());
+            }
         }
 
         void init(trace_level l)

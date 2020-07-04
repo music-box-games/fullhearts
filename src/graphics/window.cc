@@ -111,7 +111,7 @@ void window::clear()
       mark_window_to_close(id);
     }
   }
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 }
 

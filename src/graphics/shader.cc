@@ -86,6 +86,11 @@ static const char * default_fragment_shader_source =
     "}\0";
 } // namespace impl
 
+void release_shaders()
+{
+  impl::loaded_shaders.clear();
+}
+
 void load_shaders()
 {
   // find the archive that contains the map of filenames for shaders and their names or something like that

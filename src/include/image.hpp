@@ -16,12 +16,14 @@ namespace waifuengine
       unsigned char * data_;
       int height;
       int width;
+      std::string name_;
 
     public:
       image(fs::path p);
       ~image();
       unsigned char * data();
       glm::vec2 dimensions() const;
+      std::string name() const;
     };
 
     using imageptr = std::shared_ptr<image>;

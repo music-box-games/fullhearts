@@ -30,6 +30,21 @@ namespace waifuengine
         texturemap loaded_textures;
       }
 
+      void release_textures()
+      {
+        impl::loaded_textures.clear();
+      }
+
+      void release_images()
+      {
+        impl::loaded_images.clear();
+      }
+
+      impl::texturemap get_texturemap()
+      {
+        return impl::loaded_textures;
+      }
+
       std::vector<std::string> list_loaded_textures()
       {
         return utils::list_keys(impl::loaded_textures);
@@ -44,25 +59,27 @@ namespace waifuengine
       {
         if (impl::loaded_textures.count(name))
         {
+          log::LOGTRACE("Requested texture: \"" + name + "\" already loaded. Retreiving.");
           return impl::loaded_textures.at(name);
         }
         else
         {
+          log::LOGTRACE("Requested texture: \"" + name + "\" not loaded. Retreiving image data...");
           get_image(name);
           return load_texture(name, "default_texture_shader");
         }
-
-        return {};
       }
 
       std::optional<imageptr> get_image(std::string const& name)
       {
         if (impl::loaded_images.count(name))
         {
+          log::LOGTRACE(std::string("Requested image: \"" + name + "\" already loaded. Retrieving data."));
           return impl::loaded_images.at(name);
         }
         else
         {
+          log::LOGTRACE(std::string("Requested image: \"" + name + "\" not loaded. Loading data..."));
           return load_image(name);
         }
       }
@@ -105,18 +122,31 @@ namespace waifuengine
         auto img_names = list_image_paths();
         if(img_names.count(name))
         {
+          log::LOGTRACE(std::string("Requested image: \"" + name + "\" file found. Loading..."));
           impl::loaded_images[name] = std::shared_ptr<image>(new image(img_names[name]));
           return impl::loaded_images.at(name);
         }
-        return {};
+        else
+        {
+          log::LOGERROR(std::string("Requested image: \"" + name + "\" file not found."));
+          return {};
+        }
       }
 
       textureptr load_texture(std::string const& image_name, std::string const& shader_name)
       {
-        if (impl::loaded_textures.count(image_name)) return impl::loaded_textures.at(image_name);
+        if (impl::loaded_textures.count(image_name))
+        {
+          log::LOGTRACE(std::string("Requested texture: \"" + image_name + "\" already loaded. Retrieving."));
+          return impl::loaded_textures.at(image_name);
+        }
+        else
+        {
+          log::LOGTRACE(std::string("Requested texture: \"" + image_name + "\" not loaded. Retrieving image data."));
         std::shared_ptr<image> i = get_image(image_name).value();
         impl::loaded_textures[image_name] = std::make_shared<texture>(i, image_name, impl::loaded_textures.size(), shader_name);
         return impl::loaded_textures[image_name];
+        }
       }
 
       void load_textures()
@@ -126,6 +156,7 @@ namespace waifuengine
 
       texture::texture(imageptr i, std::string const& n, unsigned int uid, std::string shader_name) : unit_id(uid)
       {
+        log::LOGTRACE(std::string("Constructing texture: " + n));
         im = i;
         name = n;
         width = im->dimensions()[0];
@@ -197,7 +228,7 @@ namespace waifuengine
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
 
 
-        load(im->data());
+        load(im);
 
         shd->set_int_1("tex", unit_id);
 
@@ -210,6 +241,7 @@ namespace waifuengine
       
       texture::~texture()
       {
+        log::LOGTRACE(std::string("Destructing texture: " + name));
         // release texture
         glDeleteTextures(1, &txtr);
         glDeleteBuffers(1, &vbo);
@@ -254,13 +286,14 @@ namespace waifuengine
 
       }
 
-      void texture::load(unsigned char* image)
+      void texture::load(imageptr img)
       {
+        log::LOGTRACE(std::string("Texture: \"" + name + "\" loading image: \"" + img->name() + "\""));
         glGenTextures(1, &txtr);
 
         glActiveTexture(TUNIT(unit_id));
         glBindTexture(GL_TEXTURE_2D, txtr);
-        glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+        glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->data());
         shd->set_int_1("tex", unit_id);
 
       }

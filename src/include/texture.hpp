@@ -47,7 +47,7 @@ namespace waifuengine
         std::shared_ptr<image> im;
 
         std::string name;
-        void load(unsigned char * image);
+        void load(imageptr i);
 
       public:
         texture(imageptr image, std::string const& name, unsigned int id, std::string shader_name);
@@ -72,6 +72,11 @@ namespace waifuengine
       textureptr load_texture(std::string const& image_name, std::string const& shader_name);
       void load_images();
       imageptr load_image(std::string const& name);
+
+      void release_textures();
+      void release_images();
+
+      std::unordered_map<std::string, textureptr> get_texturemap();
 
       namespace test
       {
