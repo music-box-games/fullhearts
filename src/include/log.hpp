@@ -63,6 +63,7 @@ namespace waifuengine
     } // namespace trace
 } // namespace waifuengine
 
+
 #define LOGERROR(x) _impl::error_helper(x, __FILE__, __LINE__)
 #define LOGWARNING(x) _impl::warning_helper(x, __FILE__, __LINE__)
 #define LOGINFO(x) _impl::info_helper(x, __FILE__, __LINE__)

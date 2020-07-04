@@ -23,14 +23,14 @@ namespace waifuengine
     {
       std::stringstream ss;
       ss << "scene \"" << name << "\" constructing";
-      we::log::trace(ss.str());
+      we::log::LOGTRACE(ss.str());
     }
 
     scene::~scene()
     {
       std::stringstream ss;
       ss << "scene \"" << name << "\" destructing";
-      we::log::trace(ss.str());
+      we::log::LOGTRACE(ss.str());
     }
 
     void scene::update(float dt)

@@ -29,12 +29,14 @@ namespace graphics
     if(!glfwInit())
     {
       // TODO error handling
+      log::LOGERROR("Could not init GLFW!");
     }
     // create initial window
     auto w = create_window(title);
     if(!bool(w))
     {
       // TODO error
+      log::LOGERROR("Failed to create window!");
       we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Failed to create window!");
     }
     glfwMakeContextCurrent(w.get()->get()); // set the created window to the active window
@@ -43,7 +45,8 @@ namespace graphics
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
       // TODO error and shutdown
-      we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Fail to init GLAD!");
+      log::LOGERROR("Failed to init GLAD!");
+      we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Failed to init GLAD!");
     }
     // load shaders
     we::graphics::shaders::load_shaders();

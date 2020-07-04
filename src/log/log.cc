@@ -14,6 +14,7 @@
 
 #include <log.hpp>
 #include <settings.hpp>
+#include "fs_util.hpp"
 
 namespace waifuengine
 {
@@ -39,35 +40,35 @@ namespace waifuengine
             void error_helper(std::string message, std::string file, int line)
             {
                 std::stringstream ss;
-                ss << '[' << file << ':' << line << "] " << message;
+                ss << '[' << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
                 waifuengine::log::error(ss.str());
             }
 
             void warning_helper(std::string message, std::string file, int line)
             {
                 std::stringstream ss;
-                ss << '[' << file << ':' << line << "] " << message;
+                ss << '[' << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
                 ::waifuengine::log::warning(ss.str());
             }
 
             void info_helper(std::string message, std::string file, int line)
             {
               std::stringstream ss;
-              ss << "[INFO]" << '[' << file << ':' << line << "] " << message;
+              ss << "[INFO]" << '[' << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
               ::waifuengine::log::info(ss.str());
             }
 
             void debug_helper(std::string message, std::string file, int line)
             {
               std::stringstream ss;
-              ss << "[DEBUG][" << file << ':' << line << "] " << message;
+              ss << "[DEBUG][" << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
               ::waifuengine::log::debug(ss.str());
             }
 
             void trace_helper(std::string message, std::string file, int line)
             {
               std::stringstream ss;
-              ss << "[TRACE][" << file << ':' << line << "] " << message;
+              ss << "[" << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
               ::waifuengine::log::trace(ss.str());
             }
 

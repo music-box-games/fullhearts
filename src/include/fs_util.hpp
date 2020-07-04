@@ -34,6 +34,9 @@ namespace waifuengine
     std::string get_extension(fs::path path);
 
     void fs_init();
+
+    std::string strip_path_to_filename_and_ext(fs::path path);
+    std::string strip_path_to_filename_and_ext(std::string path);
   }
 }
 

@@ -169,5 +169,16 @@ namespace waifuengine
     {
       return path.extension().string();
     }
+
+    std::string strip_path_to_filename_and_ext(fs::path path)
+    {
+      std::string filepath = path.filename().string();
+      return filepath.substr(filepath.find_last_of("\\") + 1);
+    }
+
+    std::string strip_path_to_filename_and_ext(std::string path)
+    {
+      return path.substr(path.find_last_of("\\") + 1);
+    }
   }
 }

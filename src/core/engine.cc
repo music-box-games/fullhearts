@@ -143,7 +143,7 @@ void engine::update()
 
 void engine::load_initial_scene()
 {
-  we::log::trace("Loading inital scene");
+  we::log::LOGTRACE("Loading inital scene");
   auto func = []() -> void { we::scenes::build_splashscreen_scene(); };
   we::scenes::queue_scene(func);
 }

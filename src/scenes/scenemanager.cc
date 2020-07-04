@@ -51,7 +51,7 @@ namespace waifuengine
 
       scene_manager::scene_manager() : smap({})
       {
-        we::log::trace("scene manager construction");
+        we::log::LOGTRACE("scene manager construction");
         // navigate to the scenes save data folder and check for existing archives
         // add them to impl::scene_data if found, then update on each loop
         update_scene_saves();
@@ -59,7 +59,7 @@ namespace waifuengine
 
       scene_manager::~scene_manager()
       {
-        we::log::trace("scene manager destruction");
+        we::log::LOGTRACE("scene manager destruction");
       }
 
       void scene_manager::update(float dt)
@@ -149,7 +149,7 @@ namespace waifuengine
       {
         impl::smanager = new impl::scene_manager();
       }
-      we::log::trace("scenes: init");
+      we::log::LOGTRACE("scenes: init");
     }
 
     void load(std::string name)
@@ -174,7 +174,7 @@ namespace waifuengine
 
     void shutdown()
     {
-      we::log::trace("scenes: shutdown");
+      we::log::LOGTRACE("scenes: shutdown");
       delete impl::smanager;
       impl::smanager = nullptr;
     }
