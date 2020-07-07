@@ -45,6 +45,8 @@ namespace waifuengine
       constexpr int INPUT_BUFFER_LEN = 512;
       static char input_buffer[INPUT_BUFFER_LEN];
 
+      
+
       class imgui_listener
       {
       public:
@@ -86,7 +88,7 @@ namespace waifuengine
 
         void texture_tree(we::graphics::textures::textureptr const &t)
         {
-          if (ImGui::TreeNode("%s", t->name.c_str()))
+          if (ImGui::TreeNode("Texture: %s", t->name.c_str()))
           {
             ImGui::Text("Texture Unit: %d", t->unit_id);
             ImGui::Text("glTexture Name: %d", t->txtr);

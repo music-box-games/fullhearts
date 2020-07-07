@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <sstream>
 
 #include <graphics.hpp>
 #include <window.hpp>
@@ -15,6 +16,26 @@ namespace waifuengine
 {
 namespace graphics
 {
+  static void gl_info()
+  {
+    std::stringstream ss;
+    ss << '\n';
+    ss << "GL_Vendor: " << (char*)glGetString(GL_VENDOR) << '\n';
+    ss << "GL_Renderer: " << (char*)glGetString(GL_RENDERER) << '\n';
+    ss << "GL_Version: " << (char*)glGetString(GL_VERSION) << '\n';
+    ss << "GL_Shading_Language_Version: " << (char*)glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
+    ss << "GL_Extensions: ";
+
+    const char* ext = nullptr;
+    ext = (char*)glGetString(GL_EXTENSIONS);
+    if (ext)
+    {
+      ss << ext;
+    }
+
+    log::LOGDEBUG(ss.str());
+  }
+
   static void release_graphics_assets()
   {
     textures::release_textures();
@@ -48,6 +69,9 @@ namespace graphics
       log::LOGERROR("Failed to init GLAD!");
       we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Failed to init GLAD!");
     }
+    #ifdef _DEBUG
+    gl_info();
+    #endif
     // load shaders
     we::graphics::shaders::load_shaders();
     glEnable(GL_BLEND);

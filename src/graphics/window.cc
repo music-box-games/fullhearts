@@ -62,9 +62,9 @@ void window::queue_input(int key, int action)
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
   glfwWindowHint(GLFW_SAMPLES, 4); // 4x AA
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // 3.
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // 3
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // 3.
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6); // 3
+  //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // make sure to get core profile
   glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // double buffer
 

@@ -70,7 +70,7 @@ public:
 };
 
 static const char *default_vertex_shader_source =
-    "#version 330 core\n"
+    "#version 460 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
     "{\n"
@@ -78,7 +78,7 @@ static const char *default_vertex_shader_source =
     "}\0";
 
 static const char * default_fragment_shader_source =
-    "#version 330 core\n"
+    "#version 460 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
@@ -106,17 +106,12 @@ void load_shaders()
     m.m[we::utils::strip_filename(p)] = {v_shader_path, f_shader_path};
   }
 
-
   // using that data, recompile and link all shaders
   for(auto pair : m)
   {
     impl::loaded_shaders[pair.first] = std::shared_ptr<shader>(new shader(vertex_shader(pair.second.first), fragment_shader(pair.second.second)));
   }
   impl::loaded_shaders["default"] = std::shared_ptr<shader>(new shader(vertex_shader("default"), fragment_shader("default")));
-  // std::string temp;
-  // std::ifstream stream(temp);
-  // boost::archive::text_iarchive arch(stream);
-  // arch >> m;
 }
 
 std::optional<std::shared_ptr<shader>> get_shader(std::string name)
@@ -175,16 +170,24 @@ vertex_shader::vertex_shader(fs::path file) : source(nullptr), shader_id(0), fil
 
 void vertex_shader::compile()
 {
-#ifndef DEBUG
   {
     std::stringstream ss;
     ss << "Compiling vertex shader:" << filepath << ":\n" << source;
     we::log::LOGDEBUG(ss.str());
   }
-#endif
   shader_id = glCreateShader(GL_VERTEX_SHADER);
+  
   glShaderSource(shader_id, 1, &source, NULL);
+  glGetError();
   glCompileShader(shader_id);
+  int result = glGetError();
+  if(result != GL_NO_ERROR)
+  {
+    std::stringstream ss;
+    ss << "Error " << result << " compiling shader: " << utils::strip_path_to_filename_and_ext(filepath);
+    we::log::LOGERROR(ss.str());
+    throw std::runtime_error(ss.str());
+  }
   // check for errors
   // TODO: some kind of feedback for when compilation fails, either a function to check if it is valid
   // or throw afteer failing
@@ -223,17 +226,24 @@ fragment_shader::fragment_shader(fs::path file) : source(nullptr), shader_id(0),
 
 void fragment_shader::compile()
 {
-#ifndef DEBUG
   {
     std::stringstream ss;
     
     ss << "Compiling fragment shader:" << filepath << ":\n" << source;
     we::log::LOGDEBUG(ss.str());
   }
-#endif
   shader_id = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(shader_id, 1, &source, NULL);
+  glGetError();
   glCompileShader(shader_id);
+  int result = glGetError();
+  if(result != GL_NO_ERROR)
+  {
+    std::stringstream ss;
+    ss << "Error " << result << " compiling shader: " << utils::strip_path_to_filename_and_ext(filepath);
+    we::log::LOGERROR(ss.str());
+    throw std::runtime_error(ss.str());
+  }
   // more error checks
   int success;
   glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);

@@ -61,7 +61,7 @@ namespace waifuengine
             void debug_helper(std::string message, std::string file, int line)
             {
               std::stringstream ss;
-              ss << "[DEBUG][" << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
+              ss << "[" << utils::strip_path_to_filename_and_ext(file) << ':' << line << "] " << message;
               ::waifuengine::log::debug(ss.str());
             }
 

@@ -154,7 +154,7 @@ namespace waifuengine
 
       }
 
-      texture::texture(imageptr i, std::string const& n, unsigned int uid, std::string shader_name) : unit_id(uid)
+      texture::texture(imageptr i, std::string const& n, unsigned int uid, std::string shader_name) : unit_id(0)
       {
         log::LOGTRACE(std::string("Constructing texture: " + n));
         im = i;
@@ -230,7 +230,7 @@ namespace waifuengine
 
         load(im);
 
-        shd->set_int_1("tex", unit_id);
+        shd->set_int_1("tex", 0);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -276,6 +276,8 @@ namespace waifuengine
         glm::vec4 result = (*(t.data())) * glm::vec4(1.0, 0.0, 0.0, 1.0f);
 
         shd->use();
+        shd->set_int_1("tex",0);
+
         glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(t.data())));
 
         glDrawElements(GL_TRIANGLES, elements.size(), GL_UNSIGNED_INT, 0);
@@ -288,10 +290,9 @@ namespace waifuengine
 
       void texture::load(imageptr img)
       {
-        log::LOGTRACE(std::string("Texture: \"" + name + "\" loading image: \"" + img->name() + "\""));
+        log::LOGTRACE(std::string("Texture: \"" + name + "\" loading image: \"" + utils::strip_path_to_filename_and_ext(img->name()) + "\""));
         glGenTextures(1, &txtr);
 
-        glActiveTexture(TUNIT(unit_id));
         glBindTexture(GL_TEXTURE_2D, txtr);
         glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->data());
         shd->set_int_1("tex", unit_id);
