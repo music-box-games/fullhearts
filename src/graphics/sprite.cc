@@ -20,7 +20,10 @@ namespace waifuengine
     }
     void sprite::draw() const
     {
+      if(!disabled)
+      {
       tex->draw(trans);
+      }
     }
 
     void sprite::set_texture(std::string const& name)
@@ -33,14 +36,29 @@ namespace waifuengine
       trans.rotate(degrees);
     }
 
+    float sprite::rotate() const
+    {
+      return trans.rotate();
+    }
+
     void sprite::translate(glm::vec2 d)
     {
       trans.translate(d);
     }
 
+    glm::vec2 sprite::translate() const
+    {
+      return trans.translate();
+    }
+
     void sprite::scale(glm::vec2 s)
     {
       trans.scale(s);
+    }
+
+    glm::vec2 sprite::scale() const
+    {
+      return trans.scale();
     }
 
     void sprite::scale_to_window()

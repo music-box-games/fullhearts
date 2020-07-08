@@ -2,6 +2,7 @@
 #define _WE_INPUT_HPP_
 
 #include <unordered_map>
+#include <glm/glm.hpp>
 
 #include <events.hpp>
 #include <window.hpp>
@@ -13,6 +14,7 @@ namespace waifuengine
     namespace input
     {
       void process();
+      glm::vec2 mouse_position();
 
       enum class key
       {

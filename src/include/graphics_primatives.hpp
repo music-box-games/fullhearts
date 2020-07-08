@@ -42,6 +42,7 @@ namespace waifuengine
         glm::vec2 center = {0.0f, 0.0f};
         float alpha = 0.5f;
         std::shared_ptr<shaders::shader> shd;
+        glm::vec4 color = {0.f, 0.f, 0.f, 1.f};
 
 
         unsigned int VAO;
@@ -75,6 +76,8 @@ namespace waifuengine
 
         void set_alpha(float a);
         float get_alpha() const;
+
+        void set_color(glm::vec4 c);
       };
 
       class triangle : public base_primative

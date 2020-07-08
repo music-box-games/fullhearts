@@ -221,11 +221,11 @@ namespace waifuengine
         // specify the layour of the vertex data
         int position_attribute = shd->get_attribute("position");
         glEnableVertexAttribArray(position_attribute);
-        glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
+        glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
 
         int tex_attribute = shd->get_attribute("texcoord");
         glEnableVertexAttribArray(tex_attribute);
-        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
+        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
 
 
         load(im);
@@ -257,6 +257,9 @@ namespace waifuengine
 #define TUNIT(x) (GL_TEXTURE0 + x)
       void texture::draw(transform t) const
       {
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+              glBindTexture(GL_TEXTURE_2D, txtr);
+
         glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vert_array::value_type), vertices.data(), GL_STATIC_DRAW);
@@ -294,7 +297,8 @@ namespace waifuengine
         glGenTextures(1, &txtr);
 
         glBindTexture(GL_TEXTURE_2D, txtr);
-        glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->data());
+        glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data());
+        glGenerateMipmap(GL_TEXTURE_2D);
         shd->set_int_1("tex", unit_id);
 
       }

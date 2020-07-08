@@ -88,6 +88,8 @@ namespace waifuengine
         unsigned int program_id;
         std::pair<fs::path, fs::path> files; // shader sources used to make this program
       };
+
+      using shaderptr = std::shared_ptr<shader>;
     }
   }
 }

@@ -41,6 +41,10 @@ namespace waifuengine
       void translate(glm::vec2 dist);
       void scale(glm::vec2 s);
 
+      float rotate() const;
+      glm::vec2 translate() const;
+      glm::vec2 scale() const;
+
       void scale_to_window();
 
       

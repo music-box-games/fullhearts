@@ -22,6 +22,8 @@ namespace waifuengine
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
         auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", ms);
+        auto tr = dynamic_cast<fade_in *>(obj.get());
+        tr->set_color({0.f, 0.f, 0.f, 1.0f});
         return obj;
       }
 

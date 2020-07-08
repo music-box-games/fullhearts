@@ -13,7 +13,7 @@ namespace waifuengine
     {
       name_ = p.string();
       log::LOGTRACE(std::string("Constructing image: \"" + name_ + "\""));
-      data_ = SOIL_load_image(p.string().c_str(), &width, &height, 0, SOIL_LOAD_RGB);
+      data_ = SOIL_load_image(p.string().c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
       if(data_ == nullptr)
       {
         we::log::LOGERROR(std::string("Failed to load image: \"" + name_ + "\""));

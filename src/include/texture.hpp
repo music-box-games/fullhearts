@@ -23,6 +23,7 @@ namespace waifuengine
   {
     namespace textures
     {
+
       class texture
       {
       private:
@@ -58,6 +59,7 @@ namespace waifuengine
         void set_transform();   
 
         glm::vec2 texture_dimensions() const;  
+
       };
 
       using textureptr = std::shared_ptr<texture>;

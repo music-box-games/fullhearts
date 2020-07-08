@@ -60,6 +60,13 @@ void process()
   window::process_all_input();
 }
 
+glm::vec2 mouse_position()
+{
+  double mx, my;
+  glfwGetCursorPos(graphics::get_current_window()->get(), &mx, &my);
+  return {mx, my};
+}
+
 } // namespace input
 } // namespace graphics
 } // namespace waifuengine

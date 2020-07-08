@@ -17,6 +17,7 @@
 #include <dummy.hpp>
 #include <utils.hpp>
 #include "log.hpp"
+#include "sprite.hpp"
 
 namespace waifuengine
 {
@@ -133,6 +134,11 @@ void gameobject::disable(bool set)
   disabled_ = set;
 }
 
+bool gameobject::disabled() const
+{
+  return disabled_;
+}
+
 void gameobject::save(std::shared_ptr<gameobject> obj)
 {
   auto pt = we::utils::get_game_save_data_folder().append("objects");
@@ -151,19 +157,25 @@ void gameobject::load(std::shared_ptr<gameobject> obj, std::string name)
   arch >> obj;
 }
 
-void gameobject::rotate(float)
+void gameobject::rotate(float r)
 {
-
+  auto spr = get_component<graphics::sprite>();
+  auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  sp->rotate(r);
 }
 
-void gameobject::translate(glm::vec2)
+void gameobject::translate(glm::vec2 t)
 {
-
+  auto spr = get_component<graphics::sprite>();
+  auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  sp->translate(t);
 }
 
-void gameobject::scale(glm::vec2)
+void gameobject::scale(glm::vec2 s)
 {
-  
+  auto spr = get_component<graphics::sprite>();
+  auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  sp->scale(s);
 }
 
 } // namespace object_management

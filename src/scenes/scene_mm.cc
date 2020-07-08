@@ -24,6 +24,7 @@
 #include "transitions.hpp"
 #include "timer_manager.hpp"
 #include "timer.hpp"
+#include "button.hpp"
 
 namespace we = ::waifuengine;
 //namespace wef = we::factory;
@@ -32,6 +33,15 @@ namespace waifuengine
 {
   namespace scenes
   {
+
+    static constexpr int FADE_IN_LENGTH = 2000;
+    static constexpr int FADE_OUT_LENGTH = 2000;
+
+    static void start_fade_in()
+    {
+      graphics::transitions::add_transition(graphics::transitions::transition_list::fade_in, FADE_IN_LENGTH);
+    }
+
     static void on_quit_click()
     {
       we::core::engine::shutdown();
@@ -42,8 +52,12 @@ namespace waifuengine
       auto scn = blank_scene("Main Menu");
       auto sp_manager = scn->get_manager();
       sp_manager->build_default_spaces();
-      auto bg_obj = graphics::background::add_background("mainmenu_bg", "School entrance");
-
+      auto bg_obj = graphics::background::add_background("mainmenu_bg", "main_menu_bg");
+      auto exit_button = ui::add_button("exit button", "blank_button");
+      exit_button->scale({0.2f, 0.3f});
+      exit_button->translate({0.0f, -2.5f});
+      
+      start_fade_in();
 
       return scn;
     }

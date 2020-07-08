@@ -146,6 +146,11 @@ namespace waifuengine
           {
             if (ImGui::TreeNode(name.c_str()))
             {
+              bool disable = s->is_disabled();
+              if(ImGui::Checkbox("Disable", &disable))
+              {
+                s->disable(disable);
+              }
               texture_tree(s->tex);
               transform_tree(&s->trans);
               ImGui::TreePop();
@@ -168,6 +173,11 @@ namespace waifuengine
           {
             if (ImGui::TreeNode(obj.first.c_str()))
             {
+              bool disable = obj.second->disabled();
+              if(ImGui::Checkbox("Disable", &disable))
+              {
+                obj.second->disable(disable);
+              }
               auto &comps = obj.second->components_;
               for (auto c : comps)
               {
@@ -441,6 +451,7 @@ namespace waifuengine
         imgui_listener() : s(nullptr)
         {
           std::memset(input_buffer, 0, INPUT_BUFFER_LEN);
+
         }
 
         ~imgui_listener() {}
@@ -453,6 +464,10 @@ namespace waifuengine
           fps();
           // toggle to put frame rate in separate window
           ImGui::Checkbox("Show FPS In Separate Window", &fps_widget);
+          // mouse
+          double mx, my;
+          glfwGetCursorPos(graphics::get_current_window()->get(), &mx, &my);
+          ImGui::Text("Mouse Pos: %f, %f", mx, my);
           // console
 
           // window info

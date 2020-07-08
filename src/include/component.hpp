@@ -44,6 +44,7 @@ namespace waifuengine
             collider,
             box_collider,
             button_collider,
+            mouse_collider,
             transform,
             shader,
             texture,
@@ -65,12 +66,15 @@ namespace waifuengine
                 std::string name;
                 component_types type;
                 we::object_management::gameobject * parent;
+                bool disabled = false;
 
                 _base_component(std::string n, component_types t) : name(n), type(t), parent(nullptr) {}
                 virtual ~_base_component() {}
 
                 virtual void update(float dt) = 0;
                 virtual void draw() const = 0;
+                virtual void disable(bool set = true) { disabled = set; }
+                virtual bool is_disabled() { return disabled; }
 
                 operator std::string() { return name; }
                 bool operator<(_base_component const& rhs) { return type < rhs.type; }
@@ -101,6 +105,12 @@ namespace waifuengine
 
             virtual void update(float dt) {}
             virtual void draw() const {}
+
+            virtual void disable(bool set = true)
+            {
+              disabled = set;
+            }
+
             virtual void operator=(_base_component const& rhs)
             {
                 name = rhs.name;

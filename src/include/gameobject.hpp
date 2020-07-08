@@ -99,7 +99,6 @@ namespace waifuengine
             template<class _CType>
             std::shared_ptr<waifuengine::components::_impl::_base_component> get_component()
             {
-                std::scoped_lock lock(lock_);
 
                 return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
             }
@@ -132,6 +131,7 @@ namespace waifuengine
             // disables the object
             // Set to false to re-enable
             void disable(bool set = true);
+            bool disabled() const;
 
             static void save(std::shared_ptr<gameobject> obj);
 

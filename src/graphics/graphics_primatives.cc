@@ -142,6 +142,11 @@ namespace waifuengine
         center = c;
       }
 
+      void sized_rectangle::set_color(glm::vec4 c)
+      {
+        color = c;
+      }
+
       void sized_rectangle::set_shader(std::string n)
       {
         auto s = shaders::get_shader(n);
@@ -163,6 +168,7 @@ namespace waifuengine
 
       void sized_rectangle::draw() const
       {
+
         if (!disabled_)
         {
           int screen_width = we::core::settings::read_t<int>("window_width");
@@ -200,7 +206,7 @@ namespace waifuengine
           };
 
           shd->use();
-          shd->set_float_4("color", 0.f, 0.f, 0.f, 1.f);
+          shd->set_float_4("color", color.x, color.y, color.z, color.w);
           shd->set_float_1("c_alpha", alpha);
 
           glBindVertexArray(VAO);
@@ -214,9 +220,6 @@ namespace waifuengine
           glEnableVertexAttribArray(position_attribute);
           glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
 
-          int color_attribute = glGetAttribLocation(shd->get_id(), "color");
-          glEnableVertexAttribArray(color_attribute);
-          glVertexAttribPointer(color_attribute, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
           glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
       }
