@@ -22,66 +22,84 @@
 
 namespace waifuengine
 {
-    namespace object_management
+  namespace object_management
+  {
+    struct default_spaces
     {
-        struct default_spaces
+      using ptrt = std::shared_ptr<space>;
+
+      ptrt bg;
+      ptrt ch;
+      ptrt fx;
+      ptrt ui;
+      ptrt tr;
+    };
+
+    class space_manager
+    {
+    private:
+      std::map<std::string, space_order> const defaults =
+          {
+              {"Background Space", space_order::BACKGROUND},
+              {"Character Space", space_order::CHARACTER},
+              {"FX Space", space_order::FX},
+              {"UI Space", space_order::UI},
+              {"Transition Space", space_order::TRANSITION},
+      };
+          class space_sort
+      {
+      public:
+        bool operator()(std::string const& a, std::string const& b) const
         {
-            using ptrt = std::shared_ptr<space>;
+          std::map<std::string, int> order =
+          {
+            {"Background Space", 0},
+            {"Character Space", 1},
+            {"Unordered Space", 2},
+            {"FX Space", 3},
+            {"UI Space", 4},
+            {"Transition Space", 5},
+          };
 
-            ptrt bg;
-            ptrt ch;
-            ptrt fx;
-            ptrt ui;
-            ptrt tr;
-        };
+          return order[a] < order[b];
+        }
+      };
 
-        class space_manager
-        {
-        private:
-            std::map<std::string, std::shared_ptr<space>> spaces_;
+      std::map<std::string, std::shared_ptr<space>, space_sort> spaces_;
 
-            std::map<std::string, space_order> const defaults =
-            {
-                {"Background Space", space_order::BACKGROUND },
-                {"Character Space", space_order::CHARACTER },
-                { "FX Space", space_order::FX },
-                { "UI Space", space_order::UI },
-                { "Transition Space", space_order::TRANSITION },
-            };
+      friend class waifuengine::core::debug::imgui_listener;
+      friend class boost::serialization::access;
+      template <class Archive>
+      void serialize(Archive &ar, unsigned int const)
+      {
+        ar &spaces_;
+      }
 
-            friend class waifuengine::core::debug::imgui_listener;
-            friend class boost::serialization::access;
-            template<class Archive>
-            void serialize(Archive& ar, unsigned int const)
-            {
-                ar & spaces_;
-            }
+    public:
+      space_manager();
+      ~space_manager();
 
-        public:
-            space_manager();
-            ~space_manager();
+      std::shared_ptr<space> add_space(std::string n, space_order o = space_order::UNORDERED);
+      void remove_space(std::string n);
+      std::shared_ptr<space> get_space(std::string n);
+      bool has_space(std::string n);
 
-            std::shared_ptr<space> add_space(std::string n, space_order o = space_order::UNORDERED);
-            void remove_space(std::string n);
-            std::shared_ptr<space> get_space(std::string n);
-            bool has_space(std::string n);
+      void update(float dt);
+      void draw() const;
 
-            void update(float dt);
-            void draw() const;
+      std::size_t spaces() const;
+      std::size_t objects() const;
+      std::size_t components() const;
 
-            std::size_t spaces() const;
-            std::size_t objects() const;
-            std::size_t components() const;
+      void clear();
+      void remove_object(std::string n);
 
-            void clear();
-            void remove_object(std::string n);
+      default_spaces build_default_spaces();
 
-            default_spaces build_default_spaces();
-
-            bool operator==(space_manager const& rhs) const;
-        };
-    }
-}
+      bool operator==(space_manager const &rhs) const;
+    };
+  } // namespace object_management
+} // namespace waifuengine
 
 BOOST_CLASS_EXPORT_KEY(waifuengine::object_management::space_manager);
 

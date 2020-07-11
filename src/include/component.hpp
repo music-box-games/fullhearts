@@ -38,8 +38,9 @@ namespace waifuengine
     {
         class dummy;
 
-        enum class component_types
+        enum class component_types : int
         {
+            debug_draw,
             physics2,
             collider,
             box_collider,
@@ -56,6 +57,11 @@ namespace waifuengine
             basic_shape,
             basic_triangle,
             dummy,
+        };
+
+        enum class component_order : int
+        {
+
         };
 
         namespace _impl
@@ -128,6 +134,8 @@ namespace waifuengine
                 ar & boost::serialization::base_object<_impl::_base_component>(*this);
             }
         };
+
+        using compptr = std::shared_ptr<_impl::_base_component>;
     }
 }
 // forward declarations for components

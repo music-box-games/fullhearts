@@ -32,11 +32,11 @@ namespace waifuengine
         {
             BACKGROUND = 0,
             CHARACTER,
+            UNORDERED,
             FX,
             UI,
             TRANSITION,
             // special
-            UNORDERED,
         };
 
         class gameobject;

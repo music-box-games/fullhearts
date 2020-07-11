@@ -23,6 +23,8 @@
 #include "events.hpp"
 #include "event_manager.hpp"
 #include "sprite.hpp"
+#include "collider.hpp"
+#include "mouse_collider.hpp"
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
@@ -138,6 +140,22 @@ namespace waifuengine
 
         template <class Comp>
         void component_tree_t(Comp *, std::string name);
+
+        template<>
+        void component_tree_t(we::physics::collider *c, std::string name)
+        {
+          if(c)
+          {
+            if(ImGui::TreeNode(name.c_str()))
+            {
+              bool disable = c->is_disabled();
+              if(ImGui::Checkbox("Disable", &disable))
+              {
+                c->disable(disable);
+              }
+            }
+          }
+        }
 
         template <>
         void component_tree_t(we::graphics::sprite *s, std::string name)

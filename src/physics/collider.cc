@@ -44,10 +44,14 @@ namespace waifuengine
 
     void collider::draw() const
     {
+      if(!disabled)
+      {
+
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
       debug_rect->draw();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+      }
 
     }
 

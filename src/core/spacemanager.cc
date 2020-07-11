@@ -46,6 +46,7 @@ namespace waifuengine
 
     void space_manager::update(float dt)
     {
+  
       static auto const f = [&dt](std::pair<std::string, std::shared_ptr<space>> sp) -> void { sp.second->update(dt); };
       std::for_each(spaces_.begin(), spaces_.end(), f);
     }

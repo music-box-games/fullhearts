@@ -24,9 +24,9 @@ namespace waifuengine
       switch(a)
       {
         case axis::x:
-          return (static_cast<float>(core::settings::read_t<int>("window_width")) / (p != 0.0f) ? p : p + 0.001f) - 1.0f;
+          return ((static_cast<float>(core::settings::read_t<int>("window_width")) / (p != 0.0f)) ? p : p + 0.001f) - 1.0f;
         case axis::y:
-          return (static_cast<float>(core::settings::read_t<int>("window_height")) / (p != 0.0f) ? p : p + 0.001f) - 1.0f;
+          return ((static_cast<float>(core::settings::read_t<int>("window_height")) / (p != 0.0f)) ? p : p + 0.001f) - 1.0f;
         default:
           return 0.0f;
       }

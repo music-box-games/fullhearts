@@ -159,8 +159,8 @@ namespace waifuengine
         log::LOGTRACE(std::string("Constructing texture: " + n));
         im = i;
         name = n;
-        width = im->dimensions()[0];
-        height = im->dimensions()[1];
+        width = static_cast<int>(im->dimensions()[0]);
+        height = static_cast<int>(im->dimensions()[1]);
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
 
@@ -283,7 +283,7 @@ namespace waifuengine
 
         glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(t.data())));
 
-        glDrawElements(GL_TRIANGLES, elements.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(elements.size()), GL_UNSIGNED_INT, 0);
       }
 
       void texture::update(float)

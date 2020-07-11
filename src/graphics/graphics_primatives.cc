@@ -49,7 +49,7 @@ namespace waifuengine
           glBufferData(GL_ARRAY_BUFFER, vert_count * sizeof(float), vertices, GL_STATIC_DRAW);
           glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
           glEnableVertexAttribArray(0);
-          float timeValue = glfwGetTime();
+          float timeValue = static_cast<float>(glfwGetTime());
           float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
           shd->use();
           shd->set_float_4("ourColor", 0.0f, greenValue, 0.0f, 1.0f);

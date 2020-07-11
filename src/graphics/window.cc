@@ -191,12 +191,12 @@ void window::process_all_input()
 
 float window::get_width() const
 {
-  return width;
+  return static_cast<float>(width);
 }
 
 float window::get_height() const
 {
-  return height;
+  return static_cast<float>(height);
 }
 
 window::window_ptr window::get()
