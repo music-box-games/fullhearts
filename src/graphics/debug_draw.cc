@@ -49,7 +49,10 @@ namespace waifuengine
 
     void debug_draw::draw() const
     {
-
+      std::for_each(attached_components.begin(), attached_components.end(), [](auto pair) -> void
+      {
+        pair.second->draw_debug();
+      });
     }
   }
 }

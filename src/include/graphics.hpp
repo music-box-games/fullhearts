@@ -7,6 +7,10 @@ namespace waifuengine
 {
   namespace graphics
   {
+    namespace impl
+    {
+      void check_gl();
+    }
     void init(std::string title);
     void shutdown();
 
@@ -14,5 +18,7 @@ namespace waifuengine
     void clear();
   }
 }
+
+#define GL_CHECK() waifuengine::graphics::impl::check_gl()
 
 #endif

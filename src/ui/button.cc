@@ -1,10 +1,12 @@
 #include "button.hpp"
 #include "sprite.hpp"
+#include "collider.hpp"
 #include "mouse_collider.hpp"
 #include "window.hpp"
 #include "spacemanager.hpp"
 #include "space.hpp"
 #include "scenemanager.hpp"
+#include "debug_draw.hpp"
 
 namespace we = ::waifuengine;
 
@@ -14,8 +16,10 @@ namespace waifuengine
   {
     button::button(std::string const& name, std::string const& sprite_name, std::string const& text) : object_management::gameobject(name)
     {
-      add_component_v<graphics::sprite>(sprite_name);
-      add_component_v<mouse_collider>();
+      auto spr = dynamic_cast<graphics::sprite *>(add_component_v<graphics::sprite>(sprite_name).get());
+      auto col = dynamic_cast<physics::collider *>(add_component_v<physics::collider>().get());
+      col->set_dimensions({0.25f, 0.25f});
+      auto dd = add_component_v<graphics::debug_draw>();
     }
 
     button::~button()

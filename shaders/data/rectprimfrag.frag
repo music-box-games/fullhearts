@@ -1,4 +1,5 @@
-#version 460 core
+#version 330 core
+
 in vec4 Color;
 out vec4 outColor;
 

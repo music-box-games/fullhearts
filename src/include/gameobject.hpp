@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <memory>
 #include <mutex>
+#include <map>
 #include <glm/glm.hpp>
 
 #include <dummy.hpp>
@@ -27,6 +28,7 @@
 
 #include <fs_util.hpp>
 #include "debug.hpp"
+#include "utils.hpp"
 
 namespace waifuengine
 {
@@ -46,7 +48,7 @@ namespace waifuengine
         class gameobject
         {
         protected:
-            using component_map = std::unordered_map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>>;
+            using component_map = std::map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>, components::component_sorter>;
             component_map components_;
             bool disabled_;
             std::string name_;

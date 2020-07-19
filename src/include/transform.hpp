@@ -7,6 +7,7 @@
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include "debug.hpp"
+#include "component.hpp"
 
 namespace waifuengine
 {
@@ -32,9 +33,10 @@ namespace waifuengine
       rect_dimensions(glm::vec2 c, glm::vec2 d);
     };
 
-    class transform
+    class transform : public components::component<transform>
     {
     private:
+      friend class boost::serialization::access;
       friend class waifuengine::core::debug::imgui_listener;
       glm::mat4 trans;
       bool dirty;
@@ -44,7 +46,16 @@ namespace waifuengine
 
       float rot_deg;
 
+      template<class Archive>
+      void serialize(Archive& a, unsigned int const v)
+      {
+        a & boost::serialization::base_object<comonents::component<transform>(this);
+        
+      }
+
     public:
+      COMPONENT_NAME(transform);
+      COMPONENT_TYPE(transform);
       enum class axis
       {
         x,
@@ -54,10 +65,10 @@ namespace waifuengine
       static float convert_pixels_to_screen_coords(float p, axis a);
 
       transform();
-      ~transform();
+      virtual ~transform();
 
-      void update(float dt);
-      void draw() const;
+      virtual void update(float dt);
+      virtual void draw() const;
 
       void reset();
       void rotate(float degrees);

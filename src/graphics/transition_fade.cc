@@ -21,7 +21,7 @@ namespace waifuengine
         auto scn = we::scenes::current_scene();
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
-        auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", ms);
+        auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", static_cast<float>(ms));
         auto tr = dynamic_cast<fade_in *>(obj.get());
         tr->set_color({0.f, 0.f, 0.f, 1.0f});
         return obj;
@@ -36,15 +36,15 @@ namespace waifuengine
         return obj;
       }
 
-      fade_in::fade_in(std::string const &name, float ms) : primatives::sized_rectangle(name)
+      fade_in::fade_in(std::string const &name, float ms) : primatives::rectangle(name)
       {
         add_post_transition_script([]() -> void {});
         set_alpha(1.f);
-        set_width(we::core::settings::read_t<int>("window_width"));
-        set_height(we::core::settings::read_t<int>("window_height"));
+        set_width(static_cast<float>(we::core::settings::read_t<int>("window_width")));
+        set_height(static_cast<float>(we::core::settings::read_t<int>("window_height")));
         set_shader("rectangle_primative_shader");
 
-        mg.start(name, ms, ms / 1000.0f, std::bind(&fade_in::subtract_alpha, this, 0.001f));
+        mg.start(name, static_cast<int>(ms), static_cast<int>(ms / 1000.0f), std::bind(&fade_in::subtract_alpha, this, 0.001f));
       }
 
       void fade_in::update(float dt)
@@ -88,14 +88,14 @@ namespace waifuengine
         return *this;
       }
 
-      fade_out::fade_out(std::string const &name, int ms) : primatives::sized_rectangle(name)
+      fade_out::fade_out(std::string const &name, int ms) : primatives::rectangle(name)
       {
         set_alpha(0.f);
 
-        set_width(we::core::settings::read_t<int>("window_width"));
-        set_height(we::core::settings::read_t<int>("window_height"));
+        set_width(static_cast<float>(we::core::settings::read_t<int>("window_width")));
+        set_height(static_cast<float>(we::core::settings::read_t<int>("window_height")));
         set_shader("rectangle_primative_shader");
-        mg.start(name, ms, ms / 1000.0f, std::bind(&fade_out::add_alpha, this, 0.001f));
+        mg.start(name, static_cast<int>(ms), static_cast<int>(ms / 1000.0f), std::bind(&fade_out::add_alpha, this, 0.001f));
       }
 
       void fade_out::timeup()

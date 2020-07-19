@@ -16,6 +16,14 @@ namespace waifuengine
 {
 namespace graphics
 {
+  namespace impl
+  {
+    void check_gl()
+    {
+      
+    }
+  }
+
   static void gl_info()
   {
     std::stringstream ss;

@@ -14,7 +14,7 @@ namespace waifuengine
     {
     private:
       friend class core::debug::imgui_listener;
-      std::map<std::string, components::compptr> attached_components;
+      std::map<std::string, components::compptr, components::component_sorter> attached_components;
 
     public:
       COMPONENT_NAME(debug_draw);

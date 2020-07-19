@@ -12,7 +12,8 @@ namespace waifuengine
   {
     collider::collider() : components::component<collider>()
     {
-      debug_rect = std::shared_ptr<graphics::primatives::sized_rectangle>(new graphics::primatives::sized_rectangle("collider rect"));
+      offset = {0.f, 0.f};
+      debug_rect = std::shared_ptr<graphics::primatives::rectangle>(new graphics::primatives::rectangle("collider rect"));
       debug_rect->set_shader("rectangle_primative_shader");
     }
 
@@ -22,37 +23,24 @@ namespace waifuengine
 
     void collider::update(float dt)
     {
-      // TODO: decide if checking collisions here or all at once in a different update function
-       glm::vec2 reference_point{0.0f, 0.0f}; // reference point to offset from
-      if (parent)
+      if(!disabled)
       {
-        // TODO: objects without sprites should still have transforms
-        // set ref point to owner's position
-        auto spr = parent->get_component<graphics::sprite>();
-        if (spr.use_count())
-        {
-          auto s = dynamic_cast<graphics::sprite *>(spr.get());
-          reference_point = s->translate();
-        }
-        reference_point += offset;
-        debug_rect->set_center(reference_point);
-        debug_rect->set_width(dimensions.x);
-        debug_rect->set_height(dimensions.y);
+        // TODO: decide if checking collisions here or all at once in a different update function
       }
-      debug_rect->update(dt);
     }
 
     void collider::draw() const
     {
-      if(!disabled)
+    }
+
+    void collider::draw_debug() const
+    {
+      if (!disabled)
       {
-
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-      debug_rect->draw();
+        // TODO: draw lines around collider edges, change color based on collision status
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
       }
-
     }
 
     void collider::set_offset_from_owner_position(glm::vec2 o)
@@ -119,24 +107,24 @@ namespace waifuengine
     {
       bool point_rectangle(glm::vec2 point, graphics::rect_dimensions rect)
       {
-        if(point.x < rect.vertices[0].x)
+        if (point.x < rect.vertices[0].x)
         {
           return false;
         }
-        else if(point.x > rect.vertices[1].x)
+        else if (point.x > rect.vertices[1].x)
         {
           return false;
         }
-        else if(point.y > rect.vertices[1].y)
+        else if (point.y > rect.vertices[1].y)
         {
           return false;
         }
-        else if(point.y < rect.vertices[2].y)
+        else if (point.y < rect.vertices[2].y)
         {
           return false;
         }
         return true;
       }
-    }
-  } // namespace physics
+    } // namespace collisions
+  }   // namespace physics
 } // namespace waifuengine

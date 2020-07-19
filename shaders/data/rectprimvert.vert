@@ -1,13 +1,13 @@
-#version 460 core
+#version 330 core
+
 in vec2 position;
 uniform vec4 color;
-out vec4 Color;
+uniform mat4 transform;
 
-uniform float c_alpha;
+out vec4 Color;
 
 void main()
 {
   Color = color;
-  Color.a = c_alpha;
-  gl_Position = vec4(position, 1.0, 1.0);
+  gl_Position = transform * vec4(position, 1.0, 1.0);
 }

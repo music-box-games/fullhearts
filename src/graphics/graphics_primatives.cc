@@ -18,7 +18,6 @@ namespace waifuengine
 
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
-
       }
 
       triangle::~triangle()
@@ -29,9 +28,8 @@ namespace waifuengine
 
       void triangle::update(float)
       {
-        if(!disabled_ && calculating_vertices)
+        if (!disabled_ && calculating_vertices)
         {
-          
         }
       }
 
@@ -42,7 +40,7 @@ namespace waifuengine
 
       void triangle::draw() const
       {
-        if(!disabled_)
+        if (!disabled_)
         {
           glBindVertexArray(VAO);
           glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -61,13 +59,13 @@ namespace waifuengine
       void triangle::set_vertices(float *verts, int length)
       {
         vert_count = length;
-        if(vertices)
+        if (vertices)
         {
           delete vertices;
           vertices = nullptr;
         }
         vertices = new float[vert_count];
-        for(int i = 0; i < length; ++i)
+        for (int i = 0; i < length; ++i)
         {
           vertices[i] = verts[i];
         }
@@ -76,7 +74,7 @@ namespace waifuengine
       void triangle::set_shader(std::string name)
       {
         auto s = shaders::get_shader(name);
-        if(s.has_value())
+        if (s.has_value())
         {
           shd = s.value();
         }
@@ -112,115 +110,105 @@ namespace waifuengine
         return center;
       }
 
-      sized_rectangle::sized_rectangle(std::string name) : base_primative(name) 
+      rectangle::rectangle(std::string name) : base_primative(name)
       {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
       }
 
-      void sized_rectangle::update(float)
+      void rectangle::update(float dt)
       {
         if (!disabled_)
         {
+          std::scoped_lock lock(lock_);
 
+
+
+          static auto const f = [&dt](std::pair<std::string, std::shared_ptr<::waifuengine::components::_impl::_base_component>> c) -> void { c.second->update(dt); };
+          std::for_each(components_.begin(), components_.end(), f);
         }
       }
 
-      void sized_rectangle::set_width(float w)
+      void rectangle::set_width(float w)
       {
         width = w;
       }
 
-      void sized_rectangle::set_height(float h)
+      void rectangle::set_height(float h)
       {
         height = h;
       }
 
-      void sized_rectangle::set_center(glm::vec2 c)
+      void rectangle::set_center(glm::vec2 c)
       {
         center = c;
       }
 
-      void sized_rectangle::set_color(glm::vec4 c)
+      void rectangle::set_color(glm::vec4 c)
       {
         color = c;
       }
 
-      void sized_rectangle::set_shader(std::string n)
+      void rectangle::set_shader(std::string n)
       {
         auto s = shaders::get_shader(n);
-        if(s.has_value())
+        if (s.has_value())
         {
           shd = s.value();
         }
       }
 
-      void sized_rectangle::set_alpha(float a)
+      void rectangle::set_alpha(float a)
       {
         alpha = we::utils::clamp<float>(0.f, 1.f, a);
       }
 
-      float sized_rectangle::get_alpha() const
+      float rectangle::get_alpha() const
       {
         return alpha;
       }
 
-      void sized_rectangle::draw() const
+      void rectangle::draw() const
       {
-
         if (!disabled_)
         {
-          int screen_width = we::core::settings::read_t<int>("window_width");
-          int screen_height = we::core::settings::read_t<int>("window_height");
-          float half_width = (width * screen_width) / 2.0f; // half rectangle width in pixels
-          float half_height = (height  * screen_height) / 2.0f; // half rectangle height in pixels
-
-        float top_left_x =      center.x - half_width;
-        float top_left_y =      center.y + half_height;
-        float top_right_x =     center.x + half_width;
-        float top_right_y =     center.y + + half_height;
-        float bottom_right_x =  center.x + half_width;
-        float bottom_right_y =  center.y - half_height;
-        float bottom_left_x =   center.x - half_width;
-        float bottom_left_y =   center.y - half_height;
-
-        glm::vec2 top_left = {top_left_x, top_left_y};
-        glm::vec2 top_right = {top_right_x, top_right_y};
-        glm::vec2 bottom_right = {bottom_right_x, bottom_right_y};
-        glm::vec2 bottom_left = {bottom_left_x, bottom_left_y};
-
-        std::array<float, 20> vertices = {
-          // position                           // color        
-           top_left[0],  top_left[1],           0.0f, 0.0f, 0.0f,  
-           top_right[0], top_right[1],          0.0f, 0.0f, 0.0f,  
-           bottom_right[0], bottom_right[1],    0.0f, 0.0f, 0.0f,  
-           bottom_left[0], bottom_left[1],      0.0f, 0.0f, 0.0f,  
-        };
-
-
-          unsigned int elements[] =
-          {
-            0,1,2,
-            2,3,0
+          std::array<float, 8> vertices = {
+            -1.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, -1.0f,
+            -1.0f, -1.0f
           };
 
-          shd->use();
-          shd->set_float_4("color", color.x, color.y, color.z, color.w);
-          shd->set_float_1("c_alpha", alpha);
+          unsigned int elements[] =
+              {
+                  0, 1, 2,
+                  2, 3, 0
+              };
 
+          shd->use();
+          shd->set_float_4("color", color.r, color.g, color.b, color.a);
+
+          // write vertex data
           glBindVertexArray(VAO);
           glBindBuffer(GL_ARRAY_BUFFER, VBO);
           glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 
+          // set element data
           glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
           glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-          int position_attribute = glGetAttribLocation(shd->get_id(), "position");
+          int position_attribute = shd->get_attribute("position");
           glEnableVertexAttribArray(position_attribute);
           glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
 
-          glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+          // TODO: get transform component from parent object and use that for transforms
+          std::shared_ptr<graphics::transform> const trf = get_component<graphics::transform>();
+          int transform_attribute = shd->get_attribute("transform");
+          glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, trf->data()); // set transform in shader
+
+          glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
         }
       }
 
@@ -236,7 +224,7 @@ namespace waifuengine
 
         void test_triangle1::draw() const
         {
-          if(!disabled_)
+          if (!disabled_)
           {
             glBindVertexArray(VAO);
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -254,6 +242,6 @@ namespace waifuengine
           }
         }
       } // namespace test
-    } // namespace shaders
-  } // namespace graphics
+    }   // namespace shaders
+  }     // namespace graphics
 } // namespace waifuengine

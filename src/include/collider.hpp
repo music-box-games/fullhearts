@@ -2,6 +2,7 @@
 #ifndef _WE_COLLIDER_HPP_
 #define _WE_COLLIDER_HPP_
 
+#include "debug.hpp"
 #include "component.hpp"
 #include "gameobject.hpp"
 #include "shader.hpp"
@@ -14,13 +15,14 @@ namespace waifuengine
     class collider : public waifuengine::components::component<collider>
     {
     protected:
+      friend class core::debug::imgui_listener;
 
       glm::vec2 offset;
       glm::vec2 dimensions;
 
       bool colliding;
 
-        std::shared_ptr<graphics::primatives::sized_rectangle> debug_rect;
+        std::shared_ptr<graphics::primatives::rectangle> debug_rect;
 
     public:
       COMPONENT_NAME(collider);
@@ -31,6 +33,7 @@ namespace waifuengine
 
       virtual void update(float dt);
       virtual void draw() const;
+      virtual void draw_debug() const;
 
       void set_offset_from_owner_position(glm::vec2 o);
       glm::vec2 get_offset_from_owner_position() const;

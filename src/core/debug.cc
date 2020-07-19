@@ -25,9 +25,12 @@
 #include "sprite.hpp"
 #include "collider.hpp"
 #include "mouse_collider.hpp"
+#include "debug_draw.hpp"
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
+
+// TODO: forward declare tree functions in imgui_listener
 
 namespace we = ::waifuengine;
 
@@ -142,6 +145,34 @@ namespace waifuengine
         void component_tree_t(Comp *, std::string name);
 
         template<>
+        void component_tree_t(we::graphics::debug_draw * dd, std::string name)
+        {
+          if(dd)
+          {
+            if(ImGui::TreeNode(name.c_str()))
+            {
+              bool disable = dd->is_disabled();
+              if(ImGui::Checkbox("Disable", &disable))
+              {
+                dd->disable(disable);
+              }
+              if(ImGui::TreeNode("Attached Components"))
+              {
+                for(auto const& pair : dd->attached_components)
+                {
+                  if(ImGui::TreeNode(pair.first.c_str()))
+                  {
+                    ImGui::TreePop();
+                  }
+                }
+                ImGui::TreePop();
+              }
+              ImGui::TreePop();
+            }
+          }
+        }
+
+        template<>
         void component_tree_t(we::physics::collider *c, std::string name)
         {
           if(c)
@@ -153,6 +184,9 @@ namespace waifuengine
               {
                 c->disable(disable);
               }
+              std::pair<std::string const, object_management::objectptr> p(c->debug_rect->name_, c->debug_rect);
+              object_tree(p); 
+              ImGui::TreePop();
             }
           }
         }
@@ -178,14 +212,25 @@ namespace waifuengine
 
         void component_tree(std::pair<std::string const, std::shared_ptr<we::components::_impl::_base_component>> c)
         {
+          // TODO find a better way to do this for sure like a switch/ifelse with the name and then dyanmic cast it there
           we::graphics::sprite *sp = dynamic_cast<we::graphics::sprite *>(c.second.get());
           if (sp)
           {
             component_tree_t(sp, c.first);
           }
+          we::physics::collider * col = dynamic_cast<we::physics::collider *>(c.second.get());
+          if(col)
+          {
+            component_tree_t(col, c.first);
+          }
+          we::graphics::debug_draw * dd = dynamic_cast<we::graphics::debug_draw *>(c.second.get());
+          if(dd)
+          {
+            component_tree_t(dd, c.first);
+          }
         }
-
-        void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>> &obj, std::shared_ptr<we::object_management::space> sp)
+        // TODO: template overloads of this for graphics prims maybe
+        void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>> &obj, std::shared_ptr<we::object_management::space> sp = {})
         {
           if (obj.second.use_count())
           {
@@ -195,6 +240,13 @@ namespace waifuengine
               if(ImGui::Checkbox("Disable", &disable))
               {
                 obj.second->disable(disable);
+              }
+              auto * debug_rect_test = dynamic_cast<graphics::primatives::rectangle *>(obj.second.get());
+              if(debug_rect_test)
+              {
+                ImGui::Text("Width: %f", debug_rect_test->width);
+                ImGui::Text("Height: %f", debug_rect_test->height);
+                ImGui::Text("Center: (%f, %f)", static_cast<float>(debug_rect_test->center.x), static_cast<float>(debug_rect_test->center.y));
               }
               auto &comps = obj.second->components_;
               for (auto c : comps)

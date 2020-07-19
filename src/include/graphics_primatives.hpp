@@ -4,6 +4,7 @@
 #include <array>
 #include <glm/glm.hpp>
 
+
 #include "serialization.hpp"
 #include "gameobject.hpp"
 #include "shader.hpp"
@@ -19,6 +20,7 @@ namespace waifuengine
       {
       private:
         friend class boost::serialization::access;
+        friend class core::debug::imgui_listener;
         template<class Archive>
         void serialize(Archive& ar, unsigned int const v)
         {
@@ -34,13 +36,13 @@ namespace waifuengine
       };
       BOOST_SERIALIZATION_ASSUME_ABSTRACT(base_primative);
 
-      class sized_rectangle : public base_primative
+      class rectangle : public base_primative
       {
       protected:
         float width = 0.0; // ratio of object_width : window_width
         float height = 0.0; // object_height : window_height
         glm::vec2 center = {0.0f, 0.0f};
-        float alpha = 0.5f;
+        float alpha = 1.0f;
         std::shared_ptr<shaders::shader> shd;
         glm::vec4 color = {0.f, 0.f, 0.f, 1.f};
 
@@ -50,6 +52,7 @@ namespace waifuengine
         unsigned int EBO;
 
         friend class boost::serialization::access;
+        friend class core::debug::imgui_listener;
         template<class Archive>
         void serialize(Archive& ar, unsigned int const v)
         {
@@ -62,8 +65,8 @@ namespace waifuengine
         }
 
       public:
-        sized_rectangle(std::string name);
-        virtual ~sized_rectangle() = default;
+        rectangle(std::string name);
+        virtual ~rectangle() = default;
 
         virtual void update(float) override;
         virtual void draw() const override;
@@ -79,6 +82,7 @@ namespace waifuengine
 
         void set_color(glm::vec4 c);
       };
+
 
       class triangle : public base_primative
       {

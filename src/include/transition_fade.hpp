@@ -19,7 +19,7 @@ namespace waifuengine
 
       
 
-      class fade_in : public primatives::sized_rectangle
+      class fade_in : public primatives::rectangle
       {
       private:
         void timeup();
@@ -37,7 +37,7 @@ namespace waifuengine
       };
       using fade_in_ptr = std::shared_ptr<fade_in>;
 
-      class fade_out : public primatives::sized_rectangle
+      class fade_out : public primatives::rectangle
       {
       private:
         void timeup();

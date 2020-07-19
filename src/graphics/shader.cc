@@ -70,7 +70,7 @@ public:
 };
 
 static const char *default_vertex_shader_source =
-    "#version 460 core\n"
+    "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
     "{\n"
@@ -78,7 +78,7 @@ static const char *default_vertex_shader_source =
     "}\0";
 
 static const char * default_fragment_shader_source =
-    "#version 460 core\n"
+    "#version 330 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
@@ -112,6 +112,13 @@ void load_shaders()
     impl::loaded_shaders[pair.first] = std::shared_ptr<shader>(new shader(vertex_shader(pair.second.first), fragment_shader(pair.second.second)));
   }
   impl::loaded_shaders["default"] = std::shared_ptr<shader>(new shader(vertex_shader("default"), fragment_shader("default")));
+}
+
+void load_shader(fs::path p)
+{
+  impl::shader_file s(p);
+  std::string v_shader_path = utils::get_exe_path() + "\\shaders" + s.v_shader;
+  std::string f_shader_path = utils::get_exe_path() + "\\shaders" + s.f_shader;
 }
 
 std::optional<std::shared_ptr<shader>> get_shader(std::string name)
@@ -232,10 +239,13 @@ void fragment_shader::compile()
     ss << "Compiling fragment shader:" << filepath << ":\n" << source;
     we::log::LOGDEBUG(ss.str());
   }
+  glGetError();
   shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+  glGetError();
   glShaderSource(shader_id, 1, &source, NULL);
   glGetError();
   glCompileShader(shader_id);
+  glGetError();
   int result = glGetError();
   if(result != GL_NO_ERROR)
   {

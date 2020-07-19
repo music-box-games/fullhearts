@@ -83,11 +83,11 @@ namespace waifuengine
       (dynamic_cast<we::graphics::primatives::triangle *>((obj1.get())))->set_vertices(verts1, 18);
       (dynamic_cast<we::graphics::primatives::triangle *>((obj1.get())))->set_shader(shader1_name);
       
-      auto obj2 = sp->add_object_t<we::graphics::primatives::sized_rectangle>(rect0_name);
-      (dynamic_cast<we::graphics::primatives::sized_rectangle *>((obj2.get())))->set_width(0.5f);
-      (dynamic_cast<we::graphics::primatives::sized_rectangle *>((obj2.get())))->set_height(0.5f);
-      (dynamic_cast<we::graphics::primatives::sized_rectangle *>((obj2.get())))->set_center({0.0f, 0.0f});
-      (dynamic_cast<we::graphics::primatives::sized_rectangle *>((obj2.get())))->set_shader(rect0_shadername);
+      auto obj2 = sp->add_object_t<we::graphics::primatives::rectangle>(rect0_name);
+      (dynamic_cast<we::graphics::primatives::rectangle *>((obj2.get())))->set_width(0.5f);
+      (dynamic_cast<we::graphics::primatives::rectangle *>((obj2.get())))->set_height(0.5f);
+      (dynamic_cast<we::graphics::primatives::rectangle *>((obj2.get())))->set_center({0.0f, 0.0f});
+      (dynamic_cast<we::graphics::primatives::rectangle *>((obj2.get())))->set_shader(rect0_shadername);
 
       auto obj3 = sp->add_object_t<we::graphics::textures::test::texture_test_object>(textureobj0_name, "wallpaper", textureshader0_name);
 
