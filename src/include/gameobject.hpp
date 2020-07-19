@@ -101,8 +101,13 @@ namespace waifuengine
             template<class _CType>
             std::shared_ptr<waifuengine::components::_impl::_base_component> get_component()
             {
-
                 return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
+            }
+
+            template<class _CType>
+            std::shared_ptr<waifuengine::components::_impl::_base_component> const get_component_const() const
+            {
+                return (components_.count(_CType::NAME)) ? components_.at(_CType::NAME) : nullptr;
             }
 
             template<class _CType>

@@ -204,9 +204,9 @@ namespace waifuengine
 
 
           // TODO: get transform component from parent object and use that for transforms
-          std::shared_ptr<graphics::transform> const trf = get_component<graphics::transform>();
+          graphics::transform * const trf = dynamic_cast<graphics::transform *>(get_component_const<graphics::transform>().get());
           int transform_attribute = shd->get_attribute("transform");
-          glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, trf->data()); // set transform in shader
+          glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, nullptr); // set transform in shader
 
           glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
         }
