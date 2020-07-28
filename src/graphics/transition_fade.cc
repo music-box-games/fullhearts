@@ -24,6 +24,11 @@ namespace waifuengine
         auto obj = tr_sp->add_object_t<fade_in>("fade_in_transition", static_cast<float>(ms));
         auto tr = dynamic_cast<fade_in *>(obj.get());
         tr->set_color({0.f, 0.f, 0.f, 1.0f});
+        auto trans = tr->add_component<graphics::transform>();
+        trans->rotate(0.f);
+        trans->translate(glm::vec2({0.0f, 0.0f}));
+        trans->scale(glm::vec2{1.f, 1.f});
+
         return obj;
       }
 
@@ -33,6 +38,11 @@ namespace waifuengine
         auto sp_manager = scn->get_manager();
         auto tr_sp = sp_manager->get_space("Transition Space");
         auto obj = tr_sp->add_object_t<fade_out>("fade_out_transition", ms);
+        auto trans = obj->add_component<graphics::transform>();
+        trans->rotate(0.f);
+        trans->translate(glm::vec2({0.f, 0.f}));
+        trans->scale(glm::vec2{1.f, 1.f});
+
         return obj;
       }
 

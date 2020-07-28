@@ -276,6 +276,11 @@ namespace waifuengine
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
 
         int transform_attribute = glGetUniformLocation(shd->get_id(), "transform");
+        if (transform_attribute == -1)
+        {
+          log::LOGERROR("Could not locate uniform \"transform\"");
+          return;
+        }
         glm::vec4 result = (*(t.data())) * glm::vec4(1.0, 0.0, 0.0, 1.0f);
 
         shd->use();

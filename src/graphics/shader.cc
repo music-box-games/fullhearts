@@ -397,6 +397,16 @@ int shader::get_attribute(std::string const& name)
   return glGetAttribLocation(program_id, name.c_str());
 }
 
+int shader::get_uniform(std::string const& name)
+{
+  int result = glGetUniformLocation(program_id, name.c_str());
+  if (result == -1)
+  {
+    log::LOGERROR(std::string(std::string("Could not locate uniform \"") + name + std::string("\"")));
+  }
+  return result;
+}
+
 } // namespace shaders
 } // namespace graphics
 } // namespace waifuengine

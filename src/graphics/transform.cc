@@ -1,5 +1,6 @@
 #include "transform.hpp"
 #include "settings.hpp"
+#include "window.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -57,6 +58,29 @@ namespace waifuengine
         trans = glm::translate(trans, glm::vec3(pos_, 0.0f));
         dirty = false;
       }
+    }
+
+    void transform::width_in_pixels(int w)
+    {
+      // get width of window
+      auto wid = graphics::get_current_window()->get_width();
+      scale(glm::vec2{wid / w, 1.0f});
+    }
+
+    void transform::height_in_pixels(int h)
+    {
+      auto hei = graphics::get_current_window()->get_height();
+      scale(glm::vec2{1.0f, hei / h});
+    }
+
+    int transform::width_in_pixels() const
+    {
+      return static_cast<int>(graphics::get_current_window()->get_width());
+    }
+
+    int transform::height_in_pixels() const
+    {
+      return static_cast<int>(graphics::get_current_window()->get_height());
     }
 
     void transform::draw() const

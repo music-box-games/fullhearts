@@ -79,6 +79,11 @@ namespace waifuengine
       void scale(glm::vec2 s);
       glm::vec2 scale() const;
 
+      void width_in_pixels(int width);
+      void height_in_pixels(int height);
+      int width_in_pixels() const;
+      int height_in_pixels() const;
+
       void lock_screen_proportion(bool set = true);
       glm::mat4 *data();
 

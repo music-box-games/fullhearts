@@ -81,6 +81,7 @@ namespace waifuengine
         void set_float_4(std::string const& name, float value0, float value1, float value2, float value3) const;
 
         int get_attribute(std::string const& name);
+        int get_uniform(std::string const& name);
 
       private:
         void link(vertex_shader& v, fragment_shader& f);

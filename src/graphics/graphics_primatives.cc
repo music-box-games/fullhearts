@@ -187,7 +187,7 @@ namespace waifuengine
               };
 
           shd->use();
-          shd->set_float_4("color", color.r, color.g, color.b, color.a);
+          shd->set_float_4("color", color.r, color.g, color.b, alpha);
 
           // write vertex data
           glBindVertexArray(VAO);
@@ -200,15 +200,19 @@ namespace waifuengine
 
           int position_attribute = shd->get_attribute("position");
           glEnableVertexAttribArray(position_attribute);
-          glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
+          glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 
           // TODO: get transform component from parent object and use that for transforms
           graphics::transform * const trf = dynamic_cast<graphics::transform *>(get_component_const<graphics::transform>().get());
-          int transform_attribute = shd->get_attribute("transform");
-          glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, nullptr); // set transform in shader
+          if (trf)
+          {
 
-          glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
+            int transform_attribute = shd->get_uniform("transform");
+            glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(trf->data()))); // set transform in shader
+
+          }
+          glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
       }
 

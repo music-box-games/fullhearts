@@ -8,6 +8,8 @@
 #include "shader.hpp"
 #include "graphics_primatives.hpp"
 
+// TODO: collision layers, only check in layer
+
 namespace waifuengine
 {
   namespace physics
