@@ -169,8 +169,16 @@ vertex_shader::vertex_shader(fs::path file) : source(nullptr), shader_id(0), fil
   }
   else
   {
-    s = we::utils::parse_file_to_string(file.generic_string()).c_str();
-    source = s.c_str();
+    s = we::utils::parse_file_to_string(filepath.generic_string()).c_str();
+    if(s.empty())
+    {
+      source = impl::default_vertex_shader_source;
+      filepath = "default";
+    }
+    else
+    {
+      source = s.c_str();
+    }
   }
   compile();
 }
@@ -225,8 +233,16 @@ fragment_shader::fragment_shader(fs::path file) : source(nullptr), shader_id(0),
   }
   else
   {
-    s = we::utils::parse_file_to_string(file.generic_string());
-    source = s.c_str();
+    s = we::utils::parse_file_to_string(filepath.generic_string());
+    if(s.empty())
+    {
+      source = impl::default_fragment_shader_source;
+      filepath = "default";
+    }
+    else
+    {
+      source = s.c_str();
+    }
   }
   compile();
 }

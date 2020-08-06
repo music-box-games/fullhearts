@@ -18,7 +18,7 @@
 #include <tests.hpp>
 #include <utils.hpp>
 
-//#define CATCH
+#define CATCH
 
 namespace we = ::waifuengine;
     std::exception_ptr eptr;
@@ -55,7 +55,6 @@ int main(int argc, char ** argv)
     e = waifuengine::core::build_engine();
     e->load_initial_scene();
 
-
     while(::waifuengine::core::engine::running)
     {
         e->update();
@@ -66,21 +65,20 @@ int main(int argc, char ** argv)
   catch(std::runtime_error const& r)
   {
     we::utils::notify(we::utils::notification_type::mb_ok, "Runtime Error", r.what());
+#ifdef DEBUG
+    __debugbreak();
+#endif // DEBUG
     return -2;
   }
   catch(const std::exception& ex)
   {
    // notify
    we::utils::notify(we::utils::notification_type::mb_ok, "Uncaught Exception", ex.what());
+#ifdef DEBUG
+   __debugbreak();
+#endif // DEBUG
    return -1;
   }
-
-    catch(...)
-    {
-      eptr = std::current_exception();
-    }
-    handle_eptr(eptr);
-  
   #endif
 }
 

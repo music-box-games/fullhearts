@@ -1,0 +1,3 @@
+#vertex:\data\dbgline.vert
+#fragment:\data\dbgline.frag
+#geometry:\data\dbgline.geom
