@@ -177,7 +177,7 @@ vertex_shader::vertex_shader(fs::path file) : source(nullptr), shader_id(0), fil
     }
     else
     {
-      source = s.c_str();
+      source = s.c_str(); 
     }
   }
   compile();

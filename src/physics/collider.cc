@@ -3,6 +3,7 @@
 #include "colors.hpp"
 #include "log.hpp"
 #include "window.hpp"
+#include "draw_rects.hpp"
 
 namespace we = ::waifuengine;
 
@@ -33,12 +34,32 @@ namespace waifuengine
     {
     }
 
+    bool collider::is_colliding() const
+    {
+      return colliding;
+    }
+
     void collider::draw_debug() const
     {
-      if (!disabled)
+      if (!disabled && debugging)
       {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         // TODO: draw lines around collider edges, change color based on collision status
+        // get position of parent object
+        // add offset
+        // use width and height to get vertices 
+        glm::vec2 initial_position(0,0);
+        auto parent_transform = parent->get_component<graphics::transform>();
+        if(parent_transform.use_count())
+        {
+          graphics::transform * trf = dynamic_cast<graphics::transform *>(parent_transform.get());
+          if(trf)
+          {
+            initial_position = trf->translate();
+          }
+        }
+        initial_position += offset;
+
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
       }
     }

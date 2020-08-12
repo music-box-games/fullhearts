@@ -1,0 +1,17 @@
+#ifndef _WE_DRAW_LINES_HPP_
+#define _WE_DRAW_LINES_HPP_
+
+#include "point2d.hpp"
+#include "colors.hpp"
+#include "line2d.hpp"
+
+namespace waifuengine
+{
+  namespace graphics
+  {
+    void draw_line(point2d start, point2d end, colors::rgb_value color);
+    void draw_line(line2d l, colors::rgb_value color);
+  }
+}
+
+#endif

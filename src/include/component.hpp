@@ -83,6 +83,7 @@ namespace waifuengine
         component_types type;
         we::object_management::gameobject *parent;
         bool disabled = false;
+        bool debugging = false; // TODO: make this in #ifdef DEBUG only
 
         _base_component(std::string n, component_types t) : name(n), type(t), parent(nullptr) {}
         virtual ~_base_component() {}
@@ -91,7 +92,9 @@ namespace waifuengine
         virtual void draw() const = 0;
         virtual void draw_debug() const = 0;
         virtual void disable(bool set = true) { disabled = set; }
-        virtual bool is_disabled() { return disabled; }
+        virtual bool is_disabled() const { return disabled; }
+        virtual void debug(bool set = true) { debugging = set; }
+        virtual bool is_debugging() const { return debugging; }
 
         operator std::string() { return name; }
         bool operator<(_base_component const &rhs) { return type < rhs.type; }

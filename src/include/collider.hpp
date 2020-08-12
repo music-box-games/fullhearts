@@ -7,6 +7,7 @@
 #include "gameobject.hpp"
 #include "shader.hpp"
 #include "graphics_primatives.hpp"
+#include "transform.hpp"
 
 // TODO: collision layers, only check in layer
 
@@ -19,12 +20,12 @@ namespace waifuengine
     protected:
       friend class core::debug::imgui_listener;
 
-      glm::vec2 offset;
+      // offset from the parent's transform
+      graphics::transform offset;
+      // width, height
       glm::vec2 dimensions;
-
+      // if colliding with another object
       bool colliding;
-
-        std::shared_ptr<graphics::primatives::rectangle> debug_rect;
 
     public:
       COMPONENT_NAME(collider);
@@ -37,20 +38,25 @@ namespace waifuengine
       virtual void draw() const;
       virtual void draw_debug() const;
 
-      void set_offset_from_owner_position(glm::vec2 o);
-      glm::vec2 get_offset_from_owner_position() const;
-      void set_offset_from_owner_position_x(float x);
-      float get_offset_from_owner_position_x() const;
-      void set_offset_from_owner_position_y(float y);
-      float get_offset_from_owner_position_y() const;
+      void offset_translate(glm::vec2 translation);
+      void offset_set_translation(glm::vec2 translation);
+      glm::vec2 offset_get_translation();
 
+      void offset_rotate(float rotation);
+      void offset_set_rotation(float rotation);
+      float offset_get_rotation();
 
-      void set_dimensions(glm::vec2 d);
-      glm::vec2 get_dimensions() const;
-      void set_width(float w);
-      float get_width() const;
-      void set_height(float h);
-      float get_height() const;
+      void offset_scale(glm::vec2 scale);
+      void offset_set_scale(glm::vec2 scale);
+      glm::vec2 offset_get_scale();
+      void offset_scalex(float scale);
+      void offset_scaley(float scale);
+      float offset_get_scalex();
+      float offset_get_scaley();
+
+      
+
+      bool is_colliding() const;
     };
 
     namespace collisions

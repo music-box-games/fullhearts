@@ -156,6 +156,11 @@ namespace waifuengine
               {
                 dd->disable(disable);
               }
+              bool dbg = dd->is_debugging();
+              if(ImGui::Checkbox("Debug", &dbg))
+              {
+                dd->debug(dbg);
+              }
               if(ImGui::TreeNode("Attached Components"))
               {
                 for(auto const& pair : dd->attached_components)
@@ -184,6 +189,11 @@ namespace waifuengine
               {
                 c->disable(disable);
               }
+              bool dbg = c->is_debugging();
+              if(ImGui::Checkbox("Debug", &dbg))
+              {
+                c->debug(dbg);
+              }
               std::pair<std::string const, object_management::objectptr> p(c->debug_rect->name_, c->debug_rect);
               object_tree(p); 
               ImGui::TreePop();
@@ -202,6 +212,11 @@ namespace waifuengine
               if(ImGui::Checkbox("Disable", &disable))
               {
                 s->disable(disable);
+              }
+              bool dbg = s->is_debugging();
+              if(ImGui::Checkbox("Debug", &dbg))
+              {
+                s->debug(dbg);
               }
               texture_tree(s->tex);
               transform_tree(&s->trans);
