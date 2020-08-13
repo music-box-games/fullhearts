@@ -56,6 +56,7 @@ namespace waifuengine
     public:
       COMPONENT_NAME(transform);
       COMPONENT_TYPE(transform);
+      
       enum class axis
       {
         x,

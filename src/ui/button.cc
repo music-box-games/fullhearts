@@ -17,10 +17,9 @@ namespace waifuengine
   {
     button::button(std::string const& name, std::string const& sprite_name, std::string const& text) : object_management::gameobject(name)
     {
+      add_component<graphics::transform>();
       auto spr = dynamic_cast<graphics::sprite *>(add_component_v<graphics::sprite>(sprite_name).get());
       auto col = dynamic_cast<physics::collider *>(add_component_v<physics::collider>().get());
-      auto dd = add_component_v<graphics::debug_draw>();
-      //add_component<graphics::transform>();
     }
 
     button::~button()
