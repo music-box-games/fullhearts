@@ -38,8 +38,11 @@ namespace waifuengine
       void set_texture(std::string const& name);
 
       void rotate(float degrees);
+      void set_rotation(float degrees);
       void translate(glm::vec2 dist);
+      void set_translation(glm::vec2 p);
       void scale(glm::vec2 s);
+      void set_scale(glm::vec2 s);
 
       float rotate() const;
       glm::vec2 translate() const;

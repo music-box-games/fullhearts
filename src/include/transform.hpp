@@ -72,11 +72,14 @@ namespace waifuengine
 
       void reset();
       void rotate(float degrees);
+      void set_rotation(float degrees);
       float rotate() const;
       void translate(glm::vec2 distance);
+      void set_translation(glm::vec2 position);
       glm::vec2 translate() const;
       void uniform_scale(float s);
       void scale(glm::vec2 s);
+      void set_scale(glm::vec2 s);
       glm::vec2 scale() const;
 
       void width_in_pixels(int width);

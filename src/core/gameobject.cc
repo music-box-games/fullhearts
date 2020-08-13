@@ -73,6 +73,7 @@ void gameobject::draw() const
     for (auto &c : components_)
     {
       c.second->draw();
+      c.second->draw_debug();
     }
   }
 }
@@ -161,21 +162,66 @@ void gameobject::rotate(float r)
 {
   auto spr = get_component<graphics::sprite>();
   auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  if (sp)
+  {
+
   sp->rotate(r);
+  }
+}
+// TODO: find a better way to call it on all applicable components
+void gameobject::set_rotation(float r)
+{
+  auto spr = get_component<graphics::sprite>();
+  auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  if (sp)
+  {
+
+  sp->set_rotation(r);
+  }
 }
 
 void gameobject::translate(glm::vec2 t)
 {
   auto spr = get_component<graphics::sprite>();
   auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  if (sp)
+  {
+
   sp->translate(t);
+  }
+}
+
+void gameobject::set_translation(glm::vec2 p)
+{
+  auto spr = get_component<graphics::sprite>();
+  auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  if (sp)
+  {
+
+  sp->set_translation(p);
+  }
 }
 
 void gameobject::scale(glm::vec2 s)
 {
   auto spr = get_component<graphics::sprite>();
   auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  if (sp)
+  {
+
   sp->scale(s);
+  }
+}
+
+void gameobject::set_scale(glm::vec2 s)
+{
+  auto spr = get_component<graphics::sprite>();
+  auto sp = dynamic_cast<graphics::sprite *>(spr.get());
+  if (sp)
+  {
+
+  sp->set_scale(s);
+  }
 }
 
 } // namespace object_management

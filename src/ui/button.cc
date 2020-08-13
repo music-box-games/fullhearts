@@ -7,6 +7,7 @@
 #include "space.hpp"
 #include "scenemanager.hpp"
 #include "debug_draw.hpp"
+#include "transform.hpp"
 
 namespace we = ::waifuengine;
 
@@ -18,8 +19,8 @@ namespace waifuengine
     {
       auto spr = dynamic_cast<graphics::sprite *>(add_component_v<graphics::sprite>(sprite_name).get());
       auto col = dynamic_cast<physics::collider *>(add_component_v<physics::collider>().get());
-      col->set_dimensions({0.25f, 0.25f});
       auto dd = add_component_v<graphics::debug_draw>();
+      //add_component<graphics::transform>();
     }
 
     button::~button()

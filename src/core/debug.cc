@@ -114,27 +114,27 @@ namespace waifuengine
               float rot = t->rot_deg;
               if (ImGui::DragFloat("Rotation", &rot, 0.1f))
               {
-                t->rotate(rot);
+                t->set_rotation(rot);
               }
               float trans_x = t->pos_[0];
               float trans_y = t->pos_[1];
               if (ImGui::DragFloat("Translation X", &trans_x, 0.001f, -10.0f, 10.0f))
               {
-                t->translate(glm::vec2(trans_x, trans_y));
+                t->set_translation(glm::vec2(trans_x, trans_y));
               }
               if (ImGui::DragFloat("Translation Y", &trans_y, 0.001f, -10.0f, 10.0f))
               {
-                t->translate(glm::vec2(trans_x, trans_y));
+                t->set_translation(glm::vec2(trans_x, trans_y));
               }
               float scale_x = t->scale_[0];
               float scale_y = t->scale_[1];
               if (ImGui::DragFloat("Scale X", &scale_x, 0.01f))
               {
-                t->scale(glm::vec2(scale_x, scale_y));
+                t->set_scale(glm::vec2(scale_x, scale_y));
               }
               if (ImGui::DragFloat("Scale Y", &scale_y, 0.01f))
               {
-                t->scale(glm::vec2(scale_x, scale_y));
+                t->set_scale(glm::vec2(scale_x, scale_y));
               }
               ImGui::TreePop();
             }
@@ -194,8 +194,6 @@ namespace waifuengine
               {
                 c->debug(dbg);
               }
-              std::pair<std::string const, object_management::objectptr> p(c->debug_rect->name_, c->debug_rect);
-              object_tree(p); 
               ImGui::TreePop();
             }
           }

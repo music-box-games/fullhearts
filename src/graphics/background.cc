@@ -24,7 +24,7 @@ namespace waifuengine
       auto obj = sp->add_object(obj_name);
       obj->add_component_v<sprite>(sprite_name);
       auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
-      sprt->scale({ 0.807f, 0.807f }); // TODO: this is just covering up a bug
+      //sprt->scale({ 0.807f, 0.807f }); // TODO: this is just covering up a bug
       
       return obj;
     }

@@ -22,8 +22,6 @@ namespace waifuengine
 
       // offset from the parent's transform
       graphics::transform offset;
-      // width, height
-      glm::vec2 dimensions;
       // if colliding with another object
       bool colliding;
 
@@ -36,7 +34,7 @@ namespace waifuengine
 
       virtual void update(float dt);
       virtual void draw() const;
-      virtual void draw_debug() const;
+      virtual void draw_debug();
 
       void offset_translate(glm::vec2 translation);
       void offset_set_translation(glm::vec2 translation);

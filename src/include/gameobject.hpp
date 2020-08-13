@@ -150,10 +150,13 @@ namespace waifuengine
 
             // rotates all components with a transform
             void rotate(float degrees);
+            void set_rotation(float degrees);
             // translates all components with a transform
             void translate(glm::vec2 dist);
+            void set_translation(glm::vec2 pos);
             // scales all comopnents with a transform
             void scale(glm::vec2 s);
+            void set_scale(glm::vec2 s);
         };
         using objectptr = std::shared_ptr<gameobject>;
     }

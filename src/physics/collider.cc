@@ -13,9 +13,6 @@ namespace waifuengine
   {
     collider::collider() : components::component<collider>()
     {
-      offset = {0.f, 0.f};
-      debug_rect = std::shared_ptr<graphics::primatives::rectangle>(new graphics::primatives::rectangle("collider rect"));
-      debug_rect->set_shader("rectangle_primative_shader");
     }
 
     collider::~collider()
@@ -39,15 +36,10 @@ namespace waifuengine
       return colliding;
     }
 
-    void collider::draw_debug() const
+    void collider::draw_debug()
     {
       if (!disabled && debugging)
       {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        // TODO: draw lines around collider edges, change color based on collision status
-        // get position of parent object
-        // add offset
-        // use width and height to get vertices 
         glm::vec2 initial_position(0,0);
         auto parent_transform = parent->get_component<graphics::transform>();
         if(parent_transform.use_count())
@@ -58,71 +50,76 @@ namespace waifuengine
             initial_position = trf->translate();
           }
         }
-        initial_position += offset;
-
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        offset.set_translation(initial_position);
       }
     }
 
-    void collider::set_offset_from_owner_position(glm::vec2 o)
+    void collider::offset_translate(glm::vec2 translation)
     {
-      offset = o;
+      offset.translate(translation);
     }
 
-    glm::vec2 collider::get_offset_from_owner_position() const
+    void collider::offset_set_translation(glm::vec2 translation)
     {
-      return offset;
+      offset.set_translation(translation);
     }
 
-    void collider::set_offset_from_owner_position_x(float x)
+    glm::vec2 collider::offset_get_translation()
     {
-      offset = {x, offset.y};
+      return offset.translate();
     }
 
-    float collider::get_offset_from_owner_position_x() const
+    void collider::offset_rotate(float degrees)
     {
-      return offset.x;
+      offset.rotate(degrees);
     }
 
-    void collider::set_offset_from_owner_position_y(float y)
+    void collider::offset_set_rotation(float degrees)
     {
-      offset = {offset.x, y};
+      offset.set_rotation(degrees);
     }
 
-    float collider::get_offset_from_owner_position_y() const
+    float collider::offset_get_rotation()
     {
-      return offset.y;
+      return offset.rotate();
     }
 
-    void collider::set_dimensions(glm::vec2 d)
+    void collider::offset_scale(glm::vec2 s)
     {
-      dimensions = d;
+      offset.scale(s);
     }
 
-    glm::vec2 collider::get_dimensions() const
+    void collider::offset_set_scale(glm::vec2 s)
     {
-      return dimensions;
+      offset.set_scale(s);
     }
 
-    void collider::set_height(float h)
+    glm::vec2 collider::offset_get_scale()
     {
-      dimensions.y = h;
+      return offset.scale();
     }
 
-    float collider::get_height() const
+    void collider::offset_scalex(float s)
     {
-      return dimensions.y;
+      offset_scale(glm::vec2(s, offset_get_scaley()));
     }
 
-    void collider::set_width(float w)
+    void collider::offset_scaley(float sy)
     {
-      dimensions.x = w;
+      offset_scale(glm::vec2(offset_get_scalex(), sy));
     }
 
-    float collider::get_width() const
+    float collider::offset_get_scalex()
     {
-      return dimensions.x;
+      return offset.scale().x;
     }
+
+    float collider::offset_get_scaley()
+    {
+      return offset.scale().y;
+    }
+
+
 
     namespace collisions
     {

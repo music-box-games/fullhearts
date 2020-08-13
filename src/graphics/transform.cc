@@ -90,8 +90,22 @@ namespace waifuengine
 
     void transform::rotate(float degrees)
     {
-      rot_deg = degrees;
+      rot_deg += degrees;
       if(rot_deg < -360.0f)
+      {
+        rot_deg += 360.0f;
+      }
+      if(rot_deg > 360.0f)
+      {
+        rot_deg -= 360.0f;
+      }
+      dirty = true;
+    }
+
+    void transform::set_rotation(float d)
+    {
+      rot_deg = d;
+            if(rot_deg < -360.0f)
       {
         rot_deg += 360.0f;
       }
@@ -110,7 +124,13 @@ namespace waifuengine
 
     void transform::translate(glm::vec2 distance)
     {
-      pos_ = distance;
+      pos_ += distance;
+      dirty = true;
+    }
+
+    void transform::set_translation(glm::vec2 t)
+    {
+      pos_ = t;
       dirty = true;
     }
 
@@ -122,7 +142,7 @@ namespace waifuengine
 
     void transform::scale(glm::vec2 s)
     {
-      scale_ = s;
+      scale_ += s;
       dirty = true;
     }
 
@@ -132,9 +152,15 @@ namespace waifuengine
       return glm::vec2{dt.scale.x, dt.scale.y};
     }
 
+    void transform::set_scale(glm::vec2 s)
+    {
+      scale_ = s;
+      dirty = true;
+    }
+
     void transform::uniform_scale(float s)
     {
-      scale_ = { s, s };
+      scale_ += glm::vec2(s,s);
       dirty = true;
     }
 

@@ -9,8 +9,8 @@ namespace waifuengine
 {
   namespace graphics
   {
-    void draw_line(point2d start, point2d end, colors::rgb_value color);
-    void draw_line(line2d l, colors::rgb_value color);
+    void draw_line(point2d start, point2d end, colors::rgb_value color, float alpha);
+    void draw_line(line2d l, colors::rgb_value color, float alpha);
   }
 }
 

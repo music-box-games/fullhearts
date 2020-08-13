@@ -36,6 +36,11 @@ namespace waifuengine
       trans.rotate(degrees);
     }
 
+    void sprite::set_rotation(float d)
+    {
+      trans.set_rotation(d);
+    }
+
     float sprite::rotate() const
     {
       return trans.rotate();
@@ -46,6 +51,11 @@ namespace waifuengine
       trans.translate(d);
     }
 
+    void sprite::set_translation(glm::vec2 p)
+    {
+      trans.set_translation(p);
+    }
+
     glm::vec2 sprite::translate() const
     {
       return trans.translate();
@@ -54,6 +64,11 @@ namespace waifuengine
     void sprite::scale(glm::vec2 s)
     {
       trans.scale(s);
+    }
+
+    void sprite::set_scale(glm::vec2 s)
+    {
+      trans.set_scale(s);
     }
 
     glm::vec2 sprite::scale() const
