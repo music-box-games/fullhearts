@@ -17,44 +17,40 @@
 
 /******************************************************************************/
 /**
-* @file   point2d.hpp
+* @file   coordinates.hpp
 * @author Ryan Hanson
-* @date   27 Aug 2020
 * @par    email: iovita\@musicboxgames.net
-* @brief  2D point abstraction.
-*
+* @brief Provides logic for converting between screen and world coordinates.
 */
 /******************************************************************************/
 
-#ifndef _WE_POINT2D_HPP_
-#define _WE_POINT2D_HPP_
+#ifndef _WE_COORDINATES_HPP_
+#define _WE_COORDINATES_HPP_
 
 #include <glm/vec2.hpp>
-#include "coordinates.hpp"
 
 namespace waifuengine
 {
   namespace graphics
   {
-    using point2d = glm::vec2;
-    using screen_point2d = screen_coordinates;
-    using world_point2d = world_coordinates;
-
     /**
-      * @brief Converts a point in world space to screen space.
-      * @param p The point in world space.
-      * @return The equivalent point in screen space.
+      * Converts world coordinates to screen coordinates.
+      * @param c World coordinates to convert. Between (0,0) and (window_width, window_height).
+      * @return Corresponding screen coordinates. Between (-1,-1) and (1,1).
     */
-    screen_point2d world_point2d_to_screen_point2d(world_point2d p);
-
+    glm::vec2 world_coordinates_to_screen_coordinates(glm::vec2 c);
     /**
-      * @brief Converts a point in screen space to world spacej.
-      * @param p The point in screen space.
-      * @return The equivalent point in world space.
+      * Converts screen coordinates to world coordinates.
+      * @param c Screen coordinates to convert. Between (-1,-1) and (1,1).
+      * @return Corresponding world coordinates. Between (0,0) and (window_width, window_height).
     */
-    world_point2d screen_point2d_to_world_point2d(screen_point2d p);
+    glm::vec2 screen_coordinates_to_world_coordinates(glm::vec2 c);
+
+    using screen_coordinates = glm::vec2;
+    using world_coordinates = glm::vec2;
+
+    constexpr int SCREEN_COORD_RANGE = 2;
   }
 }
-
 
 #endif

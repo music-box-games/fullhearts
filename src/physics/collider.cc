@@ -1,9 +1,40 @@
+/****************************************************************************
+ *   Copyright (C) 2020 by Music Box Games                                  *
+ *                                                                          *
+ *   This file is part of WaifuEngine                                       *
+ *                                                                          *
+ *   WaifuEngine is free software: you can redistribute it and/or modify it *
+ *   under the terms of the MIT License.                                    *
+ *                                                                          *
+ *   WaifuEngine is distributed in the hope that it will be useful,         *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   MIT License for more details.                                          *
+ *                                                                          *
+ *   You should have received a copy of the MIT License along with          *
+ *   WaifuEngine.  If not, see https://opensource.org/licenses/MIT          *
+ ****************************************************************************/
+
+/******************************************************************************/
+/**
+* @file   collider.cc
+* @author Ryan Hanson
+* @date   27 Aug 2020
+* @par    email: iovita\@musicboxgames.net
+* @brief  Basic rectangle collider logic.
+*/
+/******************************************************************************/
+
 #include "collider.hpp"
 #include "sprite.hpp"
 #include "colors.hpp"
 #include "log.hpp"
 #include "window.hpp"
 #include "draw_rects.hpp"
+#include "shader.hpp"
+#include "polygon.hpp"
+#include "colors.hpp"
+#include "coordinates.hpp"
 
 namespace we = ::waifuengine;
 
@@ -40,17 +71,39 @@ namespace waifuengine
     {
       if (!disabled && debugging)
       {
-        glm::vec2 initial_position(0,0);
-        auto parent_transform = parent->get_component<graphics::transform>();
-        if(parent_transform.use_count())
+        // build polygon
+        // find positions of each corner of the collider to create line segments
+        if(!parent->has_component<graphics::transform>())
         {
-          graphics::transform * trf = dynamic_cast<graphics::transform *>(parent_transform.get());
-          if(trf)
-          {
-            initial_position = trf->translate();
-          }
+          return;
         }
-        offset.set_translation(initial_position);
+        auto parent_trans = dynamic_cast<graphics::transform *>(parent->get_component<graphics::transform>().get());
+        graphics::screen_point2d parent_position = parent_trans->get_position_in_screen_coordinates();
+
+        float screen_width_value = width * graphics::SCREEN_COORD_RANGE;
+        float screen_height_value = height * graphics::SCREEN_COORD_RANGE;
+
+        graphics::screen_point2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
+        graphics::screen_point2d top_left(bottom_left.x, parent_position.y + screen_height_value);
+        graphics::screen_point2d top_right(parent_position.x + screen_width_value, top_left.y);
+        graphics::screen_point2d bottom_right(top_right.x, bottom_left.y);
+        
+        // create and draw rect
+        graphics::rect2d rect(
+          graphics::line2d(bottom_left, top_left), 
+          graphics::line2d(top_left, top_right), 
+          graphics::line2d(top_right, bottom_right),
+          graphics::line2d(bottom_right, bottom_left)
+          );
+        
+        if(is_colliding())
+        {
+          rect.draw(graphics::colors::get_color(graphics::colors::color_name::red), 1.0f);
+        }
+        else
+        {
+          rect.draw(graphics::colors::get_color(graphics::colors::color_name::green), 1.0f);
+        }
       }
     }
 

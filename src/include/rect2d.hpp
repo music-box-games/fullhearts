@@ -23,7 +23,7 @@ namespace waifuengine
 
       void draw(glm::vec3 color, float alpha);
 
-      bool operator==(rect2d const& rhs) const; // * this only compares the sides, not VAO, VBO, EBO
+      bool operator==(rect2d const& rhs) const; // this only compares the sides, not VAO, VBO, EBO
     };
   }
 }

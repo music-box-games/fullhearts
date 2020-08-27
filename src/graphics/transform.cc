@@ -25,7 +25,7 @@ namespace waifuengine
       switch(a)
       {
         case axis::x:
-          return (static_cast<float>(core::settings::read_t<int>("window_width")) / ((p!= 0.0f) ? p : p + 0.001f)) - 1.0f;
+          return (static_cast<float>(core::settings::read_t<int>("window_width")) / ((p != 0.0f) ? p : p + 0.001f)) - 1.0f;
         case axis::y:
           return (static_cast<float>(core::settings::read_t<int>("window_height")) / ((p != 0.0f) ? p : p + 0.001f)) - 1.0f;
         default:
@@ -49,7 +49,7 @@ namespace waifuengine
 
     void transform::update(float dt)
     {
-      // recalc if dirty each frame to allow tweaks in imgui, store raaw vals and then make mat
+      // recalc if dirty each frame to allow tweaks in imgui
       if(dirty)
       {
         trans = glm::mat4(1.0f);
@@ -60,27 +60,66 @@ namespace waifuengine
       }
     }
 
-    void transform::width_in_pixels(int w)
-    {
-      // get width of window
-      auto wid = graphics::get_current_window()->get_width();
-      scale(glm::vec2{wid / w, 1.0f});
-    }
-
-    void transform::height_in_pixels(int h)
-    {
-      auto hei = graphics::get_current_window()->get_height();
-      scale(glm::vec2{1.0f, hei / h});
-    }
-
     int transform::width_in_pixels() const
     {
-      return static_cast<int>(graphics::get_current_window()->get_width());
+      return scale().x * static_cast<int>(graphics::get_current_window()->get_width());
     }
 
     int transform::height_in_pixels() const
     {
-      return static_cast<int>(graphics::get_current_window()->get_height());
+      return scale().y * static_cast<int>(graphics::get_current_window()->get_height());
+    }
+
+    glm::vec2 transform::dimensions_in_pixels() const
+    {
+      return glm::vec2(width_in_pixels(), height_in_pixels());
+    }
+
+    glm::vec2 transform::position_in_pixels() const
+    {
+      return get_position_in_world_coordinates();
+    }
+
+    screen_point2d transform::get_position_in_screen_coordinates() const
+    {
+      return pos_;
+    }
+
+    world_point2d transform::get_position_in_world_coordinates() const
+    {
+      return screen_point2d_to_world_point2d(get_position_in_screen_coordinates());
+    }
+
+    void transform::set_position_in_screen_coordinates(screen_point2d p)
+    {
+      pos_ = p;
+      dirty = true;
+    }
+
+    void transform::set_position_in_world_coordinates(world_point2d p)
+    {
+      set_position_in_screen_coordinates(world_point2d_to_screen_point2d(p));
+      dirty = true;
+    }
+
+    void transform::set_width_ratio(float wr)
+    {
+      width_ratio = wr;
+    }
+
+    void transform::set_height_ratio(float wh)
+    {
+      height_ratio = wh;
+    }
+
+    float transform::get_width_ratio() const
+    {
+      return width_ratio;
+    }
+
+    float transform::get_height_ratio() const
+    {
+      return height_ratio;
     }
 
     void transform::draw() const

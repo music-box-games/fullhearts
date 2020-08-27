@@ -60,7 +60,7 @@ namespace graphics
       log::LOGERROR("Could not init GLFW!");
     }
     // create initial window
-    auto w = create_window(title);
+    auto w = create_window(title, resolutions::FHD);
     if(!bool(w))
     {
       // TODO error

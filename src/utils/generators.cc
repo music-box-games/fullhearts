@@ -4,6 +4,7 @@
 #include <random>
 #include <string>
 #include <climits>
+#include <iterator>
 
 #include <generators.hpp>
 

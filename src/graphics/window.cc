@@ -59,6 +59,8 @@ void window::queue_input(int key, int action)
   queued_inputs.push_back({key, action});
 }
 
+window::window(std::string t, glm::vec2 r) : window(t, r.x, r.y) {}
+
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
   glfwWindowHint(GLFW_SAMPLES, 4); // 4x AA
@@ -253,6 +255,11 @@ std::shared_ptr<window> create_window(std::string title, int width, int height)
   impl::last_window = ptr->id;
   glfwSetKeyCallback(ptr->data, impl::key_callback);
   return ptr;
+}
+
+std::shared_ptr<window> create_window(std::string title, glm::vec2 res)
+{
+  return create_window(title, res.x, res.y);
 }
 
 void mark_window_to_close(window_id_type id)

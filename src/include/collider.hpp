@@ -1,3 +1,30 @@
+/****************************************************************************
+ *   Copyright (C) 2020 by Music Box Games                                  *
+ *                                                                          *
+ *   This file is part of WaifuEngine                                       *
+ *                                                                          *
+ *   WaifuEngine is free software: you can redistribute it and/or modify it *
+ *   under the terms of the MIT License.                                    *
+ *                                                                          *
+ *   WaifuEngine is distributed in the hope that it will be useful,         *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   MIT License for more details.                                          *
+ *                                                                          *
+ *   You should have received a copy of the MIT License along with          *
+ *   WaifuEngine.  If not, see https://opensource.org/licenses/MIT          *
+ ****************************************************************************/
+
+/******************************************************************************/
+/**
+* @file   collider.hpp
+* @author Ryan Hanson
+* @date   27 Aug 2020
+* @par    email: iovita\@musicboxgames.net
+* @brief  Basic rectangle collider logic.
+*
+*/
+/******************************************************************************/
 
 #ifndef _WE_COLLIDER_HPP_
 #define _WE_COLLIDER_HPP_
@@ -17,17 +44,20 @@ namespace waifuengine
   {
     class collider : public waifuengine::components::component<collider>
     {
+    // friends
     protected:
       friend class core::debug::imgui_listener;
 
-      // offset from the parent's transform
-      graphics::transform offset;
-      // if colliding with another object
-      bool colliding;
+    // unserialized member variables
+    protected:
+      graphics::transform offset; /**< transform offset from the parent object's transform */
+      bool colliding; /**< if this collider is currently involved in a collision */
+      float width; /**< Width ratio of collider */
+      float height; /**< Height ratio of collider */
 
     public:
-      COMPONENT_NAME(collider);
-      COMPONENT_TYPE(collider);
+      COMPONENT_NAME(collider); /**< Name of component type */
+      COMPONENT_TYPE(collider); /**< Type of component */
 
       collider();
       virtual ~collider();
@@ -35,6 +65,18 @@ namespace waifuengine
       virtual void update(float dt);
       virtual void draw() const;
       virtual void draw_debug();
+
+      /**
+       * @brief Sets the collider's width to be a ratio of the window's width.
+       * @param ratio The width ratio to set.
+      */
+      void set_width(float ratio);
+
+      /**
+        * @brief Sets the collider's height to be a ratio of the window's height.
+        * @param ratio The height ratio to set.
+      */
+      void set_height(float ratio);
 
       void offset_translate(glm::vec2 translation);
       void offset_set_translation(glm::vec2 translation);
@@ -51,8 +93,6 @@ namespace waifuengine
       void offset_scaley(float scale);
       float offset_get_scalex();
       float offset_get_scaley();
-
-      
 
       bool is_colliding() const;
     };

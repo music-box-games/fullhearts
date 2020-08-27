@@ -17,7 +17,7 @@
 
 /******************************************************************************/
 /**
-* @file   point2d.hpp
+* @file   point2d.cc
 * @author Ryan Hanson
 * @date   27 Aug 2020
 * @par    email: iovita\@musicboxgames.net
@@ -26,35 +26,33 @@
 */
 /******************************************************************************/
 
-#ifndef _WE_POINT2D_HPP_
-#define _WE_POINT2D_HPP_
-
-#include <glm/vec2.hpp>
+#include "point2d.hpp"
 #include "coordinates.hpp"
+
+namespace we = ::waifuengine;
 
 namespace waifuengine
 {
   namespace graphics
   {
-    using point2d = glm::vec2;
-    using screen_point2d = screen_coordinates;
-    using world_point2d = world_coordinates;
-
     /**
       * @brief Converts a point in world space to screen space.
       * @param p The point in world space.
       * @return The equivalent point in screen space.
     */
-    screen_point2d world_point2d_to_screen_point2d(world_point2d p);
+    screen_point2d world_point2d_to_screen_point2d(world_point2d p)
+    {
+      return world_coordinates_to_screen_coordinates(p);
+    }
 
     /**
       * @brief Converts a point in screen space to world spacej.
       * @param p The point in screen space.
       * @return The equivalent point in world space.
     */
-    world_point2d screen_point2d_to_world_point2d(screen_point2d p);
+    world_point2d screen_point2d_to_world_point2d(screen_point2d p)
+    {
+      return screen_coordinates_to_world_coordinates(p);
+    }
   }
 }
-
-
-#endif

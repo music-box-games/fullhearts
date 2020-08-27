@@ -8,6 +8,8 @@
 
 #include "debug.hpp"
 #include "component.hpp"
+#include "coordinates.hpp"
+#include "point2d.hpp"
 
 namespace waifuengine
 {
@@ -42,9 +44,12 @@ namespace waifuengine
       bool dirty;
 
       glm::vec2 scale_;
-      glm::vec2 pos_;
+      screen_point2d pos_;
 
       float rot_deg;
+
+      float width_ratio;
+      float height_ratio;
 
       template<class Archive>
       void serialize(Archive& a, unsigned int const v)
@@ -83,10 +88,64 @@ namespace waifuengine
       void set_scale(glm::vec2 s);
       glm::vec2 scale() const;
 
-      void width_in_pixels(int width);
-      void height_in_pixels(int height);
       int width_in_pixels() const;
       int height_in_pixels() const;
+      glm::vec2 dimensions_in_pixels() const;
+      [[deprecated]] glm::vec2 position_in_pixels() const;
+
+      /**
+        * @brief Gets the screen coordinates for the center of the object
+        * @return Object's screen coordinates.
+      */
+      screen_point2d get_position_in_screen_coordinates() const;
+
+      /**
+        * @brief Gets the world coordinates for the center of the object
+        * @return Object's world coordinates.
+      */
+      world_point2d get_position_in_world_coordinates() const;
+
+      /**
+        * @brief Sets the center of the object to the position given in screen coordinates.
+        * @param p Point in screen coordinates to set position to.
+      */
+      void set_position_in_screen_coordinates(screen_point2d p);
+
+      /**
+        * @brief Sets the center of the object to the position given in world coordinates.
+        * @param p Point in world coordinates to set position to.
+      */
+     void set_position_in_world_coordinates(world_point2d p);
+
+     /**
+       * @brief Sets the "width" of the object.
+       * 
+       * The width ratio is a ratio of the width of the object to the width of the window.
+       * 
+       * @param wr Ratio of object width to window width.
+     */
+     void set_width_ratio(float wr);
+
+      /**
+        * @brief Sets the "height" of the object.
+        * 
+        * The height ratio is a ratio of the height of the object to the height of the window.
+        * 
+        * @param wh Ratio of object height to window height.
+      */
+      void set_height_ratio(float wh);
+
+      /**
+        * @brief Gets the width ratio of the object.
+        * @return The object's width ratio.
+      */
+      float get_width_ratio() const;
+
+      /**
+        * @brief Gets the height ratio of the object.
+        * @return The object's height ratio.
+      */
+      float get_height_ratio() const;
 
       void lock_screen_proportion(bool set = true);
       glm::mat4 *data();

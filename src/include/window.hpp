@@ -11,6 +11,7 @@
 #include <settings.hpp>
 
 #include "debug.hpp"
+#include "graphics_values.hpp"
 
 namespace waifuengine
 {
@@ -21,6 +22,7 @@ namespace waifuengine
     {
     public:
       using window_ptr = GLFWwindow *;
+      window(std::string title, glm::vec2 res);
       window(std::string title, int width, int height);
       window(std::string title, window_ptr w); // TODO: this is uhhhhhhhhhhh
       ~window();
@@ -72,6 +74,8 @@ namespace waifuengine
     window_map const& get_window_list();
 
     std::shared_ptr<window> create_window(std::string title, int width = waifuengine::core::settings::read_t<int>("window_width"), int height = waifuengine::core::settings::read_t<int>("window_height"));
+    std::shared_ptr<window> create_window(std::string title, glm::vec2 res);
+
 
     void mark_window_to_close(window_id_type id);
     void mark_all_windows_to_close();

@@ -70,7 +70,7 @@ engine::engine()
   waifuengine::log::init(waifuengine::log::trace_level::pedantic);
   waifuengine::core::thread_pool::init();
   waifuengine::events::init();
-  waifuengine::graphics::init("test");
+  waifuengine::graphics::init("Full Hearts");
   waifuengine::audio::init();
   waifuengine::scenes::init();
   waifuengine::utils::timers::init();
