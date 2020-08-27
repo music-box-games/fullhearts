@@ -164,9 +164,9 @@ namespace waifuengine
               * @brief Gets a handle to an attached component.
               * @return Handle to the requested component, or nullptr if not present.
             */
-            std::shared_ptr<waifuengine::components::_impl::_base_component> get_component()
+            std::shared_ptr<_CType> get_component()
             {
-                return (components_.count(_CType::NAME)) ? components_[_CType::NAME] : nullptr;
+                return (components_.count(_CType::NAME)) ? std::dynamic_pointer_cast<_CType, components::_impl::_base_component>(components_[_CType::NAME]) : nullptr;
             }
 
             template<class _CType>
@@ -174,9 +174,9 @@ namespace waifuengine
               * @brief Gets a const handle to an attached component.
               * @return Const handle to the requested component, or nullptr if not present.
             */
-            std::shared_ptr<waifuengine::components::_impl::_base_component> const get_component_const() const
+            std::shared_ptr<_CType> const get_component_const() const
             {
-                return (components_.count(_CType::NAME)) ? components_.at(_CType::NAME) : nullptr;
+                return (components_.count(_CType::NAME)) ? std::dynamic_pointer_cast<_CType, components::_impl::_base_component>(components_.at(_CType::NAME)) : nullptr;
             }
 
             template<class _CType>

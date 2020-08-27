@@ -40,6 +40,8 @@ namespace waifuengine
       pos_ = {0.0f, 0.0f};
       rot_deg = 0.0f;
       dirty = true;
+      width_ratio = 0.0f;
+      height_ratio = 0.0f;
     }
 
     transform::~transform()

@@ -22,7 +22,8 @@ namespace waifuengine
     {
       if(!disabled)
       {
-      tex->draw(trans);
+        
+        tex->draw(trans);
       }
     }
 

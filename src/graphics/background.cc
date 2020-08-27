@@ -29,11 +29,7 @@ namespace waifuengine
       object_transform->set_width_ratio(1.0f);
       object_transform->set_height_ratio(1.0f);
 
-      
       obj->add_component_v<sprite>(sprite_name);
-      auto sprt = dynamic_cast<graphics::sprite *>(obj->get_component<graphics::sprite>().get());
-
-      //sprt->scale({ 0.807f, 0.807f }); // TODO: this is just covering up a bug
       
       return obj;
     }

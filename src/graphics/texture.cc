@@ -28,7 +28,7 @@ namespace waifuengine
         std::vector<std::string> all_image_names;
         imagemap loaded_images;
         texturemap loaded_textures;
-      }
+      } // namespace impl
 
       void release_textures()
       {
@@ -55,7 +55,7 @@ namespace waifuengine
         return utils::list_keys(impl::loaded_images);
       }
 
-      std::optional<textureptr> get_texture(std::string const& name)
+      std::optional<textureptr> get_texture(std::string const &name)
       {
         if (impl::loaded_textures.count(name))
         {
@@ -70,7 +70,7 @@ namespace waifuengine
         }
       }
 
-      std::optional<imageptr> get_image(std::string const& name)
+      std::optional<imageptr> get_image(std::string const &name)
       {
         if (impl::loaded_images.count(name))
         {
@@ -88,7 +88,7 @@ namespace waifuengine
       {
         std::string images_path = we::utils::get_exe_path() + "\\assets\\images";
         std::vector<fs::path> paths = we::utils::recursive_list_files_in_folder(images_path);
-        for (fs::path const& p : paths)
+        for (fs::path const &p : paths)
         {
           impl::loaded_images[we::utils::strip_filename(p)] = std::shared_ptr<image>(new image(p));
         }
@@ -99,7 +99,7 @@ namespace waifuengine
         std::string images_path = we::utils::get_exe_path() + "\\assets\\images";
         std::vector<fs::path> paths = we::utils::recursive_list_files_in_folder(images_path);
         std::set<std::string> names;
-        std::for_each(paths.begin(), paths.end(), [&names](fs::path const& p) -> void {
+        std::for_each(paths.begin(), paths.end(), [&names](fs::path const &p) -> void {
           names.insert(we::utils::strip_filename(p));
         });
         return names;
@@ -110,17 +110,17 @@ namespace waifuengine
         std::string images_path = we::utils::get_exe_path() + "\\assets\\images";
         auto paths = we::utils::recursive_list_files_in_folder(images_path);
         std::unordered_map<std::string, fs::path> p;
-        for(fs::path const& f : paths)
+        for (fs::path const &f : paths)
         {
           p[we::utils::strip_filename(f)] = f;
         }
         return p;
       }
 
-      imageptr load_image(std::string const& name)
+      imageptr load_image(std::string const &name)
       {
         auto img_names = list_image_paths();
-        if(img_names.count(name))
+        if (img_names.count(name))
         {
           log::LOGTRACE(std::string("Requested image: \"" + name + "\" file found. Loading..."));
           impl::loaded_images[name] = std::shared_ptr<image>(new image(img_names[name]));
@@ -133,7 +133,7 @@ namespace waifuengine
         }
       }
 
-      textureptr load_texture(std::string const& image_name, std::string const& shader_name)
+      textureptr load_texture(std::string const &image_name, std::string const &shader_name)
       {
         if (impl::loaded_textures.count(image_name))
         {
@@ -143,18 +143,17 @@ namespace waifuengine
         else
         {
           log::LOGTRACE(std::string("Requested texture: \"" + image_name + "\" not loaded. Retrieving image data."));
-        std::shared_ptr<image> i = get_image(image_name).value();
-        impl::loaded_textures[image_name] = std::make_shared<texture>(i, image_name, impl::loaded_textures.size(), shader_name);
-        return impl::loaded_textures[image_name];
+          std::shared_ptr<image> i = get_image(image_name).value();
+          impl::loaded_textures[image_name] = std::make_shared<texture>(i, image_name, impl::loaded_textures.size(), shader_name);
+          return impl::loaded_textures[image_name];
         }
       }
 
       void load_textures()
       {
-
       }
 
-      texture::texture(imageptr i, std::string const& n, unsigned int uid, std::string shader_name) : unit_id(0)
+      texture::texture(imageptr i, std::string const &n, unsigned int uid, std::string shader_name) : unit_id(0)
       {
         log::LOGTRACE(std::string("Constructing texture: " + n));
         im = i;
@@ -168,14 +167,14 @@ namespace waifuengine
 
         auto wind = get_current_window();
 
-        float top_left_x =      0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) -1.0f;
-        float top_left_y =      0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
-        float top_right_x =     0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
-        float top_right_y =     0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
-        float bottom_right_x =  0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
-        float bottom_right_y =  0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
-        float bottom_left_x =   0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f;
-        float bottom_left_y =   0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
+        float top_left_x = 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f;
+        float top_left_y = 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
+        float top_right_x = 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
+        float top_right_y = 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
+        float bottom_right_x = 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
+        float bottom_right_y = 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
+        float bottom_left_x = 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f;
+        float bottom_left_y = 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
 
         glm::vec2 top_left = {top_left_x, top_left_y};
         glm::vec2 top_right = {top_right_x, top_right_y};
@@ -183,11 +182,11 @@ namespace waifuengine
         glm::vec2 bottom_left = {bottom_left_x, bottom_left_y};
 
         vert_array v = {
-          // position                           // color              // tex coord
-           top_left[0],  top_left[1],           1.0f, 0.0f, 0.0f,  0.0f, 0.0f, // top left
-           top_right[0], top_right[1],          0.0f, 1.0f, 0.0f,  1.0f, 0.0f,  // top right
-           bottom_right[0], bottom_right[1],    0.0f, 0.0f, 1.0f,  1.0f, 1.0f, // bottom right
-           bottom_left[0], bottom_left[1],      1.0f, 1.0f, 1.0f,  0.0f, 1.0f // bottom left
+            // position                           // color              // tex coord
+            top_left[0], top_left[1], 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,         // top left
+            top_right[0], top_right[1], 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,       // top right
+            bottom_right[0], bottom_right[1], 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // bottom right
+            bottom_left[0], bottom_left[1], 1.0f, 1.0f, 1.0f, 0.0f, 1.0f    // bottom left
         };
 
         vertices = v;
@@ -198,9 +197,8 @@ namespace waifuengine
         glGenBuffers(1, &ebo);
 
         std::array<unsigned int, ELEMENT_COUNT> e = {
-          0, 1, 2,
-          2, 3, 0
-        };
+            0, 1, 2,
+            2, 3, 0};
         elements = e;
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -225,8 +223,7 @@ namespace waifuengine
 
         int tex_attribute = shd->get_attribute("texcoord");
         glEnableVertexAttribArray(tex_attribute);
-        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
-
+        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(5 * sizeof(float)));
 
         load(im);
 
@@ -238,7 +235,6 @@ namespace waifuengine
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
       }
 
-      
       texture::~texture()
       {
         log::LOGTRACE(std::string("Destructing texture: " + name));
@@ -257,8 +253,8 @@ namespace waifuengine
 #define TUNIT(x) (GL_TEXTURE0 + x)
       void texture::draw(transform t) const
       {
-      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-              glBindTexture(GL_TEXTURE_2D, txtr);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBindTexture(GL_TEXTURE_2D, txtr);
 
         glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -273,7 +269,7 @@ namespace waifuengine
 
         int tex_attribute = glGetAttribLocation(shd->get_id(), "texcoord");
         glEnableVertexAttribArray(tex_attribute);
-        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
+        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void *)(5 * sizeof(float)));
 
         int transform_attribute = glGetUniformLocation(shd->get_id(), "transform");
         if (transform_attribute == -1)
@@ -284,7 +280,7 @@ namespace waifuengine
         glm::vec4 result = (*(t.data())) * glm::vec4(1.0, 0.0, 0.0, 1.0f);
 
         shd->use();
-        shd->set_int_1("tex",0);
+        shd->set_int_1("tex", 0);
 
         glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(t.data())));
 
@@ -293,7 +289,6 @@ namespace waifuengine
 
       void texture::update(float)
       {
-
       }
 
       void texture::load(imageptr img)
@@ -305,20 +300,18 @@ namespace waifuengine
         glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data());
         glGenerateMipmap(GL_TEXTURE_2D);
         shd->set_int_1("tex", unit_id);
-
       }
 #undef TUNIT
 
       namespace test
       {
-        texture_test_object::texture_test_object(std::string const& n, std::string const& texture_name, std::string const& shader_name) : object_management::gameobject(n)
+        texture_test_object::texture_test_object(std::string const &n, std::string const &texture_name, std::string const &shader_name) : object_management::gameobject(n)
         {
           tex = get_texture(texture_name).value();
         }
 
         texture_test_object::~texture_test_object()
         {
-
         }
 
         void texture_test_object::update(float dt)
@@ -336,7 +329,7 @@ namespace waifuengine
             tex->draw();
           }
         }
-      }
+      } // namespace test
 
     } // namespace textures
   }   // namespace graphics
