@@ -55,20 +55,12 @@ namespace waifuengine
       auto bg_obj = graphics::background::add_background("mainmenu_bg", "main_menu_bg");
       
       auto start_button = ui::add_button("start button", "blank_button");
-      start_button->set_scale({0.2f, 0.3f});
-      start_button->set_translation({0.0f, -0.55f});
       
       auto load_button = ui::add_button("load button", "blank_button");
-      load_button->set_scale({0.2f, 0.3f});
-      load_button->set_translation({0.0f, -1.5f});
 
       auto options_button = ui::add_button("options button", "blank_button");
-      options_button->set_scale({0.2f, 0.3f});
-      options_button->set_translation({0.0f, -2.25f});
       
       auto exit_button = ui::add_button("exit button", "blank_button");
-      exit_button->set_scale({0.2f, 0.3f});
-      exit_button->set_translation({0.0f, -3.f});
       
       start_fade_in();
 

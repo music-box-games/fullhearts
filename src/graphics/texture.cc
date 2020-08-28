@@ -12,6 +12,7 @@
 #include "image.hpp"
 #include "container_utils.hpp"
 #include "log.hpp"
+#include "point2d.hpp"
 
 namespace we = ::waifuengine;
 
@@ -251,8 +252,11 @@ namespace waifuengine
       }
 
 #define TUNIT(x) (GL_TEXTURE0 + x)
-      void texture::draw(transform t) const
+      void texture::draw() const
       {
+  
+
+
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBindTexture(GL_TEXTURE_2D, txtr);
 
@@ -277,18 +281,49 @@ namespace waifuengine
           log::LOGERROR("Could not locate uniform \"transform\"");
           return;
         }
-        glm::vec4 result = (*(t.data())) * glm::vec4(1.0, 0.0, 0.0, 1.0f);
 
         shd->use();
         shd->set_int_1("tex", 0);
 
-        glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(t.data())));
+        glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(last_trans.const_data())));
 
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(elements.size()), GL_UNSIGNED_INT, 0);
       }
 
-      void texture::update(float)
+      void texture::update(transform t)
       {
+        last_trans = t;
+              // calc vertices from transform's position and dimensions
+        // get width and height of window
+        float window_width = get_current_window()->get_width();
+        float window_height = get_current_window()->get_height();
+        float height_ratio = t.get_height_ratio();
+        float width_ratio = t.get_width_ratio();
+        float transformed_width = window_width * width_ratio;
+        float transformed_height = window_height * height_ratio;
+
+        screen_point2d pos = t.get_position_in_world_coordinates();
+
+        // take the x value for the center, and subtract half of the width of the object to the the x value for the left two verts
+        // take the y value for the center, and add half of the height of the object to get the y value for the top two verts
+        world_point2d top_left(pos.x - (transformed_width / 2.0f), pos.y + (transformed_height / 2.0f));
+        world_point2d top_right(pos.x + (transformed_width / 2.0f), top_left.y);
+        world_point2d bottom_right(top_right.x, pos.y - (transformed_height / 2.0f));
+        world_point2d bottom_left(top_left.x, bottom_right.y);
+
+        screen_point2d stop_left = world_point2d_to_screen_point2d(top_left);
+        screen_point2d stop_right = world_point2d_to_screen_point2d(top_right);
+        screen_point2d sbottom_right = world_point2d_to_screen_point2d(bottom_right);
+        screen_point2d sbottom_left = world_point2d_to_screen_point2d(bottom_left);
+
+                vert_array v = {
+            // position             // color r     g      b   // tex coord uv
+            stop_left.x, stop_left.y,         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // top left
+            stop_right.x, stop_right.y,       0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // top right
+            sbottom_right.x, sbottom_right.y, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // bottom right
+            sbottom_left.x, sbottom_left.y,   1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // bottom left
+        };
+        vertices = v;
       }
 
       void texture::load(imageptr img)
@@ -314,11 +349,11 @@ namespace waifuengine
         {
         }
 
-        void texture_test_object::update(float dt)
+        void texture_test_object::update(float)
         {
           if (!disabled_)
           {
-            tex->update(dt);
+            tex->update();
           }
         }
 

@@ -18,7 +18,8 @@ namespace waifuengine
         {graphics::sprite::NAME, component_order::sprite},
         {graphics::debug_draw::NAME, component_order::debug_draw},
         {physics::collider::NAME, component_order::collider},
-        {ui::mouse_collider::NAME, component_order::mouse_collider}
+        {ui::mouse_collider::NAME, component_order::mouse_collider},
+        {graphics::transform::NAME, component_order::transform},
       };
 
       return orders[a] < orders[b];

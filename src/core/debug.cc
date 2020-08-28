@@ -136,6 +136,19 @@ namespace waifuengine
               {
                 t->set_scale(glm::vec2(scale_x, scale_y));
               }
+
+              float width_ratio = t->width_ratio;
+              float height_ratio = t->height_ratio;
+              if(ImGui::DragFloat("Width Ratio", &width_ratio, 0.01f))
+              {
+                t->set_width_ratio(width_ratio);
+              }
+              if(ImGui::DragFloat("Height Ratio", &height_ratio, 0.01f))
+              {
+                t->set_height_ratio(height_ratio);
+              }
+
+
               ImGui::TreePop();
             }
           }
@@ -149,8 +162,9 @@ namespace waifuengine
         {
           if(dd)
           {
-            if(ImGui::TreeNode(name.c_str()))
+            if(ImGui::TreeNode(graphics::debug_draw::NAME))
             {
+              ImGui::Text("Name: %s", name.c_str());
               bool disable = dd->is_disabled();
               if(ImGui::Checkbox("Disable", &disable))
               {
@@ -182,8 +196,9 @@ namespace waifuengine
         {
           if(c)
           {
-            if(ImGui::TreeNode(name.c_str()))
+            if(ImGui::TreeNode(physics::collider::NAME))
             {
+              ImGui::Text("Name: %s", name.c_str());
               bool disable = c->is_disabled();
               if(ImGui::Checkbox("Disable", &disable))
               {
@@ -204,8 +219,9 @@ namespace waifuengine
         {
           if (s)
           {
-            if (ImGui::TreeNode(name.c_str()))
+            if (ImGui::TreeNode(graphics::sprite::NAME))
             {
+              ImGui::Text("Name: %s", name.c_str());
               bool disable = s->is_disabled();
               if(ImGui::Checkbox("Disable", &disable))
               {
@@ -242,6 +258,7 @@ namespace waifuengine
             component_tree_t(dd, c.first);
           }
         }
+
         // TODO: template overloads of this for graphics prims maybe
         void object_tree(std::pair<std::string const, std::shared_ptr<we::object_management::gameobject>> &obj, std::shared_ptr<we::object_management::space> sp = {})
         {

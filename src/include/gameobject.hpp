@@ -141,9 +141,12 @@ namespace waifuengine
             {
               std::scoped_lock lock(lock_);
 
-              auto ptr = std::shared_ptr<_CType>(new _CType(args...));
+              std::shared_ptr<_CType> ptr = std::make_shared<_CType>(args...);
+
               ptr->parent = this;
-              components_[_CType::NAME] = ptr;
+              std::string n = _CType::NAME;
+
+              components_[n] = ptr;
               return ptr;
             }
 
@@ -166,7 +169,14 @@ namespace waifuengine
             */
             std::shared_ptr<_CType> get_component()
             {
-                return (components_.count(_CType::NAME)) ? std::dynamic_pointer_cast<_CType, components::_impl::_base_component>(components_[_CType::NAME]) : nullptr;
+              if (components_.count(_CType::NAME))
+              {
+                return std::reinterpret_pointer_cast<_CType>(components_.at(_CType::NAME));
+              }
+              else
+              {
+                return nullptr;
+              }
             }
 
             template<class _CType>
@@ -176,7 +186,7 @@ namespace waifuengine
             */
             std::shared_ptr<_CType> const get_component_const() const
             {
-                return (components_.count(_CType::NAME)) ? std::dynamic_pointer_cast<_CType, components::_impl::_base_component>(components_.at(_CType::NAME)) : nullptr;
+                return (components_.count(_CType::NAME)) ? std::dynamic_pointer_cast<_CType>(components_.at(_CType::NAME)) : nullptr;
             }
 
             template<class _CType>

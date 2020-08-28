@@ -99,7 +99,7 @@ namespace waifuengine
         operator std::string() { return name; }
         bool operator<(_base_component const &rhs) { return type < rhs.type; }
 
-        virtual void operator=(_base_component const &rhs) = 0;
+        //virtual void operator=(_base_component const &rhs) = 0;
         virtual bool operator==(_base_component const &rhs) = 0;
 
       private:

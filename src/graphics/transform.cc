@@ -39,9 +39,9 @@ namespace waifuengine
       scale_ = {1.0f, 1.0f};
       pos_ = {0.0f, 0.0f};
       rot_deg = 0.0f;
-      dirty = true;
       width_ratio = 0.0f;
       height_ratio = 0.0f;
+      dirty = true;
     }
 
     transform::~transform()
@@ -49,16 +49,21 @@ namespace waifuengine
 
     }
 
+    void transform::calculate_transform()
+    {
+      trans = glm::mat4(1.0f);
+      trans = glm::scale(trans, glm::vec3(scale_, 1.0f));
+      trans = glm::rotate(trans, glm::radians(rot_deg), glm::vec3(0.0, 0.0f, 1.0f));
+      trans = glm::translate(trans, glm::vec3(pos_, 0.0f));
+      dirty = false;
+    }
+
     void transform::update(float dt)
     {
       // recalc if dirty each frame to allow tweaks in imgui
       if(dirty)
       {
-        trans = glm::mat4(1.0f);
-        trans = glm::scale(trans, glm::vec3(scale_, 1.0f));
-        trans = glm::rotate(trans, glm::radians(rot_deg), glm::vec3(0.0f, 0.0f, 1.0f));
-        trans = glm::translate(trans, glm::vec3(pos_, 0.0f));
-        dirty = false;
+        calculate_transform();
       }
     }
 
@@ -208,6 +213,16 @@ namespace waifuengine
     glm::mat4 * transform::data()
     {
       return &trans;
+    }
+
+    glm::mat4 const * transform::const_data() const
+    {
+      return & trans;
+    }
+
+    glm::mat4 transform::matrix() const
+    {
+      return trans;
     }
 
     decomposed_transform transform::decompose() const

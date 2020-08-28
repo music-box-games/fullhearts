@@ -58,6 +58,8 @@ namespace waifuengine
         
       }
 
+      void calculate_transform();
+
     public:
       COMPONENT_NAME(transform);
       COMPONENT_TYPE(transform);
@@ -146,9 +148,11 @@ namespace waifuengine
         * @return The object's height ratio.
       */
       float get_height_ratio() const;
-
+      
       void lock_screen_proportion(bool set = true);
       glm::mat4 *data();
+      glm::mat4 const * const_data() const;
+      glm::mat4 matrix() const;
 
       decomposed_transform decompose() const;
     };

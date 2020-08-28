@@ -15,8 +15,9 @@ namespace waifuengine
     {
     private:
       friend class waifuengine::core::debug::imgui_listener;
-      textures::textureptr tex;
-      transform trans;
+      textures::textureptr tex; /**< pointer to the texture this sprite uses */
+      transform trans; /**< the sprite's transform, separate from the parent object */
+      bool locked_to_parent_transform; /**< if the sprite should just use the transform from the parent object instead of its own */
 
       friend class boost::serialization::access;
       template<class Archive>
@@ -49,6 +50,18 @@ namespace waifuengine
       glm::vec2 scale() const;
 
       void scale_to_window();
+
+      /**
+        * @brief Makes the sprite use the parent's transform instead.
+        * @param set To set or not to set.
+      */
+      void lock_transform_to_parent_transform(bool set = true);
+
+      /**
+        * @brief Checks if the sprite is using its parent's transform instead of its own.
+        * @return If using the parent's transform.
+      */
+      bool transform_locked_to_parent() const;
 
       
     };

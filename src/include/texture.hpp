@@ -35,27 +35,31 @@ namespace waifuengine
         using vert_array = std::array<float, VERT_COUNT>;
         using element_array = std::array<unsigned int, ELEMENT_COUNT>;
 
-        unsigned int unit_id;
-        unsigned int txtr;
-        vert_array vertices;
-        element_array elements;
-        std::shared_ptr<shaders::shader> shd;
-        unsigned int vao;
-        unsigned int vbo;
-        unsigned int ebo;
-        int width;
-        int height;
-        std::shared_ptr<image> im;
+        unsigned int unit_id; /**< texture unit ID */
+        unsigned int txtr; /**< texture data */
+        vert_array vertices; /**< array of vertices */
+        element_array elements; /**< array of elements */
+        std::shared_ptr<shaders::shader> shd; /**< shader */
+        unsigned int vao; /**< vertex array object */
+        unsigned int vbo; /**< vertex buffer object */
+        unsigned int ebo; /**< element buffer object */
 
-        std::string name;
+        int width; /**< texture's width in pixels */
+        int height; /**< texture's height in pixels */
+        std::shared_ptr<image> im; /**< image file for texture */
+
+        std::string name; /**< texture name */
+
+        transform last_trans; /**< copy of last transform passed to update() */
+
         void load(imageptr i);
 
       public:
         texture(imageptr image, std::string const& name, unsigned int id, std::string shader_name);
         ~texture();
 
-        void draw(transform t = transform()) const;
-        void update(float dt);
+        void draw() const;
+        void update(transform t = transform());
         void set_transform();   
 
         glm::vec2 texture_dimensions() const;  
