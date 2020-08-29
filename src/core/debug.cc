@@ -105,13 +105,9 @@ namespace waifuengine
           }
         }
 
-        void transform_tree(we::graphics::transform *t)
+        void transform_tree_impl(we::graphics::transform * t)
         {
-          if (t)
-          {
-            if (ImGui::TreeNode("Transform"))
-            {
-              float rot = t->rot_deg;
+          float rot = t->rot_deg;
               if (ImGui::DragFloat("Rotation", &rot, 0.1f))
               {
                 t->set_rotation(rot);
@@ -147,7 +143,16 @@ namespace waifuengine
               {
                 t->set_height_ratio(height_ratio);
               }
+        }
 
+        void transform_tree(we::graphics::transform *t)
+        {
+          if (t)
+          {
+            if (ImGui::TreeNode("Transform"))
+            {
+              
+                transform_tree_impl(t);
 
               ImGui::TreePop();
             }
@@ -155,7 +160,30 @@ namespace waifuengine
         }
 
         template <class Comp>
-        void component_tree_t(Comp *, std::string name);
+        void component_tree_t(Comp * c, std::string name)
+        {
+          if(c)
+          {
+            if(ImGui::TreeNode(name.c_str()))
+            {
+              ImGui::TreePop();
+            }
+          }
+        }
+
+        template<>
+        void component_tree_t(we::graphics::transform * tr, std::string name)
+        {
+          if(tr)
+          {
+            if(ImGui::TreeNode(graphics::transform::NAME))
+            {
+              ImGui::Text("Name: %s", name.c_str());
+              transform_tree_impl(tr);
+              ImGui::TreePop();
+            }
+          }
+        }
 
         template<>
         void component_tree_t(we::graphics::debug_draw * dd, std::string name)
@@ -241,21 +269,45 @@ namespace waifuengine
 
         void component_tree(std::pair<std::string const, std::shared_ptr<we::components::_impl::_base_component>> c)
         {
+
           // TODO find a better way to do this for sure like a switch/ifelse with the name and then dyanmic cast it there
           we::graphics::sprite *sp = dynamic_cast<we::graphics::sprite *>(c.second.get());
           if (sp)
           {
             component_tree_t(sp, c.first);
+            return;
           }
           we::physics::collider * col = dynamic_cast<we::physics::collider *>(c.second.get());
           if(col)
           {
             component_tree_t(col, c.first);
+            return;
           }
           we::graphics::debug_draw * dd = dynamic_cast<we::graphics::debug_draw *>(c.second.get());
           if(dd)
           {
             component_tree_t(dd, c.first);
+            return;
+          }
+          we::graphics::transform * tr = dynamic_cast<we::graphics::transform *>(c.second.get());
+          if(tr)
+          {
+            component_tree_t(tr, c.first);
+            return;
+          }
+          we::ui::mouse_collider * mscol = dynamic_cast<we::ui::mouse_collider *>(c.second.get());
+          if(mscol)
+          {
+            component_tree_t(mscol, c.first);
+            return;
+          }
+
+          
+          {
+            if (ImGui::TreeNode(c.first.c_str()))
+            {
+              ImGui::TreePop();
+            }
           }
         }
 
@@ -278,10 +330,15 @@ namespace waifuengine
                 ImGui::Text("Height: %f", debug_rect_test->height);
                 ImGui::Text("Center: (%f, %f)", static_cast<float>(debug_rect_test->center.x), static_cast<float>(debug_rect_test->center.y));
               }
-              auto &comps = obj.second->components_;
-              for (auto c : comps)
+              if (ImGui::TreeNode("Components"))
               {
-                component_tree(c);
+                ImGui::Text("Count: %d", obj.second->components_.size());
+                auto &comps = obj.second->components_;
+                for (auto c : comps)
+                {
+                  component_tree(c);
+                }
+                ImGui::TreePop();
               }
               ImGui::TreePop();
             }
