@@ -2,6 +2,7 @@
 #define _WE_BUTTON_HPP_
 
 #include "gameobject.hpp"
+#include "point2d.hpp"
 
 namespace waifuengine
 {
@@ -22,7 +23,13 @@ namespace waifuengine
       virtual ~button();
     };
 
-    object_management::objectptr add_button(std::string const& name, std::string const& sprite_name, std::string const& text = "");
+    object_management::objectptr add_button(
+      std::string const& name, 
+      std::string const& sprite_name, 
+      std::string const& text = "", 
+      graphics::screen_point2d pos = graphics::screen_point2d(),
+      glm::vec2 screen_ratios = glm::vec2(1.f, 1.f)
+      );
   }
 }
 

@@ -164,7 +164,7 @@ namespace waifuengine
         {
           if(c)
           {
-            if(ImGui::TreeNode(name.c_str()))
+            if(ImGui::TreeNode(Comp::NAME))
             {
               ImGui::TreePop();
             }

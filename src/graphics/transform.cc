@@ -129,6 +129,12 @@ namespace waifuengine
       return height_ratio;
     }
 
+    void transform::set_ratios(glm::vec2 r)
+    {
+      set_width_ratio(r.x);
+      set_height_ratio(r.y);
+    }
+
     void transform::draw() const
     {
 

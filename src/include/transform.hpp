@@ -147,6 +147,12 @@ namespace waifuengine
         * @return The object's height ratio.
       */
       float get_height_ratio() const;
+
+      /**
+        * @brief Sets the width and height ratios
+        * @param r Ratios for width and height
+      */
+      void set_ratios(glm::vec2 r);
       
       void lock_screen_proportion(bool set = true);
       glm::mat4 *data();

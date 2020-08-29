@@ -27,12 +27,18 @@ namespace waifuengine
 
     }
 
-    object_management::objectptr add_button(std::string const& name, std::string const& sprite_name, std::string const& text)
+    object_management::objectptr add_button(std::string const& name, std::string const& sprite_name, std::string const& text, graphics::screen_point2d pos, glm::vec2 ratios)
     {
        auto scn = scenes::current_scene();
       auto sp_manager = scn->get_manager();
       auto sp = sp_manager->get_space("UI Space");
       auto obj = sp->add_object_t<button>(name, sprite_name, text);
+      auto obj_trans = obj->get_component<graphics::transform>();
+      if(obj_trans.use_count())
+      {
+        obj_trans->set_position_in_screen_coordinates(pos);
+        obj_trans->set_ratios(ratios);
+      }
       return obj;
 
     }
