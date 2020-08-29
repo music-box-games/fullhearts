@@ -11,17 +11,18 @@ namespace waifuengine
 {
   namespace components
   {
+    static std::map<std::string, int> orders;
+
+    void component_sorter::register_component(std::string a, int b)
+    {
+      if(!orders.count(a))
+      {
+        orders[a] = b;
+      }
+    }
+
     bool component_sorter::operator()(std::string a, std::string b) const
     {
-      std::map<std::string, component_order> orders = 
-      {
-        {graphics::sprite::NAME, component_order::sprite},
-        {graphics::debug_draw::NAME, component_order::debug_draw},
-        {physics::collider::NAME, component_order::collider},
-        {ui::mouse_collider::NAME, component_order::mouse_collider},
-        {graphics::transform::NAME, component_order::transform},
-      };
-
       return orders[a] < orders[b];
     }
   }

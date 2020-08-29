@@ -35,8 +35,7 @@ namespace waifuengine
       }
 
     public:
-      COMPONENT_NAME(dummy);
-      COMPONENT_TYPE(dummy);
+      COMPONENT_REGISTER(dummy);
 
       dummy();
       dummy(dummy const& other);

@@ -61,8 +61,7 @@ namespace waifuengine
       void calculate_transform();
 
     public:
-      COMPONENT_NAME(transform);
-      COMPONENT_TYPE(transform);
+      COMPONENT_REGISTER(transform);
       
       enum class axis
       {

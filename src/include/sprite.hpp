@@ -27,8 +27,7 @@ namespace waifuengine
       }
 
     public:
-      COMPONENT_NAME(sprite);
-      COMPONENT_TYPE(sprite);
+      COMPONENT_REGISTER(sprite);
       
       sprite(std::string const& tex_name = "default");
       virtual ~sprite();

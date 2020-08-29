@@ -10,8 +10,7 @@ namespace waifuengine
     class mouse_collider : public physics::collider
     {
     public:
-      COMPONENT_NAME(mouse_collider);
-      COMPONENT_TYPE(mouse_collider);
+      COMPONENT_REGISTER(mouse_collider);
 
       mouse_collider();
       virtual ~mouse_collider();

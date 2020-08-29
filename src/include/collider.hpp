@@ -56,8 +56,7 @@ namespace waifuengine
       float height; /**< Height ratio of collider */
 
     public:
-      COMPONENT_NAME(collider); /**< Name of component type */
-      COMPONENT_TYPE(collider); /**< Type of component */
+      COMPONENT_REGISTER(collider);
 
       collider();
       virtual ~collider();

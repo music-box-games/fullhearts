@@ -17,8 +17,7 @@ namespace waifuengine
       std::map<std::string, components::compptr, components::component_sorter> attached_components;
 
     public:
-      COMPONENT_NAME(debug_draw);
-      COMPONENT_TYPE(debug_draw);
+      COMPONENT_REGISTER(debug_draw);
 
       debug_draw();
       virtual ~debug_draw();

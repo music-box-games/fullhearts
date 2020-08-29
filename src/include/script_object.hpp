@@ -42,8 +42,7 @@ private:
   }
 
 public:
-  COMPONENT_NAME(script_object);
-  COMPONENT_TYPE(script_object);
+  COMPONENT_REGISTER(script_object);
 
   class script_proxy
   {
