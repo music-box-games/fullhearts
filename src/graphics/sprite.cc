@@ -10,14 +10,13 @@ namespace waifuengine
 {
   namespace graphics
   {
-    sprite::sprite(std::string const& tex_name) : components::component<sprite>()
+    sprite::sprite(std::string const& tex_name) : components::component<sprite>(), tex(textures::get_texture(tex_name))
     {
       {
         std::stringstream ss;
         ss << "Constructing sprite with texture: " << tex_name;
         log::LOGTRACE(ss.str());
       }
-      tex = textures::get_texture(tex_name).value();
     }
     sprite::~sprite() 
     {
@@ -39,11 +38,11 @@ namespace waifuengine
           // something we wrong
           return;
         }
-        tex->update(*transform_ptr);
+        tex.update(*transform_ptr);
       }
       else
       {
-        tex->update(trans);
+        tex.update(trans);
       }
     }
     
@@ -51,13 +50,13 @@ namespace waifuengine
     {
       if(!disabled)
       {
-        tex->draw();
+        tex.draw();
       }
     }
 
     void sprite::set_texture(std::string const& name)
     {
-      tex = textures::get_texture(name).value();
+      tex = textures::get_texture(name);
     }
 
     void sprite::rotate(float degrees)
@@ -109,7 +108,7 @@ namespace waifuengine
     {
       // TODO maybe need to calc this differently
       auto w = get_current_window();
-      auto d = tex->texture_dimensions();
+      auto d = tex.texture_dimensions();
       glm::vec2 w_d{w->get_width(), w->get_height()};
       glm::vec2 s{w_d.x / d.x, w_d.y / d.y};
       scale(s);

@@ -96,16 +96,25 @@ namespace waifuengine
           }
         }
 
-        void texture_tree(we::graphics::textures::textureptr const &t)
+        void raw_texture_data_tree(std::shared_ptr<we::graphics::raw_texture_data> const t)
         {
-          if (ImGui::TreeNode("Texture: %s", t->name.c_str()))
+          if(ImGui::TreeNode("raw_texture_data"))
           {
             ImGui::Text("Texture Unit: %d", t->unit_id);
             ImGui::Text("glTexture Name: %d", t->txtr);
             ImGui::Text("Name: %s", t->name.c_str());
             ImGui::Text("Texture Width: %d", t->width);
             ImGui::Text("Texture Height: %d", t->height);
+            ImGui::TreePop();
+          }
+        }
 
+        void texture_tree(we::graphics::textures::texture const &t)
+        {
+          if (ImGui::TreeNode("Texture: %s", t.name.c_str()))
+          {
+            ImGui::Text("Name: %s", t.name.c_str());
+            raw_texture_data_tree(t.tdata);
             ImGui::TreePop();
           }
         }
@@ -536,7 +545,8 @@ namespace waifuengine
             auto tmap = we::graphics::textures::get_texturemap();
             for (auto const &pair : tmap)
             {
-              texture_tree(pair.second);
+              
+              raw_texture_data_tree(pair.second);
             }
             ImGui::TreePop();
           }

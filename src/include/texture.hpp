@@ -1,3 +1,31 @@
+/****************************************************************************
+ *   Copyright (C) 2020 by Music Box Games                                  *
+ *                                                                          *
+ *   This file is part of WaifuEngine                                       *
+ *                                                                          *
+ *   WaifuEngine is free software: you can redistribute it and/or modify it *
+ *   under the terms of the MIT License.                                    *
+ *                                                                          *
+ *   WaifuEngine is distributed in the hope that it will be useful,         *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   MIT License for more details.                                          *
+ *                                                                          *
+ *   You should have received a copy of the MIT License along with          *
+ *   WaifuEngine.  If not, see https://opensource.org/licenses/MIT          *
+ ****************************************************************************/
+
+/******************************************************************************/
+/**
+* @file   texture.hpp
+* @author Ryan Hanson
+* @date   30 Aug 2020
+* @par    email: iovita\@musicboxgames.net
+* @brief  Texture class
+*
+*/
+/******************************************************************************/
+
 #ifndef _WE_TEXTURE_HPP_
 #define _WE_TEXTURE_HPP_
 
@@ -16,6 +44,7 @@
 #include "texture.hpp"
 #include "transform.hpp"
 #include "debug.hpp"
+#include "raw_texture_data.hpp"
 
 namespace waifuengine
 {
@@ -23,7 +52,6 @@ namespace waifuengine
   {
     namespace textures
     {
-
       class texture
       {
       private:
@@ -35,27 +63,15 @@ namespace waifuengine
         using vert_array = std::array<float, VERT_COUNT>;
         using element_array = std::array<unsigned int, ELEMENT_COUNT>;
 
-        unsigned int unit_id; /**< texture unit ID */
-        unsigned int txtr; /**< texture data */
         vert_array vertices; /**< array of vertices */
         element_array elements; /**< array of elements */
-        std::shared_ptr<shaders::shader> shd; /**< shader */
-        unsigned int vao; /**< vertex array object */
-        unsigned int vbo; /**< vertex buffer object */
-        unsigned int ebo; /**< element buffer object */
-
-        int width; /**< texture's width in pixels */
-        int height; /**< texture's height in pixels */
-        std::shared_ptr<image> im; /**< image file for texture */
 
         std::string name; /**< texture name */
-
-        transform last_trans; /**< copy of last transform passed to update() */
-
-        void load(imageptr i);
+        waifuengine::graphics::transform last_trans; /**< copy of last transform passed to update() */
+        std::shared_ptr<raw_texture_data> tdata; /**< texture */
 
       public:
-        texture(imageptr image, std::string const& name, unsigned int id, std::string shader_name);
+        texture(raw_txtr_ptr d);
         ~texture();
 
         void draw() const;
@@ -72,24 +88,27 @@ namespace waifuengine
       std::vector<std::string> list_loaded_images();
       std::set<std::string> list_image_files();
       std::unordered_map<std::string, fs::path> list_image_paths();
-      std::optional<std::shared_ptr<texture>> get_texture(std::string const& name);
+
+      std::shared_ptr<raw_texture_data> get_raw_texture(std::string const& name);
+      texture get_texture(std::string const& name);
       std::optional<std::shared_ptr<image>> get_image(std::string const& name);
+      std::unordered_map<std::string, std::shared_ptr<raw_texture_data>> get_texturemap();
+
       void load_textures();
-      textureptr load_texture(std::string const& image_name, std::string const& shader_name);
+      std::shared_ptr<raw_texture_data> load_texture(std::string const& image_name, std::string const& shader_name);
       void load_images();
       imageptr load_image(std::string const& name);
 
       void release_textures();
       void release_images();
 
-      std::unordered_map<std::string, textureptr> get_texturemap();
 
       namespace test
       {
         class texture_test_object : public we::object_management::gameobject
         {
         protected:
-          textureptr tex;
+          texture tex;
 
         public:
           texture_test_object(std::string const& name, std::string const& texture_name, std::string const& shader_name);

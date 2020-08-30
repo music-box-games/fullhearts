@@ -25,7 +25,8 @@ namespace waifuengine
       namespace impl
       {
         using imagemap = std::unordered_map<std::string, std::shared_ptr<image>>;
-        using texturemap = std::unordered_map<std::string, std::shared_ptr<texture>>;
+        using texturemap = std::unordered_map<std::string, std::shared_ptr<raw_texture_data>>;
+
         std::vector<std::string> all_image_names;
         imagemap loaded_images;
         texturemap loaded_textures;
@@ -56,18 +57,32 @@ namespace waifuengine
         return utils::list_keys(impl::loaded_images);
       }
 
-      std::optional<textureptr> get_texture(std::string const &name)
+      std::shared_ptr<raw_texture_data> get_raw_texture(std::string const& name)
+      {
+        if(impl::loaded_textures.count(name))
+        {
+          return impl::loaded_textures.at(name);
+        }
+        else
+        {
+          return {};          
+        }
+        
+      }
+
+
+      texture get_texture(std::string const &name)
       {
         if (impl::loaded_textures.count(name))
         {
           log::LOGTRACE("Requested texture: \"" + name + "\" already loaded. Retreiving.");
-          return impl::loaded_textures.at(name);
+          return texture(impl::loaded_textures.at(name));
         }
         else
         {
           log::LOGTRACE("Requested texture: \"" + name + "\" not loaded. Retreiving image data...");
           get_image(name);
-          return load_texture(name, "default_texture_shader");
+          return texture(load_texture(name, "default_texture_shader"));
         }
       }
 
@@ -134,7 +149,7 @@ namespace waifuengine
         }
       }
 
-      textureptr load_texture(std::string const &image_name, std::string const &shader_name)
+      std::shared_ptr<raw_texture_data> load_texture(std::string const &image_name, std::string const &shader_name)
       {
         if (impl::loaded_textures.count(image_name))
         {
@@ -145,7 +160,7 @@ namespace waifuengine
         {
           log::LOGTRACE(std::string("Requested texture: \"" + image_name + "\" not loaded. Retrieving image data."));
           std::shared_ptr<image> i = get_image(image_name).value();
-          impl::loaded_textures[image_name] = std::make_shared<texture>(i, image_name, impl::loaded_textures.size(), shader_name);
+          impl::loaded_textures[image_name] = std::make_shared<raw_texture_data>(i, image_name, impl::loaded_textures.size(), shader_name);
           return impl::loaded_textures[image_name];
         }
       }
@@ -154,146 +169,32 @@ namespace waifuengine
       {
       }
 
-      texture::texture(imageptr i, std::string const &n, unsigned int uid, std::string shader_name) : unit_id(0)
+      texture::texture(std::shared_ptr<raw_texture_data> d) : name(d->get_name()), tdata(d)
       {
-        log::LOGTRACE(std::string("Constructing texture: " + n));
-        im = i;
-        name = n;
-        width = static_cast<int>(im->dimensions()[0]);
-        height = static_cast<int>(im->dimensions()[1]);
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-
-        glGenBuffers(1, &vbo);
-
-        auto wind = get_current_window();
-
-        float top_left_x = 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f;
-        float top_left_y = 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
-        float top_right_x = 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
-        float top_right_y = 0 + (((height / 2) + (wind->get_height() / 2)) / wind->get_height());
-        float bottom_right_x = 0 + (((width / 2) + (wind->get_width() / 2)) / wind->get_width());
-        float bottom_right_y = 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
-        float bottom_left_x = 0 - (((width / 2) - (wind->get_width() / 2)) / wind->get_width()) - 1.0f;
-        float bottom_left_y = 0 - (((height / 2) - (wind->get_height() / 2)) / wind->get_height()) - 1.0f;
-
-        glm::vec2 top_left = {top_left_x, top_left_y};
-        glm::vec2 top_right = {top_right_x, top_right_y};
-        glm::vec2 bottom_right = {bottom_right_x, bottom_right_y};
-        glm::vec2 bottom_left = {bottom_left_x, bottom_left_y};
-
-        vert_array v = {
-            // position                           // color              // tex coord
-            top_left[0], top_left[1], 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,         // top left
-            top_right[0], top_right[1], 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,       // top right
-            bottom_right[0], bottom_right[1], 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // bottom right
-            bottom_left[0], bottom_left[1], 1.0f, 1.0f, 1.0f, 0.0f, 1.0f    // bottom left
-        };
-
-        vertices = v;
-
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vert_array::value_type), vertices.data(), GL_STATIC_DRAW);
-
-        glGenBuffers(1, &ebo);
-
-        std::array<unsigned int, ELEMENT_COUNT> e = {
-            0, 1, 2,
-            2, 3, 0};
-        elements = e;
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(element_array::value_type), elements.data(), GL_STATIC_DRAW);
-
-        auto s = shaders::get_shader(shader_name);
-        if (s.has_value())
-        {
-          shd = s.value();
-        }
-        else
-        {
-          // warning
-          we::log::LOGWARNING(std::string("Could not find shader: " + shader_name));
-        }
-        shd->use();
-
-        // specify the layour of the vertex data
-        int position_attribute = shd->get_attribute("position");
-        glEnableVertexAttribArray(position_attribute);
-        glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-
-        int tex_attribute = shd->get_attribute("texcoord");
-        glEnableVertexAttribArray(tex_attribute);
-        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(5 * sizeof(float)));
-
-        load(im);
-
-        shd->set_int_1("tex", 0);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        log::LOGTRACE(std::string("Constructing texture: " + name));
       }
 
       texture::~texture()
       {
         log::LOGTRACE(std::string("Destructing texture: " + name));
-        // release texture
-        glDeleteTextures(1, &txtr);
-        glDeleteBuffers(1, &vbo);
-        glDeleteBuffers(1, &ebo);
-        glDeleteVertexArrays(1, &vao);
+
       }
 
       glm::vec2 texture::texture_dimensions() const
       {
-        return {width, height};
+        return {tdata->get_width(), tdata->get_height()};
       }
 
 #define TUNIT(x) (GL_TEXTURE0 + x)
       void texture::draw() const
       {
-  
-
-
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glBindTexture(GL_TEXTURE_2D, txtr);
-
-        glBindVertexArray(vao);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vert_array::value_type), vertices.data(), GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(element_array::value_type), elements.data(), GL_STATIC_DRAW);
-
-        int position_attribute = glGetAttribLocation(shd->get_id(), "position");
-        glEnableVertexAttribArray(position_attribute);
-        glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
-
-        int tex_attribute = glGetAttribLocation(shd->get_id(), "texcoord");
-        glEnableVertexAttribArray(tex_attribute);
-        glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void *)(5 * sizeof(float)));
-
-        int transform_attribute = glGetUniformLocation(shd->get_id(), "transform");
-        if (transform_attribute == -1)
-        {
-          log::LOGERROR("Could not locate uniform \"transform\"");
-          return;
-        }
-
-        shd->use();
-        shd->set_int_1("tex", 0);
-
-        glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(last_trans.const_data())));
-
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(elements.size()), GL_UNSIGNED_INT, 0);
+        tdata->draw((float*)vertices.data(), vertices.size(), (unsigned int *)elements.data(), elements.size(), last_trans);
       }
 
       void texture::update(transform const& t)
       {
         last_trans = t;
-              // calc vertices from transform's position and dimensions
+        // calc vertices from transform's position and dimensions
         // get width and height of window
         float window_width = get_current_window()->get_width();
         float window_height = get_current_window()->get_height();
@@ -324,36 +225,30 @@ namespace waifuengine
             sbottom_left.x, sbottom_left.y,   1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // bottom left
         };
         vertices = v;
-      }
 
-      void texture::load(imageptr img)
-      {
-        log::LOGTRACE(std::string("Texture: \"" + name + "\" loading image: \"" + utils::strip_path_to_filename_and_ext(img->name()) + "\""));
-        glGenTextures(1, &txtr);
-
-        glBindTexture(GL_TEXTURE_2D, txtr);
-        glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data());
-        glGenerateMipmap(GL_TEXTURE_2D);
-        shd->set_int_1("tex", unit_id);
+                elements = {
+            0, 1, 2,
+            2, 3, 0};
       }
 #undef TUNIT
 
       namespace test
       {
-        texture_test_object::texture_test_object(std::string const &n, std::string const &texture_name, std::string const &shader_name) : object_management::gameobject(n)
+        texture_test_object::texture_test_object(std::string const &n, std::string const &texture_name, std::string const &shader_name) : object_management::gameobject(n), tex(get_texture(texture_name))
         {
-          tex = get_texture(texture_name).value();
+          log::LOGTRACE("Constructing texture_test_object");
         }
 
         texture_test_object::~texture_test_object()
         {
+          log::LOGTRACE("Destructing texture_test_object");
         }
 
         void texture_test_object::update(float)
         {
           if (!disabled_)
           {
-            tex->update();
+            tex.update();
           }
         }
 
@@ -361,7 +256,7 @@ namespace waifuengine
         {
           if (!disabled_)
           {
-            tex->draw();
+            tex.draw();
           }
         }
       } // namespace test

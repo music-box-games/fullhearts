@@ -15,7 +15,7 @@ namespace waifuengine
     {
     private:
       friend class waifuengine::core::debug::imgui_listener;
-      textures::textureptr tex; /**< pointer to the texture this sprite uses */
+      textures::texture tex; /**< pointer to the texture this sprite uses */
       transform trans; /**< the sprite's transform, separate from the parent object */
       bool locked_to_parent_transform; /**< if the sprite should just use the transform from the parent object instead of its own */
 
