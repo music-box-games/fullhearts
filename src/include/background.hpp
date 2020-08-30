@@ -17,15 +17,16 @@ namespace waifuengine
 
     friend class waifuengine::core::debug::imgui_listener;
     friend class boost::serialization::access;
+    
     template<class Archive>
     void serialize(Archive& ar, const unsigned int v)
     {
       ar & boost::serialization::base_object<waifuengine::object_management::gameobject>(*this);
     }
 
-    background(std::string const& name, std::string const& sprite_name);
     
     public:
+    background(std::string const& name, std::string const& sprite_name);
       ~background() = default;
 
       static std::shared_ptr<object_management::gameobject> add_background(std::string const& obj_name, std::string const& sprite_name);

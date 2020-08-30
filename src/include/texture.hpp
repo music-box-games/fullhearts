@@ -59,7 +59,7 @@ namespace waifuengine
         ~texture();
 
         void draw() const;
-        void update(transform t = transform());
+        void update(transform const& t = transform());
         void set_transform();   
 
         glm::vec2 texture_dimensions() const;  

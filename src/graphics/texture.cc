@@ -290,7 +290,7 @@ namespace waifuengine
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(elements.size()), GL_UNSIGNED_INT, 0);
       }
 
-      void texture::update(transform t)
+      void texture::update(transform const& t)
       {
         last_trans = t;
               // calc vertices from transform's position and dimensions

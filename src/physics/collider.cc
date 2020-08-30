@@ -44,10 +44,12 @@ namespace waifuengine
   {
     collider::collider() : components::component<collider>()
     {
+      log::LOGTRACE("Constructing collider");
     }
 
     collider::~collider()
     {
+      log::LOGTRACE("Destructing collider");
     }
 
     void collider::update(float dt)

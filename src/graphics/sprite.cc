@@ -1,6 +1,9 @@
 #include "sprite.hpp"
 #include "window.hpp"
 
+#include <sstream>
+#include "log.hpp"
+
 namespace we = ::waifuengine;
 
 namespace waifuengine
@@ -9,9 +12,17 @@ namespace waifuengine
   {
     sprite::sprite(std::string const& tex_name) : components::component<sprite>()
     {
+      {
+        std::stringstream ss;
+        ss << "Constructing sprite with texture: " << tex_name;
+        log::LOGTRACE(ss.str());
+      }
       tex = textures::get_texture(tex_name).value();
     }
-    sprite::~sprite() {}
+    sprite::~sprite() 
+    {
+      log::LOGTRACE("Destructing sprite");
+    }
 
     void sprite::update(float dt)
     {

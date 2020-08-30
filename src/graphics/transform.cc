@@ -6,6 +6,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
+#include "log.hpp"
+
 namespace we = ::waifuengine;
 
 namespace waifuengine
@@ -35,6 +37,7 @@ namespace waifuengine
 
     transform::transform() : components::component<transform>()
     {
+      log::LOGTRACE("Constructing transform");
       trans = glm::mat4(1.0f);
       scale_ = {1.0f, 1.0f};
       pos_ = {0.0f, 0.0f};
@@ -46,7 +49,7 @@ namespace waifuengine
 
     transform::~transform()
     {
-
+      log::LOGTRACE("Destructing transform");
     }
 
     void transform::calculate_transform()

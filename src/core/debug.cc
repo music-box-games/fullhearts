@@ -78,6 +78,11 @@ namespace waifuengine
         {
           if (ImGui::TreeNode("Windows"))
           {
+            if(ImGui::TreeNode("ImGui"))
+            {
+              
+              ImGui::TreePop();
+            }
             for (auto w : ws)
             {
               if (ImGui::TreeNode(w.second->title.c_str()))
@@ -112,15 +117,17 @@ namespace waifuengine
               {
                 t->set_rotation(rot);
               }
-              float trans_x = t->pos_[0];
-              float trans_y = t->pos_[1];
-              if (ImGui::DragFloat("Translation X", &trans_x, 0.001f, -10.0f, 10.0f))
+              auto pos = t->get_position_in_world_coordinates();
+              float trans_x = pos.x;
+              float trans_y = pos.y;
+
+              if (ImGui::DragFloat("Translation X", &trans_x, 1.f))
               {
-                t->set_translation(glm::vec2(trans_x, trans_y));
+                t->set_position_in_world_coordinates(graphics::world_point2d(trans_x, trans_y));
               }
-              if (ImGui::DragFloat("Translation Y", &trans_y, 0.001f, -10.0f, 10.0f))
+              if (ImGui::DragFloat("Translation Y", &trans_y, 1.f))
               {
-                t->set_translation(glm::vec2(trans_x, trans_y));
+                t->set_position_in_world_coordinates(graphics::world_point2d(trans_x, trans_y));
               }
               float scale_x = t->scale_[0];
               float scale_y = t->scale_[1];
@@ -261,7 +268,15 @@ namespace waifuengine
                 s->debug(dbg);
               }
               texture_tree(s->tex);
-              transform_tree(&s->trans);
+              bool parent_lock = s->transform_locked_to_parent();
+              if(ImGui::Checkbox("Lock Tranform to Parent", &parent_lock))
+              {
+                s->lock_transform_to_parent_transform(parent_lock);
+              }
+              if(!parent_lock)
+              {
+                transform_tree(&s->trans);
+              }
               ImGui::TreePop();
             }
           }
@@ -643,6 +658,8 @@ namespace waifuengine
         void draw()
         {
           ImGui::Begin("Debug");
+          ImGui::SetWindowFontScale(2);
+
           menu_bar();
           tree();
           ImGui::End();

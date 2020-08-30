@@ -54,13 +54,10 @@ namespace waifuengine
       sp_manager->build_default_spaces();
       auto bg_obj = graphics::background::add_background("mainmenu_bg", "main_menu_bg");
       
-      auto start_button = ui::add_button("start button", "blank_button");
-      
-      auto load_button = ui::add_button("load button", "blank_button");
-
-      auto options_button = ui::add_button("options button", "blank_button");
-      
-      auto exit_button = ui::add_button("exit button", "blank_button");
+      auto start_button = ui::add_button("start button", "blank_button", "Start", {0.f, 0.0f}, {0.2f, 0.3f});
+      auto load_button = ui::add_button("load button", "blank_button", "Load", {0.f, -0.2f}, {0.2f, 0.3f});
+      auto options_button = ui::add_button("options button", "blank_button", "Options", {0.f, -0.4f}, {0.2f, 0.3f});
+      auto exit_button = ui::add_button("exit button", "blank_button", "Exit", {0.f, -0.6f}, {0.2f, 0.3f});
       
       start_fade_in();
 
