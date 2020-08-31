@@ -29,6 +29,7 @@
 
 #include "num_utils.hpp"
 #include "machinegun_call.hpp"
+#include "type_utils.hpp"
 
 #define WE_UTIL_STRINGIFY(x) #x
 

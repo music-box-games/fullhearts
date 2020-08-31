@@ -333,7 +333,7 @@ void shader::link(vertex_shader&& v, fragment_shader&& f)
   }
 }
 
-void shader::use()
+void shader::use() const
 {
   glUseProgram(program_id);
 }
@@ -355,6 +355,7 @@ void shader::set_bool_1(std::string const& name, bool value) const
 
 void shader::set_int_1(std::string const& name, int value) const
 {
+  use();
   glUniform1i(glGetUniformLocation(program_id, name.c_str()), value);
 }
 

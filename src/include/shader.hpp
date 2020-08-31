@@ -60,7 +60,7 @@ namespace waifuengine
         shader(vertex_shader&& v, fragment_shader&& f);
         ~shader();
 
-        void use();
+        void use() const;
         unsigned int get_id() const;
 
         // uniform setters

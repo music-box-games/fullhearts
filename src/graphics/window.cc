@@ -64,11 +64,12 @@ window::window(std::string t, glm::vec2 r) : window(t, r.x, r.y) {}
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
   glfwWindowHint(GLFW_SAMPLES, 4); // 4x AA
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // 3.
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // 3
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Set client API version to require compat with v4.3
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); 
+  //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // make sure to get core profile
   glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE); // double buffer
+  glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE); // use a debug context in open gl
 
   data = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
   glfwMakeContextCurrent(data);

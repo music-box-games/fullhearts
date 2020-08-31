@@ -41,7 +41,7 @@ namespace waifuengine
 {
   namespace graphics
   {
-    raw_texture_data::raw_texture_data(imageptr i, std::string const& n, unsigned int id, std::string shader_name)
+    raw_texture_data::raw_texture_data(imageptr i, std::string const& n, unsigned int id, std::string shader_name) : name(n), unit_id(0)
     {
       log::LOGTRACE(std::string("Constructing raw_texture_data: " + name));
         im = i;
@@ -131,9 +131,9 @@ namespace waifuengine
 
     void raw_texture_data::load(imageptr img)
     {
-        log::LOGTRACE(std::string("raw_exture_data: \"" + name + "\" loading image: \"" + utils::strip_path_to_filename_and_ext(img->name()) + "\""));
+        log::LOGTRACE(std::string("raw_texture_data: \"" + name + "\" loading image: \"" + utils::strip_path_to_filename_and_ext(img->name()) + "\""));
         glGenTextures(1, &txtr);
-
+        
         glBindTexture(GL_TEXTURE_2D, txtr);
         glTexImage2D(GL_TEXTURE_2D, unit_id, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data());
         glGenerateMipmap(GL_TEXTURE_2D);
