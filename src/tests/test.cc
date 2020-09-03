@@ -13,6 +13,7 @@
 #include <functional>
 #include <fstream>
 #include <sstream>
+#include <random>
 
 #include <dummy.hpp>
 #include <tests.hpp>
@@ -26,6 +27,8 @@
 #include <scenemanager.hpp>
 #include <scenelist.hpp>
 #include <settings.hpp>
+#include "coordinates.hpp"
+#include "num_utils.hpp"
 
 namespace we = ::waifuengine;
 
@@ -33,6 +36,21 @@ namespace waifuengine
 {
 namespace tests
 {
+
+  constexpr float WW = 1920.0f;
+  constexpr float WH = 1080.0f;
+  constexpr float ERROR_MARGIN = 0.1f;
+
+
+static graphics::screen_coordinates_2d random_screen_pos()
+{
+  return graphics::screen_coordinates_2d(utils::generate_random_float_between(-1.0f, 1.0f), utils::generate_random_float_between(-1.0f, 1.0f));
+}
+
+static graphics::window_coordinates_2d random_world_pos()
+{
+  return graphics::window_coordinates_2d(utils::generate_random_int_between(0, static_cast<int>(WW)), utils::generate_random_int_between(0, static_cast<int>(WH)));
+}
 
 int run_tests(int argc, char **argv)
 {
@@ -48,137 +66,98 @@ int run_tests(int argc, char **argv)
     return result;
 }
 
-// serialization tests
-static std::stringstream create_serialize_test_folder()
+
+
+TEST(ConversionTest, WorldCoordinatesToScreenCoordinates)
 {
-    std::stringstream ss;
-    ss << utils::get_exe_path() << "\\.tests\\serialization";
-    if(!::fs::exists(ss.str()))
-    {
-        ::fs::create_directory(ss.str());
-    }
-    return ss;
+  // check that world coordinates are properly converted into screen coordinates
+  // check each corner and dead center
+  graphics::window_coordinates_2d world_pos;
+  graphics::screen_coordinates_2d expected_result;
+  graphics::screen_coordinates_2d actual_result;
+
+  // center
+  world_pos = {WW / 2.0f, WH / 2.0f}; // center of screen in world coordinates is half of the width and height
+  expected_result = {0.f, 0.f};
+  actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+
+  // bottom left
+  world_pos = {0.f,0.f}; // bottom left is 0,0 in world coordinates, that way no negative numbers for being on screen
+  expected_result = {-1.f, -1.f};
+  actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+
+  // top left
+  world_pos = {0.f, WH}; // top left, 0 in x, max in y
+  expected_result = {-1.f, 1.f};
+  actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+
+  // top right
+  world_pos = {WW, WH}; // max in each direction
+  expected_result = {1.f,1.f};
+  actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+  
+
+  // bottom right
+  world_pos = {WW, 0.f};
+  expected_result = {1.f, -1.f};
+  actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+
+  // random pos
+  world_pos = random_world_pos();
+  expected_result = { world_pos.x / WW, world_pos.y / WH};
+  actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 }
 
-TEST(SerializationTest, SerializeBaseClass)
+TEST(ConversionTest, ScreenCoordinatesToWorldCoordinates)
 {
-    // create object to serialze
-    we::core::serialization::test::test_serialize_object o(1, 2, 3, "Hello");
-    // create test folder, if it doesn't already exist
-    auto ss = create_serialize_test_folder();
-    // create archive
-    ss << "\\base_object";
-    {
-        std::ofstream stream(ss.str());
-        ::boost::archive::text_oarchive arch(stream);
-        // write instance to archive
-        arch << o;
-    }
-    // load archive into new object
-    we::core::serialization::test::test_serialize_object i(0,0,0,"");
-    {
-        std::ifstream stream(ss.str());
-        ::boost::archive::text_iarchive arch(stream);
-        // read from archive;
-        arch >> i;
-    }
-    
-    ASSERT_TRUE(o == i);
-}
+  // check that world coordinates are properly converted into screen coordinates
+  // check each corner and dead center
+  graphics::screen_coordinates_2d screen_pos;
+  graphics::window_coordinates_2d expected_result;
+  graphics::window_coordinates_2d actual_result;
 
-TEST(SerializationTest, SerializeDerivedClass)
-{
-    // create the object
-    we::core::serialization::test::derived_test_serialize_object o(1, 2, 3, "Hello", 4);
-    // create folder if not existing
-    auto ss = create_serialize_test_folder();
-    // create archive
-    ss << "\\derived_object";
-    {
-        std::ofstream stream(ss.str());
-        ::boost::archive::text_oarchive arch(stream);
-        // write instance to archive
-        arch << o;
-    }
-    // load archive to fresh object
-    we::core::serialization::test::derived_test_serialize_object i(0,0,0, "", 0);
-    {
-        std::ifstream stream(ss.str());
-        ::boost::archive::text_iarchive arch(stream);
-        // write instance to archive
-        arch >> i;
-    }
+  // center
+  screen_pos = {0.f, 0.f};
+  expected_result = {WW / 2.0f, WH / 2.0f};
+  actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 
-    ASSERT_TRUE(o == i);
-}
+  // bottom left
+  screen_pos = {-1.f, -1.f};
+  expected_result = {0.f,0.f};
+  actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 
-TEST(SerializationTest, SerializeEmptyObject)
-{
-    we::object_management::space_manager spm;
-    auto sp = spm.add_space("test");
-    auto objo = sp->add_object("test");
+  // top left
+  screen_pos = {-1.f, 1.f};
+  expected_result = {0.f, WH};
+  actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 
-    auto ss = create_serialize_test_folder();
-    ss << "\\empty_object";
-    {
-        std::ofstream stream(ss.str());
-        ::boost::archive::text_oarchive arch(stream);
-        arch << objo;
-    }
-    auto obji = sp->add_object("");
-    EXPECT_FALSE(*objo == *obji);
-    {
-        std::ifstream stream(ss.str());
-        ::boost::archive::text_iarchive arch(stream);
-        arch >> obji;
-    }
-    EXPECT_TRUE(*objo == *obji);
-}
+  // top right
+  screen_pos = {1.f,1.f};
+  expected_result = {WW, WH}; 
+  actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+  
 
-TEST(SerializationTest, SerializeObject)
-{
-    we::object_management::space_manager spm;
-    auto sp = spm.add_space("test");
-    auto objo = sp->add_object("test");
-    auto d = objo->add_component<components::dummy>();
+  // bottom right
+  screen_pos = {1.f, -1.f};
+  expected_result = {WW, 0.f};
+  actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
+  ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 
-    auto ss = create_serialize_test_folder();
-    ss << "\\object";
-    {
-        std::ofstream stream(ss.str());
-        ::boost::archive::text_oarchive arch(stream);
-        arch << objo;
-    }
-    auto obji = sp->add_object("");
-    EXPECT_FALSE(*objo == *obji);
-    {
-        std::ifstream stream(ss.str());
-        ::boost::archive::text_iarchive arch(stream);
-        arch >> obji;
-    }
-    EXPECT_TRUE(*objo == *obji);
-}
-
-TEST(SerializationTest, SerializeSettings)
-{
-  // auto s1 = we::core::settings();
-
-  // auto ss = create_serialize_test_folder();
-  // ss << "\\settings";
-  // {
-  //   std::ofstream stream(ss.str());
-  //   ::boost::archive::text_oarchive arch(stream);
-  //   arch << s1;
-  // }
-  // auto s2 = we::core::settings();
-  // EXPECT_FALSE(s1 == s2);
-  // {
-  //   std::ifstream stream(ss.str());
-  //   ::boost::archive::text_iarchive arch(stream);
-  //   arch >> s2;
-  // }
-  // EXPECT_TRUE(s1 == s2);
-  EXPECT_TRUE(true);
+  //  // random pos
+  //screen_pos = random_screen_pos();
+  //expected_result = { screen_pos.x * WW, screen_pos.y * WH};
+  //actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
+  //ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 }
 
 } // namespace tests

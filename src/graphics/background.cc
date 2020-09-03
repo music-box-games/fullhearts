@@ -17,7 +17,7 @@ namespace waifuengine
             // add background's transform
       auto object_transform = add_component<graphics::transform>();
       // set transform to center of window
-      object_transform->set_position_in_screen_coordinates(screen_point2d(0.0f, 0.0f));
+      object_transform->set_position_in_screen_coordinates(screen_point_2d(0.0f, 0.0f));
       // set the width and height ratio to fill the window
       object_transform->set_ratios({1.f, 1.f});
             // add sprite to object

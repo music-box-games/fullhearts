@@ -36,23 +36,23 @@ namespace waifuengine
 {
   namespace graphics
   {
-    using point2d = glm::vec2;
-    using screen_point2d = screen_coordinates;
-    using world_point2d = world_coordinates;
+    using point_2d = glm::vec2;
+    using screen_point_2d = screen_coordinates_2d;
+    using window_point_2d = window_coordinates_2d;
 
     /**
-      * @brief Converts a point in world space to screen space.
-      * @param p The point in world space.
+      * @brief Converts a point in window space to screen space.
+      * @param p The point in window space.
       * @return The equivalent point in screen space.
     */
-    screen_point2d world_point2d_to_screen_point2d(world_point2d p);
+    screen_point_2d window_point_2d_to_screen_point_2d(window_point_2d p);
 
     /**
       * @brief Converts a point in screen space to world spacej.
       * @param p The point in screen space.
-      * @return The equivalent point in world space.
+      * @return The equivalent point in window space.
     */
-    world_point2d screen_point2d_to_world_point2d(screen_point2d p);
+    window_point_2d screen_point_2d_to_window_point_2d(screen_point_2d p);
   }
 }
 

@@ -28,26 +28,35 @@
 #define _WE_COORDINATES_HPP_
 
 #include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include "window.hpp"
+
 
 namespace waifuengine
 {
   namespace graphics
   {
+    using coordinate_type_2d = glm::vec2;
+    using screen_coordinates_2d = coordinate_type_2d;
+    using window_coordinates_2d = coordinate_type_2d;
+
+    using coordinate_type_3d = glm::vec3;
+
     /**
       * Converts world coordinates to screen coordinates.
       * @param c World coordinates to convert. Between (0,0) and (window_width, window_height).
       * @return Corresponding screen coordinates. Between (-1,-1) and (1,1).
     */
-    glm::vec2 world_coordinates_to_screen_coordinates(glm::vec2 c);
+    screen_coordinates_2d window_coordinates_to_screen_coordinates(window_coordinates_2d c, float window_width = get_current_window()->get_width(), float window_height = get_current_window()->get_height());
     /**
       * Converts screen coordinates to world coordinates.
       * @param c Screen coordinates to convert. Between (-1,-1) and (1,1).
       * @return Corresponding world coordinates. Between (0,0) and (window_width, window_height).
     */
-    glm::vec2 screen_coordinates_to_world_coordinates(glm::vec2 c);
+    window_coordinates_2d screen_coordinates_to_window_coordinates(screen_coordinates_2d c, float window_width = get_current_window()->get_width(), float window_height = get_current_window()->get_height());
 
-    using screen_coordinates = glm::vec2;
-    using world_coordinates = glm::vec2;
+
+    bool lax_coordinate_compare(coordinate_type_2d const& a, coordinate_type_2d const& b, float error);
 
     constexpr int SCREEN_COORD_RANGE = 2;
   }

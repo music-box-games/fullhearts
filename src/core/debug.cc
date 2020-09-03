@@ -5,19 +5,20 @@
 
 #include <boost/range/adaptor/reversed.hpp>
 #include <imgui.h>
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_glfw.h"
 
-#include <debug.hpp>
-#include <window.hpp>
-#include <scenemanager.hpp>
-#include <spacemanager.hpp>
-#include <space.hpp>
-#include <gameobject.hpp>
-#include <component.hpp>
-#include <scenes.hpp>
-#include <scenelist.hpp>
-#include <gameobject.hpp>
-#include <scripting.hpp>
-
+#include "debug.hpp"
+#include "window.hpp"
+#include "scenemanager.hpp"
+#include "spacemanager.hpp"
+#include "space.hpp"
+#include "gameobject.hpp"
+#include "component.hpp"
+#include "scenes.hpp"
+#include "scenelist.hpp"
+#include "gameobject.hpp"
+#include "scripting.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
 #include "events.hpp"
@@ -26,11 +27,10 @@
 #include "collider.hpp"
 #include "mouse_collider.hpp"
 #include "debug_draw.hpp"
+#include "point2d.hpp"
+#include "coordinates.hpp"
 
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_glfw.h"
-
-// TODO: forward declare tree functions in imgui_listener
+// TODO: forward declare tree functions in imgui_listener or something
 
 namespace we = ::waifuengine;
 
@@ -40,7 +40,6 @@ namespace waifuengine
   {
     namespace debug
     {
-
       static bool show_imgui_window = false;
       static bool imgui_render_ready = false;
       static bool fps_widget = false;
@@ -49,8 +48,6 @@ namespace waifuengine
 
       constexpr int INPUT_BUFFER_LEN = 512;
       static char input_buffer[INPUT_BUFFER_LEN];
-
-      
 
       class imgui_listener
       {
@@ -126,17 +123,17 @@ namespace waifuengine
               {
                 t->set_rotation(rot);
               }
-              auto pos = t->get_position_in_world_coordinates();
+              auto pos = t->get_position_in_screen_coordinates();
               float trans_x = pos.x;
               float trans_y = pos.y;
 
-              if (ImGui::DragFloat("Translation X", &trans_x, 1.f))
+              if (ImGui::DragFloat("Translation X", &trans_x, 0.01f))
               {
-                t->set_position_in_world_coordinates(graphics::world_point2d(trans_x, trans_y));
+                t->set_position_in_screen_coordinates(graphics::screen_point_2d(trans_x, trans_y));
               }
-              if (ImGui::DragFloat("Translation Y", &trans_y, 1.f))
+              if (ImGui::DragFloat("Translation Y", &trans_y, 0.01f))
               {
-                t->set_position_in_world_coordinates(graphics::world_point2d(trans_x, trans_y));
+                t->set_position_in_screen_coordinates(graphics::screen_point_2d(trans_x, trans_y));
               }
               float scale_x = t->scale_[0];
               float scale_y = t->scale_[1];

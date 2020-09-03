@@ -1,3 +1,5 @@
+#include <unordered_map>
+
 #include "colors.hpp"
 
 namespace we = ::waifuengine;
@@ -8,19 +10,21 @@ namespace waifuengine
   {
     namespace colors
     {
+      static std::unordered_map<color_name, rgb_value> color_data = 
+      {
+        {color_name::blue, rgb_value(0.f, 0.f, 1.f)},
+        {color_name::green, rgb_value(0.f, 1.f, 0.f)},
+        {color_name::red, rgb_value(1.f, 0.f, 0.f)},
+        {color_name::coral, rgb_value(1.f, 0.5f, 0.31f)},
+      };
+      
       glm::vec3 get_color(color_name c)
       {
-        switch(c)
+        if(color_data.count(c))
         {
-          case color_name::blue:
-            return glm::vec3{0.f, 0.f, 1.f};
-          case color_name::green:
-            return glm::vec3(0.f, 1.f, 0.f);
-          case color_name::red:
-            return glm::vec3(1.f, 0.f, 0.f);
-          default:
-            return glm::vec3{0.f,0.f,0.f};
+          return color_data.at(c);
         }
+        return rgb_value(0.f,0.f,0.f);
       }
     }
   }

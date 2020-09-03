@@ -65,18 +65,12 @@ int main(int argc, char ** argv)
   catch(std::runtime_error const& r)
   {
     we::utils::notify(we::utils::notification_type::mb_ok, "Runtime Error", r.what());
-#ifdef DEBUG
-    __debugbreak();
-#endif // DEBUG
     return -2;
   }
   catch(const std::exception& ex)
   {
    // notify
    we::utils::notify(we::utils::notification_type::mb_ok, "Uncaught Exception", ex.what());
-#ifdef DEBUG
-   __debugbreak();
-#endif // DEBUG
    return -1;
   }
   #endif

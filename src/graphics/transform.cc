@@ -22,18 +22,6 @@ namespace waifuengine
       vertices[3] = { center.x - (dimensions.x / 2), center.y - (dimensions.y / 2) };
     }
 
-    float transform::convert_pixels_to_screen_coords(float p, transform::axis a)
-    {
-      switch(a)
-      {
-        case axis::x:
-          return (static_cast<float>(core::settings::read_t<int>("window_width")) / ((p != 0.0f) ? p : p + 0.001f)) - 1.0f;
-        case axis::y:
-          return (static_cast<float>(core::settings::read_t<int>("window_height")) / ((p != 0.0f) ? p : p + 0.001f)) - 1.0f;
-        default:
-          return 0.0f;
-      }
-    }
 
     transform::transform() : components::component<transform>()
     {
@@ -55,9 +43,9 @@ namespace waifuengine
     void transform::calculate_transform()
     {
       trans = glm::mat4(1.0f);
-      trans = glm::scale(trans, glm::vec3(scale_, 1.0f));
-      trans = glm::rotate(trans, glm::radians(rot_deg), glm::vec3(0.0, 0.0f, 1.0f));
       trans = glm::translate(trans, glm::vec3(pos_, 0.0f));
+      trans = glm::rotate(trans, glm::radians(rot_deg), glm::vec3(0.0, 0.0f, 1.0f));
+      trans = glm::scale(trans, glm::vec3(scale_, 1.0f));
       dirty = false;
     }
 
@@ -72,12 +60,12 @@ namespace waifuengine
 
     int transform::width_in_pixels() const
     {
-      return scale().x * static_cast<int>(graphics::get_current_window()->get_width());
+      return static_cast<int>(scale().x * static_cast<int>(graphics::get_current_window()->get_width())); // cast to int because we can't have a fraction of a pixel anyways
     }
 
     int transform::height_in_pixels() const
     {
-      return scale().y * static_cast<int>(graphics::get_current_window()->get_height());
+      return static_cast<int>(scale().y * static_cast<int>(graphics::get_current_window()->get_height()));
     }
 
     glm::vec2 transform::dimensions_in_pixels() const
@@ -87,28 +75,30 @@ namespace waifuengine
 
     glm::vec2 transform::position_in_pixels() const
     {
-      return get_position_in_world_coordinates();
+      return get_position_in_window_coordinates();
     }
 
-    screen_point2d transform::get_position_in_screen_coordinates() const
+    screen_point_2d transform::get_position_in_screen_coordinates() const
     {
       return pos_;
     }
 
-    world_point2d transform::get_position_in_world_coordinates() const
+    window_point_2d transform::get_position_in_window_coordinates() const
     {
-      return screen_point2d_to_world_point2d(get_position_in_screen_coordinates());
+      return screen_point_2d_to_window_point_2d(get_position_in_screen_coordinates());
     }
 
-    void transform::set_position_in_screen_coordinates(screen_point2d p)
+    void transform::set_position_in_screen_coordinates(screen_point_2d p)
     {
       pos_ = p;
       dirty = true;
     }
 
-    void transform::set_position_in_world_coordinates(world_point2d p)
+    void transform::set_position_in_window_coordinates(window_point_2d p)
     {
-      set_position_in_screen_coordinates(world_point2d_to_screen_point2d(p));
+      int b = 0;
+      int a = 1 / b;
+      set_position_in_screen_coordinates(window_point_2d_to_screen_point_2d(p));
       dirty = true;
     }
 

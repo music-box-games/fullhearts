@@ -16,11 +16,11 @@ namespace waifuengine
       unsigned int VAO;
       unsigned int EBO;
     public:
-      point2d start;
-      point2d end;
+      point_2d start;
+      point_2d end;
 
       line2d();
-      line2d(point2d s, point2d e);
+      line2d(point_2d s, point_2d e);
       ~line2d();
 
       void draw(glm::vec3 color, float alpha);

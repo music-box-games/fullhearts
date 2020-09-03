@@ -14,6 +14,7 @@ namespace waifuengine
         red,
         green,
         blue,
+        coral,
       };
 
       glm::vec3 get_color(color_name c);

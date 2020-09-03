@@ -59,7 +59,7 @@ void window::queue_input(int key, int action)
   queued_inputs.push_back({key, action});
 }
 
-window::window(std::string t, glm::vec2 r) : window(t, r.x, r.y) {}
+window::window(std::string t, glm::vec2 r) : window(t, static_cast<int>(r.x), static_cast<int>(r.y)) {}
 
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
@@ -84,7 +84,7 @@ window::window(std::string t, int w, int h) : title(t), width(w), height(h)
   
 }
 
-window::window(std::string title, window::window_ptr w)
+window::window(std::string title, window::window_ptr w) : width(0), height(0)
 {
   // TODO: secure this against nullptr
   data = w;
@@ -260,7 +260,7 @@ std::shared_ptr<window> create_window(std::string title, int width, int height)
 
 std::shared_ptr<window> create_window(std::string title, glm::vec2 res)
 {
-  return create_window(title, res.x, res.y);
+  return create_window(title, static_cast<int>(res.x), static_cast<int>(res.y));
 }
 
 void mark_window_to_close(window_id_type id)

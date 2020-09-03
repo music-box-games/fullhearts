@@ -17,7 +17,7 @@ std::string generate_string(int length)
 {
   std::string const charset = "1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
   std::default_random_engine generator;
-  std::uniform_int_distribution<int> dist(0, charset.size() - 1);
+  std::uniform_int_distribution<int> dist(0, static_cast<int>(charset.size()) - 1);
   std::string result;
   std::generate_n(std::back_inserter(result), length, [&]() { return charset[dist(generator)];});
   return result;

@@ -18,7 +18,7 @@ namespace waifuengine
 {
   namespace ui
   {
-    button::button(std::string const& name, std::string const& sprite_name, std::string const& text, graphics::screen_point2d pos, glm::vec2 ratios) : object_management::gameobject(name)
+    button::button(std::string const& name, std::string const& sprite_name, std::string const& text, graphics::screen_point_2d pos, glm::vec2 ratios) : object_management::gameobject(name)
     {
       {
         std::stringstream ss;
@@ -47,7 +47,7 @@ namespace waifuengine
       }
     }
 
-    object_management::objectptr add_button(std::string const& name, std::string const& sprite_name, std::string const& text, graphics::screen_point2d pos, glm::vec2 ratios)
+    object_management::objectptr add_button(std::string const& name, std::string const& sprite_name, std::string const& text, graphics::screen_point_2d pos, glm::vec2 ratios)
     {
        auto scn = scenes::current_scene();
       auto sp_manager = scn->get_manager();

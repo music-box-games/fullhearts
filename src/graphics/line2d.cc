@@ -13,7 +13,7 @@ namespace waifuengine
 {
   namespace graphics
   {
-    line2d::line2d(point2d s, point2d e) : start(s), end(e)
+    line2d::line2d(point_2d s, point_2d e) : start(s), end(e)
     {
               glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);

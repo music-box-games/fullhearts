@@ -53,30 +53,14 @@ namespace graphics
       // switch over error
       switch(error)
       {
-        case GL_INVALID_ENUM:
-          error_name = WE_UTIL_STRINGIFY(GL_INVALID_ENUM);
-          break;
-        case GL_INVALID_VALUE:
-          error_name = WE_UTIL_STRINGIFY(GL_INVALID_VALUE);
-          break;
-        case GL_INVALID_OPERATION:
-          error_name = WE_UTIL_STRINGIFY(GL_INVALID_OPERATION);
-          break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION:
-          error_name= WE_UTIL_STRINGIFY(GL_INVALID_FRAMEBUFFER_OPERATION);
-          break;
-        case GL_OUT_OF_MEMORY:
-          error_name = WE_UTIL_STRINGIFY(GL_OUT_OF_MEMORY);
-          break;
-        case GL_STACK_UNDERFLOW:
-          error_name = WE_UTIL_STRINGIFY(GL_STACK_UNDERFLOW);
-          break;
-        case GL_STACK_OVERFLOW:
-          error_name = WE_UTIL_STRINGIFY(GL_STACK_OVERFLOW);
-          break;
-        default:
-          error_name = "error";
-          break;
+        case GL_INVALID_ENUM:                   error_name = WE_UTIL_STRINGIFY(GL_INVALID_ENUM); break;
+        case GL_INVALID_VALUE:                  error_name = WE_UTIL_STRINGIFY(GL_INVALID_VALUE); break;
+        case GL_INVALID_OPERATION:              error_name = WE_UTIL_STRINGIFY(GL_INVALID_OPERATION); break;
+        case GL_INVALID_FRAMEBUFFER_OPERATION:  error_name = WE_UTIL_STRINGIFY(GL_INVALID_FRAMEBUFFER_OPERATION); break;
+        case GL_STACK_UNDERFLOW:                error_name = WE_UTIL_STRINGIFY(GL_STACK_UNDERFLOW); break;
+        case GL_STACK_OVERFLOW:                 error_name = WE_UTIL_STRINGIFY(GL_STACK_OVERFLOW); break;
+        case GL_OUT_OF_MEMORY:                  error_name = WE_UTIL_STRINGIFY(GL_OUT_OF_MEMORY); break;
+        default:                                error_name = "error"; break;
       }
 
       message << "[glad_postcall_callback_func]\n";
@@ -158,7 +142,8 @@ namespace graphics
       log::LOGERROR("Could not init GLFW!");
     }
     // create initial window
-    auto w = create_window(title, resolutions::FHD);
+    auto res = resolutions::FHD;
+    auto w = create_window(title, res);
     if(!bool(w))
     {
       // TODO error

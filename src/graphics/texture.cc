@@ -169,7 +169,7 @@ namespace waifuengine
       {
       }
 
-      texture::texture(std::shared_ptr<raw_texture_data> d) : name(d->get_name()), tdata(d)
+      texture::texture(std::shared_ptr<raw_texture_data> d) : name(d->get_name()), tdata(d), vertices({ 0 }), elements({ 0 })
       {
         log::LOGTRACE(std::string("Constructing texture: " + name));
       }
@@ -188,6 +188,10 @@ namespace waifuengine
 #define TUNIT(x) (GL_TEXTURE0 + x)
       void texture::draw() const
       {
+        {
+          std::stringstream ss;
+          
+        }
         tdata->draw((float*)vertices.data(), vertices.size(), (unsigned int *)elements.data(), elements.size(), last_trans);
       }
 
@@ -203,21 +207,21 @@ namespace waifuengine
         float transformed_width = window_width * width_ratio;
         float transformed_height = window_height * height_ratio;
 
-        screen_point2d pos = t.get_position_in_world_coordinates();
+        window_point_2d pos = t.get_position_in_window_coordinates();
 
         // take the x value for the center, and subtract half of the width of the object to the the x value for the left two verts
         // take the y value for the center, and add half of the height of the object to get the y value for the top two verts
-        world_point2d top_left(pos.x - (transformed_width / 2.0f), pos.y + (transformed_height / 2.0f));
-        world_point2d top_right(pos.x + (transformed_width / 2.0f), top_left.y);
-        world_point2d bottom_right(top_right.x, pos.y - (transformed_height / 2.0f));
-        world_point2d bottom_left(top_left.x, bottom_right.y);
+        window_point_2d top_left(pos.x - (transformed_width / 2.0f), pos.y + (transformed_height / 2.0f));
+        window_point_2d top_right(pos.x + (transformed_width / 2.0f), top_left.y);
+        window_point_2d bottom_right(top_right.x, pos.y - (transformed_height / 2.0f));
+        window_point_2d bottom_left(top_left.x, bottom_right.y);
 
-        screen_point2d stop_left = world_point2d_to_screen_point2d(top_left);
-        screen_point2d stop_right = world_point2d_to_screen_point2d(top_right);
-        screen_point2d sbottom_right = world_point2d_to_screen_point2d(bottom_right);
-        screen_point2d sbottom_left = world_point2d_to_screen_point2d(bottom_left);
+        screen_point_2d stop_left = window_point_2d_to_screen_point_2d(top_left);
+        screen_point_2d stop_right = window_point_2d_to_screen_point_2d(top_right);
+        screen_point_2d sbottom_right = window_point_2d_to_screen_point_2d(bottom_right);
+        screen_point_2d sbottom_left = window_point_2d_to_screen_point_2d(bottom_left);
 
-                vert_array v = {
+        vert_array v = {
             // position             // color r     g      b   // tex coord uv
             stop_left.x, stop_left.y,         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // top left
             stop_right.x, stop_right.y,       0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // top right
@@ -226,7 +230,7 @@ namespace waifuengine
         };
         vertices = v;
 
-                elements = {
+        elements = {
             0, 1, 2,
             2, 3, 0};
       }

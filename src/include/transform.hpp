@@ -44,7 +44,7 @@ namespace waifuengine
       bool dirty;
 
       glm::vec2 scale_;
-      screen_point2d pos_;
+      screen_point_2d pos_;
 
       float rot_deg;
 
@@ -69,7 +69,6 @@ namespace waifuengine
         y,
         z,
       };
-      static float convert_pixels_to_screen_coords(float p, axis a);
 
       transform();
       virtual ~transform();
@@ -98,25 +97,25 @@ namespace waifuengine
         * @brief Gets the screen coordinates for the center of the object
         * @return Object's screen coordinates.
       */
-      screen_point2d get_position_in_screen_coordinates() const;
+      screen_point_2d get_position_in_screen_coordinates() const;
 
       /**
         * @brief Gets the world coordinates for the center of the object
         * @return Object's world coordinates.
       */
-      world_point2d get_position_in_world_coordinates() const;
+      window_point_2d get_position_in_window_coordinates() const;
 
       /**
         * @brief Sets the center of the object to the position given in screen coordinates.
         * @param p Point in screen coordinates to set position to.
       */
-      void set_position_in_screen_coordinates(screen_point2d p);
+      void set_position_in_screen_coordinates(screen_point_2d p);
 
       /**
         * @brief Sets the center of the object to the position given in world coordinates.
         * @param p Point in world coordinates to set position to.
       */
-     void set_position_in_world_coordinates(world_point2d p);
+     void set_position_in_window_coordinates(window_point_2d p);
 
      /**
        * @brief Sets the "width" of the object.

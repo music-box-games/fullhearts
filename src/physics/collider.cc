@@ -80,15 +80,15 @@ namespace waifuengine
           return;
         }
         auto parent_trans = dynamic_cast<graphics::transform *>(parent->get_component<graphics::transform>().get());
-        graphics::screen_point2d parent_position = parent_trans->get_position_in_screen_coordinates();
+        graphics::screen_point_2d parent_position = parent_trans->get_position_in_screen_coordinates();
 
         float screen_width_value = width * graphics::SCREEN_COORD_RANGE;
         float screen_height_value = height * graphics::SCREEN_COORD_RANGE;
 
-        graphics::screen_point2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
-        graphics::screen_point2d top_left(bottom_left.x, parent_position.y + screen_height_value);
-        graphics::screen_point2d top_right(parent_position.x + screen_width_value, top_left.y);
-        graphics::screen_point2d bottom_right(top_right.x, bottom_left.y);
+        graphics::screen_point_2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
+        graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + screen_height_value);
+        graphics::screen_point_2d top_right(parent_position.x + screen_width_value, top_left.y);
+        graphics::screen_point_2d bottom_right(top_right.x, bottom_left.y);
         
         // create and draw rect
         graphics::rect2d rect(

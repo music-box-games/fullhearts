@@ -79,8 +79,7 @@ namespace waifuengine
         glDeleteVertexArrays(1, &vao);
     }
 
-    void raw_texture_data::draw(float * verts, std::size_t vert_count, unsigned int * elements, std::size_t e_count, transform const& tr) const
-    {
+    void raw_texture_data::draw(float * verts, std::size_t vert_count, unsigned int * elements, std::size_t e_count, transform const& tr) const    {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBindTexture(GL_TEXTURE_2D, txtr);
 
