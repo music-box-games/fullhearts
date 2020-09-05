@@ -13,12 +13,15 @@ namespace waifuengine
     constexpr unsigned int RES_QHD_HEIGHT = 1440;
     constexpr unsigned int RES_FHD_WIDTH = 1920;
     constexpr unsigned int RES_FHD_HEIGHT = 1080;
+    constexpr unsigned int RES_SD_WIDTH = 1280;
+    constexpr unsigned int RES_SD_HEIGHT = 720;
 
     namespace resolutions
     {
       constexpr glm::vec2 UHD = {RES_UHD_WIDTH, RES_UHD_HEIGHT};
       constexpr glm::vec2 QHD = {RES_QHD_WIDTH, RES_QHD_HEIGHT};
       constexpr glm::vec2 FHD = {RES_FHD_WIDTH, RES_FHD_HEIGHT};
+      constexpr glm::vec2 SD = {RES_SD_WIDTH, RES_SD_HEIGHT};
     }
   }
 }
