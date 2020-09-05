@@ -39,7 +39,7 @@ namespace tests
 
   constexpr float WW = 1920.0f;
   constexpr float WH = 1080.0f;
-  constexpr float ERROR_MARGIN = 0.1f;
+  constexpr float ERROR_MARGIN = 0.01f;
 
 
 static graphics::screen_coordinates_2d random_screen_pos()
@@ -68,7 +68,7 @@ int run_tests(int argc, char **argv)
 
 
 
-TEST(ConversionTest, WorldCoordinatesToScreenCoordinates)
+TEST(ConversionTest, WindowCoordinatesToScreenCoordinates)
 {
   // check that world coordinates are properly converted into screen coordinates
   // check each corner and dead center
@@ -114,7 +114,7 @@ TEST(ConversionTest, WorldCoordinatesToScreenCoordinates)
   ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 }
 
-TEST(ConversionTest, ScreenCoordinatesToWorldCoordinates)
+TEST(ConversionTest, ScreenCoordinatesToWindowCoordinates)
 {
   // check that world coordinates are properly converted into screen coordinates
   // check each corner and dead center

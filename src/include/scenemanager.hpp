@@ -87,7 +87,8 @@ namespace waifuengine
     void load(std::string name);
     void unload();
     void save();
-    void queue_scene(std::function<void()> sl);
+    using scene_loader = std::function<void()>;
+    void queue_scene(scene_loader sl);
 
     void init();
     void shutdown();

@@ -144,7 +144,10 @@ void engine::update()
 void engine::load_initial_scene()
 {
   we::log::LOGTRACE("Loading inital scene");
-  auto func = []() -> void { we::scenes::build_splashscreen_scene(); };
+  we::scenes::scene_loader func = []() -> void { 
+    //we::scenes::build_splashscreen_scene(); 
+    we::scenes::build_scene_mainmenu();
+    };
   we::scenes::queue_scene(func);
 }
 } // namespace core

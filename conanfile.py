@@ -10,6 +10,7 @@ class FullheartsConan(ConanFile):
     self.requires("glad/0.1.29@bincrafters/stable")
     self.requires("glfw/3.3.2@bincrafters/stable")
     self.requires("soil2/1.20@bincrafters/stable")
+    self.requires("nlohmann_json/3.9.1")
     if self.settings.os == "Windows":
       self.requires("boost/1.71.0@conan/stable")
     else:
