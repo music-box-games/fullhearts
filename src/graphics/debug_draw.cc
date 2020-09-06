@@ -20,7 +20,7 @@ namespace waifuengine
 
     void debug_draw::update(float) 
     {
-            if(!disabled)
+      if(!disabled)
       {
         attached_components.clear();
         // collect pointers to the components we want to draw

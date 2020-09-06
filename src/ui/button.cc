@@ -36,6 +36,7 @@ namespace waifuengine
         obj_trans->set_ratios(ratios);
       auto spr = add_component_v<graphics::sprite>(sprite_name);
       auto col = add_component_v<physics::collider>();
+      add_component<graphics::debug_draw>();
     }
 
     button::~button()

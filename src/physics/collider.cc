@@ -42,7 +42,7 @@ namespace waifuengine
 {
   namespace physics
   {
-    collider::collider() : components::component<collider>()
+    collider::collider() : components::component<collider>(), width(0), height(0), colliding(false)
     {
       log::LOGTRACE("Constructing collider");
     }
@@ -69,9 +69,19 @@ namespace waifuengine
       return colliding;
     }
 
+    void collider::set_width(float wr)
+    {
+      width = wr;
+    }
+
+    void collider::set_height(float hr)
+    {
+      height = hr;
+    }
+
     void collider::draw_debug()
     {
-      if (!disabled && debugging)
+      if ((!disabled) && debugging)
       {
         // build polygon
         // find positions of each corner of the collider to create line segments
@@ -79,12 +89,13 @@ namespace waifuengine
         {
           return;
         }
-        auto parent_trans = dynamic_cast<graphics::transform *>(parent->get_component<graphics::transform>().get());
+        std::shared_ptr<graphics::transform> parent_trans = parent->get_component<graphics::transform>();
+        // set width and height from parent transform
+        set_width(parent_trans->get_width_ratio());
+        set_height(parent_trans->get_height_ratio());
         graphics::screen_point_2d parent_position = parent_trans->get_position_in_screen_coordinates();
-
-        float screen_width_value = width * graphics::SCREEN_COORD_RANGE;
-        float screen_height_value = height * graphics::SCREEN_COORD_RANGE;
-
+        float screen_width_value = width;// *graphics::SCREEN_COORD_RANGE;
+        float screen_height_value = height;// *graphics::SCREEN_COORD_RANGE;
         graphics::screen_point_2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
         graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + screen_height_value);
         graphics::screen_point_2d top_right(parent_position.x + screen_width_value, top_left.y);

@@ -27,7 +27,12 @@ namespace waifuengine
       glGenBuffers(1, &EBO);
     }
 
-    line2d::~line2d() {}
+    line2d::~line2d() 
+    {
+      glDeleteBuffers(1, &EBO);
+      glDeleteBuffers(1, &VBO);
+      glDeleteVertexArrays(1, &VAO);
+    }
 
     void line2d::draw(glm::vec3 color, float alpha)
     {

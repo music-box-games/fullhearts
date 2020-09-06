@@ -90,7 +90,7 @@ namespace waifuengine
 
         virtual void update(float dt) = 0;
         virtual void draw() const = 0;
-        virtual void draw_debug() const = 0;
+        virtual void draw_debug() = 0;
         virtual void disable(bool set = true) { disabled = set; }
         virtual bool is_disabled() const { return disabled; }
         virtual void debug(bool set = true) { debugging = set; }
@@ -123,11 +123,12 @@ namespace waifuengine
         // register component with sorting
         component_sorter::register_component(name, order);
       }
+      
       virtual ~component() {}
 
       virtual void update(float dt) {}
       virtual void draw() const {}
-      virtual void draw_debug() const {}
+      virtual void draw_debug() {}
 
       virtual void disable(bool set = true)
       {

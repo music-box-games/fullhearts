@@ -3,6 +3,7 @@
 #include "rect2d.hpp"
 #include "graphics.hpp"
 #include "shader.hpp"
+#include "log.hpp"
 
 namespace we = ::waifuengine;
 
@@ -14,8 +15,8 @@ namespace waifuengine
     {
       sides[0] = a;
       sides[1] = b;
-      sides[3] = c;
-      sides[4] = d;
+      sides[2] = c;
+      sides[3] = d;
 
                     glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -24,7 +25,7 @@ namespace waifuengine
 
     void rect2d::draw(glm::vec3 color, float alpha)
     {
-      auto shdopt = shaders::get_shader("debug_line_shader");
+      auto shdopt = shaders::get_shader("line_shader");
       std::shared_ptr<shaders::shader> shd;
       if(shdopt.has_value())
       {
@@ -32,14 +33,19 @@ namespace waifuengine
       }
       else{
         // TOOD: error handle
+        std::stringstream ss;
+        ss << "Shader has invalid value!";
+        log::LOGERROR(ss.str());
+        return;
       }
       shd->use();
-      std::array<float, 8> verts = {
+      std::array<float, 8> verts =
+      {
         sides[0].start.x, sides[0].start.y,
         sides[1].start.x, sides[1].start.y,
         sides[2].start.x, sides[2].start.y,
         sides[3].start.x, sides[3].start.y,
-                    };
+      };
       unsigned int elements[] = {0, 1, 2, 2, 3, 0};
 
       shd->set_float_3("color", color.r, color.g, color.b);
@@ -57,6 +63,10 @@ namespace waifuengine
       glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
       glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+      glDeleteBuffers(1, &EBO);
+      glDeleteBuffers(1, &VBO);
+      glDeleteVertexArrays(1, &VAO);
     }
 
     bool rect2d::operator==(rect2d const& rhs) const
