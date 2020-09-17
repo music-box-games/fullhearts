@@ -16,6 +16,8 @@ namespace waifuengine
       unsigned int VBO;
       unsigned int EBO;
 
+      std::array<float, 8> last_verts;
+
     public:
       std::array<line2d, 4> sides;
       rect2d(line2d a, line2d b, line2d c, line2d d);
@@ -24,6 +26,8 @@ namespace waifuengine
       void draw(glm::vec3 color, float alpha);
 
       bool operator==(rect2d const& rhs) const; // this only compares the sides, not VAO, VBO, EBO
+
+      std::array<float, 8> get_last_verts() const;
     };
   }
 }

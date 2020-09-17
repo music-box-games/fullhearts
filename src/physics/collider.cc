@@ -103,11 +103,12 @@ namespace waifuengine
         
         // create and draw rect
         graphics::rect2d rect(
-          graphics::line2d(bottom_left, top_left), 
           graphics::line2d(top_left, top_right), 
           graphics::line2d(top_right, bottom_right),
-          graphics::line2d(bottom_right, bottom_left)
+          graphics::line2d(bottom_right, bottom_left),
+          graphics::line2d(bottom_left, top_left)
           );
+
         
         if(is_colliding())
         {
@@ -117,7 +118,13 @@ namespace waifuengine
         {
           rect.draw(graphics::colors::get_color(graphics::colors::color_name::green), 1.0f);
         }
+        last_verts = rect.get_last_verts();
       }
+    }
+
+    std::array<float, 8> collider::get_last_verts() const
+    {
+      return last_verts;
     }
 
     void collider::offset_translate(glm::vec2 translation)

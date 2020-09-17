@@ -18,9 +18,14 @@ namespace waifuengine
       sides[2] = c;
       sides[3] = d;
 
-                    glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &EBO);
+      glGenVertexArrays(1, &VAO);
+      glGenBuffers(1, &VBO);
+      glGenBuffers(1, &EBO);
+    }
+
+    std::array<float, 8> rect2d::get_last_verts() const
+    {
+      return last_verts;
     }
 
     void rect2d::draw(glm::vec3 color, float alpha)
@@ -31,7 +36,8 @@ namespace waifuengine
       {
         shd = shdopt.value();
       }
-      else{
+      else
+      {
         // TOOD: error handle
         std::stringstream ss;
         ss << "Shader has invalid value!";
@@ -46,6 +52,7 @@ namespace waifuengine
         sides[2].start.x, sides[2].start.y,
         sides[3].start.x, sides[3].start.y,
       };
+      last_verts = verts;
       unsigned int elements[] = {0, 1, 2, 2, 3, 0};
 
       shd->set_float_3("color", color.r, color.g, color.b);
@@ -71,7 +78,8 @@ namespace waifuengine
 
     bool rect2d::operator==(rect2d const& rhs) const
     {
-      return (sides[0] == rhs.sides[0]) &&
+      return 
+      (sides[0] == rhs.sides[0]) &&
       (sides[1] == rhs.sides[1]) &&
       (sides[2] == rhs.sides[2]) &&
       (sides[3] == rhs.sides[3]);     

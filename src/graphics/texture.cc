@@ -236,6 +236,11 @@ namespace waifuengine
       }
 #undef TUNIT
 
+      texture::vert_array texture::get_vertices() const
+      {
+        return vertices;
+      }
+
       namespace test
       {
         texture_test_object::texture_test_object(std::string const &n, std::string const &texture_name, std::string const &shader_name) : object_management::gameobject(n), tex(get_texture(texture_name))

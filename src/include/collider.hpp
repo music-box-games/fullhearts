@@ -35,6 +35,7 @@
 #include "shader.hpp"
 #include "graphics_primatives.hpp"
 #include "transform.hpp"
+#include "rect2d.hpp"
 
 // TODO: collision layers, only check in layer
 
@@ -44,6 +45,9 @@ namespace waifuengine
   {
     class collider : public waifuengine::components::component<collider>
     {
+    private:
+      std::array<float, 8> last_verts;
+
     // friends
     protected:
       friend class core::debug::imgui_listener;
@@ -64,6 +68,8 @@ namespace waifuengine
       virtual void update(float dt);
       virtual void draw() const;
       virtual void draw_debug();
+
+      std::array<float, 8> get_last_verts() const;
 
       /**
        * @brief Sets the collider's width to be a ratio of the window's width.

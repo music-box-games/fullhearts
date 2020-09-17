@@ -54,14 +54,16 @@ namespace waifuengine
     {
       class texture
       {
-      private:
-        friend class waifuengine::core::debug::imgui_listener;
-
+      public:
         static constexpr int VERT_COUNT = 28;
         static constexpr int ELEMENT_COUNT = 6;
 
         using vert_array = std::array<float, VERT_COUNT>;
         using element_array = std::array<unsigned int, ELEMENT_COUNT>;
+
+      private:
+        friend class waifuengine::core::debug::imgui_listener;
+
 
         vert_array vertices; /**< array of vertices */
         element_array elements; /**< array of elements */
@@ -73,6 +75,8 @@ namespace waifuengine
       public:
         texture(raw_txtr_ptr d);
         ~texture();
+
+        vert_array get_vertices() const;
 
         void draw() const;
         void update(transform const& t = transform());

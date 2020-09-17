@@ -112,6 +112,18 @@ namespace waifuengine
           {
             ImGui::Text("Name: %s", t.name.c_str());
             raw_texture_data_tree(t.tdata);
+            auto v = t.get_vertices();
+            std::stringstream ss;
+            ss << "Vertices:\n";
+            for (int i = 1; i < v.size() + 1; ++i)
+            {
+              ss << v[i - 1] << " ";
+              if (i % 7 == 0)
+              {
+                ss << '\n';
+              }
+            }
+            ImGui::Text(ss.str().c_str());
             ImGui::TreePop();
           }
         }
@@ -250,6 +262,18 @@ namespace waifuengine
               {
                 c->debug(dbg);
               }
+              std::stringstream ss;
+              ss << "Vertices:\n";
+              std::array<float, 8> v = c->get_last_verts();
+              for (int i = 0; i < v.size(); ++i)
+              {
+                if (i % 2 == 0)
+                {
+                  ss << '\n';
+                }
+                ss << v[i] << ' ';
+              }
+              ImGui::Text(ss.str().c_str());
               ImGui::TreePop();
             }
           }
