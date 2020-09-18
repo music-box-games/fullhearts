@@ -165,6 +165,14 @@ namespace waifuengine
         }
       }
 
+      void remove_texture(std::string const& name)
+      {
+        if (impl::loaded_textures.count(name))
+        {
+          impl::loaded_textures.erase(name);
+        }
+      }
+
       void load_textures()
       {
       }
@@ -185,13 +193,8 @@ namespace waifuengine
         return {tdata->get_width(), tdata->get_height()};
       }
 
-#define TUNIT(x) (GL_TEXTURE0 + x)
       void texture::draw() const
       {
-        {
-          std::stringstream ss;
-          
-        }
         tdata->draw((float*)vertices.data(), vertices.size(), (unsigned int *)elements.data(), elements.size(), last_trans);
       }
 
@@ -223,10 +226,10 @@ namespace waifuengine
 
         vert_array v = {
             // position             // color r     g      b   // tex coord uv
-            stop_left.x, stop_left.y,         1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // top left
-            stop_right.x, stop_right.y,       0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // top right
+            sbottom_left.x, sbottom_left.y,   1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  // bottom left
             sbottom_right.x, sbottom_right.y, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // bottom right
-            sbottom_left.x, sbottom_left.y,   1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // bottom left
+            stop_right.x, stop_right.y,       0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // top right
+            stop_left.x, stop_left.y,         1.0f, 0.0f, 0.0f, 0.0f, 0.0f // top left
         };
         vertices = v;
 
@@ -234,7 +237,6 @@ namespace waifuengine
             0, 1, 2,
             2, 3, 0};
       }
-#undef TUNIT
 
       texture::vert_array texture::get_vertices() const
       {

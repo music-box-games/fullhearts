@@ -21,7 +21,7 @@ namespace waifuengine
     public:
       std::array<line2d, 4> sides;
       rect2d(line2d a, line2d b, line2d c, line2d d);
-      ~rect2d() = default;
+      ~rect2d();
 
       void draw(glm::vec3 color, float alpha);
 

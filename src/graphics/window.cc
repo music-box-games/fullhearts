@@ -2,12 +2,13 @@
 #include <unordered_map>
 #include <set>
 
-#include <window.hpp>
-#include <settings.hpp>
-#include <utils.hpp>
-#include <engine.hpp>
-#include <input.hpp>
-#include <event_manager.hpp>
+#include "window.hpp"
+#include "settings.hpp"
+#include "utils.hpp"
+#include "engine.hpp"
+#include "input.hpp"
+#include "event_manager.hpp"
+#include "texture.hpp"
 
 namespace we = ::waifuengine;
 using settings = we::core::settings;
@@ -217,9 +218,14 @@ window::operator bool() const
   return !(data == NULL);
 }
 
+textures::texture window::get_current_framebuffer()
+{
+  return textures::texture(nullptr);
+}
+
 std::shared_ptr<window> get_current_window() 
 {
-  return (*impl::windows.begin()).second;
+  return (impl::windows.begin())->second;
 }
 
 std::shared_ptr<window> get_window_by_id(window_id_type id)

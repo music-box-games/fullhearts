@@ -45,16 +45,19 @@ namespace waifuengine
         {
         public:
           using data_func_type = std::function<std::vector<std::string>()>;
+          using detail_func_type = std::function<std::string()>;
 
           data_func_type pnames;
           data_func_type ptypes;
+          detail_func_type edetails;
 
-          detailed_error_funcs(data_func_type pn, data_func_type pt);
+          detailed_error_funcs(data_func_type pn, data_func_type pt, detail_func_type ed = []() -> std::string { return std::string(); });
           ~detailed_error_funcs() = default;
         };
 
         std::vector<std::string> param_names(std::string func_name);
         std::vector<std::string> param_types(std::string func_name);
+        std::string extra_details(std::string func_name);
 
         bool has_detailed_error_info(std::string func_name);
       }

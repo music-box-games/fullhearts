@@ -73,6 +73,7 @@ namespace graphics
       {
         auto parameter_types = graphics_debug::gl_function_detailed_errors::param_types(func_name);
         auto parameter_names = graphics_debug::gl_function_detailed_errors::param_names(func_name);
+        auto extra_details = graphics_debug::gl_function_detailed_errors::extra_details(func_name);
 
         message << "(";
         va_list l;
@@ -89,6 +90,10 @@ namespace graphics
         }
         va_end(l);
         message << ')';
+        if(!extra_details.empty())
+        {
+          message << '\n' << extra_details;
+        }
       }
       else
       { 

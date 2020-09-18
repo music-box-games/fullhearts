@@ -117,6 +117,8 @@ void engine::update()
   // update things
   we::utils::timers::update();
   ::waifuengine::scenes::update(dt);
+  // audio update
+  we::audio::update();
 
   // now draw
   we::scenes::draw();
@@ -124,11 +126,12 @@ void engine::update()
   // draw imgui on top
   we::core::debug::present_imgui();
 
-  // then present on screen
+  // TODO: draw next frame in small window for debugging
+
+  // then present on screen, this is where the frame buffers are swapped and what we've been drawing becomes
+  // visible to the user
   ::waifuengine::graphics::present();
 
-  // audio update
-  we::audio::update();
 
   // apply frame limiter if applicable
   if (we::core::settings::read_t<std::size_t>("frame_limit"))

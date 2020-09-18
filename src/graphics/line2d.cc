@@ -6,6 +6,7 @@
 #include "line2d.hpp"
 #include "shader.hpp"
 #include "graphics.hpp"
+#include "log.hpp"
 
 namespace we = ::waifuengine;
 
@@ -17,19 +18,16 @@ namespace waifuengine
     {
               glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
-        glGenBuffers(1, &EBO);
     }
 
     line2d::line2d() : start(glm::vec2(0.f, 0.f)), end(glm::vec2(0.f, 0.f))
     {
       glGenVertexArrays(1, &VAO);
       glGenBuffers(1, &VBO);
-      glGenBuffers(1, &EBO);
     }
 
     line2d::~line2d() 
     {
-      glDeleteBuffers(1, &EBO);
       glDeleteBuffers(1, &VBO);
       glDeleteVertexArrays(1, &VAO);
     }
@@ -42,15 +40,20 @@ namespace waifuengine
       {
         shd = shdopt.value();
       }
-      else{
-        // TOOD: error handle
+      else
+      {
+        // TODO: error handle
+        std::stringstream ss;
+        ss << "Shader has invalid value!";
+        log::LOGERROR(ss.str());
+        return;
       }
       shd->use();
-      std::array<float, 4> verts = {
+      std::array<float, 4> verts = 
+      {
         start.x, start.y,
         end.x,   end.y
-                    };
-      unsigned int elements[] = {0, 1};
+      };
 
       shd->set_float_3("color", color.r, color.g, color.b);
       shd->set_float_1("alpha", alpha);
@@ -59,14 +62,11 @@ namespace waifuengine
       glBindBuffer(GL_ARRAY_BUFFER, VBO);
       glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_STATIC_DRAW);
 
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
       int position_attribute = shd->get_attribute("position");
       glEnableVertexAttribArray(position_attribute);
       glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-      glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+      glDrawArrays(GL_LINES, 0, 2);
     }
 
     bool line2d::operator==(line2d const& rhs) const

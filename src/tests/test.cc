@@ -109,7 +109,7 @@ TEST(ConversionTest, WindowCoordinatesToScreenCoordinates)
 
   // random pos
   world_pos = random_world_pos();
-  expected_result = { world_pos.x / WW, world_pos.y / WH};
+  expected_result = { (2.0f * (world_pos.x / WW)) - 1.0f, (2.0f * (world_pos.y / WH)) - 1.0f};
   actual_result = graphics::window_coordinates_to_screen_coordinates(world_pos, WW, WH);
   ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 }

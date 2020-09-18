@@ -98,6 +98,8 @@ namespace waifuengine
       std::optional<std::shared_ptr<image>> get_image(std::string const& name);
       std::unordered_map<std::string, std::shared_ptr<raw_texture_data>> get_texturemap();
 
+      void remove_texture(std::string const& name);
+
       void load_textures();
       std::shared_ptr<raw_texture_data> load_texture(std::string const& image_name, std::string const& shader_name);
       void load_images();

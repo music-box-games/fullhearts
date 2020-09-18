@@ -1,4 +1,5 @@
 #include <boost/container_hash/hash.hpp>
+#include <tuple>
 
 #include "rect2d.hpp"
 #include "graphics.hpp"
@@ -11,6 +12,7 @@ namespace waifuengine
 {
   namespace graphics
   {
+
     rect2d::rect2d(line2d a, line2d b, line2d c, line2d d) : VAO(0), VBO(0), EBO(0)
     {
       sides[0] = a;
@@ -28,8 +30,16 @@ namespace waifuengine
       return last_verts;
     }
 
+#define RECT2D_DRAW_USE_LINE_DRAW_METHOD
+
     void rect2d::draw(glm::vec3 color, float alpha)
     {
+
+
+#ifdef RECT2D_DRAW_USE_LINE_DRAW_METHOD
+      std::for_each(sides.begin(), sides.end(), [&color, &alpha](auto & l) -> void { l.draw(color, alpha); });
+#else
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINES);
       auto shdopt = shaders::get_shader("line_shader");
       std::shared_ptr<shaders::shader> shd;
       if(shdopt.has_value())
@@ -38,7 +48,7 @@ namespace waifuengine
       }
       else
       {
-        // TOOD: error handle
+        // TODO: error handle
         std::stringstream ss;
         ss << "Shader has invalid value!";
         log::LOGERROR(ss.str());
@@ -53,7 +63,7 @@ namespace waifuengine
         sides[3].start.x, sides[3].start.y,
       };
       last_verts = verts;
-      unsigned int elements[] = {0, 1, 2, 2, 3, 0};
+      unsigned int elements[] = {0, 1, 2, 3, 0};
 
       shd->set_float_3("color", color.r, color.g, color.b);
       shd->set_float_1("alpha", alpha);
@@ -69,8 +79,14 @@ namespace waifuengine
       glEnableVertexAttribArray(position_attribute);
       glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-      glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+      glDrawArrays(GL_LINES, 0, 4);
+      //glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0); // TODO: fix this
 
+#endif // RECT2D_DRAW_USE_LINE_DRAW_METHOD
+    }
+
+    rect2d::~rect2d()
+    {
       glDeleteBuffers(1, &EBO);
       glDeleteBuffers(1, &VBO);
       glDeleteVertexArrays(1, &VAO);

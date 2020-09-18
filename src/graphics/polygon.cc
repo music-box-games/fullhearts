@@ -10,7 +10,7 @@ namespace waifuengine
   {
     polygon::polygon(std::initializer_list<line2d> lines)
     {
-      for(auto l : lines)
+      for(auto& l : lines)
       {
         sides.push_back(l);
       }      

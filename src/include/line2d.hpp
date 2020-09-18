@@ -14,7 +14,6 @@ namespace waifuengine
     private:
       unsigned int VBO;
       unsigned int VAO;
-      unsigned int EBO;
     public:
       point_2d start;
       point_2d end;
@@ -26,8 +25,10 @@ namespace waifuengine
       void draw(glm::vec3 color, float alpha);
 
       bool operator==(line2d const& rhs) const;
+
     };
   }
+
 }
 
 #endif

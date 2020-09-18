@@ -17,6 +17,11 @@ namespace waifuengine
 {
   namespace graphics
   {
+    namespace textures
+    {
+      class texture; // forward def
+    }
+
     typedef std::string window_id_type;
     class window
     {
@@ -46,6 +51,8 @@ namespace waifuengine
 
       float get_width() const;
       float get_height() const;
+
+      textures::texture get_current_framebuffer();
 
       static void apply_imgui_restriction(bool set);
 
