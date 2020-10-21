@@ -75,7 +75,7 @@ namespace waifuengine
           }
           GLuint id = p.first->second.data();
           auto node = underlying_bmap.extract(0); // extra the node for the newly made entry and change the key to the GLuint id
-          node.key() = id;
+          node.key() = id; // set key to what we actualyl want it to be
           underlying_bmap.insert(std::move(node));
           bmap[name] = id;
           return buffer_type(underlying_bmap.at(id));
