@@ -28,6 +28,7 @@
 */
 /******************************************************************************/
 
+#include <iostream>
 #include <unordered_map>
 
 #include "graphic_buffer_manager.hpp"
@@ -66,7 +67,7 @@ namespace waifuengine
         else
         {
           // construct at index '0', because that is only for errors anyways
-          auto p = underlying_bmap.emplace(std::make_pair((GLuint)0, buffer_type::buffer_t(name)));
+          auto p = underlying_bmap.emplace((GLuint)0, buffer_type::buffer_t(name));
           if(!p.second)
           {
             return {}; // p.second is false if it failed to emplace
@@ -75,7 +76,8 @@ namespace waifuengine
           GLuint id = p.first->second.data();
           auto node = underlying_bmap.extract(0); // extra the node for the newly made entry and change the key to the GLuint id
           node.key() = id;
-          bmap.at(name) = id;
+          underlying_bmap.insert(std::move(node));
+          bmap[name] = id;
           return buffer_type(underlying_bmap.at(id));
         }
       }

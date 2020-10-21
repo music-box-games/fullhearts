@@ -18,7 +18,7 @@
 #include <tests.hpp>
 #include <utils.hpp>
 
-#define CATCH
+//#define CATCH
 
 namespace we = ::waifuengine;
     std::exception_ptr eptr;
