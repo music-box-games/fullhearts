@@ -38,6 +38,14 @@ namespace waifuengine
               []() -> std::string { return "GL_INVALID_OPERATION is generated if array is not zero or the name of a vertex array object previously returned from a call to glGenVertexArrays."; }
             )
           },
+          {
+            "glCreateShader",
+            detailed_error_funcs(
+              []() -> std::vector<std::string> { return std::vector<std::string>({"shaderType"}); },
+              []() -> std::vector<std::string> { return std::vector<std::string>({"GLenum"}); },
+              []() -> std::string { return "This function returns 0 if an error occurs creating the shader object. GL_INVALID_ENUM is generated if shaderType is not an accepted value."; }
+            )
+          }
         };
 
         std::vector<std::string> param_names(std::string func_name)

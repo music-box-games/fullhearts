@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <random>
+
 #include <str_util.hpp>
 
 #ifdef WINDOWS
@@ -37,7 +40,17 @@ namespace waifuengine
       return tokens;
     }
 
-    // taxed from https://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c/16388594
+    std::string random_str(std::size_t length)
+    {
+      using namespace std::string_view_literals;
+      static constexpr std::string_view character_set =
+      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"sv;
 
+      thread_local std::mt19937 rng(std::random_device{}());
+      auto distribution = std::uniform_int_distribution{{}, character_set.size() - 1};
+      std::string result(length, '\0');
+      std::generate_n(std::begin(result), length, [&]() {return character_set.at(distribution(rng));});
+      return result;
+    }
   }
 }

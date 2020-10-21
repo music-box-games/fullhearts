@@ -4,6 +4,7 @@
 #include <glm/vec3.hpp>
 
 #include "point2d.hpp"
+#include "graphic_buffer_manager.hpp"
 
 namespace waifuengine
 {
@@ -12,8 +13,8 @@ namespace waifuengine
     class line2d
     {
     private:
-      unsigned int VBO;
-      unsigned int VAO;
+      buffer_manager::vao_handle VAO;
+      buffer_manager::vbo_handle VBO;
     public:
       point_2d start;
       point_2d end;

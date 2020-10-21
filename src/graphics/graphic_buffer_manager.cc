@@ -40,92 +40,93 @@ namespace waifuengine
   {
     namespace buffer_manager
     {
-      static std::unordered_map<std::string, vao_handle::buffer_t> vaos;
-      static std::unordered_map<std::string, vbo_handle::buffer_t> vbos;
-      static std::unordered_map<std::string, ebo_handle::buffer_t> ebos;
+      namespace impl
+      {
+        template<class buffer_type>
+        using underlying_buffer_map_type = std::unordered_map<GLuint, buffer_type>;
+
+        static underlying_buffer_map_type<vao_handle::buffer_t> underlying_vaos;
+        static underlying_buffer_map_type<vbo_handle::buffer_t> underlying_vbos;
+        static underlying_buffer_map_type<ebo_handle::buffer_t> underlying_ebos;
+      }
+
+      using buffer_map_type = std::unordered_map<std::string, GLuint>;
+      static buffer_map_type vaos;
+      static buffer_map_type vbos;
+      static buffer_map_type ebos;
+
+      template<class buffer_type, class buffer_t = buffer_type::buffer_t>
+      static std::optional<buffer_type> new_handle_t(buffer_map_type& bmap, impl::underlying_buffer_map_type<buffer_t>& underlying_bmap, std::string const& name)
+      {
+        if(bmap.count(name))
+        {
+          // errors if a buffer already exists with the name
+          return {};
+        }
+        else
+        {
+          // construct at index '0', because that is only for errors anyways
+          auto p = underlying_bmap.emplace(std::make_pair((GLuint)0, buffer_type::buffer_t(name)));
+          if(!p.second)
+          {
+            return {}; // p.second is false if it failed to emplace
+            // TODO: error handle
+          }
+          GLuint id = p.first->second.data();
+          auto node = underlying_bmap.extract(0); // extra the node for the newly made entry and change the key to the GLuint id
+          node.key() = id;
+          bmap.at(name) = id;
+          return buffer_type(underlying_bmap.at(id));
+        }
+      }
+
+      template<class buffer_type, class buffer_t = buffer_type::buffer_t>
+      static std::optional<buffer_type> get_handle_t(buffer_map_type& bmap, impl::underlying_buffer_map_type<buffer_t>& underlying_bmap, std::string const& name)
+      {
+        if(bmap.count(name))
+        {
+          return buffer_type(underlying_bmap.at(bmap.at(name)));
+        }
+        else
+        {
+          // fail if doesn't exist
+          return {};
+        }
+      }
 
       vao_handle::vao_handle(graphics::buffers::vertex_array_object & d) : data(d) {}
       vao_handle::~vao_handle() {}
       std::optional<vao_handle> vao_handle::new_handle(std::string const& name)
       {
-        if(vaos.count(name))
-        {
-          // fails if a buffer with this name already exists
-          return {};
-        }
-        else
-        {
-          vaos.at(name) = vao_handle::buffer_t(name);
-          return vao_handle(vaos.at(name));
-        }
+        return new_handle_t<vao_handle, vao_handle::buffer_t>(vaos, impl::underlying_vaos, name);
       }
 
       std::optional<vao_handle> vao_handle::get_handle(std::string const& name)
       {
-        if(vaos.count(name))
-        {
-          return vao_handle(vaos.at(name));
-        }
-        else
-        {
-          // fail if none exist
-          return {};
-        }
+        return get_handle_t<vao_handle, vao_handle::buffer_t>(vaos, impl::underlying_vaos, name);
       }
 
       vbo_handle::vbo_handle(graphics::buffers::vertex_buffer_object & d) : data(d) {}
       vbo_handle::~vbo_handle() {}
       std::optional<vbo_handle> vbo_handle::new_handle(std::string const& name)
       {
-        if(vbos.count(name))
-        {
-
-          // fails if exists already
-          return {};
-        }
-        else
-        {
-          vbos.at(name) = vbo_handle::buffer_t(name);
-          return vbo_handle(vbos.at(name));
-        }
+        return new_handle_t<vbo_handle, vbo_handle::buffer_t>(vbos, impl::underlying_vbos, name);
       }
       std::optional<vbo_handle> vbo_handle::get_handle(std::string const& name)
       {
-        if(vbos.count(name))
-        {
-          return vbo_handle(vbos.at(name));
-        }
-        else
-        {
-          return {};
-        }
+        return get_handle_t<vbo_handle, vbo_handle::buffer_t>(vbos, impl::underlying_vbos, name);
       }
 
       ebo_handle::ebo_handle(graphics::buffers::element_buffer_object & d) : data(d) {}
       ebo_handle::~ebo_handle() {}
       std::optional<ebo_handle> ebo_handle::new_handle(std::string const& name)
       {
-        if(ebos.count(name))
-        {
-          return {};
-        }
-        else
-        {
-          ebos.at(name) = ebo_handle::buffer_t(name);
-          return ebo_handle(ebos.at(name));
-        }
+        return new_handle_t<ebo_handle, ebo_handle::buffer_t>(ebos, impl::underlying_ebos, name);
       }
 
       std::optional<ebo_handle> ebo_handle::get_handle(std::string const& name)
       {
-        if(ebos.count(name))
-        {
-          return ebo_handle(ebos.at(name));
-        }
-        else
-        {
-          return {};
-        }
+        return get_handle_t<ebo_handle, ebo_handle::buffer_t>(ebos, impl::underlying_ebos, name);
       }
     }
   }

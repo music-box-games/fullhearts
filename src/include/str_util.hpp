@@ -14,6 +14,7 @@ namespace waifuengine
     {
       return !s[h] ? 5381 : (string_to_int(s, h+1) * 33) ^ s[h];
     }
+    std::string random_str(std::size_t length);
   }
 }
 

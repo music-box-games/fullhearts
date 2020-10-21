@@ -7,6 +7,9 @@
 #include "shader.hpp"
 #include "graphics.hpp"
 #include "log.hpp"
+#include "graphic_buffer_manager.hpp"
+
+constexpr std::size_t RAND_STR_LEN = 256;
 
 namespace we = ::waifuengine;
 
@@ -15,22 +18,21 @@ namespace waifuengine
   namespace graphics
   {
     // TODO: hook this up with the buffer manager to allow trivial copying of class
-    line2d::line2d(point_2d s, point_2d e) : start(s), end(e)
+    line2d::line2d(point_2d s, point_2d e) : start(s), end(e), 
+    VAO(buffer_manager::new_buffer_handle<buffer_manager::vao_handle>(utils::random_str(RAND_STR_LEN)).value()),
+    VBO(buffer_manager::new_buffer_handle<buffer_manager::vbo_handle>(utils::random_str(RAND_STR_LEN)).value())
     {
-              glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
+      
     }
 
-    line2d::line2d() : start(glm::vec2(0.f, 0.f)), end(glm::vec2(0.f, 0.f))
+    line2d::line2d() : start(glm::vec2(0.f, 0.f)), end(glm::vec2(0.f, 0.f)),
+    VAO(buffer_manager::new_buffer_handle<buffer_manager::vao_handle>(utils::random_str(RAND_STR_LEN)).value()),
+    VBO(buffer_manager::new_buffer_handle<buffer_manager::vbo_handle>(utils::random_str(RAND_STR_LEN)).value())
     {
-      glGenVertexArrays(1, &VAO);
-      glGenBuffers(1, &VBO);
     }
 
     line2d::~line2d() 
     {
-      glDeleteBuffers(1, &VBO);
-      glDeleteVertexArrays(1, &VAO);
     }
 
     void line2d::draw(glm::vec3 color, float alpha)
@@ -59,8 +61,8 @@ namespace waifuengine
       shd->set_float_3("color", color.r, color.g, color.b);
       shd->set_float_1("alpha", alpha);
 
-      glBindVertexArray(VAO);
-      glBindBuffer(GL_ARRAY_BUFFER, VBO);
+      glBindVertexArray(VAO.data.data());
+      glBindBuffer(GL_ARRAY_BUFFER, VBO.data.data());
       glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_STATIC_DRAW);
 
       int position_attribute = shd->get_attribute("position");

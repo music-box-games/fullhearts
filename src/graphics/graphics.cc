@@ -34,8 +34,6 @@ namespace graphics
 
     static void glad_postcall_callback_func(const char * name, void * func_ptr, int len_args, ...)
     {
-      
-
       std::stringstream buffer;
       std::stringstream message;
       GLenum error = glad_glGetError();

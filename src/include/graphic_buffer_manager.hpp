@@ -47,10 +47,8 @@ namespace waifuengine
       public:
         using buffer_t = graphics::buffers::vertex_array_object;
 
-      private:
         buffer_t& data;
 
-      public:
         vao_handle(graphics::buffers::vertex_array_object & d);
         ~vao_handle();
 
@@ -64,10 +62,8 @@ namespace waifuengine
       public:
         using buffer_t = graphics::buffers::vertex_buffer_object;
 
-      private:
         buffer_t& data;
 
-      public:
         vbo_handle(graphics::buffers::vertex_buffer_object & d);
         ~vbo_handle();
 
@@ -80,10 +76,8 @@ namespace waifuengine
       public:
         using buffer_t = graphics::buffers::element_buffer_object;
 
-      private:
         buffer_t& data;
 
-      public:
         ebo_handle(graphics::buffers::element_buffer_object & d);
         ~ebo_handle();
 
