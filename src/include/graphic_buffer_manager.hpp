@@ -31,6 +31,9 @@
 #ifndef _WE_GRAPHIC_BUFFER_MANAGER_HPP_
 #define _WE_GRAPHIC_BUFFER_MANAGER_HPP_
 
+#include <memory>
+#include <optional>
+
 #include "graphic_buffers.hpp"
 
 namespace waifuengine
@@ -41,33 +44,64 @@ namespace waifuengine
     {
       class vao_handle
       {
+      public:
+        using buffer_t = graphics::buffers::vertex_array_object;
+
       private:
-        graphics::buffers::vertex_array_object &const data;
+        buffer_t& data;
 
       public:
         vao_handle(graphics::buffers::vertex_array_object & d);
         ~vao_handle();
+
+        static std::optional<vao_handle> new_handle(std::string const& name);
+        static std::optional<vao_handle> get_handle(std::string const& name);
+
       };
 
       class vbo_handle
       {
+      public:
+        using buffer_t = graphics::buffers::vertex_buffer_object;
+
       private:
-        graphics::buffers::vertex_buffer_object &const data;
+        buffer_t& data;
 
       public:
         vbo_handle(graphics::buffers::vertex_buffer_object & d);
         ~vbo_handle();
+
+        static std::optional<vbo_handle> new_handle(std::string const& name);
+        static std::optional<vbo_handle> get_handle(std::string const& name);
       };
 
       class ebo_handle
       {
+      public:
+        using buffer_t = graphics::buffers::element_buffer_object;
+
       private:
-        graphics::buffers::element_buffer_object &const data;
+        buffer_t& data;
 
       public:
         ebo_handle(graphics::buffers::element_buffer_object & d);
         ~ebo_handle();
+
+        static std::optional<ebo_handle> new_handle(std::string const& name);
+        static std::optional<ebo_handle> get_handle(std::string const& name);
       };
+
+      template<class Buffer_Type>
+      std::optional<Buffer_Type> get_buffer_handle(std::string const& name)
+      {
+        return Buffer_Type::get_handle(name);
+      }
+
+      template<class Buffer_Type>
+      std::optional<Buffer_Type> new_buffer_handle(std::string const& name)
+      {
+        return Buffer_Type::new_handle(name);
+      } 
     }
   }
 }

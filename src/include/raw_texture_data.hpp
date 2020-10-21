@@ -37,6 +37,7 @@
 #include "shader.hpp"
 #include "debug.hpp"
 #include "transform.hpp"
+#include "graphic_buffer_manager.hpp"
 
 namespace waifuengine
 {
