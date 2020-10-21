@@ -13,6 +13,13 @@ namespace waifuengine
   namespace graphics
   {
 
+    rect2d::rect2d() : VAO(0), VBO(0), EBO(0)
+    {
+      glGenVertexArrays(1, &VAO);
+      glGenBuffers(1, &VBO);
+      glGenBuffers(1, &EBO);
+    }
+
     rect2d::rect2d(line2d a, line2d b, line2d c, line2d d) : VAO(0), VBO(0), EBO(0)
     {
       sides[0] = a;
@@ -23,6 +30,13 @@ namespace waifuengine
       glGenVertexArrays(1, &VAO);
       glGenBuffers(1, &VBO);
       glGenBuffers(1, &EBO);
+    }
+
+        rect2d::~rect2d()
+    {
+      glDeleteBuffers(1, &EBO);
+      glDeleteBuffers(1, &VBO);
+      glDeleteVertexArrays(1, &VAO);
     }
 
     std::array<float, 8> rect2d::get_last_verts() const
@@ -85,12 +99,7 @@ namespace waifuengine
 #endif // RECT2D_DRAW_USE_LINE_DRAW_METHOD
     }
 
-    rect2d::~rect2d()
-    {
-      glDeleteBuffers(1, &EBO);
-      glDeleteBuffers(1, &VBO);
-      glDeleteVertexArrays(1, &VAO);
-    }
+
 
     bool rect2d::operator==(rect2d const& rhs) const
     {

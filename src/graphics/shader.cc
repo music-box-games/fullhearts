@@ -255,13 +255,9 @@ void fragment_shader::compile()
     ss << "Compiling fragment shader:" << filepath << ":\n" << source;
     we::log::LOGDEBUG(ss.str());
   }
-  glGetError();
   shader_id = glCreateShader(GL_FRAGMENT_SHADER);
-  glGetError();
   glShaderSource(shader_id, 1, &source, NULL);
-  glGetError();
   glCompileShader(shader_id);
-  glGetError();
   int result = glGetError();
   if(result != GL_NO_ERROR)
   {

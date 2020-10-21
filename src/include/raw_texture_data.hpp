@@ -18,7 +18,7 @@
 /******************************************************************************/
 /**
 * @file   raw_texture_data.hpp
-* @author Author
+* @author Ryan Hanson
 * @date   30 Aug 2020
 * @par    email: iovita\@musicboxgames.net
 * @brief  Class that holds onto texture data, sharing it with texture classes to save data

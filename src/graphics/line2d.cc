@@ -14,6 +14,7 @@ namespace waifuengine
 {
   namespace graphics
   {
+    // TODO: hook this up with the buffer manager to allow trivial copying of class
     line2d::line2d(point_2d s, point_2d e) : start(s), end(e)
     {
               glGenVertexArrays(1, &VAO);
