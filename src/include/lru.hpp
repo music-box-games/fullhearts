@@ -1,90 +1,99 @@
-#ifndef _WE_LRU_HPP_
-#define _WE_LRU_HPP_
+#ifndef _WE_LRU_HHP_
+#define _WE_LRU_HHP_
 
-#include <list>
-#include <unordered_map>
+#include <cstddef> // std::size_t
+#include <unordered_map> // std::unordered_map
+#include <functional> // std::hash
+#include <optional> // std::optional
+#include <list> // std::list
+#include <algorithm> // std::for_each
+#include <thread> // std::scoped_lock
+#include <mutex> // std::mutex
 
 namespace waifuengine
 {
-  namespace core
+namespace cache
+{
+  using hash_value_type = std::size_t;
+  template<class data_type, class key_type = hash_value_type, class list_iter = typename std::list<std::pair<key_type, data_type>>::iterator>
+  class LRU
   {
-    template<class Key, class Value = Key>
-    class lru
+  public:
+    using map_type = std::unordered_map<key_type, list_iter>;
+    using list_type = std::list<std::pair<key_type, data_type>>;
+
+  private:
+    std::size_t cache_limit;
+    map_type cache_map;
+    list_type cache_list;
+    std::mutex mt;
+
+    void refer(key_type h)
     {
-    private:
-      using key_type = Key;
-      using value_type = Value;
-
-      std::size_t max_size;
-      std::list<key_type> keys;
-      std::unordered_map<key_type, std::pair<value_type, decltype(keys.begin())>> data;
-
-      void refer(key_type const& k)
+      if (!cache_map.count(h))
       {
-        keys.erase(data[k].second);
-        keys.push_front(k);
-        data[k].second = keys.begin();
+        return;
       }
+      auto map_it = cache_map.find(h);
+      auto list_pair = *(map_it->second);
+      cache_list.erase(map_it->second);
+      cache_list.push_front(list_pair);
+      cache_map[h] = cache_list.begin();
+    }
 
-      void evict()
+  public:
+    LRU(std::size_t cache_size) : cache_limit(cache_size) {}
+    ~LRU() {}
+
+    void put(key_type h, data_type d)
+    {
+      // if the value is already present in the cache, move it to the front
+      auto it = cache_map.find(h);
+      if (it != cache_map.end())
       {
-        data.erase(keys.back());
-        keys.pop_back();
+        cache_list.erase(it->second);
+        cache_map.erase(it);
       }
+      cache_list.emplace_front(h, d);
+      cache_map.emplace(h, cache_list.begin());
+    }
 
-      void resize(std::size_t const& s)
+    std::optional<data_type> get(key_type h)
+    {
+      if (contains(h))
       {
-        if(s < max_size && s < keys.size())
-        {
-          while(s < keys.size())
-          {
-            data.erase(keys.back());
-            keys.pop_back();
-          }
-        }
+        refer(h);
+        return (*cache_map[h]).second;
       }
-
-    public:
-      lru(std::size_t s = 10) : max_size(s) {}
-
-      ~lru() {}
-
-      void push(key_type const& key, value_type value)
+      else
       {
-        // if cache is full, evict
-        if(keys.size() > max_size) evict();
-        // check if key is already present
-        auto pos = data.find(key);
-        // miss
-        if(pos == data.end())
-        {
-          keys.push_front(key);
-          data[key] = {value, keys.front()};
-        }
-        // hit
-        else
-        {
-          refer(key);
-        }
+        return {};
       }
+    }
 
-      bool get(key_type const& key, value_type& v)
-      {
-        if(data.count(key))
-        {
-          refer(key);
-          v = data[key].first;
-          return true;
-        }
-        else return false;
-      }
+    bool contains(key_type h)
+    {
+      return cache_map.count(h);
+    }
 
-      void set_max_size(std::size_t const& s)
-      {
-        resize(s);
-      }
-    };
-  }
+    list_type const& data() const
+    {
+      return cache_list;
+    }
+  };
 }
 
-#endif // !_WE_LRU_HPP_
+template<class DataType>
+std::ostream& operator<<(std::ostream& os, waifuengine::cache::LRU<DataType> const& c)
+{
+  auto const& l = c.data();
+  os << '{';
+  std::for_each(l.begin(), l.end(), [&os](DataType const& d) -> void {
+    os << d << ',';
+    });
+  os << '}';
+  return os;
+}
+}
+
+#endif

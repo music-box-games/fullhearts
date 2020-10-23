@@ -1,6 +1,8 @@
 
 #include <unordered_map>
 #include "graphics_debug.hpp"
+#include "lru.hpp"
+#include "line2d.hpp"
 
 namespace we = waifuengine;
 
@@ -10,6 +12,13 @@ namespace waifuengine
   {
     namespace graphics_debug
     {
+      namespace debug_line2d_cache
+      {
+        // here we have an lru cache for holding the line2d objects used for drawing debug lines. They key is a std::size_t
+        // and is the combined hash of the x and y values
+        we::cache::LRU<std::size_t, line2d> line_cache;
+      }
+
       namespace gl_function_detailed_errors
       {
         detailed_error_funcs::detailed_error_funcs(data_func_type pn, data_func_type pt, detail_func_type ed) : pnames(pn), ptypes(pt), edetails(ed) {}
