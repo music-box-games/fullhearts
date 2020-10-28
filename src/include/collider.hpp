@@ -36,6 +36,7 @@
 #include "graphics_primatives.hpp"
 #include "transform.hpp"
 #include "rect2d.hpp"
+#include "line2d.hpp"
 
 // TODO: collision layers, only check in layer
 
@@ -45,15 +46,10 @@ namespace waifuengine
   {
     class collider : public waifuengine::components::component<collider>
     {
-    private:
-      std::array<float, 8> last_verts;
-
-    // friends
     protected:
       friend class core::debug::imgui_listener;
-
-    // unserialized member variables
-    protected:
+      std::array<float, 8> last_verts;
+      std::array<graphics::line2d, 4> debug_square;
       graphics::transform offset; /**< transform offset from the parent object's transform */
       bool colliding; /**< if this collider is currently involved in a collision */
       float width; /**< Width ratio of collider */

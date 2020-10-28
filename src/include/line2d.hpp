@@ -5,6 +5,7 @@
 
 #include "point2d.hpp"
 #include "graphic_buffer_manager.hpp"
+#include "transform.hpp"
 
 namespace waifuengine
 {
@@ -13,8 +14,8 @@ namespace waifuengine
     class line2d
     {
     private:
-      buffer_manager::vao_handle VAO;
-      buffer_manager::vbo_handle VBO;
+      buffers::vertex_array_object VAO;
+      buffers::vertex_buffer_object VBO;
     public:
       point_2d start;
       point_2d end;
@@ -26,6 +27,9 @@ namespace waifuengine
       void draw(glm::vec3 color, float alpha);
 
       bool operator==(line2d const& rhs) const;
+      line2d& operator=(line2d const& rhs);
+      line2d operator*(transform const& rhs) const;
+      line2d& operator*=(transform const& rhs);
 
     };
   }

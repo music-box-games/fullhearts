@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include <vector>
+#include <thread>
 
 #include "graphics.hpp"
 #include "window.hpp"
@@ -131,6 +132,9 @@ namespace graphics
   void init(std::string title)
   {
     std::stringstream log_stream;
+    log_stream << "Starting graphics::init(\"" << title << "\")";
+    log::LOGTRACE(log_stream.str());
+    log_stream.str(std::string());
     glfwSetErrorCallback(impl::glfw_error_callback_func); // set glfw callback
     {
       log_stream.str(std::string());
@@ -144,8 +148,9 @@ namespace graphics
       // TODO error handling
       log::LOGERROR("Could not init GLFW!");
     }
+    log::LOGTRACE("glfwInit() successful!");
     // create initial window
-    auto res = resolutions::FHD;
+    auto res = resolutions::FHD; // TODO: remove hard coded resolution
     auto w = create_window(title, res);
     if(!bool(w))
     {
@@ -162,6 +167,7 @@ namespace graphics
       log::LOGERROR("Failed to init GLAD!");
       we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Failed to init GLAD!");
     }
+    log::LOGTRACE("GLAD initialization successful!");
     log::LOGDEBUG(opengl_info());
 
       glad_set_post_callback(impl::glad_postcall_callback_func);
@@ -171,9 +177,11 @@ namespace graphics
         log::LOGTRACE(log_stream.str());
       }
 
-    // load shaders
-    we::graphics::shaders::load_shaders();
 
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+    // load shaders
+    // TODO: mt shader compiling
+    we::graphics::shaders::load_shaders();
     // for alpha transparency
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);

@@ -88,6 +88,7 @@ namespace waifuengine
         void link(vertex_shader&& v, fragment_shader&& f);
         unsigned int program_id;
         std::pair<fs::path, fs::path> files; // shader sources used to make this program
+        std::string filename; // the .shd file used to load this shader
       };
 
       using shaderptr = std::shared_ptr<shader>;

@@ -47,11 +47,12 @@ namespace waifuengine
         GLuint vao;
 
       public:
-        vertex_array_object(std::string const& n);
+        vertex_array_object(std::string const& n = "default_name");
         ~vertex_array_object();
 
         std::string name() const;
-        GLuint data() const;
+        GLuint data();
+        GLuint const_data() const;
       };
 
       class vertex_buffer_object
@@ -61,11 +62,12 @@ namespace waifuengine
         GLuint vbo;
 
       public:
-        vertex_buffer_object(std::string const& n);
+        vertex_buffer_object(std::string const& n = "default_name");
         ~vertex_buffer_object();
 
         std::string name() const;
-        GLuint data() const;
+        GLuint data();
+        GLuint const_data() const;
       };
 
       class element_buffer_object
@@ -75,11 +77,12 @@ namespace waifuengine
         GLuint ebo;
 
       public:
-        element_buffer_object(std::string const& n);
+        element_buffer_object(std::string const& n = "default_name");
         ~element_buffer_object();
 
         std::string name() const;
-        GLuint data() const;
+        GLuint data();
+        GLuint const_data() const;
       };
     }
   }

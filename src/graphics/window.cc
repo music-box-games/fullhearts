@@ -65,7 +65,7 @@ window::window(std::string t, glm::vec2 r) : window(t, static_cast<int>(r.x), st
 window::window(std::string t, int w, int h) : title(t), width(w), height(h)
 {
   glfwWindowHint(GLFW_SAMPLES, 4); // 4x AA
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Set client API version to require compat with v4.3
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Set client API version to work with v4.3
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); 
   //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // to make Macs happy
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // make sure to get core profile

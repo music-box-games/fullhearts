@@ -33,6 +33,8 @@
 #include <vector>
 #include <functional>
 
+#include "line2d.hpp"
+
 namespace waifuengine
 {
   namespace graphics
@@ -60,7 +62,10 @@ namespace waifuengine
         std::string extra_details(std::string func_name);
 
         bool has_detailed_error_info(std::string func_name);
+
       }
+      std::optional<graphics::line2d> get_debug_line(std::size_t hash);
+      graphics::line2d gen_debug_line(point_2d a, point_2d b);
     }
   }
 }

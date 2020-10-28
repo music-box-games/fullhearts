@@ -42,7 +42,7 @@ namespace waifuengine
 {
   namespace physics
   {
-    collider::collider() : components::component<collider>(), width(0), height(0), colliding(false)
+    collider::collider() : components::component<collider>(), colliding(false), width(0), height(0)
     {
       log::LOGTRACE("Constructing collider");
     }
@@ -83,12 +83,14 @@ namespace waifuengine
     {
       if ((!disabled) && debugging)
       {
-        // build polygon
-        // find positions of each corner of the collider to create line segments
+        // ensure that the parent object even has a transform
         if(!parent->has_component<graphics::transform>())
         {
           return;
         }
+        // build polygon
+        // find positions of each corner of the collider to create line segments
+        // get the parent transform
         std::shared_ptr<graphics::transform> parent_trans = parent->get_component<graphics::transform>();
         // set width and height from parent transform
         set_width(parent_trans->get_width_ratio());

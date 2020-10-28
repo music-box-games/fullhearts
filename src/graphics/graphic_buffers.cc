@@ -53,7 +53,12 @@ namespace waifuengine
         return name_;
       }
 
-      GLuint vertex_array_object::data() const
+      GLuint vertex_array_object::data()
+      {
+        return vao;
+      }
+
+      GLuint vertex_array_object::const_data() const
       {
         return vao;
       }
@@ -73,7 +78,12 @@ namespace waifuengine
         return name_;
       }
 
-      GLuint vertex_buffer_object::data() const
+      GLuint vertex_buffer_object::data()
+      {
+        return vbo;
+      }
+
+      GLuint vertex_buffer_object::const_data() const
       {
         return vbo;
       }
@@ -93,7 +103,12 @@ namespace waifuengine
         return name_;
       }
 
-      GLuint element_buffer_object::data() const
+      GLuint element_buffer_object::data()
+      {
+        return ebo;
+      }
+
+      GLuint element_buffer_object::const_data() const
       {
         return ebo;
       }

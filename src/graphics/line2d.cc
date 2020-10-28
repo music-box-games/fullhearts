@@ -18,16 +18,12 @@ namespace waifuengine
   namespace graphics
   {
     // TODO: hook this up with the buffer manager to allow trivial copying of class
-    line2d::line2d(point_2d s, point_2d e) : start(s), end(e), 
-    VAO(buffer_manager::new_buffer_handle<buffer_manager::vao_handle>(utils::random_str(RAND_STR_LEN)).value()),
-    VBO(buffer_manager::new_buffer_handle<buffer_manager::vbo_handle>(utils::random_str(RAND_STR_LEN)).value())
+    line2d::line2d(point_2d s, point_2d e) : start(s), end(e)
     {
       
     }
 
-    line2d::line2d() : start(glm::vec2(0.f, 0.f)), end(glm::vec2(0.f, 0.f)),
-    VAO(buffer_manager::new_buffer_handle<buffer_manager::vao_handle>(utils::random_str(RAND_STR_LEN)).value()),
-    VBO(buffer_manager::new_buffer_handle<buffer_manager::vbo_handle>(utils::random_str(RAND_STR_LEN)).value())
+    line2d::line2d() : start(glm::vec2(0.f, 0.f)), end(glm::vec2(0.f, 0.f))
     {
     }
 
@@ -61,8 +57,8 @@ namespace waifuengine
       shd->set_float_3("color", color.r, color.g, color.b);
       shd->set_float_1("alpha", alpha);
 
-      glBindVertexArray(VAO.data.data());
-      glBindBuffer(GL_ARRAY_BUFFER, VBO.data.data());
+      glBindVertexArray(VAO.data());
+      glBindBuffer(GL_ARRAY_BUFFER, VBO.data());
       glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float), verts.data(), GL_STATIC_DRAW);
 
       int position_attribute = shd->get_attribute("position");
@@ -75,6 +71,28 @@ namespace waifuengine
     bool line2d::operator==(line2d const& rhs) const
     {
       return (start == rhs.start) && (end == rhs.end);
+    }
+
+    line2d& line2d::operator=(line2d const& rhs)
+    {
+      // graphic buffers aren't copied on purpose
+      this->start = rhs.start;
+      this->end = rhs.end;
+      return *this;
+    }
+
+    line2d line2d::operator*(transform const& rhs) const
+    {
+      line2d temp = *this;
+      temp.start = glm::vec4(start, 0, 1) * (*(rhs.const_data()));
+      temp.end = glm::vec4(end, 0, 1) * (*(rhs.const_data()));
+      return temp;
+    }
+
+    line2d& line2d::operator*=(transform const& rhs)
+    {
+      *this = *this * rhs;
+      return *this;
     }
   }
 }

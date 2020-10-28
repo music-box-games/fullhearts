@@ -1,5 +1,33 @@
+/****************************************************************************
+ *   Copyright (C) 2020 by Music Box Games                                  *
+ *                                                                          *
+ *   This file is part of WaifuEngine                                       *
+ *                                                                          *
+ *   WaifuEngine is free software: you can redistribute it and/or modify it *
+ *   under the terms of the MIT License.                                    *
+ *                                                                          *
+ *   WaifuEngine is distributed in the hope that it will be useful,         *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   MIT License for more details.                                          *
+ *                                                                          *
+ *   You should have received a copy of the MIT License along with          *
+ *   WaifuEngine.  If not, see https://opensource.org/licenses/MIT          *
+ ****************************************************************************/
+
+/******************************************************************************/
+/**
+* @file   graphics_debug.cc
+* @author Ryan Hanson
+* @date   31 Aug 2020
+* @par    email: iovita\@musicboxgames.net
+* @brief  Code to help debug graphics.
+*
+*/
+/******************************************************************************/
 
 #include <unordered_map>
+
 #include "graphics_debug.hpp"
 #include "lru.hpp"
 #include "line2d.hpp"
@@ -14,10 +42,8 @@ namespace waifuengine
     {
       namespace debug_line2d_cache
       {
-        // here we have an lru cache for holding the line2d objects used for drawing debug lines. They key is a std::size_t
-        // and is the combined hash of the x and y values
-        we::cache::LRU<std::size_t, line2d> line_cache;
       }
+
 
       namespace gl_function_detailed_errors
       {

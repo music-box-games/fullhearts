@@ -6,10 +6,10 @@
 #include <unordered_map>
 #include <fstream>
 
-#include <shader.hpp>
 #include <utils.hpp>
 #include <serialization.hpp>
 
+#include "shader.hpp"
 #include "fs_util.hpp"
 #include "log.hpp"
 
@@ -70,7 +70,7 @@ public:
 };
 
 static const char *default_vertex_shader_source =
-    "#version 330 core\n"
+    "#version 430 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
     "{\n"
@@ -78,7 +78,7 @@ static const char *default_vertex_shader_source =
     "}\0";
 
 static const char * default_fragment_shader_source =
-    "#version 330 core\n"
+    "#version 430 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
@@ -98,6 +98,17 @@ void load_shaders()
   std::string exe_path = we::utils::get_exe_path();
   std::string shaders_path = exe_path + std::string("\\shaders");
   std::vector<fs::path> shader_files = we::utils::list_files_in_folder(fs::path(shaders_path));
+  // TODO: wrap this in ifdef debug
+  {
+    std::stringstream ss;
+    ss << "Shader files found:\n";
+    for(fs::path p : shader_files)
+    {
+      ss << p.string() << '\n';
+    }
+    log::LOGTRACE(ss.str());
+  }
+
   for(auto const& p : shader_files)
   {
     impl::shader_file s(p);
@@ -106,12 +117,13 @@ void load_shaders()
     m.m[we::utils::strip_filename(p)] = {v_shader_path, f_shader_path};
   }
 
+  log::LOGTRACE("Compiling and linking shaders");
   // using that data, recompile and link all shaders
+  impl::loaded_shaders["default"] = std::shared_ptr<shader>(new shader(vertex_shader("default"), fragment_shader("default")));
   for(auto pair : m)
   {
     impl::loaded_shaders[pair.first] = std::shared_ptr<shader>(new shader(vertex_shader(pair.second.first), fragment_shader(pair.second.second)));
   }
-  impl::loaded_shaders["default"] = std::shared_ptr<shader>(new shader(vertex_shader("default"), fragment_shader("default")));
 }
 
 void load_shader(fs::path p)
@@ -284,12 +296,12 @@ fragment_shader::~fragment_shader()
   glDeleteShader(shader_id);
 }
 
-shader::shader(vertex_shader& v, fragment_shader& f) : program_id(0), files({v.filepath, f.filepath})
+shader::shader(vertex_shader& v, fragment_shader& f) : program_id(0), files({v.filepath, f.filepath}), filename("")
 {
   link(v, f);
 }
 
-shader::shader(vertex_shader&& v, fragment_shader&& f) : program_id(0), files({v.filepath, f.filepath})
+shader::shader(vertex_shader&& v, fragment_shader&& f) : program_id(0), files({v.filepath, f.filepath}), filename("")
 {
   link(v, f);
 }

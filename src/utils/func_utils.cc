@@ -17,18 +17,52 @@
 
 /******************************************************************************/
 /**
-* @file   lru.hpp
+* @file   func_utils.hpp
 * @author Ryan Hanson
-* @date   23 Oct 2020
+* @date   27 Oct 2020
 * @par    email: iovita\@musicboxgames.net
-* @brief  Aggregate header for different cache types
+* @brief  Function utilities
 *
 */
 /******************************************************************************/
 
-#ifndef _WE_CACHE_HPP_
-#define _WE_CACHE_HPP_
+#define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
+#include <Windows.h>
+#include <DbgHelp.h>
 
-#include "lru.hpp"
+#include "func_utils.hpp"
 
-#endif
+namespace waifuengine
+{
+  namespace utils
+  {
+    std::string function_name_from_addr(long long addr)
+    {
+      // https://docs.microsoft.com/en-us/windows/win32/debug/retrieving-symbol-information-by-address
+#if 0
+      DWORD64 dwDisplacement = 0;
+      DWORD64 dwAddress = addr;
+
+
+      char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];
+      PSYMBOL_INFO pSymbol = (PSYMBOL_INFO)buffer;
+
+      pSymbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+      pSymbol->MaxNameLen = MAX_SYM_NAME;
+
+      if (SymFromAddr(hProcess, dwAddress, &dwDisplacement, pSymbol))
+      {
+        // SymFromAddr returned success
+        return pSymbol->Name;
+      }
+      else
+      {
+        // SymFromAddr failed
+        DWORD error = GetLastError();
+      }
+#endif // Windows specific code
+      return "unimplemented";
+    }
+  }
+}
