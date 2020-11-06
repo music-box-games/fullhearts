@@ -51,7 +51,7 @@ namespace waifuengine
             {
                 cpu_info cpu;
                 gpu_info gpu;
-                unsigned long long memory;
+                unsigned long double memory;
 
                 operator std::string() explicit const;
 
@@ -64,7 +64,7 @@ namespace waifuengine
 
             int get_cpu_core_count();
 
-            unsigned long long total_ram();
+            unsigned long double total_ram();
 		
 #ifdef DEBUG
 		    void print_cpu_info();

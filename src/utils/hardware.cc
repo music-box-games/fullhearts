@@ -15,12 +15,15 @@
 
 #include <hardware.hpp>
 #include <log.hpp>
+#include "data_conversions.hpp"
 
 #ifdef WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <intrin.h>
 #endif // WINDOWS
+
+namespace we = ::waifuengine;
 
 namespace waifuengine
 {
@@ -133,7 +136,7 @@ std::ostream &operator<<(std::ostream &os, hardware_info const &hwi)
 {
     os << hwi.cpu << '\n'
        << hwi.gpu << '\n'
-       << "Total memory: " << hwi.memory << "kb\n";
+       << "Total memory: " << hwi.memory << "GB\n";
     return os;
 }
 
@@ -164,14 +167,15 @@ int get_cpu_core_count()
     return get_hardware_info().cpu.cores;
 }
 
-unsigned long long total_ram()
+unsigned long double total_ram()
 {
 #ifdef WINDOWS
     unsigned long long ram;
+    // this is kb
     BOOL result = GetPhysicallyInstalledSystemMemory(&ram);
     if(result)
     {
-        return ram;
+      return ::we::utils::byte_conversion<utils::byte_table::kilobyte, utils::byte_table::gigabyte>(unsigned long double(ram));
     }
     else
     {
