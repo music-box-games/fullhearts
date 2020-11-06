@@ -48,12 +48,12 @@ namespace waifuengine
     {
     protected:
       friend class core::debug::imgui_listener;
-      std::array<float, 8> last_verts;
-      std::array<graphics::line2d, 4> debug_square;
+      graphics::rect2d debug_square;
       graphics::transform offset; /**< transform offset from the parent object's transform */
       bool colliding; /**< if this collider is currently involved in a collision */
       float width; /**< Width ratio of collider */
       float height; /**< Height ratio of collider */
+      bool allow_manual_collider_editing = false; /**< allows manually editing the collider in debug mode */
 
     public:
       COMPONENT_REGISTER(collider);
@@ -65,7 +65,6 @@ namespace waifuengine
       virtual void draw() const;
       virtual void draw_debug();
 
-      std::array<float, 8> get_last_verts() const;
 
       /**
        * @brief Sets the collider's width to be a ratio of the window's width.

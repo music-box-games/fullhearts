@@ -68,9 +68,9 @@ engine::engine()
   waifuengine::core::scripting::init();
   waifuengine::utils::fs_init();
   waifuengine::log::init(waifuengine::log::trace_level::pedantic);
-  waifuengine::core::thread_pool::init();
   waifuengine::events::init();
   waifuengine::graphics::init("Full Hearts");
+  waifuengine::core::thread_pool::init(); // NOTE: must init after graphics rn
   waifuengine::audio::init();
   waifuengine::scenes::init();
   waifuengine::utils::timers::init();
@@ -89,9 +89,9 @@ engine::~engine()
   waifuengine::utils::timers::shutdown();
   waifuengine::scenes::shutdown();
   waifuengine::audio::shutdown();
+  waifuengine::core::thread_pool::shutdown();
   waifuengine::graphics::shutdown();
   waifuengine::events::shutdown();
-  waifuengine::core::thread_pool::shutdown();
   waifuengine::log::shutdown();
   waifuengine::core::scripting::shutdown();
 }

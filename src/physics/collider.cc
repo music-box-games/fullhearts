@@ -56,7 +56,35 @@ namespace waifuengine
     {
       if(!disabled)
       {
-        // TODO: decide if checking collisions here or all at once in a different update function
+        // TODO: update position of debug draw if debugging
+        if(debugging && !allow_manual_collider_editing)
+        {
+          // ensure that the parent object even has a transform
+        if(!parent->has_component<graphics::transform>())
+        {
+          return;
+        }
+        // build polygon
+        // find positions of each corner of the collider to create line segments
+        // get the parent transform
+        std::shared_ptr<graphics::transform> parent_trans = parent->get_component<graphics::transform>();
+        // set width and height from parent transform
+        set_width(parent_trans->get_width_ratio());
+        set_height(parent_trans->get_height_ratio());
+
+        // get point for the parent transform, which is center of the object
+        graphics::screen_point_2d parent_position = parent_trans->get_position_in_screen_coordinates();
+        float screen_width_value = width / 2.0f;
+        float screen_height_value = height / 2.0f;
+
+        graphics::screen_point_2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
+        graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + screen_height_value);
+        graphics::screen_point_2d top_right(parent_position.x + screen_width_value, top_left.y);
+        graphics::screen_point_2d bottom_right(top_right.x, bottom_left.y);
+        
+        // counter clockwise starting at bottom left point
+        debug_square = graphics::rect2d({ bottom_left, bottom_right }, { bottom_right, top_right }, { top_right, top_left }, { top_left, bottom_left });
+        }
       }
     }
 
@@ -82,50 +110,18 @@ namespace waifuengine
     void collider::draw_debug()
     {
       if ((!disabled) && debugging)
-      {
-        // ensure that the parent object even has a transform
-        if(!parent->has_component<graphics::transform>())
-        {
-          return;
-        }
-        // build polygon
-        // find positions of each corner of the collider to create line segments
-        // get the parent transform
-        std::shared_ptr<graphics::transform> parent_trans = parent->get_component<graphics::transform>();
-        // set width and height from parent transform
-        set_width(parent_trans->get_width_ratio());
-        set_height(parent_trans->get_height_ratio());
-
-        // get point for the parent transform, which is center of the object
-        graphics::screen_point_2d parent_position = parent_trans->get_position_in_screen_coordinates();
-        float screen_width_value = width / 2.0f;
-        float screen_height_value = height / 2.0f;
-
-        graphics::screen_point_2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
-        graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + screen_height_value);
-        graphics::screen_point_2d top_right(parent_position.x + screen_width_value, top_left.y);
-        graphics::screen_point_2d bottom_right(top_right.x, bottom_left.y);
-        
-        // counter clockwise starting at bottom left point
-        graphics::rect2d rect({ bottom_left, bottom_right }, { bottom_right, top_right }, { top_right, top_left }, { top_left, bottom_left });
-        last_verts = rect.get_last_verts();
-
-          
+      {          
         if(is_colliding())
         {
-          rect.draw(graphics::colors::get_color(graphics::colors::color_name::red), 1.0f);
+          debug_square.draw(graphics::colors::get_color(graphics::colors::color_name::red), 1.0f);
         }
         else
         {
-          rect.draw(graphics::colors::get_color(graphics::colors::color_name::green), 1.0f);
+          debug_square.draw(graphics::colors::get_color(graphics::colors::color_name::green), 1.0f);
         }
       }
     }
 
-    std::array<float, 8> collider::get_last_verts() const
-    {
-      return last_verts;
-    }
 
     void collider::offset_translate(glm::vec2 translation)
     {

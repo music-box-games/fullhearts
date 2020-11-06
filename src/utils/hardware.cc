@@ -16,9 +16,15 @@
 #include <hardware.hpp>
 #include <log.hpp>
 #include "data_conversions.hpp"
+#include "graphics.hpp"
 
 #ifdef WINDOWS
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif // !WIN32_LEAN_AND_MEAN
+#ifndef VC_EXTRALEAN
+#define VC_EXTRALEAN
+#endif // !VC_EXTRALEAN
 #include <Windows.h>
 #include <intrin.h>
 #endif // WINDOWS
@@ -107,9 +113,10 @@ static cpu_info get_cpu_info()
 
 static gpu_info get_gpu_info()
 {
+    graphics::open_gl::open_gl_info gli = graphics::open_gl::open_gl_info();
     gpu_info gpu;
-    gpu.make = "UNIMPL";
-    gpu.model = "UNIMPL";
+    gpu.vendor = gli.vendor;
+    gpu.renderer = gli.renderer;
     gpu.discrete = true;
 
     gpucache = true;
@@ -121,14 +128,14 @@ std::ostream &operator<<(std::ostream &os, cpu_info const &cpu)
 {
     os << "CPU Type: " << cpu.type << '\n'
        << "CPU Architecture: " << cpu.arch << '\n'
-       << "CPU Cores: " << cpu.cores << '\n';
+       << "Logical CPU Cores: " << cpu.cores << '\n';
     return os;
 }
 
 std::ostream &operator<<(std::ostream &os, gpu_info const &gpu)
 {
-    os << "GPU Make: " << gpu.make << '\n'
-       << "GPU Model: " << gpu.make << '\n';
+    os << "GPU Vendor: " << gpu.vendor << '\n'
+       << "GPU Renderer: " << gpu.renderer << '\n';
     return os;
 }
 
@@ -136,7 +143,7 @@ std::ostream &operator<<(std::ostream &os, hardware_info const &hwi)
 {
     os << hwi.cpu << '\n'
        << hwi.gpu << '\n'
-       << "Total memory: " << hwi.memory << "GB\n";
+       << "Physically Installed Memory: " << hwi.memory << "GB\n";
     return os;
 }
 

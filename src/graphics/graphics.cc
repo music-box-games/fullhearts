@@ -186,8 +186,16 @@ namespace graphics
     }
 
     // finished initializing graphics print hardware info to trace log
-    log::LOGTRACE("Dumping PC Hardware Info\n" + utils::hardware::get_hardware_info().str());
+    {
+      std::stringstream ss;
 
+      ss << "Dumping PC Hardware Info\n";
+      ss << "----------------------------------------\n";
+      ss << utils::hardware::get_hardware_info().str() << '\n';
+      ss << get_graphics_api_info();
+      ss << "----------------------------------------\n";
+      log::LOGTRACE(ss.str());
+    }
 
     // load shaders
     // TODO: mt shader compiling
@@ -215,6 +223,25 @@ namespace graphics
   void present()
   {
     window::present_all();
+  }
+
+  void dump_graphics_api_info()
+  {
+    log::LOGTRACE(get_graphics_api_info());
+  }
+
+  std::string get_graphics_api_info()
+  {
+    open_gl::open_gl_info gli = open_gl::open_gl_info(); 
+    // TODO: ifdef for api
+    std::stringstream ss;
+    ss << "OpenGL API Info\n";
+    ss << "GL_Vendor: " << gli.vendor << '\n';
+    ss << "GL_Renderer: " << gli.renderer << '\n';
+    ss << "GL_Version: " << gli.version << '\n';
+    ss << "GLSL_Version: " << gli.glsl_version << '\n';
+    ss << "GL_Extensions: " << gli.gl_extensions << '\n';
+    return ss.str();
   }
 }
 }

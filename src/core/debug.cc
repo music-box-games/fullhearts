@@ -262,18 +262,39 @@ namespace waifuengine
               {
                 c->debug(dbg);
               }
-              // std::stringstream ss;
-              // ss << "Vertices:\n";
-              // std::array<float, 8> v = c->get_last_verts();
-              // for (int i = 0; i < v.size(); ++i)
-              // {
-              //   if (i % 2 == 0)
-              //   {
-              //     ss << '\n';
-              //   }
-              //   ss << v[i] << ' ';
-              // }
-              // ImGui::Text(ss.str().c_str());
+              
+              {
+              std::stringstream ss;
+              ImGui::Checkbox("Manual Editing", &c->allow_manual_collider_editing);
+              if(c->allow_manual_collider_editing)
+              {
+                auto& debug_lines = c->debug_square.sides;
+
+                int i = 0; // loop var
+                for(auto& l : debug_lines)
+                {
+                  std::stringstream ss;
+                  ss << "Line " << i;
+                  
+                  float x0 = l.start.x;
+                  float y0 = l.start.y;
+                  float x1 = l.end.x;
+                  float y1 = l.end.y;
+
+                  if(ImGui::TreeNode(ss.str().c_str()))
+                  {
+                    if(ImGui::DragFloat("X0:", &x0, 0.01f)) { l.start.x = x0; }
+                    if(ImGui::DragFloat("Y0:", &y0, 0.01f)) { l.start.y = y0; }
+                    if(ImGui::DragFloat("X1:", &x1, 0.01f)) { l.end.x = x1; }
+                    if(ImGui::DragFloat("Y1:", &y1, 0.01f)) { l.end.y = y1; }
+
+                    ImGui::TreePop();
+                  }
+                }
+                ImGui::Text(ss.str().c_str());
+              }
+              }
+
               ImGui::TreePop();
             }
           }

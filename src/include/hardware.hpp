@@ -39,8 +39,8 @@ namespace waifuengine
 
             struct gpu_info
             {
-                std::string make;
-                std::string model;
+              std::string vendor;
+              std::string renderer;
                 bool discrete;
 
                 operator std::string();

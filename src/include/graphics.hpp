@@ -31,7 +31,8 @@ namespace waifuengine
       };
     }
 
-    
+    void dump_graphics_api_info();
+    std::string get_graphics_api_info();
     
 
     void init(std::string title);
