@@ -19,6 +19,21 @@ namespace waifuengine
 {
 namespace graphics
 {
+  namespace open_gl
+  {
+    open_gl_info::open_gl_info()
+    {
+      vendor = (char*)glGetString(GL_VENDOR);
+      renderer = (char*)glGetString(GL_RENDERER);
+      version = (char*)glGetString(GL_VERSION);
+      glsl_version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+      char * ext = (char*)glGetString(GL_EXTENSIONS);
+      if (ext)
+      {
+        gl_extensions = ext; 
+      }
+    }
+  }
   namespace impl
   {
     void opengl_check_error()
@@ -94,7 +109,7 @@ namespace graphics
           message << '\n' << extra_details;
         }
       }
-      else
+        else
       { 
         message << "Detailed error information is not available for this function";
       }
@@ -105,20 +120,15 @@ namespace graphics
 
   std::string opengl_info()
   {
+    open_gl::open_gl_info gli = open_gl::open_gl_info();
     std::stringstream ss;
     ss << '\n';
-    ss << "GL_Vendor: " << (char*)glGetString(GL_VENDOR) << '\n';
-    ss << "GL_Renderer: " << (char*)glGetString(GL_RENDERER) << '\n';
-    ss << "GL_Version: " << (char*)glGetString(GL_VERSION) << '\n';
-    ss << "GL_Shading_Language_Version: " << (char*)glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
-    ss << "GL_Extensions: ";
+    ss << "GL_Vendor: " << gli.vendor << '\n';
+    ss << "GL_Renderer: " << gli.renderer << '\n';
+    ss << "GL_Version: " << gli.version << '\n';
+    ss << "GL_Shading_Language_Version: " << gli.glsl_version << '\n';
+    ss << "GL_Extensions: " << gli.gl_extensions;
 
-    const char* ext = nullptr;
-    ext = (char*)glGetString(GL_EXTENSIONS);
-    if (ext)
-    {
-      ss << ext;
-    }
     return ss.str();
   }
 
@@ -168,19 +178,20 @@ namespace graphics
       we::utils::notify(utils::notification_type::mb_ok, "Fatal Error", "Failed to init GLAD!");
     }
     log::LOGTRACE("GLAD initialization successful!");
-    log::LOGDEBUG(opengl_info());
+    glad_set_post_callback(impl::glad_postcall_callback_func);
+    {
+      log_stream.str(std::string());
+      log_stream << "Set GLAD postcall callback to 0x" << std::hex << impl::glad_postcall_callback_func;
+      log::LOGTRACE(log_stream.str());
+    }
 
-      glad_set_post_callback(impl::glad_postcall_callback_func);
-      {
-        log_stream.str(std::string());
-        log_stream << "Set GLAD postcall callback to 0x" << std::hex << impl::glad_postcall_callback_func;
-        log::LOGTRACE(log_stream.str());
-      }
+    // finished initializing graphics print hardware info to trace log
+    log::LOGTRACE("Dumping PC Hardware Info\n" + utils::hardware::get_hardware_info().str());
 
 
-    std::this_thread::sleep_for(std::chrono::seconds(10));
     // load shaders
     // TODO: mt shader compiling
+    // TODO: fix the error with the first shader compile generating an error but not failing
     we::graphics::shaders::load_shaders();
     // for alpha transparency
     glEnable(GL_BLEND);

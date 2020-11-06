@@ -139,12 +139,24 @@ std::ostream &operator<<(std::ostream &os, hardware_info const &hwi)
 
 hardware_info const get_hardware_info()
 {
-    if (hwcache) return hwcached_info;
+    if (hwcache) return hwcached_info; // TODO: hmm
     hardware_info hi;
     hi.cpu = (cpucache) ? cpucached_info : get_cpu_info();
     hi.gpu = (gpucache) ? gpucached_info : get_gpu_info();
     hi.memory = total_ram(); // TODO: cache
     return hi;
+}
+
+hardware_info::operator std::string() const
+{
+  std::stringstream ss;
+  ss << *this;
+  return ss.str();
+}
+
+std::string hardware_info::str() const
+{
+  return std::string(*this);
 }
 
 int get_cpu_core_count()

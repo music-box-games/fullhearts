@@ -16,6 +16,24 @@ namespace waifuengine
     {
       void opengl_check_error();
     }
+    namespace open_gl
+    {
+      struct open_gl_info
+      {
+        std::string vendor;
+        std::string renderer;
+        std::string version;
+        std::string glsl_version;
+        std::string gl_extensions;
+
+        open_gl_info();
+        ~open_gl_info() = default;
+      };
+    }
+
+    
+    
+
     void init(std::string title);
     void shutdown();
 

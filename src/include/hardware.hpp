@@ -53,7 +53,10 @@ namespace waifuengine
                 gpu_info gpu;
                 unsigned long long memory;
 
-                operator std::string();
+                operator std::string() explicit const;
+
+                std::string str() const;
+
                 friend std::ostream& operator<<(std::ostream& os, hardware_info const& hwi);
             };
 

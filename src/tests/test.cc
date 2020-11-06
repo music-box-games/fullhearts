@@ -29,6 +29,7 @@
 #include <settings.hpp>
 #include "coordinates.hpp"
 #include "num_utils.hpp"
+#include "utils.hpp"
 
 namespace we = ::waifuengine;
 
@@ -68,7 +69,7 @@ int run_tests(int argc, char **argv)
 
 
 
-TEST(ConversionTest, WindowCoordinatesToScreenCoordinates)
+TEST(ConversionTests, WindowCoordinatesToScreenCoordinates)
 {
   // check that world coordinates are properly converted into screen coordinates
   // check each corner and dead center
@@ -114,7 +115,7 @@ TEST(ConversionTest, WindowCoordinatesToScreenCoordinates)
   ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
 }
 
-TEST(ConversionTest, ScreenCoordinatesToWindowCoordinates)
+TEST(ConversionTests, ScreenCoordinatesToWindowCoordinates)
 {
   // check that world coordinates are properly converted into screen coordinates
   // check each corner and dead center
@@ -158,6 +159,28 @@ TEST(ConversionTest, ScreenCoordinatesToWindowCoordinates)
   //expected_result = { screen_pos.x * WW, screen_pos.y * WH};
   //actual_result = graphics::screen_coordinates_to_window_coordinates(screen_pos, WW, WH);
   //ASSERT_TRUE(graphics::lax_coordinate_compare(expected_result, actual_result, ERROR_MARGIN));
+}
+
+TEST(ConversionTests, ByteTableConversions)
+{
+  {
+    constexpr unsigned long double BYTES_IN = 1024.0;
+    constexpr unsigned long double EXPECTED_KB_OUT = 1.0;
+    unsigned long double actual_out = utils::byte_conversion<utils::byte_table::byte, utils::byte_table::kilobyte>(BYTES_IN);
+    EXPECT_EQ(EXPECTED_KB_OUT, actual_out);
+  }
+  {
+    constexpr unsigned long double KB_IN = (1024.0 * 1024.0) * 2.0;
+    constexpr unsigned long double EXPECTED_GB_OUT = 2.0;
+    unsigned long double actual_out = utils::byte_conversion<utils::byte_table::kilobyte, utils::byte_table::gigabyte>(KB_IN);
+    EXPECT_EQ(EXPECTED_GB_OUT, actual_out);
+  }
+  {
+    constexpr unsigned long double GB_IN = 512.0;
+    constexpr unsigned long double EXPECTED_TB_OUT = 0.5;
+    unsigned long double actual_out = utils::byte_conversion<utils::byte_table::gigabyte, utils::byte_table::terabyte>(GB_IN);
+    EXPECT_EQ(EXPECTED_TB_OUT, actual_out);
+  }
 }
 
 } // namespace tests

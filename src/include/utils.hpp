@@ -32,6 +32,8 @@
 #include "type_utils.hpp"
 #include "func_utils.hpp"
 
+#include "data_conversions.hpp"
+
 #define WE_UTIL_STRINGIFY(x) #x
 
 namespace waifuengine
