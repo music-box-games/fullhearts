@@ -54,36 +54,38 @@ namespace waifuengine
 
     void collider::update(float dt)
     {
-      if(!disabled)
+      if (!disabled)
       {
         // TODO: update position of debug draw if debugging
-        if(debugging && !allow_manual_collider_editing)
+        if (debugging && !allow_manual_collider_editing)
         {
           // ensure that the parent object even has a transform
-        if(!parent->has_component<graphics::transform>())
-        {
-          return;
-        }
-        // build polygon
-        // find positions of each corner of the collider to create line segments
-        // get the parent transform
-        std::shared_ptr<graphics::transform> parent_trans = parent->get_component<graphics::transform>();
-        // set width and height from parent transform
-        set_width(parent_trans->get_width_ratio());
-        set_height(parent_trans->get_height_ratio());
+          if (!parent->has_component<graphics::transform>())
+          {
+            return;
+          }
+          // build polygon
+          // find positions of each corner of the collider to create line segments
+          // get the parent transform
+          std::shared_ptr<graphics::transform> parent_trans = parent->get_component<graphics::transform>();
+          // set width and height from parent transform
+          set_width(parent_trans->get_width_ratio());
+          set_height(parent_trans->get_height_ratio());
 
-        // get point for the parent transform, which is center of the object
-        graphics::screen_point_2d parent_position = parent_trans->get_position_in_screen_coordinates();
-        float screen_width_value = width / 2.0f;
-        float screen_height_value = height / 2.0f;
+          // get point for the parent transform, which is center of the object
+          graphics::screen_point_2d parent_position = parent_trans->get_position_in_screen_coordinates();
 
-        graphics::screen_point_2d bottom_left(parent_position.x - screen_width_value, parent_position.y - screen_height_value);
-        graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + screen_height_value);
-        graphics::screen_point_2d top_right(parent_position.x + screen_width_value, top_left.y);
-        graphics::screen_point_2d bottom_right(top_right.x, bottom_left.y);
-        
-        // counter clockwise starting at bottom left point
-        debug_square = graphics::rect2d({ bottom_left, bottom_right }, { bottom_right, top_right }, { top_right, top_left }, { top_left, bottom_left });
+          float rect_width = width;   // screen coordinate width (so a ratio of rect width to window width from 0-1)
+          float rect_height = height; // height " "
+
+          // calculate the corners of the rectangle
+          graphics::screen_point_2d bottom_left(parent_position.x - rect_width, parent_position.y - rect_height);
+          graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + rect_height);
+          graphics::screen_point_2d top_right(parent_position.x + rect_width, top_left.y);
+          graphics::screen_point_2d bottom_right(top_right.x, bottom_left.y);
+
+          // counter clockwise starting at bottom left point
+          debug_square = graphics::rect2d({bottom_left, bottom_right}, {bottom_right, top_right}, {top_right, top_left}, {top_left, bottom_left});
         }
       }
     }
@@ -110,8 +112,8 @@ namespace waifuengine
     void collider::draw_debug()
     {
       if ((!disabled) && debugging)
-      {          
-        if(is_colliding())
+      {
+        if (is_colliding())
         {
           debug_square.draw(graphics::colors::get_color(graphics::colors::color_name::red), 1.0f);
         }
@@ -121,7 +123,6 @@ namespace waifuengine
         }
       }
     }
-
 
     void collider::offset_translate(glm::vec2 translation)
     {
@@ -187,8 +188,6 @@ namespace waifuengine
     {
       return offset.scale().y;
     }
-
-
 
     namespace collisions
     {
