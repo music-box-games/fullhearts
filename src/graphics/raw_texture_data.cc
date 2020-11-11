@@ -98,17 +98,21 @@ namespace waifuengine
         glEnableVertexAttribArray(tex_attribute);
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void *)(5 * sizeof(float)));
 
-        int transform_attribute = glGetUniformLocation(shd->get_id(), "transform");
+        int model_attribute = glGetUniformLocation(shd->get_id(), "model");
         if (transform_attribute == -1)
         {
-          log::LOGERROR("Could not locate uniform \"transform\"");
+          return;
+        }
+        int view_attribute = glGetUniformLocation(shd->get_id(), "view");
+        if(view_attribute == -1)
+        {
           return;
         }
 
         shd->use();
         shd->set_int_1("tex", 0);
 
-        glUniformMatrix4fv(transform_attribute, 1, GL_FALSE, glm::value_ptr(*(tr.const_data())));
+        glUniformMatrix4fv(model_attribute, 1, GL_FALSE, glm::value_ptr(*(tr.const_data())));
 
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(e_count), GL_UNSIGNED_INT, 0);
     }

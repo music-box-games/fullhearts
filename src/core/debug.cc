@@ -290,6 +290,7 @@ namespace waifuengine
 
                     ImGui::TreePop();
                   }
+                  ++i;
                 }
                 ImGui::Text(ss.str().c_str());
               }
