@@ -49,6 +49,23 @@ namespace waifuengine
       dirty = false;
     }
 
+    bool transform::operator==(transform const& rhs) const
+    {
+      return
+      (trans == rhs.trans) &&
+      (dirty == rhs.dirty) &&
+      (scale_ == rhs.scale_) &&
+      (pos_ == rhs.pos_) &&
+      (rot_deg == rhs.rot_deg) &&
+      (width_ratio == rhs.width_ratio) &&
+      (height_ratio == rhs.height_ratio);
+    }
+
+    bool transform::operator!=(transform const& rhs) const
+    {
+      return !this->operator==(rhs);
+    }
+
     void transform::update(float dt)
     {
       // recalc if dirty each frame to allow tweaks in imgui

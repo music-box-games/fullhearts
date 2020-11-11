@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EDE0E14A-FF0A-337D-B4A2-D1572A4B0853}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>audio</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\dev\musicboxgames\repo\fullhearts\src\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">audio.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">audio</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\dev\musicboxgames\repo\fullhearts\src\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">audio.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">audio</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\dev\musicboxgames\repo\fullhearts\src\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">audio.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">audio</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\dev\musicboxgames\repo\fullhearts\src\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">audio.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">audio</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:threadSafeInit-</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:threadSafeInit-</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:threadSafeInit-</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:threadSafeInit-</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;BOOST_ALL_NO_LIB;JSON_USE_IMPLICIT_CONVERSIONS=1;GTEST_LANG_CXX11=1;GTEST_HAS_TR1_TUPLE=0;WINDOWS;WE_GRAPHICS_SDL2;WE_AUDIO_FMOD_LL;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\dev\musicboxgames\repo\fullhearts\src\audio\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/src/audio/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/src/audio/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\dev\musicboxgames\repo\fullhearts\src\src\audio\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/src/audio/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/src/audio/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\dev\musicboxgames\repo\fullhearts\src\src\audio\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/src/audio/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/src/audio/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\dev\musicboxgames\repo\fullhearts\src\src\audio\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/src/audio/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/src/audio/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\dev\musicboxgames\repo\fullhearts\src\src\audio\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="E:\dev\musicboxgames\repo\fullhearts\src\audio\audio.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\ZERO_CHECK.vcxproj">
+      <Project>{0108B27B-180B-3EF1-82EE-43D81FE5A9B9}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

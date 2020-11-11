@@ -17,7 +17,6 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include <serialization.hpp>
 
 #include "component_order.hpp"
 
@@ -102,16 +101,6 @@ namespace waifuengine
         //virtual void operator=(_base_component const &rhs) = 0;
         virtual bool operator==(_base_component const &rhs) = 0;
 
-      private:
-        friend class boost::serialization::access;
-        template <class Archive>
-        void serialize(Archive &ar, unsigned int const)
-        {
-          ar &name;
-          ar &type;
-        }
-      };
-      BOOST_SERIALIZATION_ASSUME_ABSTRACT(_base_component)
     } // namespace _impl
 
     template <typename _Derive>
@@ -145,13 +134,6 @@ namespace waifuengine
         return (name == rhs.name) && (type == rhs.type);
       }
 
-    private:
-      friend class boost::serialization::access;
-      template <class Archive>
-      void serialize(Archive &ar, unsigned int const version)
-      {
-        ar &boost::serialization::base_object<_impl::_base_component>(*this);
-      }
     };
 
     using compptr = std::shared_ptr<_impl::_base_component>;
@@ -173,6 +155,5 @@ namespace waifuengine
   } // namespace core
 } // namespace waifuengine
 
-BOOST_CLASS_EXPORT_KEY(we::components::component<we::core::scripting::script_object>);
 
 #endif // !_W_COMPONENT_HPP_

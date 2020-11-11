@@ -27,4 +27,3 @@ namespace waifuengine
     }
   }
 }
-BOOST_CLASS_EXPORT_IMPLEMENT(we::components::component<we::core::scripting::script_object>);

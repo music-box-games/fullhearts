@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E66080D4-E2B6-3699-8092-561EAA315423}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\thewr\.conan\data\glm\0.9.9.5\g-truc\stable\package\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\include;C:\Users\thewr\.conan\data\gtest\1.8.1\bincrafters\stable\package\875c67f4d8a79bdd002908b75efce119eb82836d\include;C:\Users\thewr\.conan\data\glad\0.1.29\bincrafters\stable\package\0de526cfd320907099725a63a8aa147cfa42ae97\include;C:\Users\thewr\.conan\data\glfw\3.3.2\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\soil2\1.20\bincrafters\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\nlohmann_json\3.9.1\_\_\package\d1091b2ed420e6d287293709a907ae824d5de508\include;C:\.conan\016a1d\1\include;C:\Users\thewr\.conan\data\zlib\1.2.11\conan\stable\package\d057732059ea44a47760900cb5e4855d2bea8714\include;C:\Users\thewr\.conan\data\bzip2\1.0.8\conan\stable\package\589a23dff5fdb23a7fb851223eb766480ead0a9a\include;E:\dev\musicboxgames\repo\fullhearts\.\src\include;E:\dev\musicboxgames\repo\fullhearts\.\ext_src\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\dev\musicboxgames\repo\fullhearts\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.15\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\postbuild_copy.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.15\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\postbuild_copy.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.15\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\postbuild_copy.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/dev/musicboxgames/repo/fullhearts/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-file E:/dev/musicboxgames/repo/fullhearts/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.15\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.15\Modules\Platform\WindowsPaths.cmake;E:\dev\musicboxgames\repo\fullhearts\build\conanbuildinfo.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\compiler_setup.cmake;E:\dev\musicboxgames\repo\fullhearts\cmake_scripts\postbuild_copy.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeCXXCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeRCCompiler.cmake;E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\3.15.4\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\dev\musicboxgames\repo\fullhearts\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\ZERO_CHECK.vcxproj">
+      <Project>{0108B27B-180B-3EF1-82EE-43D81FE5A9B9}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\audio\audio.vcxproj">
+      <Project>{EDE0E14A-FF0A-337D-B4A2-D1572A4B0853}</Project>
+      <Name>audio</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\components\components.vcxproj">
+      <Project>{ECC68933-899D-311C-9973-E2F25D247443}</Project>
+      <Name>components</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\core\core.vcxproj">
+      <Project>{01DB4503-9476-3B26-BC77-0BA3846A1EF5}</Project>
+      <Name>core</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\events\events.vcxproj">
+      <Project>{3A2E93D2-8AD8-3EFD-98C5-90DE4485154A}</Project>
+      <Name>events</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\factory\factory.vcxproj">
+      <Project>{D25C6EDA-9A05-3A3A-BF4D-262D465AE9C2}</Project>
+      <Name>factory</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\fh.vcxproj">
+      <Project>{09FF7BC6-8EFA-3C49-9A4A-81D8128CABC2}</Project>
+      <Name>fh</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\graphics\graphics.vcxproj">
+      <Project>{A7211831-32B4-345A-8771-66AFD254DD8F}</Project>
+      <Name>graphics</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\log\log.vcxproj">
+      <Project>{FB9660F3-811C-3CDE-80BA-68DA8E1555E3}</Project>
+      <Name>log</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\physics\physics.vcxproj">
+      <Project>{422E0578-4197-31C7-A7A6-C374462A0076}</Project>
+      <Name>physics</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\scenes\scenes.vcxproj">
+      <Project>{821A13C8-F8A0-3F16-BB57-F621DAB497FC}</Project>
+      <Name>scenes</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\tests\tests.vcxproj">
+      <Project>{D720F9BA-9869-3148-A37F-DEF5E86770C7}</Project>
+      <Name>tests</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\ui\ui.vcxproj">
+      <Project>{3B687FCC-46FE-341A-9318-96B6A0E0500B}</Project>
+      <Name>ui</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\dev\musicboxgames\repo\fullhearts\src\src\utils\utils.vcxproj">
+      <Project>{AD2173E2-A5EA-30B0-A3D8-3ABA2ED0EEAA}</Project>
+      <Name>utils</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

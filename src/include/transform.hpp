@@ -54,8 +54,7 @@ namespace waifuengine
       template<class Archive>
       void serialize(Archive& a, unsigned int const v)
       {
-        a & boost::serialization::base_object<comonents::component<transform>(this);
-        
+        a & boost::serialization::base_object<comonents::component<transform>(this);  
       }
 
       void calculate_transform();
@@ -159,6 +158,9 @@ namespace waifuengine
       glm::mat4 matrix() const;
 
       decomposed_transform decompose() const;
+
+      bool operator==(transform const& rhs) const;
+      bool operator!=(transform const& rhs) const;
     };
   } // namespace graphics
 } // namespace waifuengine

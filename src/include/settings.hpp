@@ -14,7 +14,6 @@
 
 #include <any>
 
-#include <serialization.hpp>
 #include "debug.hpp"
 
 #include "events.hpp"
@@ -67,12 +66,6 @@ namespace waifuengine
       friend class waifuengine::core::debug::imgui_listener;
       static std::unordered_map<std::string, setting_value> values;
 
-      friend class boost::serialization::access;
-      template <class Archive>
-      void serialize(Archive &ar, unsigned int const v)
-      {
-        
-      }
 
       static void send_change_event(std::string n, std::any o_value, std::any n_value);
 

@@ -1,0 +1,10 @@
+^E:\DEV\MUSICBOXGAMES\REPO\FULLHEARTS\SRC\CMAKEFILES\4F99BAF4B14F3C0D882FDFE5E1DE64D1\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/dev/musicboxgames/repo/fullhearts -BE:/dev/musicboxgames/repo/fullhearts/src --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/dev/musicboxgames/repo/fullhearts/src/fullhearts.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
