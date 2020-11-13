@@ -177,22 +177,14 @@ namespace waifuengine
       }
     }
 
-    void gameobject::save(std::shared_ptr<gameobject> obj)
+    void gameobject::save(std::shared_ptr<gameobject> )
     {
-      auto pt = we::utils::get_game_save_data_folder().append("objects");
-      pt.append(obj->name_);
-      std::ofstream stream(pt.string());
-      boost::archive::text_oarchive arch(stream);
-      arch << obj;
+
     }
 
-    void gameobject::load(std::shared_ptr<gameobject> obj, std::string name)
+    void gameobject::load(std::shared_ptr<gameobject> , std::string )
     {
-      auto pt = we::utils::get_game_save_data_folder().append("objects");
-      pt.append(name);
-      std::ifstream stream(pt.string());
-      boost::archive::text_iarchive arch(stream);
-      arch >> obj;
+
     }
 
     void gameobject::rotate(float r)

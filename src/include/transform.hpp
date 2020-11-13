@@ -38,7 +38,6 @@ namespace waifuengine
     class transform : public components::component<transform>
     {
     private:
-      friend class boost::serialization::access;
       friend class waifuengine::core::debug::imgui_listener;
       glm::mat4 trans;
       bool dirty;
@@ -51,12 +50,7 @@ namespace waifuengine
       float width_ratio;
       float height_ratio;
 
-      template<class Archive>
-      void serialize(Archive& a, unsigned int const v)
-      {
-        a & boost::serialization::base_object<comonents::component<transform>(this);  
-      }
-
+     
       void calculate_transform();
 
     public:

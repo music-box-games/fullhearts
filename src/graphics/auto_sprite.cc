@@ -25,9 +25,9 @@ namespace waifuengine
       loaded = false;
     }
 
-    void auto_sprite::draw()
+    void auto_sprite::draw() const
     {
-      (loaded) ? sp->draw() : default_sp.draw();
+      (loaded) ? sp.lock()->draw() : default_sp.draw();
     }
   }
 }

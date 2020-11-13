@@ -13,6 +13,7 @@
 #define _WE_SETTINGS_HPP_
 
 #include <any>
+#include <unordered_map>
 
 #include "debug.hpp"
 

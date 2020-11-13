@@ -6,7 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-#include "serialization.hpp"
 #include "gameobject.hpp"
 #include "shader.hpp"
 #include "transform.hpp"
@@ -20,13 +19,8 @@ namespace waifuengine
       class base_primative : public waifuengine::object_management::gameobject
       {
       private:
-        friend class boost::serialization::access;
         friend class core::debug::imgui_listener;
-        template<class Archive>
-        void serialize(Archive& ar, unsigned int const v)
-        {
-          ar & boost::serialization::base_object<waifuengine::object_management::gameobject>(*this);
-        }
+ 
 
       public:
         base_primative(std::string name) : waifuengine::object_management::gameobject(name) {}
@@ -35,7 +29,6 @@ namespace waifuengine
         virtual void update(float dt) = 0;
         virtual void draw() const = 0;
       };
-      BOOST_SERIALIZATION_ASSUME_ABSTRACT(base_primative);
 
       class rectangle : public base_primative
       {
@@ -52,18 +45,8 @@ namespace waifuengine
         unsigned int VBO;
         unsigned int EBO;
 
-        friend class boost::serialization::access;
         friend class core::debug::imgui_listener;
-        template<class Archive>
-        void serialize(Archive& ar, unsigned int const v)
-        {
-          ar & boost::serialization::base_object<base_primative>(*this);
-          ar & width;
-          ar & height;
-          ar & center[0];
-          ar & center[1];
-          ar & alpha;
-        }
+     
 
       public:
         rectangle(std::string name);
@@ -100,13 +83,7 @@ namespace waifuengine
         glm::vec2 center; // center point, ratios
         bool calculating_vertices = true;
 
-        friend class boost::serialization::access;
-        template<class Archive>
-        void serialize(Archive& ar, unsigned int const v)
-        {
-          ar & boost::serialization::base_object<base_primative>(*this);
-          ar & vertices;
-        }
+   
 
       public:
         triangle(std::string name);
@@ -136,12 +113,7 @@ namespace waifuengine
         class test_triangle0 : public primatives::triangle
         {
         protected:
-          friend class boost::serialization::access;
-          template<class Archive>
-          void serialize(Archive& ar, unsigned int const v)
-          {
-            ar & boost::serialization::base_object<primatives::triangle>(*this);
-          }
+
 
         public:
           test_triangle0(std::string name);
@@ -151,12 +123,7 @@ namespace waifuengine
         class test_triangle1 : public primatives::triangle
         {
         protected:
-          friend class boost::serialization::access;
-          template<class Archive>
-          void serialize(Archive& ar, unsigned int const v)
-          {
-            ar & boost::serialization::base_object<primatives::triangle>(*this);
-          }
+
 
         public:
           test_triangle1(std::string name);

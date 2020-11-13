@@ -125,5 +125,3 @@ namespace waifuengine
     }
   }
 }
-
-BOOST_CLASS_EXPORT_IMPLEMENT(we::graphics::sprite);

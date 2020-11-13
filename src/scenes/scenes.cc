@@ -54,5 +54,3 @@ namespace waifuengine
     }
   }
 }
-
-BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::scene);

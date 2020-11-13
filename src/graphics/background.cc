@@ -21,7 +21,7 @@ namespace waifuengine
       // set the width and height ratio to fill the window
       object_transform->set_ratios({1.f, 1.f});
             // add sprite to object
-      auto spr = add_component_v<sprite>(sprite_name);
+      auto spr = add_component_v<graphics::sprite>(sprite_name);
       // lock sprite to parent transform
       spr->lock_transform_to_parent_transform();
     }

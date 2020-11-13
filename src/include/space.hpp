@@ -17,7 +17,6 @@
 #include <string>
 #include <set>
 
-#include <serialization.hpp>
 #include <component.hpp>
 #include <gameobject.hpp>
 #include <debug.hpp>
@@ -51,14 +50,7 @@ namespace waifuengine
             std::set<std::string> objects_to_remove;
 
             friend class waifuengine::core::debug::imgui_listener;
-            friend class boost::serialization::access;
-            template<class Archive>
-            void serialize(Archive& ar, unsigned int const)
-            {
-                ar & name_;
-                ar & order_;
-                ar & objects_;
-            }
+        
 
         public:
             space(std::string n = "", space_order order = space_order::UNORDERED);
@@ -97,6 +89,5 @@ namespace waifuengine
     }
 }
 
-BOOST_CLASS_EXPORT_KEY(waifuengine::object_management::space);
 
 #endif // !_W_SPACE_HPP_

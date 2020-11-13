@@ -14,12 +14,7 @@ namespace waifuengine
       {
       private:
         friend class waifuengine::core::debug::imgui_listener;
-        friend class boost::serialization::access;
-        template<class Archive>
-        void serialize(Archive& ar, unsigned int const)
-        {
-          ar & boost::serialization::base_object<::waifuengine::scenes::scene>(*this);
-        }
+
 
       public:
         SCENE_NAME(scene_serializationtest);
@@ -31,6 +26,5 @@ namespace waifuengine
   }
 }
 
-BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::test::scene_serializationtest);
 
 #endif

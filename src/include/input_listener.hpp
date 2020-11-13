@@ -16,13 +16,6 @@ namespace waifuengine
       typedef waifuengine::graphics::input::input_event event_subscribe_type;
       typedef std::function<void(event_receive_type*)> input_handler_type;
     private:
-      friend class boost::serialization::access;
-      template <class Archive>
-      void serialize(Archive &ar, unsigned int const v)
-      {
-        ar & boost::serialization::base_object<::waifuengine::object_management::gameobject>(*this);
-      }
-
       input_handler_type func;
 
       void on_input(event_receive_type* ievent);

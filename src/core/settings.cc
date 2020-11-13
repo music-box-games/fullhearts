@@ -10,7 +10,6 @@
 /******************************************************************************/
 
 #include <settings.hpp>
-#include <serialization.hpp>
 #include "utils.hpp"
 #include "events.hpp"
 #include "event_manager.hpp"
@@ -47,26 +46,15 @@ std::unordered_map<std::string, settings::setting_value> settings::values =
   {"frame_limit", settings::setting_value("frame_limit", std::size_t(0))},
 };
 
-void settings::save(settings const& s)
+void settings::save(settings const&)
 {
-  fs::path settings_save_folder = we::utils::get_settings_save_folder();
-  settings_save_folder.append("settings");
-  std::ofstream stream(settings_save_folder.string());
-  boost::archive::text_oarchive arch(stream);
-  arch << s;
+
 }
 
 void settings::load()
 {
-  fs::path settings_save_folder = we::utils::get_settings_save_folder();
-  settings_save_folder.append("settings");
-  if(fs::exists(settings_save_folder))
-  {
-    settings s;
-    std::ifstream stream(settings_save_folder.string());
-    boost::archive::text_iarchive arch(stream);
-    arch >> s;
-  }
+
+  
 }
 
 settings::setting_value::setting_value(std::string n, std::any v) : name(n), value(v) {}

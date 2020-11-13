@@ -130,5 +130,3 @@ namespace waifuengine
 
   } // namespace object_management
 } // namespace waifuengine
-
-BOOST_CLASS_EXPORT_IMPLEMENT(waifuengine::object_management::space_manager);

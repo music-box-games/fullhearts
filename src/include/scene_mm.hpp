@@ -3,7 +3,6 @@
 
 #include <scenes.hpp>
 #include <events.hpp>
-#include <serialization.hpp>
 
 namespace waifuengine
 {

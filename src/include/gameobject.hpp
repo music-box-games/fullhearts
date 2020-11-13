@@ -40,10 +40,6 @@
 #include <glm/glm.hpp>
 
 #include <dummy.hpp>
-#include <serialization.hpp>
-#include <boost/serialization/unordered_map.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 
 #include <fs_util.hpp>
 #include "debug.hpp"
@@ -290,7 +286,7 @@ namespace waifuengine
             bool has_component() const
             {
               // TODO: un hardcode this
-              return (_CType::NAME == "transform") true ? components_.count(_CType::NAME);
+              return (_CType::NAME == "transform") ? true : components_.count(_CType::NAME);
             }
 
             /**

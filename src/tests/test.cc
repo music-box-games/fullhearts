@@ -18,7 +18,6 @@
 #include <dummy.hpp>
 #include <tests.hpp>
 #include <fs_util.hpp>
-#include <serialization.hpp>
 #include <component.hpp>
 #include <gameobject.hpp>
 #include <spacemanager.hpp>

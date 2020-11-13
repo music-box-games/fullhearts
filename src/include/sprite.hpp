@@ -2,7 +2,6 @@
 #define _WE_SPRITE_HPP_
 
 #include <component.hpp>
-#include <serialization.hpp>
 #include "texture.hpp"
 #include "transform.hpp"
 #include "debug.hpp"
@@ -19,12 +18,7 @@ namespace waifuengine
       transform trans; /**< the sprite's transform, separate from the parent object */
       bool locked_to_parent_transform; /**< if the sprite should just use the transform from the parent object instead of its own */
 
-      friend class boost::serialization::access;
-      template<class Archive>
-      void serialize(Archive& ar, unsigned int const)
-      {
-        ar & boost::serialization::base_object<components::component<sprite>>(*this);
-      }
+ 
 
     public:
       COMPONENT_REGISTER(sprite);
@@ -67,7 +61,6 @@ namespace waifuengine
     typedef std::shared_ptr<sprite> spriteptr;
   }
 }
-BOOST_CLASS_EXPORT_KEY(we::components::component<we::graphics::sprite>);
-BOOST_CLASS_EXPORT_KEY(waifuengine::graphics::sprite);
+
 
 #endif

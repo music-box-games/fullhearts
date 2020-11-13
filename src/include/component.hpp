@@ -16,7 +16,7 @@
 #include <string_view>
 #include <typeinfo>
 #include <typeindex>
-
+#include <memory>
 
 #include "component_order.hpp"
 
@@ -100,7 +100,7 @@ namespace waifuengine
 
         //virtual void operator=(_base_component const &rhs) = 0;
         virtual bool operator==(_base_component const &rhs) = 0;
-
+      };
     } // namespace _impl
 
     template <typename _Derive>

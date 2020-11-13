@@ -16,13 +16,7 @@ namespace waifuengine
     private:
 
     friend class waifuengine::core::debug::imgui_listener;
-    friend class boost::serialization::access;
-    
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int v)
-    {
-      ar & boost::serialization::base_object<waifuengine::object_management::gameobject>(*this);
-    }
+
 
     
     public:

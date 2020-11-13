@@ -13,7 +13,6 @@
 #define _WE_DUMMY_HPP_
 
 #include <component.hpp>
-#include <serialization.hpp>
 
 namespace we = ::waifuengine;
 
@@ -24,15 +23,7 @@ namespace waifuengine
     class dummy : public component<dummy>
     {
     private:
-      friend class boost::serialization::access;
       int dumb;
-
-      template<class Archive>
-      void serialize(Archive& ar, unsigned int const)
-      {
-        ar & boost::serialization::base_object<component<dummy>>(*this);
-        ar & dumb;
-      }
 
     public:
       COMPONENT_REGISTER(dummy);
@@ -54,6 +45,5 @@ namespace waifuengine
 
   }
 }
-BOOST_CLASS_EXPORT_KEY(we::components::dummy);
 
 #endif // !_WE_DUMMY_HPP_

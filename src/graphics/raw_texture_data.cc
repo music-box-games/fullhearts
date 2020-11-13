@@ -99,7 +99,7 @@ namespace waifuengine
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void *)(5 * sizeof(float)));
 
         int model_attribute = glGetUniformLocation(shd->get_id(), "model");
-        if (transform_attribute == -1)
+        if (model_attribute == -1)
         {
           return;
         }

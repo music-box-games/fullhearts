@@ -7,7 +7,6 @@
 #include <fstream>
 
 #include <utils.hpp>
-#include <serialization.hpp>
 
 #include "shader.hpp"
 #include "fs_util.hpp"
@@ -36,11 +35,7 @@ public:
   auto begin() -> decltype(m.begin()) { return m.begin(); }
   auto end() -> decltype(m.end()) { return m.end(); }
   
-  template<class Archive>
-  void serialize(Archive& ar, unsigned int const v)
-  {
-    ar & m;
-  }
+
 };
 
 class shader_file
@@ -165,10 +160,6 @@ void save_shader_map()
   // saves out a config file that has the location of shader files in use
   impl::shader_map m;
 
-  std::string temp; // TODO: change this for the actual file path
-  std::ofstream stream(temp);
-  boost::archive::text_oarchive arch(stream);
-  arch << m;
 }
 
 vertex_shader::vertex_shader(fs::path file) : source(nullptr), shader_id(0), filepath(file)

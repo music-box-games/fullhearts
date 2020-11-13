@@ -21,7 +21,6 @@
 #include <functional>
 
 #include <component.hpp>
-#include <serialization.hpp>
 #include <scenes.hpp>
 #include <log.hpp>
 #include <debug.hpp>
@@ -48,12 +47,6 @@ namespace waifuengine
         std::function<void()> scene_loader;
 
         friend class waifuengine::core::debug::imgui_listener;
-        friend class boost::serialization::access;
-        template <class Archive>
-        void serialize(Archive &ar, unsigned int const)
-        {
-          ar &smap;
-        }
 
         void unload_scene();
         void load_scene();
@@ -100,6 +93,5 @@ namespace waifuengine
   } // namespace scenes
 } // namespace waifuengine
 
-BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::impl::scene_manager);
 
 #endif // !_WE_SCENE_MANAGER_HPP_

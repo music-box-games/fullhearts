@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <script_object.hpp>
-#include <serialization.hpp>
 #include <component.hpp>
 #include <utils.hpp>
 
@@ -30,16 +29,7 @@ private:
   std::vector<std::string> init_script;
   std::vector<std::string> update_script;
   std::vector<std::string> shutdown_script;
-  friend class boost::serialization::access;
-  template <class Archive>
-  void serialize(Archive &ar, unsigned int const)
-  {
-    ar.template register_type<script_object>();
-    ar & boost::serialization::base_object <waifuengine::components::component<script_object>>(*this);
-    ar & init_script;
-    ar & update_script;
-    ar & shutdown_script;
-  }
+ 
 
 public:
   COMPONENT_REGISTER(script_object);
@@ -95,6 +85,5 @@ public:
 } // namespace core
 } // namespace waifuengine
 
-BOOST_CLASS_EXPORT_KEY(waifuengine::core::scripting::script_object);
 
 #endif

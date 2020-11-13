@@ -68,12 +68,7 @@ namespace waifuengine
       std::map<std::string, std::shared_ptr<space>, space_sort> spaces_;
 
       friend class waifuengine::core::debug::imgui_listener;
-      friend class boost::serialization::access;
-      template <class Archive>
-      void serialize(Archive &ar, unsigned int const)
-      {
-        ar &spaces_;
-      }
+
 
     public:
       space_manager();
@@ -101,6 +96,5 @@ namespace waifuengine
   } // namespace object_management
 } // namespace waifuengine
 
-BOOST_CLASS_EXPORT_KEY(waifuengine::object_management::space_manager);
 
 #endif // !_W_SPACE_MANAGER_HPP_

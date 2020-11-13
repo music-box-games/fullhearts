@@ -14,7 +14,6 @@
 #include <scenemanager.hpp>
 #include <log.hpp>
 #include <fs_util.hpp>
-#include <serialization.hpp>
 
 namespace we = ::waifuengine;
 
@@ -99,10 +98,7 @@ namespace waifuengine
         // get path to save folder
         auto pt = utils::get_game_save_data_folder();
         pt.append("scenes");
-        pt.append(smap.first);
-        std::ofstream stream(pt.string());
-        boost::archive::text_oarchive arch(stream);
-        arch << smap;
+    
       }
 
       void scene_manager::draw() const
@@ -201,4 +197,3 @@ namespace waifuengine
   } // namespace scenes
 }
 
-BOOST_CLASS_EXPORT_IMPLEMENT(we::scenes::impl::scene_manager);

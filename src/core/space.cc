@@ -138,4 +138,3 @@ std::shared_ptr<gameobject> space::load_object(std::string name)
 } // namespace object_management
 } // namespace waifuengine
 
-BOOST_CLASS_EXPORT_IMPLEMENT(waifuengine::object_management::space);

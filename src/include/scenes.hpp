@@ -15,7 +15,6 @@
 #include <unordered_map>
 #include <memory>
 
-#include <serialization.hpp>
 #include <spacemanager.hpp>
 #include <component.hpp>
 #include <debug.hpp>
@@ -35,13 +34,7 @@ namespace waifuengine
 
     private:
       friend class waifuengine::core::debug::imgui_listener;
-      friend class ::boost::serialization::access;
-      template<class Archive>
-      void serialize(Archive& ar, unsigned int const)
-      {
-        ar & manager;
-        ar & name;
-      }
+
 
     public:
       std::string name;
@@ -60,6 +53,5 @@ namespace waifuengine
   }
 }
 
-BOOST_CLASS_EXPORT_KEY(waifuengine::scenes::scene);
 
 #endif // !_WE_SCENES_HPP_
