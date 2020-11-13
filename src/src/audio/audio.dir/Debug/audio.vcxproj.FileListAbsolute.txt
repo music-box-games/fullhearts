@@ -1,2 +1,0 @@
-E:\dev\musicboxgames\repo\fullhearts\src\lib\audio.pdb
-E:\dev\musicboxgames\repo\fullhearts\src\src\audio\audio.dir\Debug\audio.pdb
