@@ -153,30 +153,6 @@ namespace waifuengine
       return disabled_;
     }
 
-    void gameobject::set_sprite(std::weak_ptr<graphics::sprite> sp)
-    {
-      if(sp.use_count())
-      {
-        sprite.load(sp);
-      }
-      else
-      {
-        sprite.unload();
-      }
-    }
-
-    std::weak_ptr<graphics::sprite> gameobject::get_sprite()
-    {
-      if(sprite.loaded)
-      {
-        return sprite.sp;
-      }
-      else
-      {
-        return {};
-      }
-    }
-
     void gameobject::save(std::shared_ptr<gameobject> )
     {
 

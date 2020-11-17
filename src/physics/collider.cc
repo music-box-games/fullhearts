@@ -79,10 +79,15 @@ namespace waifuengine
           float rect_height = height; // height " "
 
           // calculate the corners of the rectangle
-          graphics::screen_point_2d bottom_left(parent_position.x - rect_width, parent_position.y - rect_height);
-          graphics::screen_point_2d top_left(bottom_left.x, parent_position.y + rect_height);
-          graphics::screen_point_2d top_right(parent_position.x + rect_width, top_left.y);
-          graphics::screen_point_2d bottom_right(top_right.x, bottom_left.y);
+          float left_x_value = parent_position.x - (rect_width / 2.0f);
+          float right_x_value = parent_position.x + (rect_width / 2.0f);
+          float top_y_value = parent_position.y + (rect_height / 2.0f);
+          float bottom_y_value = parent_position.y - (rect_height / 2.0f);
+
+          graphics::screen_point_2d bottom_left(left_x_value, bottom_y_value);
+          graphics::screen_point_2d top_left(left_x_value, top_y_value);
+          graphics::screen_point_2d top_right(right_x_value, top_y_value);
+          graphics::screen_point_2d bottom_right(right_x_value, bottom_y_value);
 
           // counter clockwise starting at bottom left point
           debug_square = graphics::rect2d({bottom_left, bottom_right}, {bottom_right, top_right}, {top_right, top_left}, {top_left, bottom_left});

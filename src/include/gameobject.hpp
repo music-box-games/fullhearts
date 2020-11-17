@@ -114,7 +114,6 @@ namespace waifuengine
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////
             #pragma region settors
             ///////////// settors
-            void set_sprite(std::weak_ptr<graphics::sprite> sp);
 
             void set_transform(graphics::transform const& tr);
 
@@ -236,7 +235,6 @@ namespace waifuengine
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////
             #pragma region gettors
             ///////////// gettors
-            std::weak_ptr<graphics::sprite> get_sprite();
 
             graphics::transform& get_transform();
 
