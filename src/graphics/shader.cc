@@ -213,8 +213,8 @@ void vertex_shader::compile()
   glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
   if(!success)
   {
-    char infolog[512];
-    glGetShaderInfoLog(shader_id, 512, NULL, infolog);
+    char infolog[1024];
+    glGetShaderInfoLog(shader_id, 1024, NULL, infolog);
     // ERROR HERE
     we::log::LOGERROR(infolog);
     throw std::runtime_error((const char*)infolog);

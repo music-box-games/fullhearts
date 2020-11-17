@@ -52,5 +52,3 @@ script_object::script_proxy script_object::append_shutdown()
 } // namespace scripting
 } // namespace core
 } // namespace waifuengine
-
-BOOST_CLASS_EXPORT_IMPLEMENT(waifuengine::core::scripting::script_object);

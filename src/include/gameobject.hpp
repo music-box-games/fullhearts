@@ -76,6 +76,7 @@ namespace waifuengine
 
             bool disabled_; /**< If gameobject is disabled. */
             std::mutex lock_; /**< Lock for safe multithreading. */
+            
 
         public:
             /**
