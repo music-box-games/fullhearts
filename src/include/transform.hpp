@@ -1,3 +1,29 @@
+/****************************************************************************
+ *   Copyright (C) 2020 by Music Box Games                                  *
+ *                                                                          *
+ *   This file is part of WaifuEngine                                       *
+ *                                                                          *
+ *   WaifuEngine is free software: you can redistribute it and/or modify it *
+ *   under the terms of the MIT License.                                    *
+ *                                                                          *
+ *   WaifuEngine is distributed in the hope that it will be useful,         *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   MIT License for more details.                                          *
+ *                                                                          *
+ *   You should have received a copy of the MIT License along with          *
+ *   WaifuEngine.  If not, see https://opensource.org/licenses/MIT          *
+ ****************************************************************************/
+
+/******************************************************************************/
+/**
+* @file   transform.hpp
+* @author Ryan Hanson
+* @par    email: iovita\@musicboxgames.net
+* @brief  Transform
+*/
+/******************************************************************************/
+
 #ifndef _WE_TRANSFORM_HPP_
 #define _WE_TRANSFORM_HPP_
 
@@ -43,13 +69,12 @@ namespace waifuengine
       bool dirty;
 
       glm::vec2 scale_;
-      screen_point_2d pos_;
+      world_point_2d pos_; // position in world coordinates defaults to 0,0
 
       float rot_deg;
 
       float width_ratio;
       float height_ratio;
-
      
       void calculate_transform();
 
@@ -83,8 +108,15 @@ namespace waifuengine
 
       int width_in_pixels() const;
       int height_in_pixels() const;
+
+      void set_width_in_pixels(int width);
+      void set_height_in_pixels(int height);
+
+      void set_dimensions_in_pixels(glm::vec2 d);
       glm::vec2 dimensions_in_pixels() const;
+
       [[deprecated]] glm::vec2 position_in_pixels() const;
+
 
       /**
         * @brief Gets the screen coordinates for the center of the object

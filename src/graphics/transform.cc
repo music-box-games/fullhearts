@@ -16,10 +16,10 @@ namespace waifuengine
   {
     rect_dimensions::rect_dimensions(glm::vec2 c, glm::vec2 d) : center(c), dimensions(d)
     {
-      vertices[0] = { center.x - (dimensions.x / 2), center.y + (dimensions.y / 2) };
-      vertices[1] = { center.x + (dimensions.x / 2), center.y + (dimensions.y / 2) };
-      vertices[2] = { center.x + (dimensions.x / 2), center.y - (dimensions.y / 2) };
-      vertices[3] = { center.x - (dimensions.x / 2), center.y - (dimensions.y / 2) };
+      vertices[0] = { center.x - (dimensions.x / 2.0f), center.y + (dimensions.y / 2.0f) };
+      vertices[1] = { center.x + (dimensions.x / 2.0f), center.y + (dimensions.y / 2.0f) };
+      vertices[2] = { center.x + (dimensions.x / 2.0f), center.y - (dimensions.y / 2.0f) };
+      vertices[3] = { center.x - (dimensions.x / 2.0f), center.y - (dimensions.y / 2.0f) };
     }
 
 
@@ -47,6 +47,31 @@ namespace waifuengine
       trans = glm::rotate(trans, glm::radians(rot_deg), glm::vec3(0.0, 0.0f, 1.0f));
       trans = glm::scale(trans, glm::vec3(scale_, 1.0f));
       dirty = false;
+    }
+
+    void transform::set_width_in_pixels(int w)
+    {
+      // get window width
+      float ratio = float(w) / graphics::get_current_window()->get_width();
+      // set width_ratio to new value
+      width_ratio = ratio;
+      dirty = true;
+    }
+
+    void transform::set_height_in_pixels(int h)
+    {
+      // get window height
+      float ratio = float(h) / graphics::get_current_window()->get_height();
+      // set height_ratio to new value
+      height_ratio = ratio;
+      dirty = true;
+    }
+
+    void transform::set_dimensions_in_pixels(glm::vec2 d)
+    {
+      set_width_in_pixels(d.x);
+      set_height_in_pixels(d.y);
+      dirty = true;
     }
 
     bool transform::operator==(transform const& rhs) const
@@ -77,12 +102,12 @@ namespace waifuengine
 
     int transform::width_in_pixels() const
     {
-      return static_cast<int>(scale().x * static_cast<int>(graphics::get_current_window()->get_width())); // cast to int because we can't have a fraction of a pixel anyways
+      return static_cast<int>(width_ratio * static_cast<int>(graphics::get_current_window()->get_width())); // cast to int because we can't have a fraction of a pixel anyways
     }
 
     int transform::height_in_pixels() const
     {
-      return static_cast<int>(scale().y * static_cast<int>(graphics::get_current_window()->get_height()));
+      return static_cast<int>(height_ratio * static_cast<int>(graphics::get_current_window()->get_height()));
     }
 
     glm::vec2 transform::dimensions_in_pixels() const

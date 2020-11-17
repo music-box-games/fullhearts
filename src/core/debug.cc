@@ -135,10 +135,10 @@ namespace waifuengine
               {
                 t->set_rotation(rot);
               }
+
               auto pos = t->get_position_in_screen_coordinates();
               float trans_x = pos.x;
               float trans_y = pos.y;
-
               if (ImGui::DragFloat("Translation X", &trans_x, 0.01f))
               {
                 t->set_position_in_screen_coordinates(graphics::screen_point_2d(trans_x, trans_y));
@@ -147,6 +147,36 @@ namespace waifuengine
               {
                 t->set_position_in_screen_coordinates(graphics::screen_point_2d(trans_x, trans_y));
               }
+
+              // edit width_ratio and height_ratio
+              {
+                float width_ratio = t->width_ratio;
+                float height_ratio = t->height_ratio;
+                if(ImGui::DragFloat("Width Ratio", &width_ratio, 0.01f))
+                {
+                  t->set_width_ratio(width_ratio);
+                }
+                if(ImGui::DragFloat("Height Ratio", &height_ratio, 0.01f))
+                {
+                  t->set_height_ratio(height_ratio);
+                }
+              }
+
+              // edit width and height in pixels
+              {
+                int width = t->width_in_pixels();
+                int height = t->height_in_pixels();
+                if(ImGui::DragInt("Width (Pixels)", &width, 1, -65536, 65536)) // TODO: have actual world bounds / un hard code this
+                {
+                  t->set_width_in_pixels(width);
+                }
+                if(ImGui::DragInt("Height (Pixels)", &height, 1, -65536, 65536))
+                {
+                  t->set_height_in_pixels(height);
+                }
+              }
+
+              // edit scale
               float scale_x = t->scale_[0];
               float scale_y = t->scale_[1];
               if (ImGui::DragFloat("Scale X", &scale_x, 0.01f))
@@ -156,17 +186,6 @@ namespace waifuengine
               if (ImGui::DragFloat("Scale Y", &scale_y, 0.01f))
               {
                 t->set_scale(glm::vec2(scale_x, scale_y));
-              }
-
-              float width_ratio = t->width_ratio;
-              float height_ratio = t->height_ratio;
-              if(ImGui::DragFloat("Width Ratio", &width_ratio, 0.01f))
-              {
-                t->set_width_ratio(width_ratio);
-              }
-              if(ImGui::DragFloat("Height Ratio", &height_ratio, 0.01f))
-              {
-                t->set_height_ratio(height_ratio);
               }
         }
 
@@ -390,13 +409,6 @@ namespace waifuengine
               {
                 obj.second->disable(disable);
               }
-              auto * debug_rect_test = dynamic_cast<graphics::primatives::rectangle *>(obj.second.get());
-              if(debug_rect_test)
-              {
-                ImGui::Text("Width: %f", debug_rect_test->width);
-                ImGui::Text("Height: %f", debug_rect_test->height);
-                ImGui::Text("Center: (%f, %f)", static_cast<float>(debug_rect_test->center.x), static_cast<float>(debug_rect_test->center.y));
-              }
               if (ImGui::TreeNode("Components"))
               {
                 ImGui::Text("Count: %d", obj.second->components_.size());
@@ -421,9 +433,13 @@ namespace waifuengine
           {
             names.push_back(pair.first.c_str());
           }
+          
           static int current_object_index = 0;
           if (current_object_index > names.size())
+          {
             current_object_index = 0;
+          }
+
           ImGui::ListBox("Objects", &current_object_index, names.data(), static_cast<int>(names.size()));
           if (ImGui::Button("Load"))
           {
@@ -440,10 +456,8 @@ namespace waifuengine
         {
           if (sp.second.use_count())
           {
-
             if (ImGui::TreeNode(sp.first.c_str()))
             {
-
               auto &obj = sp.second->objects_;
               for (auto &o : obj)
               {

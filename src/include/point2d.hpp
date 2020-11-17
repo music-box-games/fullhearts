@@ -39,6 +39,7 @@ namespace waifuengine
     using point_2d = glm::vec2;
     using screen_point_2d = screen_coordinates_2d;
     using window_point_2d = window_coordinates_2d;
+    using world_point_2d = world_coordinates_2d;
 
     /**
       * @brief Converts a point in window space to screen space.
