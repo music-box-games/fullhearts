@@ -45,7 +45,6 @@
 #include "debug.hpp"
 #include "utils.hpp"
 #include "transform.hpp"
-#include "auto_sprite.hpp"
 
 namespace waifuengine
 {
@@ -69,14 +68,13 @@ namespace waifuengine
             using component_map = std::map<std::string, std::shared_ptr<waifuengine::components::_impl::_base_component>, components::component_sorter>;
 
             graphics::transform object_transform; /**< transform for the game object */
-            graphics::auto_sprite sprite; /**< object's sprite */
 
             component_map components_; /**< Contains attached components, keyed to their string names. */
             std::string name_; /**< Name of gameobject. */
 
             bool disabled_; /**< If gameobject is disabled. */
             std::mutex lock_; /**< Lock for safe multithreading. */
-            
+
 
         public:
             /**
