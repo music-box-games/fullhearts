@@ -90,18 +90,27 @@ namespace waifuengine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, e_count * sizeof(unsigned int), elements, GL_STATIC_DRAW);
 
+        // position that gets transformed I guess
         int position_attribute = glGetAttribLocation(shd->get_id(), "position");
         glEnableVertexAttribArray(position_attribute);
         glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
 
+        // set texture coordinates
         int tex_attribute = glGetAttribLocation(shd->get_id(), "texcoord");
         glEnableVertexAttribArray(tex_attribute);
         glVertexAttribPointer(tex_attribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void *)(5 * sizeof(float)));
 
+        // calculate projection matrix
+        glm::vec2 window_dimensions(graphics::get_current_window()->get_width(), graphics::get_current_window()->get_height());
+        // TODO: switch to using camera and world coordinates
+        glm::mat4 projection = glm::ortho(0.0f, window_dimensions.x, window_dimensions.y, 0.0f, -1.0f, 1.0f);
+
         shd->use();
         shd->set_int_1("tex", 0);
 
-        glUniformMatrix4fv(shd->get_uniform("transform"), 1, GL_FALSE, glm::value_ptr(*(tr.const_data())));
+
+        glUniformMatrix4fv(shd->get_uniform("model"), 1, GL_FALSE, glm::value_ptr(*(tr.const_data())));
+        //glUniformMatrix4fv(shd->get_uniform("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(e_count), GL_UNSIGNED_INT, 0);
     }

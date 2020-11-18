@@ -130,6 +130,8 @@ namespace waifuengine
       */
       window_point_2d get_position_in_window_coordinates() const;
 
+      world_point_2d get_position_in_world_coordinates() const;
+
       /**
         * @brief Sets the center of the object to the position given in screen coordinates.
         * @param p Point in screen coordinates to set position to.

@@ -45,6 +45,11 @@ namespace waifuengine
       return window_coordinates_to_screen_coordinates(p);
     }
 
+    screen_point_2d world_point_2d_to_screen_point_2d(world_point_2d p)
+    {
+      return {};
+    }
+
     /**
       * @brief Converts a point in screen space to window space.
       * @param p The point in screen space.
@@ -53,6 +58,22 @@ namespace waifuengine
     window_point_2d screen_point_2d_to_window_point_2d(screen_point_2d p)
     {
       return screen_coordinates_to_window_coordinates(p);
+    }
+
+    window_point_2d world_point_2d_to_window_point_2d(world_point_2d p)
+    {
+      return {};
+    }
+
+    world_point_2d screen_point_2d_to_world_point_2d(screen_point_2d p)
+    {
+      // get camera position to determine the screen coordinate from the world pos
+      return {};
+    }
+
+    world_point_2d window_point_2d_to_world_point_2d(window_point_2d p)
+    {
+      return {};
     }
   }
 }

@@ -122,6 +122,7 @@ namespace waifuengine
 
     screen_point_2d transform::get_position_in_screen_coordinates() const
     {
+      
       return pos_;
     }
 
@@ -130,8 +131,14 @@ namespace waifuengine
       return screen_point_2d_to_window_point_2d(get_position_in_screen_coordinates());
     }
 
+    world_point_2d transform::get_position_in_world_coordinates() const
+    {
+      return pos_;
+    }
+
     void transform::set_position_in_screen_coordinates(screen_point_2d p)
     {
+
       pos_ = p;
       dirty = true;
     }
