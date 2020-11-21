@@ -58,6 +58,11 @@ namespace waifuengine
 
       std::array<glm::vec2, 4> vertices; // top-left, top-right, bottom-right, bottom-left
 
+      /**
+      * @brief Constructor
+      * @param c Center of the rectangle
+      * @param d Dimensions of the rectangle
+      */
       rect_dimensions(glm::vec2 c, glm::vec2 d);
     };
 
@@ -76,6 +81,9 @@ namespace waifuengine
       float width_ratio;
       float height_ratio;
      
+      /**
+      * @brief Calculates the transform matrix, sets dirty to false
+      */
       void calculate_transform();
 
     public:
@@ -88,9 +96,19 @@ namespace waifuengine
         z,
       };
 
+      /**
+      * @brief Constructor
+      */
       transform();
+      /**
+      * @brief Destructor
+      */
       virtual ~transform();
 
+      /**
+      * @brief Updates the component
+      * @param dt Time since last update in ms
+      */
       virtual void update(float dt);
       virtual void draw() const;
 
@@ -128,9 +146,9 @@ namespace waifuengine
         * @brief Gets the world coordinates for the center of the object
         * @return Object's world coordinates.
       */
-      window_point_2d get_position_in_window_coordinates() const;
-
       world_point_2d get_position_in_world_coordinates() const;
+
+      window_point_2d get_position_in_window_coordinates() const;
 
       /**
         * @brief Sets the center of the object to the position given in screen coordinates.

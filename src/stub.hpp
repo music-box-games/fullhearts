@@ -29,7 +29,7 @@
 
 
 /**
- * Brief
+* Brief
 */
 void dummy2();
 
