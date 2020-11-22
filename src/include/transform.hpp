@@ -66,20 +66,23 @@ namespace waifuengine
       rect_dimensions(glm::vec2 c, glm::vec2 d);
     };
 
-    class transform : public components::component<transform>
+    // transform class
+    /*
+
+      
+
+    */
+    class transform
     {
     private:
       friend class waifuengine::core::debug::imgui_listener;
-      glm::mat4 trans;
-      bool dirty;
+      glm::mat4 trans; // transform matrix
+      bool dirty; // if true, transform matrix needs to be recalculated
 
-      glm::vec2 scale_;
+      glm::vec2 scale_; // x and y scale
       world_point_2d pos_; // position in world coordinates defaults to 0,0
 
-      float rot_deg;
-
-      float width_ratio;
-      float height_ratio;
+      float rot_deg; // degrees rotation
      
       /**
       * @brief Calculates the transform matrix, sets dirty to false
@@ -87,8 +90,6 @@ namespace waifuengine
       void calculate_transform();
 
     public:
-      COMPONENT_REGISTER(transform);
-      
       enum class axis
       {
         x,
@@ -106,24 +107,68 @@ namespace waifuengine
       virtual ~transform();
 
       /**
-      * @brief Updates the component
-      * @param dt Time since last update in ms
+      * @brief Updates the transform
       */
-      virtual void update(float dt);
+      virtual void update();
+      /**
+      * @brief Draws the transform (if needed)
+      */
       virtual void draw() const;
-
+      /**
+      * @brief Resets the transform to default values
+      */
       void reset();
+      /**
+      * @brief Rotates the transform by the given number of degrees
+      * @param degrees Value to rotate by
+      */
       void rotate(float degrees);
+      /**
+      * @brief Sets the rotation to the given value
+      * @param degrees Value to set rotation to
+      */
       void set_rotation(float degrees);
+      /**
+      * @brief Gets the rotation in degrees
+      * @return Degrees of rotation
+      */
       float rotate() const;
+      /**
+      * @brief Translates by the given distance
+      * @param distance Distance to translate by
+      */
       void translate(glm::vec2 distance);
+      /**
+      * @brief Sets the translation of the object to the given position
+      * @param position Where to set translation to.
+      */
       void set_translation(glm::vec2 position);
+      /**
+      * @brief Gets the translation of the transform
+      * @return Returns the position of the transform
+      */
       glm::vec2 translate() const;
+      /**
+      * @brief Uniformly scales each dimension by the given value
+      * @param s Value to scale by
+      */
       void uniform_scale(float s);
+      /**
+      * @brief Scales the transform by the provided values
+      * @param s Values to scale by
+      */
       void scale(glm::vec2 s);
+      /**
+      * @brief Sets the scale to the provided values
+      * @param s Values to set scale to
+      */
       void set_scale(glm::vec2 s);
+      /**
+      * @brief Gets the scale of the transform
+      * @return Scale
+      */
       glm::vec2 scale() const;
-
+      
       int width_in_pixels() const;
       int height_in_pixels() const;
 
@@ -199,10 +244,26 @@ namespace waifuengine
       void set_ratios(glm::vec2 r);
       
       void lock_screen_proportion(bool set = true);
+      /**
+      * @brief Gets a pointer to the transform matrix
+      * @return Pointer to transform matrix
+      */
       glm::mat4 *data();
+      /**
+      * @brief Gets a const pointer to the transform matrix
+      * @return Const pointer to transform matrix
+      */
       glm::mat4 const * const_data() const;
+      /**
+      * @brief Gets a copy of the transform matrix
+      * @return Copy of transform matrix
+      */
       glm::mat4 matrix() const;
 
+      /**
+      * @brief Decomposes a matrix into its parts.
+      * @return Decomposed transform matrix
+      */
       decomposed_transform decompose() const;
 
       bool operator==(transform const& rhs) const;
