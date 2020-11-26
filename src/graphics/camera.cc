@@ -64,5 +64,11 @@ namespace waifuengine
     {
       return position;
     }
+
+    std::tuple<world_coordinates_2d, world_coordinates_2d, world_coordinates_2d, world_coordinates_2d> camera::get_corners() const
+    {
+      std::tuple<world_coordinates_2d, world_coordinates_2d, world_coordinates_2d, world_coordinates_2d> result;
+      
+    }
   }
 }

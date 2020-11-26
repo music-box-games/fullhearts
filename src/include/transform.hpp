@@ -78,10 +78,8 @@ namespace waifuengine
       friend class waifuengine::core::debug::imgui_listener;
       glm::mat4 trans; // transform matrix
       bool dirty; // if true, transform matrix needs to be recalculated
-
       glm::vec2 scale_; // x and y scale
       world_point_2d pos_; // position in world coordinates defaults to 0,0
-
       float rot_deg; // degrees rotation
      
       /**
@@ -135,14 +133,14 @@ namespace waifuengine
       float rotate() const;
       /**
       * @brief Translates by the given distance
-      * @param distance Distance to translate by
+      * @param distance Distance to translate by in world coordinates
       */
-      void translate(glm::vec2 distance);
+      void translate(world_coordinates_2d distance);
       /**
       * @brief Sets the translation of the object to the given position
-      * @param position Where to set translation to.
+      * @param position Where to set translation to in World Coordinates
       */
-      void set_translation(glm::vec2 position);
+      void set_translation(world_point_2d position);
       /**
       * @brief Gets the translation of the transform
       * @return Returns the position of the transform

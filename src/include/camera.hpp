@@ -27,6 +27,8 @@
 #ifndef _WE_CAMERA_HPP_
 #define _WE_CAMERA_HPP_
 
+#include <tuple>
+
 #include "point2d.hpp"
 
 namespace waifuengine
@@ -51,7 +53,9 @@ namespace waifuengine
       world_coordinates_2d get_position() const;
       void set_position(world_coordinates_2d pos);
 
-      void present();
+      std::tuple<world_coordinates_2d, world_coordinates_2d, world_coordinates_2d, world_coordinates_2d> get_corners() const;
+      std::tuple<world_coordinates_2d, world_coordinates_2d> get_projection_coordinates() const;
+
     };
   }
 }

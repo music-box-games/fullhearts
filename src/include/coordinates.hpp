@@ -40,6 +40,7 @@ namespace waifuengine
     using screen_coordinates_2d = coordinate_type_2d;
     using window_coordinates_2d = coordinate_type_2d;
     using world_coordinates_2d = coordinate_type_2d;
+    using world_dimensions_2d = glm::vec2;
 
     using coordinate_type_3d = glm::vec3;
 
