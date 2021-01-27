@@ -120,6 +120,7 @@ namespace waifuengine
 
     void init();
     void shutdown();
+    void send_shutdown_event();
 
     template<typename Event>
     void handle(Event * e)

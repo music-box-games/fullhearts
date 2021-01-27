@@ -10,7 +10,7 @@
 /******************************************************************************/
 
 #include <event_manager.hpp>
-
+#include "shutdown_event.hpp"
 namespace waifuengine
 {
   namespace events
@@ -32,6 +32,12 @@ namespace waifuengine
     {
       delete impl::emanager;
       impl::emanager = nullptr;
+    }
+
+    void send_shutdown_event()
+    {
+      shutdown_event se;
+      impl::emanager->handle(&se);
     }
   }
 }
