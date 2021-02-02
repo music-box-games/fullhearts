@@ -28,6 +28,7 @@
 #include <settings.hpp>
 #include <scripting.hpp>
 #include "shutdown_event.hpp"
+#include "input_event.hpp"
 
 namespace we = ::waifuengine;
 
@@ -41,7 +42,11 @@ std::unique_ptr<engine> build_engine() { return std::unique_ptr<engine>(new engi
 
 void engine::input_handler(we::events::event *e)
 {
-  
+  graphics::input::input_event * ie = dynamic_cast<graphics::input::input_event*>(e);
+  if(ie->key == graphics::input::keys::backtick && ie->action == graphics::input::actions::release)
+  {
+    debug::toggle_imgui_window();
+  }
 }
 
 void engine::shutdown_event_handler(we::events::event *e)
@@ -74,7 +79,7 @@ engine::engine()
 
   // register for events
   auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
-  //we::events::subscribe<we::graphics::input::input_event>(this, f);
+  we::events::subscribe<we::graphics::input::input_event>(this, f);
   auto shutdown_handler = std::bind(&engine::shutdown_event_handler, this, std::placeholders::_1);
   we::events::subscribe<we::events::shutdown_event>(this, shutdown_handler);
 
@@ -84,9 +89,9 @@ engine::engine()
 engine::~engine()
 {
   // unsub from events
+  we::events::unsubcribe<we::graphics::input::input_event>(this);
   we::events::unsubcribe<we::events::shutdown_event>(this);
 
-  waifuengine::core::debug::shutdown_imgui();
   waifuengine::utils::timers::shutdown();
   waifuengine::scenes::shutdown();
   waifuengine::audio::shutdown();
@@ -109,9 +114,6 @@ void engine::update()
   // clear buffer
   we::graphics::clear();
 
-  // prep imgui
-  we::core::debug::render_imgui();
-
   // update input
   graphics::get_window_manager().lock()->update_all();
 
@@ -121,16 +123,17 @@ void engine::update()
   // audio update
   we::audio::update();
 
+  // draw imgui
+  we::core::debug::render_imgui();
   // now draw
   we::scenes::draw();
 
-  // draw imgui on top
-  we::core::debug::present_imgui();
 
   // TODO: draw next frame in small window for debugging
 
   // then present on screen, this is where the frame buffers are swapped and what we've been drawing becomes
   // visible to the user
+  we::core::debug::present_imgui();
   ::waifuengine::graphics::display();
 
 

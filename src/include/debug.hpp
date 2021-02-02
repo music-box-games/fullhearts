@@ -21,7 +21,6 @@ namespace waifuengine
 
       void render_imgui();
       void present_imgui();
-      void imgui_start_frame();
 
       class imgui_listener;
     }

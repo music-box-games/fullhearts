@@ -1,6 +1,7 @@
 #include "sprite.hpp"
 #include "graphics.hpp"
 #include "gameobject.hpp"
+#include "log.hpp"
 
 namespace waifuengine
 {

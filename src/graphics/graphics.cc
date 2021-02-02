@@ -1,4 +1,5 @@
 #include "graphics.hpp"
+#include "debug.hpp"
 
 namespace waifuengine
 {
@@ -13,16 +14,17 @@ namespace waifuengine
     {
       impl::winmanager = std::shared_ptr<window_manager>(new window_manager());
       impl::winmanager->add_window(width, height, title);
+      core::debug::init_imgui();
     }
 
     void shutdown()
     {
+      core::debug::shutdown_imgui();
       impl::winmanager.reset();
     }
 
     void draw()
     {
-      
     }
 
     void display()

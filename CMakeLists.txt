@@ -33,7 +33,6 @@ conan_basic_setup()
 
 # add include paths
 include_directories(./src/include)
-include_directories(./ext_src/imgui)
 
 # add subdirs
 add_subdirectory(./src/components)
@@ -54,7 +53,7 @@ set(WLIBS components core log utils events graphics scenes tests factory audio u
 
 # add root src
 file(GLOB SOURCES "./src/*.cc")
-file(GLOB EXTSOURCES "./ext_src/imgui/*.cpp")
+file(GLOB EXTSOURCES "./ext_src/*.cpp")
 
 # set ouput
 add_executable(${EXENAME} ${SOURCES} ${EXTSOURCES})

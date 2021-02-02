@@ -1,6 +1,7 @@
 #include "window.hpp"
 #include "event_manager.hpp"
 #include "input_event.hpp"
+#include <imgui-SFML.h>
 
 namespace waifuengine
 {
@@ -32,6 +33,7 @@ namespace waifuengine
       sf::Event ev;
       while(rw->pollEvent(ev))
       {
+        ImGui::SFML::ProcessEvent(ev);
         // handle events, convert them into engine events
         if(ev.type == sf::Event::EventType::Closed)
         {

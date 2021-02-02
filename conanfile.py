@@ -21,6 +21,8 @@ class FullheartsConan(ConanFile):
     self.requires("soil2/1.20@bincrafters/stable")
     self.requires("nlohmann_json/3.9.1")
     self.requires("sfml/2.5.1@bincrafters/stable")
+    self.requires("imgui-sfml/2.1@bincrafters/stable") # must be before imgui
+    self.requires("imgui/1.80")
 
   def configure(self):
     if self.settings.os == "Windows":
