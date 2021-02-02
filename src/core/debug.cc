@@ -35,10 +35,42 @@ namespace waifuengine
   {
     namespace debug
     {
+      class imgui_listener
+      {
+      private:
+        static const std::size_t HISTOGRAM_LEN = 300;
+        std::deque<float> fps_histogram;
+      
+      public:
+        imgui_listener() {}
+        ~imgui_listener() {}
+
+        void run()
+        {
+          ImGui::Begin("Debug");
+
+          ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+          fps_histogram.push_back(ImGui::GetIO().Framerate);
+          if (fps_histogram.size() > HISTOGRAM_LEN)
+          {
+            fps_histogram.pop_front();
+          }
+          static std::array<float, HISTOGRAM_LEN> values;
+          std::copy(fps_histogram.begin(), fps_histogram.end(), values.begin());
+          std::stringstream ss;
+          ss << "Framerate\n(Last " << HISTOGRAM_LEN << " frames)\nLimit: " << we::core::settings::read_t<std::size_t>("frame_limit");
+          ImGui::PlotLines(ss.str().c_str(), values.data(), HISTOGRAM_LEN, 0, NULL, 0, 144, ImVec2(0, 0), 4);
+
+          ImGui::End();
+        }
+      };
+
       namespace impl
       {
         bool show_debug_window = false;
         bool debug_ready_to_draw = false;
+
+        imgui_listener listener;
       }
       void init_imgui()
       {
@@ -55,14 +87,12 @@ namespace waifuengine
         impl::show_debug_window = !impl::show_debug_window;
       }
 
+
       void render_imgui()
       {
         static sf::Clock dclk;
           ImGui::SFML::Update(*graphics::get_window_manager().lock()->get_main_window().lock()->data().lock(), dclk.restart());
-        
-          ImGui::Begin("Debug");
-          
-          ImGui::End();
+          impl::listener.run();
           impl::debug_ready_to_draw = true;
         // do stuff
       }
