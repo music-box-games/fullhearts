@@ -18,7 +18,6 @@
 #include <log.hpp>
 #include <scenemanager.hpp>
 #include <scenelist.hpp>
-#include <input.hpp>
 #include <utils.hpp>
 #include <event_manager.hpp>
 #include <timer_manager.hpp>
@@ -28,7 +27,7 @@
 #include <debug.hpp>
 #include <settings.hpp>
 #include <scripting.hpp>
-#include "graphics_primatives.hpp"
+#include "shutdown_event.hpp"
 
 namespace we = ::waifuengine;
 
@@ -42,15 +41,12 @@ std::unique_ptr<engine> build_engine() { return std::unique_ptr<engine>(new engi
 
 void engine::input_handler(we::events::event *e)
 {
-  we::graphics::input::input_event *ev = dynamic_cast<we::graphics::input::input_event *>(e);
-  if (ev->a == we::graphics::input::action::press && ev->k == we::graphics::input::key::escape)
-  {
-    shutdown();
-  }
-  else if (ev->a == we::graphics::input::action::press && ev->k == we::graphics::input::key::grave_accent)
-  {
-    we::core::debug::toggle_imgui_window();
-  }
+  
+}
+
+void engine::shutdown_event_handler(we::events::event *e)
+{
+  shutdown();
 }
 
 void engine::shutdown()
@@ -69,22 +65,27 @@ engine::engine()
   waifuengine::utils::fs_init();
   waifuengine::log::init(waifuengine::log::trace_level::pedantic);
   waifuengine::events::init();
-  waifuengine::graphics::init("Full Hearts");
+  waifuengine::graphics::init(640, 480, "Full Hearts");
   waifuengine::core::thread_pool::init(); // NOTE: must init after graphics rn
   waifuengine::audio::init();
   waifuengine::scenes::init();
   waifuengine::utils::timers::init();
   waifuengine::core::debug::init_imgui();
 
-  // register for input events
+  // register for events
   auto f = std::bind(&engine::input_handler, this, std::placeholders::_1);
-  we::events::subscribe<we::graphics::input::input_event>(this, f);
+  //we::events::subscribe<we::graphics::input::input_event>(this, f);
+  auto shutdown_handler = std::bind(&engine::shutdown_event_handler, this, std::placeholders::_1);
+  we::events::subscribe<we::events::shutdown_event>(this, shutdown_handler);
 
   running = true;
 }
 
 engine::~engine()
 {
+  // unsub from events
+  we::events::unsubcribe<we::events::shutdown_event>(this);
+
   waifuengine::core::debug::shutdown_imgui();
   waifuengine::utils::timers::shutdown();
   waifuengine::scenes::shutdown();
@@ -112,7 +113,7 @@ void engine::update()
   we::core::debug::render_imgui();
 
   // update input
-  we::graphics::input::process();
+  graphics::get_window_manager().lock()->update_all();
 
   // update things
   we::utils::timers::update();
@@ -130,7 +131,7 @@ void engine::update()
 
   // then present on screen, this is where the frame buffers are swapped and what we've been drawing becomes
   // visible to the user
-  ::waifuengine::graphics::present();
+  ::waifuengine::graphics::display();
 
 
   // apply frame limiter if applicable

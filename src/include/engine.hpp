@@ -24,6 +24,7 @@ namespace waifuengine
         {
         private:
           void input_handler(waifuengine::events::event* e);
+          void shutdown_event_handler(waifuengine::events::event *e);
         public:
             static bool running;
             static void shutdown();

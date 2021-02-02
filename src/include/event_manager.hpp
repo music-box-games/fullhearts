@@ -20,7 +20,7 @@
 #include <events.hpp>
 #include <settings.hpp>
 #include <thread_pool.hpp>
-
+#include "log.hpp"
 namespace waifuengine
 {
   namespace events
@@ -102,6 +102,7 @@ namespace waifuengine
       template<typename Event>
       void handle(Event * e)
       {
+        log::LOGTRACE("Handling event");
         std::string ename(Event::NAME);
         if(::waifuengine::core::settings::read_t<bool>("mt_messaging"))
         {

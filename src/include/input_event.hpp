@@ -1,7 +1,7 @@
 #ifndef _WE_INPUT_EVENT_HPP_
 #define _WE_INPUT_EVENT_HPP_
 
-#include <SFML/Keyboard.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "events.hpp"
 

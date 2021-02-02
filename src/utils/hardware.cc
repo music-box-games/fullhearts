@@ -113,14 +113,7 @@ static cpu_info get_cpu_info()
 
 static gpu_info get_gpu_info()
 {
-    graphics::open_gl::open_gl_info gli = graphics::open_gl::open_gl_info();
     gpu_info gpu;
-    gpu.vendor = gli.vendor;
-    gpu.renderer = gli.renderer;
-    gpu.discrete = true;
-
-    gpucache = true;
-    gpucached_info = gpu;
     return gpu;
 }
 

@@ -8,25 +8,25 @@ namespace waifuengine
   {
     window::window(int w, int h, std::string t) : width_(w), height_(h), title_(t)
     {
-      rw = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(width, height), title));
+      rw = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(width_, height_), title_));
     }
 
     window::~window()
     {
-      rw.close();
+      rw->close();
     }
 
-    window::clear()
+    void window::clear()
     {
       rw->clear();
     }
 
-    window::display()
+    void window::display()
     {
       rw->display();
     }
 
-    window::update()
+    void window::update()
     {
       // events
       sf::Event ev;
@@ -48,6 +48,11 @@ namespace waifuengine
           events::handle(&ie);
         }
       }
+    }
+
+    std::weak_ptr<sf::RenderWindow> window::data()
+    {
+      return rw;
     }
   }
 }

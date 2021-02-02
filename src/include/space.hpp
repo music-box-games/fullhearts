@@ -21,7 +21,6 @@
 #include <gameobject.hpp>
 #include <debug.hpp>
 
-#include "graphics_primatives.hpp"
 
 namespace waifuengine
 {

@@ -1,5 +1,4 @@
-#ifndef _WE_SHAPES_HPP_
-#define _WE_SHAPES_HPP_
+#include "shape.hpp"
 
 namespace waifuengine
 {
@@ -7,6 +6,4 @@ namespace waifuengine
   {
     
   }
-}
-
-#endif
+} // namespace waifuengine

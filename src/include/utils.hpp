@@ -25,7 +25,6 @@
 #include <notify.hpp>
 #include <generators.hpp>
 #include <str_util.hpp>
-#include <graphic_utils.hpp>
 
 #include "num_utils.hpp"
 #include "machinegun_call.hpp"

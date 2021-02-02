@@ -1,10 +1,6 @@
-#include <component.hpp>
 #include <dummy.hpp>
 #include <script_object.hpp>
-#include "sprite.hpp"
-#include "debug_draw.hpp"
-#include "collider.hpp"
-#include "mouse_collider.hpp"
+#include <map>
 #include "component.hpp"
 
 namespace waifuengine

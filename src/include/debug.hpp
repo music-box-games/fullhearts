@@ -7,7 +7,7 @@ namespace waifuengine
   {
     namespace impl
     {
-      class scene_manager;
+      class scene_manager; // forward decl
     }
   }
 
