@@ -20,6 +20,8 @@ namespace waifuengine
       void clear();
       void display();
 
+      void set_frame_limit(int f);
+
       std::weak_ptr<sf::RenderWindow> data();
 
     private:

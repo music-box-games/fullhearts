@@ -7,7 +7,11 @@ namespace waifuengine
 {
   namespace graphics
   {
-    sprite::sprite(fs::path texture_file) : tex(texture_file), sp(tex.data()) {}
+    sprite::sprite(fs::path texture_file) : tex(texture_file), sp(tex.data()) 
+    {
+      log::LOGTRACE(std::string("Creating sprite with texture: \"" + texture_file.string()));
+    }
+
     sprite::~sprite() {}
 
     void sprite::draw() const 

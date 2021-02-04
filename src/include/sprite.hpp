@@ -22,6 +22,7 @@ namespace waifuengine
       virtual void draw() const;
 
     private:
+      friend class waifuengine::core::debug::imgui_listener;
       texture tex;
       sf::Sprite sp;
     };

@@ -27,6 +27,11 @@ namespace waifuengine
       rw->display();
     }
 
+    void window::set_frame_limit(int f)
+    {
+      rw->setFramerateLimit(f);
+    }
+
     void window::update()
     {
       // events

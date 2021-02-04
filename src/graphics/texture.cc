@@ -14,7 +14,7 @@ namespace waifuengine
 
     }
 
-    sf::Texture texture::data()
+    sf::Texture& texture::data()
     {
       return tex;
     }

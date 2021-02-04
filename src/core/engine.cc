@@ -13,6 +13,8 @@
 #include <sstream>
 #include <thread>
 
+#include <SFML/Graphics.hpp>
+
 #include <engine.hpp>
 #include <framewatcher.hpp>
 #include <log.hpp>
@@ -70,7 +72,7 @@ engine::engine()
   waifuengine::utils::fs_init();
   waifuengine::log::init(waifuengine::log::trace_level::pedantic);
   waifuengine::events::init();
-  waifuengine::graphics::init(640, 480, "Full Hearts");
+  waifuengine::graphics::init(1920, 1080, "Full Hearts");
   waifuengine::core::thread_pool::init(); // NOTE: must init after graphics rn
   waifuengine::audio::init();
   waifuengine::scenes::init();
@@ -89,8 +91,8 @@ engine::engine()
 engine::~engine()
 {
   // unsub from events
-  we::events::unsubcribe<we::graphics::input::input_event>(this);
   we::events::unsubcribe<we::events::shutdown_event>(this);
+  we::events::unsubcribe<we::graphics::input::input_event>(this);
 
   waifuengine::utils::timers::shutdown();
   waifuengine::scenes::shutdown();
@@ -107,6 +109,7 @@ void engine::update()
   // track frame rate
   static we::utils::frame_timer ft;
   float dt = ft.delta_time_reset();
+  static sf::Clock clk;
 
   // check threads
   core::thread_pool::update();
@@ -124,28 +127,14 @@ void engine::update()
   we::audio::update();
 
   // draw imgui
-  we::core::debug::render_imgui();
+  we::core::debug::render_imgui(clk.restart());
   // now draw
   we::scenes::draw();
-
-
-  // TODO: draw next frame in small window for debugging
 
   // then present on screen, this is where the frame buffers are swapped and what we've been drawing becomes
   // visible to the user
   we::core::debug::present_imgui();
   ::waifuengine::graphics::display();
-
-
-  // apply frame limiter if applicable
-  if (we::core::settings::read_t<std::size_t>("frame_limit"))
-  {
-    float diff = (1000.0f / static_cast<float>(we::core::settings::read_t<std::size_t>("frame_limit"))) - ft.delta_time();
-    if (diff > 0)
-    {
-      std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(diff)));
-    }
-  }
 }
 
 void engine::load_initial_scene()
