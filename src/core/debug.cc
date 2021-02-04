@@ -100,6 +100,38 @@ namespace waifuengine
           ImGui::Text("Main Window:\nWidth:%d\nHeight:%d", ww, wh);
         }
 
+        void transform_tree(graphics::transform & t)
+        {
+          // translation
+          auto trans = t.translation();
+          int trans_x = static_cast<int>(trans.x), trans_y = static_cast<int>(trans.y);
+          if(ImGui::DragInt("Translation X", &trans_x, 1))
+          {
+            t.set_translation(trans_x, trans_y);
+          }
+          if(ImGui::DragInt("Translation Y", &trans_y, 1))
+          {
+            t.set_translation(trans_x, trans_y);
+          }
+          // scale
+          auto scl = t.scale();
+          float scl_x = scl.x, scl_y = scl.y;
+          if(ImGui::DragFloat("Scale X", &scl_x, 0.1f))
+          {
+            t.set_scale(scl_x, scl_y);
+          }
+          if(ImGui::DragFloat("Scale Y", &scl_y, 0.1f))
+          {
+            t.set_scale(scl_x, scl_y);
+          }
+          // rotation
+          float rot = t.rotation();
+          if(ImGui::DragFloat("Rotation", &rot, 0.1f))
+          {
+            t.set_rotation(rot);
+          }
+        }
+
         void component_tree(std::pair<const std::string, waifuengine::components::compptr> & c)
         {
           // TODO: use a switch statement with c.second->type
@@ -139,6 +171,12 @@ namespace waifuengine
                 {
                   if(ImGui::TreeNode(obj.first.c_str()))
                   {
+                    // object transform
+                    if(ImGui::TreeNode("Transform"))
+                    {
+                      transform_tree(obj.second->object_transform);
+                      ImGui::TreePop();
+                    }
                     // list components in object
                     for(auto& comp : obj.second->components_)
                     {

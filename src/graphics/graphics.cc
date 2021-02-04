@@ -34,7 +34,7 @@ namespace waifuengine
 
     void clear()
     {
-
+      impl::winmanager->clear_all();
     }
 
     std::weak_ptr<window_manager> get_window_manager()
