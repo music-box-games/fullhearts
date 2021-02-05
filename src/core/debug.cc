@@ -2,6 +2,7 @@
 #include <array>
 #include <string>
 #include <cstring>
+#include <bitset>
 
 #include <SFML/Graphics.hpp>
 #include <boost/range/adaptor/reversed.hpp>
@@ -25,6 +26,7 @@
 #include "event_manager.hpp"
 #include "sprite.hpp"
 #include "graphics.hpp"
+#include "button.hpp"
 
 // TODO: forward declare tree functions in imgui_listener or something
 
@@ -60,6 +62,7 @@ namespace waifuengine
           fps_graph();
           mouse_pos();
           main_window_info();
+          font_manager_tree();
           current_scene();
           ImGui::End();
           }
@@ -99,6 +102,40 @@ namespace waifuengine
           wh = window_dimensions.y;
           ImGui::Text("Main Window:\nWidth:%d\nHeight:%d", ww, wh);
         }
+
+        void font_manager_tree()
+        {
+          if(ImGui::TreeNode("Font Manager"))
+          {
+            auto fman = graphics::get_font_manager().lock();
+            if(!fman.use_count())
+            {
+              ImGui::TreePop();
+              return;
+            }
+            ImGui::Text("Font count: %d", fman->count());
+
+            // load new font
+            
+            // list loaded fonts and allow unloading fonts
+            if(ImGui::TreeNode("Loaded Fonts"))
+            {
+              for(auto& f : fman->fonts_)
+              {
+                ImGui::Text(f.second->name().c_str());
+                ImGui::SameLine();
+                if(ImGui::Button("Unload"))
+                {
+                  fman->unload_font(f.first);
+                }
+              }
+              ImGui::TreePop();
+            }
+            ImGui::TreePop();
+          }
+        }
+
+        
 
         void transform_tree(graphics::transform & t)
         {
@@ -154,6 +191,107 @@ namespace waifuengine
           }
         }
 
+        void sftransform_tree(sf::Transformable& trans)
+        {
+          // translation
+          sf::Vector2f const& pos = trans.getPosition();
+          float posx = pos.x, posy = pos.y;
+          if(ImGui::DragFloat("Position X", &posx, 1.f))
+          {
+            trans.setPosition(posx, posy);
+          }
+          if(ImGui::DragFloat("Position Y", &posy, 1.f))
+          {
+            trans.setPosition(posx, posy);
+          }
+          // scale
+          sf::Vector2f const& sc = trans.getScale();
+          float scx = sc.x, scy = sc.y;
+          if(ImGui::DragFloat("Scale X", &scx, 1.f))
+          {
+            trans.setScale(scx, scy);
+          }
+          if(ImGui::DragFloat("Scale Y", &scy, 1.f))
+          {
+            trans.setScale(scx, scy);
+          }
+          // rotation
+          float rot = trans.getRotation();
+          if(ImGui::DragFloat("Rotation", &rot, 1.f))
+          {
+            trans.setRotation(rot);
+          }
+        }
+
+        void text_tree(graphics::text& tobj)
+        {
+          std::stringstream ss;
+          ss << "Style: " << std::bitset<8>(tobj.style_);
+          ImGui::Text(ss.str().c_str());
+          ImGui::Text("Font: %s", tobj.get_font().c_str());
+          ImGui::Text("Character Size: %d", tobj.get_char_size_in_pixels());
+          auto currentc = tobj.get_active_color();
+          auto idlefc = tobj.get_fill_color_idle();
+          auto hoverfc = tobj.get_fill_color_hover();
+          auto infc = tobj.get_fill_color_inactive();
+          ImGui::Text("Active Fill Color: %u, %u, %u, %u", currentc.r, currentc.g, currentc.b, currentc.a);
+          ImGui::Text("Idle Fill Color: %u, %u, %u, %u", idlefc.r, idlefc.g, idlefc.b, idlefc.a);
+          ImGui::Text("Hover Fill Color: %u, %u, %u, %u", hoverfc.r, hoverfc.g, hoverfc.b, hoverfc.a);
+          ImGui::Text("Inactive Fill Color: %u, %u, %u, %u", infc.r, infc.g, infc.b, infc.a);
+          ImGui::Text("String: %s", tobj.get_string().c_str());
+          // text transform (different from graphics::transform)
+          sftransform_tree(tobj.tobj_);
+          
+        }
+
+        void textbutton_object_tree(std::shared_ptr<ui::text_button> & obj)
+        {
+          if(ImGui::TreeNode("Text Object"))
+          {
+            text_tree(obj->tobj_);
+            ImGui::TreePop();
+          }
+        }
+
+        void button_object_tree(std::shared_ptr<ui::button> & obj)
+        {
+          // stuff
+
+          {
+            std::shared_ptr<ui::text_button> tbptr = std::dynamic_pointer_cast<ui::text_button, ui::button>(obj);
+            if(tbptr.use_count())
+            {
+              textbutton_object_tree(tbptr);
+            }
+          }
+        }
+
+        void gameobject_tree(std::pair<const std::string, std::shared_ptr<object_management::gameobject>> & obj)
+        {
+          ImGui::Text("Name: %s", obj.first.c_str());
+          if(ImGui::TreeNode("Transform"))
+          {
+            transform_tree(obj.second->object_transform);
+            ImGui::TreePop();
+          }
+          for(auto& comp : obj.second->components_)
+          {
+            if(ImGui::TreeNode(comp.first.c_str()))
+            {
+              component_tree(comp);
+              ImGui::TreePop();
+            }
+          }
+
+          {
+            std::shared_ptr<ui::button> bptr = std::dynamic_pointer_cast<ui::button, object_management::gameobject>(obj.second);
+            if(bptr.use_count())
+            {
+              button_object_tree(bptr);
+            }
+          }
+        }
+
         void current_scene()
         {
           auto sc = scenes::current_scene();
@@ -171,30 +309,13 @@ namespace waifuengine
                 {
                   if(ImGui::TreeNode(obj.first.c_str()))
                   {
-                    // object transform
-                    if(ImGui::TreeNode("Transform"))
-                    {
-                      transform_tree(obj.second->object_transform);
-                      ImGui::TreePop();
-                    }
-                    // list components in object
-                    for(auto& comp : obj.second->components_)
-                    {
-                      if(ImGui::TreeNode(comp.first.c_str()))
-                      {
-                        component_tree(comp);
-                        ImGui::TreePop();
-                      }
-                    }        
-
+                    gameobject_tree(obj);
                     ImGui::TreePop();
                   }
                 }
-
                 ImGui::TreePop();
               }
             }
-
             ImGui::TreePop();
           }
         }

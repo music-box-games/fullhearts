@@ -23,6 +23,7 @@
 #include "timer_manager.hpp"
 #include "timer.hpp"
 #include "fs_util.hpp"
+#include "button.hpp"
 
 namespace we = ::waifuengine;
 //namespace wef = we::factory;
@@ -52,10 +53,19 @@ namespace waifuengine
       auto scn = blank_scene("Main Menu");
       auto sp_manager = scn->get_manager();
       sp_manager->build_default_spaces();
-      auto bgsp = sp_manager->get_space("background_space");
-      std::stringstream texture_path;
-      texture_path << utils::get_exe_path() << "\\assets\\images\\test\\wallpaper.png";
-      auto bg_obj = bgsp->add_object_t<graphics::background>("mainmenu_bg", texture_path.str());
+      auto bgsp = sp_manager->get_space("Background Space");
+      auto uisp = sp_manager->get_space("UI Space");
+
+      std::stringstream bg_texture_path;
+      bg_texture_path << utils::get_exe_path() << "\\assets\\images\\test\\wallpaper.png";
+      auto bg_obj = bgsp->add_object_t<graphics::background>("mainmenu_bg", bg_texture_path.str());
+
+      std::stringstream exit_texture_path;
+      exit_texture_path << utils::get_exe_path() << "\\assets\\images\\ui\\blank_button.png";
+      auto ebtn_obj = uisp->add_object_t<ui::text_button>("exit_button", std::optional<fs::path>(), "Exit");
+      ebtn_obj->set_string("Exit");
+      ebtn_obj->set_font("playtime.ttf");
+      ebtn_obj->set_color(graphics::colors::color(0,0,0,255));
 
       start_fade_in();
 
