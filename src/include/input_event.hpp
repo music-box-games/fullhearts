@@ -29,7 +29,7 @@ namespace waifuengine
 
       enum class actions
       {
-        press, release,
+        press, release, mouse_button
       };
 
       class input_event : public events::event

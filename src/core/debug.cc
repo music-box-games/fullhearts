@@ -27,6 +27,7 @@
 #include "sprite.hpp"
 #include "graphics.hpp"
 #include "button.hpp"
+#include "vfx.hpp"
 
 // TODO: forward declare tree functions in imgui_listener or something
 
@@ -244,6 +245,82 @@ namespace waifuengine
           
         }
 
+        void rectangle_tree(graphics::rectangle & rect)
+        {
+          if(ImGui::TreeNode("Fill Color"))
+          {
+            graphics::colors::color c = rect.get_fill_color();
+            float r = c.r, g = c.g, b = c.b, a = c.a;
+            if(ImGui::DragFloat("Red", &r, 1.0f))
+            {
+              rect.set_fill_color(graphics::colors::color(r, g, b, a));
+            }
+            if(ImGui::DragFloat("Green", &g, 1.0f))
+            {
+              rect.set_fill_color(graphics::colors::color(r, g, b, a));
+            }
+            if(ImGui::DragFloat("Blue", &b, 1.0f))
+            {
+              rect.set_fill_color(graphics::colors::color(r, g, b, a));
+            }
+            if(ImGui::DragFloat("Alpha", &a, 1.0f))
+            {
+              rect.set_fill_color(graphics::colors::color(r, g, b, a));
+            }
+            ImGui::TreePop();
+          }
+          if(ImGui::TreeNode("Outline Color"))
+          {
+            graphics::colors::color c = rect.get_outline_color();
+            float r = c.r, g = c.g, b = c.b, a = c.a;
+            if(ImGui::DragFloat("Red", &r, 1.0f))
+            {
+              rect.set_outline_color(graphics::colors::color(r, g, b, a));
+            }
+            if(ImGui::DragFloat("Green", &g, 1.0f))
+            {
+              rect.set_outline_color(graphics::colors::color(r, g, b, a));
+            }
+            if(ImGui::DragFloat("Blue", &b, 1.0f))
+            {
+              rect.set_outline_color(graphics::colors::color(r, g, b, a));
+            }
+            if(ImGui::DragFloat("Alpha", &a, 1.0f))
+            {
+              rect.set_outline_color(graphics::colors::color(r, g, b, a));
+            }
+            ImGui::TreePop();
+          }
+          float ot = rect.get_outline_thickness();
+          if(ImGui::DragFloat("Outline Thickness", &ot, 1.f))
+          {
+            rect.set_outline_thickness(ot);
+          }
+
+          sftransform_tree(rect.data());
+        }
+
+        void fade_object_tree(std::shared_ptr<graphics::vfx::fade> & obj)
+        {
+          ImGui::Text("Start Alpha: %c", obj->start_alpha);
+          ImGui::Text("End Alpha: %c", obj->end_alpha);
+          ImGui::Text("Current Alpha: %c", obj->curr_alpha);
+          ImGui::Text("Fade Duration: %llms", obj->duration.count());
+          ImGui::Text("Duration Clock: %llms", obj->duration_clk.get_time_elapsed_ms().count());
+          ImGui::Text("Increment Clock: %llms", obj->increment_clk.get_time_elapsed_ms().count());
+          ImGui::Text("MS / 1 alpha: %ll", obj->ms_per_1_alpha.count());
+        }
+
+        void transition_object_tree(std::shared_ptr<graphics::vfx::transition> & obj)
+        {
+          ImGui::Text("Transition Running: %s", (obj->running()) ? "True" : "False");
+          auto fadeobj = std::dynamic_pointer_cast<graphics::vfx::fade, graphics::vfx::transition>(obj);
+          if(fadeobj.use_count())
+          {
+            fade_object_tree(fadeobj);
+          }
+        }
+
         void textbutton_object_tree(std::shared_ptr<ui::text_button> & obj)
         {
           if(ImGui::TreeNode("Text Object"))
@@ -288,6 +365,13 @@ namespace waifuengine
             if(bptr.use_count())
             {
               button_object_tree(bptr);
+            }
+          }
+          {
+            std::shared_ptr<graphics::vfx::transition> tptr = std::dynamic_pointer_cast<graphics::vfx::transition, object_management::gameobject>(obj.second);
+            if(tptr.use_count())
+            {
+              transition_object_tree(tptr);
             }
           }
         }

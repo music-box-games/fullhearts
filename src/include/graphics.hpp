@@ -17,6 +17,7 @@ namespace waifuengine
 
     std::weak_ptr<window_manager> get_window_manager();
     std::weak_ptr<font_manager> get_font_manager();
+    std::weak_ptr<window> get_main_window();
 
   }
 }

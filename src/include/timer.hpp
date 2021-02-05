@@ -19,6 +19,22 @@ namespace waifuengine
 {
     namespace utils
     {
+      class clock
+      {
+      public:
+        clock();
+        ~clock();
+
+        std::chrono::milliseconds restart_ms();
+        std::chrono::milliseconds get_time_elapsed_ms();
+
+        std::chrono::seconds restart_s();
+        std::chrono::seconds get_time_elapsed_s();
+
+      private:
+        std::chrono::steady_clock::time_point start_time;
+
+      };
         class timer
         {
         protected:

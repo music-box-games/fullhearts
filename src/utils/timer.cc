@@ -17,6 +17,35 @@ namespace waifuengine
     {
         namespace sc = std::chrono;
 
+        clock::clock() : start_time(std::chrono::steady_clock::now()) {}
+        clock::~clock() {}
+
+        std::chrono::milliseconds clock::restart_ms()
+        {
+          auto ret = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time);
+          start_time = std::chrono::steady_clock::now();
+          return ret;
+        }
+
+        std::chrono::milliseconds clock::get_time_elapsed_ms()
+        {
+          return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time);
+        }
+
+        std::chrono::seconds clock::restart_s()
+        {
+          auto ret = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start_time);
+          start_time = std::chrono::steady_clock::now();
+          return ret;
+        }
+
+        std::chrono::seconds clock::get_time_elapsed_s()
+        {
+          return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start_time);
+        }
+
+
+
         timer::timer() : running_(false)
         {
 

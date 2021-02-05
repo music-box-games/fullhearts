@@ -58,5 +58,10 @@ namespace waifuengine
     {
       return impl::fontmanager;
     }
+
+    std::weak_ptr<window> get_main_window()
+    {
+      return impl::winmanager->get_main_window();
+    }
   }
 }

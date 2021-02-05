@@ -9,6 +9,8 @@
 */
 /******************************************************************************/
 
+#include <vector>
+
 #include <scene_mm.hpp>
 #include <event_manager.hpp>
 
@@ -24,6 +26,8 @@
 #include "timer.hpp"
 #include "fs_util.hpp"
 #include "button.hpp"
+#include "vfx.hpp"
+#include "click_watcher.hpp"
 
 namespace we = ::waifuengine;
 //namespace wef = we::factory;
@@ -36,12 +40,14 @@ namespace waifuengine
     static constexpr int FADE_IN_LENGTH = 2000;
     static constexpr int FADE_OUT_LENGTH = 2000;
 
-    static void start_fade_in()
+    namespace impl
     {
+      std::vector<utils::click_watcher> cwatchers;
     }
 
     static void on_quit_click()
     {
+      impl::cwatchers.clear();
       we::core::engine::shutdown();
     }
 
@@ -55,6 +61,7 @@ namespace waifuengine
       sp_manager->build_default_spaces();
       auto bgsp = sp_manager->get_space("Background Space");
       auto uisp = sp_manager->get_space("UI Space");
+      auto trsp = sp_manager->get_space("Transition Space");
 
       std::stringstream bg_texture_path;
       bg_texture_path << utils::get_exe_path() << "\\assets\\images\\test\\wallpaper.png";
@@ -66,8 +73,11 @@ namespace waifuengine
       ebtn_obj->set_string("Exit");
       ebtn_obj->set_font("playtime.ttf");
       ebtn_obj->set_color(graphics::colors::color(0,0,0,255));
+      
+      auto fdin_obj = trsp->add_object_t<graphics::vfx::fade>("mm_fade_in", 0, 255, std::chrono::seconds(2));
+      fdin_obj->start();
 
-      start_fade_in();
+      //impl::cwatchers.push_back(utils::click_watcher([&trsp]() -> void {trsp->mark_object_for_removal("mm_fade_in");}));
 
       return  scn;
     }
