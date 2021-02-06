@@ -8,7 +8,7 @@ namespace waifuengine
     {
       sf::Color convert_we_color_to_sfml_color(color c)
       {
-        return sf::Color(c.r, c.g, c.b);
+        return sf::Color(c.r, c.g, c.b, c.a);
       }
 
       color convert_sfml_color_to_we_color(sf::Color c)

@@ -24,12 +24,21 @@ namespace waifuengine
         {
           auto ret = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time);
           start_time = std::chrono::steady_clock::now();
+          if(ret.count() == 0)
+          {
+            ret = std::chrono::milliseconds(1);
+          }
           return ret;
         }
 
         std::chrono::milliseconds clock::get_time_elapsed_ms()
         {
-          return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time);
+          auto ret = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time);
+          if(ret.count() == 0)
+          {
+            ret = std::chrono::milliseconds(1);
+          }
+          return ret;
         }
 
         std::chrono::seconds clock::restart_s()

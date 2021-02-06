@@ -302,13 +302,14 @@ namespace waifuengine
 
         void fade_object_tree(std::shared_ptr<graphics::vfx::fade> & obj)
         {
-          ImGui::Text("Start Alpha: %c", obj->start_alpha);
-          ImGui::Text("End Alpha: %c", obj->end_alpha);
-          ImGui::Text("Current Alpha: %c", obj->curr_alpha);
-          ImGui::Text("Fade Duration: %llms", obj->duration.count());
-          ImGui::Text("Duration Clock: %llms", obj->duration_clk.get_time_elapsed_ms().count());
-          ImGui::Text("Increment Clock: %llms", obj->increment_clk.get_time_elapsed_ms().count());
-          ImGui::Text("MS / 1 alpha: %ll", obj->ms_per_1_alpha.count());
+          ImGui::Text("Start Alpha: %d", obj->start_alpha);
+          ImGui::Text("End Alpha: %d", obj->end_alpha);
+          ImGui::Text("Current Alpha: %d", obj->curr_alpha);
+          ImGui::Text("Fade Duration: %lldms", obj->duration.count());
+          ImGui::Text("Duration Clock: %lldms", (obj->running()) ? obj->duration_clk.get_time_elapsed_ms().count() : 0);
+          ImGui::Text("Increment Clock: %lldms", (obj->running()) ? obj->increment_clk.get_time_elapsed_ms().count() : 0);
+          ImGui::Text("MS / 1 alpha: %f", obj->ms_per_1_alpha);
+          sftransform_tree(obj->the_darkness.data());
         }
 
         void transition_object_tree(std::shared_ptr<graphics::vfx::transition> & obj)

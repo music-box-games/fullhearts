@@ -74,7 +74,7 @@ namespace waifuengine
       ebtn_obj->set_font("playtime.ttf");
       ebtn_obj->set_color(graphics::colors::color(0,0,0,255));
       
-      auto fdin_obj = trsp->add_object_t<graphics::vfx::fade>("mm_fade_in", 0, 255, std::chrono::seconds(2));
+      auto fdin_obj = trsp->add_object_t<graphics::vfx::fade>("mm_fade_in", 255, 0, std::chrono::milliseconds(30000));
       fdin_obj->start();
 
       //impl::cwatchers.push_back(utils::click_watcher([&trsp]() -> void {trsp->mark_object_for_removal("mm_fade_in");}));

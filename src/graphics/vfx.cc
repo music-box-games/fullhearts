@@ -29,9 +29,10 @@ namespace waifuengine
         return running_;
       }
 
-      fade::fade(std::string name, char start_value, char end_value, std::chrono::milliseconds dur) : transition(name), start_alpha(start_value), end_alpha(end_value), duration(dur), the_darkness(rectangle())
+      fade::fade(std::string name, int start_value, int end_value, std::chrono::milliseconds dur) : transition(name), start_alpha(start_value), end_alpha(end_value), curr_alpha(255), duration(dur), the_darkness(rectangle())
       {
-        ms_per_1_alpha = std::chrono::milliseconds(duration.count() / (end_alpha - start_alpha));
+        // takes this many ms to change 1 alpha on the image
+        ms_per_1_alpha = std::chrono::milliseconds(std::abs(duration.count() / (end_alpha - start_alpha))).count();
         the_darkness.set_fill_color(colors::color(0,0,0,start_value));
       }
 
@@ -53,10 +54,27 @@ namespace waifuengine
           static auto const f = [&dt](std::pair<std::string, std::shared_ptr<::waifuengine::components::_impl::_base_component>> c) -> void { c.second->update(dt); };
           std::for_each(components_.begin(), components_.end(), f);
           
-          auto ms = increment_clk.restart_ms().count();
-          long long add_alpha = ms / ms_per_1_alpha.count();
-          colors::color current_color = the_darkness.get_fill_color();
-          colors::color new_color = colors::color(current_color.r, current_color.g, current_color.b, current_color.a + add_alpha);
+          auto ms_elapsed = increment_clk.get_time_elapsed_ms().count(); // ms since last fade::update
+          long long add_alpha = (ms_elapsed / ms_per_1_alpha); // how many alpha to add/subtract from the current value
+          colors::color curcolor = the_darkness.get_fill_color(); // current color of the rectangle making the fade effect
+          colors::color new_color = curcolor;
+          if(ms_elapsed > ms_per_1_alpha)
+          {
+            // if fading in
+            if(start_alpha > end_alpha)
+            {
+              new_color.a = new_color.a - add_alpha;
+            }
+            else if(start_alpha < end_alpha)
+            {
+              new_color.a = new_color.a + add_alpha;
+            }
+            the_darkness.set_fill_color(new_color);
+            increment_clk.restart_ms();
+          }
+          curr_alpha = new_color.a; 
+
+          // check total fade duration
           auto total_ms = duration_clk.get_time_elapsed_ms();
           if(total_ms.count() >= duration.count())
           {
