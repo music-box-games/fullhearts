@@ -41,6 +41,7 @@ namespace waifuengine
       sprite = 0,
       physics,
       physics2,
+      slidefx,
       transform,
       collider,
       mouse_collider,

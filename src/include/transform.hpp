@@ -85,7 +85,7 @@ namespace waifuengine
 
       static sf::Vector2f glm_vec2_to_sfml_vec2(glm::vec2 v);
       static glm::vec2 sfml_vec2_to_glm_vec2(sf::Vector2f v);
-
+      static glm::vec2 sfml_vec2_to_glm_vec2(sf::Vector2i v);
     private:
       sf::Transformable tr;
 

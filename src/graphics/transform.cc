@@ -179,5 +179,10 @@ namespace waifuengine
     {
       return glm::vec2(v.x, v.y);
     }
+
+    glm::vec2 transform::sfml_vec2_to_glm_vec2(sf::Vector2i v)
+    {
+      return glm::vec2(v.x, v.y);
+    }
   }
 }

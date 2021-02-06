@@ -28,6 +28,7 @@
 #include "graphics.hpp"
 #include "button.hpp"
 #include "vfx.hpp"
+#include "slidefx.hpp"
 
 // TODO: forward declare tree functions in imgui_listener or something
 
@@ -170,25 +171,38 @@ namespace waifuengine
           }
         }
 
+        void sprite_tree(std::shared_ptr<graphics::sprite> & spr)
+        {
+          ImGui::Text("Position: %d, %d", spr->sp.getPosition().x, spr->sp.getPosition().y);
+          if(ImGui::TreeNode("Texture"))
+          {
+            auto texsize = spr->tex.data().getSize();
+            ImGui::Text("Size: %d, %d", texsize.x, texsize.y);
+            ImGui::Text("isSmooth: %s", (spr->tex.data().isSmooth()) ? "True" : "False");
+            ImGui::Text("isSrgb: %s", (spr->tex.data().isSrgb()) ? "True" : "False");
+            ImGui::Text("isRepeated: %s", (spr->tex.data().isRepeated()) ? "True" : "False");
+            ImGui::Text("Native Handle: %ud", spr->tex.data().getNativeHandle());
+            ImGui::TreePop();
+          }
+        }
+
+        void slidefx_tree(std::shared_ptr<graphics::slidefx> & s)
+        {
+
+        }
+
         void component_tree(std::pair<const std::string, waifuengine::components::compptr> & c)
         {
           // TODO: use a switch statement with c.second->type
           if(c.first == std::string("sprite"))
           {
-            graphics::sprite * spr = dynamic_cast<graphics::sprite *>(c.second.get());
-            if(!spr) return;
-            spr->sp;
-            ImGui::Text("Position: %d, %d", spr->sp.getPosition().x, spr->sp.getPosition().y);
-            if(ImGui::TreeNode("Texture"))
-            {
-              auto texsize = spr->tex.data().getSize();
-              ImGui::Text("Size: %d, %d", texsize.x, texsize.y);
-              ImGui::Text("isSmooth: %s", (spr->tex.data().isSmooth()) ? "True" : "False");
-              ImGui::Text("isSrgb: %s", (spr->tex.data().isSrgb()) ? "True" : "False");
-              ImGui::Text("isRepeated: %s", (spr->tex.data().isRepeated()) ? "True" : "False");
-              ImGui::Text("Native Handle: %ud", spr->tex.data().getNativeHandle());
-              ImGui::TreePop();
-            }
+            std::shared_ptr<graphics::sprite> spr = std::dynamic_pointer_cast<graphics::sprite, components::compptr::element_type>(c.second);
+            sprite_tree(spr);
+          }
+          else if(c.first == std::string("slidefx"))
+          {
+            std::shared_ptr<graphics::slidefx> sl = std::dynamic_pointer_cast<graphics::slidefx, components::compptr::element_type>(c.second);
+            slidefx_tree(sl);
           }
         }
 

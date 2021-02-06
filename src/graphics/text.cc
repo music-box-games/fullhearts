@@ -6,7 +6,10 @@ namespace waifuengine
   namespace graphics
   {
     text::text() : style_(static_cast<int>(text::style::regular)) {}
-    text::text(std::string s) : style_(static_cast<int>(text::style::regular)), tstr_(s) {}
+    text::text(std::string s) : style_(static_cast<int>(text::style::regular)), tstr_(s) 
+    {
+      tobj_.setString(tstr_);
+    }
     text::~text() {}
 
     void text::set_font(std::string font_name)

@@ -2,6 +2,7 @@
 #define _WE_MOUSE_COLLIDER_HPP_
 
 #include "collider.hpp"
+#include "input_event.hpp"
 
 namespace waifuengine
 {
@@ -16,6 +17,11 @@ namespace waifuengine
       virtual ~mouse_collider();
 
       virtual void update(float dt);
+      virtual void draw() const;
+      virtual void draw_debug();
+
+    private:
+      void input_handler(events::event * e);
     };
   }
 }

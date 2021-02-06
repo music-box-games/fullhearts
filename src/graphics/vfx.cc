@@ -78,6 +78,14 @@ namespace waifuengine
           auto total_ms = duration_clk.get_time_elapsed_ms();
           if(total_ms.count() >= duration.count())
           {
+            // todo: send a warning instead of this happening silently
+            if(curr_alpha != end_alpha)
+            {
+              auto c = the_darkness.get_fill_color();
+              c.a = end_alpha;
+              the_darkness.set_fill_color(c);
+              curr_alpha = end_alpha;
+            }
             stop();
           }
         }

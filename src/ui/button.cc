@@ -11,6 +11,7 @@
 #include "log.hpp"
 #include "graphics.hpp"
 #include "font_manager.hpp"
+#include "mouse_collider.hpp"
 
 namespace we = ::waifuengine;
 
@@ -24,6 +25,7 @@ namespace waifuengine
       {
         add_component_v<graphics::sprite>(texture_file.value());
       }
+      add_component_v<ui::mouse_collider>();
     }
 
     button::~button()

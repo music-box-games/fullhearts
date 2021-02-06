@@ -51,6 +51,7 @@ namespace waifuengine
       box_collider,
       button_collider,
       mouse_collider,
+      slidefx,
       transform,
       shader,
       texture,
