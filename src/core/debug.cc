@@ -29,6 +29,7 @@
 #include "button.hpp"
 #include "vfx.hpp"
 #include "slidefx.hpp"
+#include "mouse_collider.hpp"
 
 // TODO: forward declare tree functions in imgui_listener or something
 
@@ -186,6 +187,14 @@ namespace waifuengine
           }
         }
 
+        void mouse_collider_tree(std::shared_ptr<ui::mouse_collider> & mc)
+        {
+          ImGui::Text("Colliding: %s", (mc->colliding) ? "True" : "False");
+          ImGui::Text("Position: %d, %d", mc->get_position().x, mc->get_position().y);
+          ImGui::Text("Width: %d", mc->get_dimensions().x);
+          ImGui::Text("Height: %d", mc->get_dimensions().y);
+        }
+
         void slidefx_tree(std::shared_ptr<graphics::slidefx> & s)
         {
 
@@ -193,6 +202,10 @@ namespace waifuengine
 
         void component_tree(std::pair<const std::string, waifuengine::components::compptr> & c)
         {
+          // disable box
+          // debug box
+          ImGui::Checkbox("Debug", &c.second->debugging);
+
           // TODO: use a switch statement with c.second->type
           if(c.first == std::string("sprite"))
           {
@@ -203,6 +216,11 @@ namespace waifuengine
           {
             std::shared_ptr<graphics::slidefx> sl = std::dynamic_pointer_cast<graphics::slidefx, components::compptr::element_type>(c.second);
             slidefx_tree(sl);
+          }
+          else if(c.first == std::string("mouse_collider"))
+          {
+            std::shared_ptr<ui::mouse_collider> mc = std::dynamic_pointer_cast<ui::mouse_collider, components::compptr::element_type>(c.second);
+            mouse_collider_tree(mc);
           }
         }
 
@@ -254,6 +272,9 @@ namespace waifuengine
           ImGui::Text("Hover Fill Color: %u, %u, %u, %u", hoverfc.r, hoverfc.g, hoverfc.b, hoverfc.a);
           ImGui::Text("Inactive Fill Color: %u, %u, %u, %u", infc.r, infc.g, infc.b, infc.a);
           ImGui::Text("String: %s", tobj.get_string().c_str());
+          auto trec = tobj.tobj_.getGlobalBounds();
+          ImGui::Text("Width: %d", trec.width);
+          ImGui::Text("Height: %d", trec.height);
           // text transform (different from graphics::transform)
           sftransform_tree(tobj.tobj_);
           

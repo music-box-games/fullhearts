@@ -33,6 +33,8 @@ namespace waifuengine
       return object_transform;
     }
 
+    
+
     void gameobject::set_transform(graphics::transform const &tr)
     {
       object_transform = tr;

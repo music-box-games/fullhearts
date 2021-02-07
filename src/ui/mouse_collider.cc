@@ -14,31 +14,66 @@ namespace waifuengine
 {
   namespace ui
   {
-    mouse_collider::mouse_collider() : physics::collider()
+    mouse_collider::mouse_collider() : components::component<mouse_collider>(), colliding(false), col(0,0)
     {
       log::LOGTRACE("Constructing mouse_collider");
-      // sign up for mouse click events
-      auto f = std::bind(&mouse_collider::input_handler, this, std::placeholders::_1);
-      events::subscribe<graphics::input::input_event>(this, f);
+      
     }
 
     mouse_collider::~mouse_collider()
     {
       log::LOGTRACE("Destructing mouse_collider");
-      events::unsubcribe<graphics::input::input_event>(this);
     }
 
     void mouse_collider::update(float dt)
     {
       auto window = graphics::get_main_window().lock();
-      glm::vec2 mpos = sf::Mouse::getPosition(*(window->data().lock()));
+      auto mp = sf::Mouse::getPosition(*(window->data().lock()));
+      glm::vec2 mpos(mp.x, mp.y); 
       // check if mouse is in collider bounds
-      // 
+      colliding = col.check_point(mpos);
     }
 
-    void mouse_collider::input_handler(events::event * e)
+    void mouse_collider::draw() const
     {
-
+      
     }
+
+    void mouse_collider::draw_debug()
+    {
+      if(debugging)
+      {
+
+      if(colliding)
+      {
+        col.draw_debug(graphics::colors::color(0,255,0,255), parent->get_transform());
+      }
+      else
+      {
+        col.draw_debug(graphics::colors::color(255,0,0,255), parent->get_transform());
+      }
+      }
+    }
+
+    void mouse_collider::set_dimensions(glm::vec2 d)
+    {
+      col.set_dimensions(d.x, d.y);
+    }
+
+    glm::vec2 mouse_collider::get_dimensions() const
+    {
+      return col.get_dimensions();
+    }
+
+    void mouse_collider::set_position(glm::vec2 p)
+    {
+      col.set_position(p);
+    }
+
+    glm::vec2 mouse_collider::get_position() const
+    {
+      return col.get_position();
+    }
+
   } // namespace ui
 } // namespace waifuengine

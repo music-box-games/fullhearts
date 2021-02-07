@@ -1,4 +1,5 @@
 #include "slidefx.hpp"
+#include "gameobject.hpp"
 
 namespace waifuengine
 {
@@ -15,7 +16,7 @@ namespace waifuengine
         {
           stop();
         }
-        glm::vec2 new_pos = slide_calc_(parent->get_translation(), dt * 1000);
+        glm::vec2 new_pos = slide_calc_(parent->get_transform().translation(), dt * 1000);
         parent->set_translation(new_pos);
       }
     }

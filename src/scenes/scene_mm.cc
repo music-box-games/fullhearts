@@ -72,30 +72,21 @@ namespace waifuengine
       start_obj->set_font("playtime.ttf");
       start_obj->set_color(graphics::colors::color(0,0,0,255));
       start_obj->set_translation(glm::vec2(672.f, 845.f));
-      std::function<glm::vec2(glm::vec2, float)> start_obj_slide_func = [=start_obj](glm::vec2 pos, float total_elapsed) -> glm::vec2
-      {
-        // i hate math
-        
-      };
-      start_obj->add_component_v<graphics::slidefx>();
 
       auto load_obj = uisp->add_object_t<ui::text_button>("load_button", std::optional<fs::path>(), "Load");
       load_obj->set_font("playtime.ttf");
       load_obj->set_color(graphics::colors::color(0,0,0,255));
       load_obj->set_translation(glm::vec2(821.f, 845.f));
-      load_obj->add_component_v<graphics::slidefx>();
       
       auto opt_obj = uisp->add_object_t<ui::text_button>("options_button", std::optional<fs::path>(), "Options");
       opt_obj->set_font("playtime.ttf");
       opt_obj->set_color(graphics::colors::color(0,0,0,255));
       opt_obj->set_translation(glm::vec2(973.f, 845.f));
-      opt_obj->add_component_v<graphics::slidefx>();
 
       auto ebtn_obj = uisp->add_object_t<ui::text_button>("exit_button", std::optional<fs::path>(), "Exit");
       ebtn_obj->set_font("playtime.ttf");
       ebtn_obj->set_color(graphics::colors::color(0,0,0,255));
       ebtn_obj->set_translation(glm::vec2(1147.f, 845.f));
-      ebtn_obj->add_component_v<graphics::slidefx>();
 
       auto fdin_obj = trsp->add_object_t<graphics::vfx::fade>("mm_fade_in", 255, 0, std::chrono::milliseconds(3000));
       fdin_obj->start();

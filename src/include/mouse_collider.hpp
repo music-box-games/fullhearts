@@ -3,12 +3,14 @@
 
 #include "collider.hpp"
 #include "input_event.hpp"
+#include "bounding_box.hpp"
+#include "debug.hpp"
 
 namespace waifuengine
 {
   namespace ui
   {
-    class mouse_collider : public physics::collider
+    class mouse_collider : public components::component<mouse_collider>
     {
     public:
       COMPONENT_REGISTER(mouse_collider);
@@ -20,8 +22,15 @@ namespace waifuengine
       virtual void draw() const;
       virtual void draw_debug();
 
+      void set_dimensions(glm::vec2 d);
+      glm::vec2 get_dimensions() const;
+      void set_position(glm::vec2 p);
+      glm::vec2 get_position() const;
+
     private:
-      void input_handler(events::event * e);
+      friend class core::debug::imgui_listener;
+      bool colliding;
+      graphics::bounding_box col;
     };
   }
 }

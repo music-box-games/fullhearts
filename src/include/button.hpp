@@ -39,7 +39,7 @@ namespace waifuengine
       void set_string(std::string s);
       void set_style(int st);
 
-      //virtual void update(float dt);
+      virtual void update(float dt);
       virtual void draw() const;
     };
 

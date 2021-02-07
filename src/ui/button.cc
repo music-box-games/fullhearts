@@ -34,7 +34,10 @@ namespace waifuengine
 
     text_button::text_button(std::string const& name, std::optional<fs::path> button_texture, std::string text) : button(name, button_texture), tobj_(graphics::text(text))
     {
-
+      std::shared_ptr<ui::mouse_collider> mc = get_component<ui::mouse_collider>();
+      sf::FloatRect r = tobj_.data().getGlobalBounds();
+      mc->set_position(object_transform.translation());
+      mc->set_dimensions(glm::vec2(r.width, r.height));
     }
 
     text_button::~text_button() {}
@@ -76,6 +79,15 @@ namespace waifuengine
         // draw text after components
         graphics::get_window_manager().lock()->get_main_window().lock()->data().lock()->draw(tobj_.data(), sf::RenderStates(object_transform.data().getTransform()));
       }
+    }
+
+    void text_button::update(float dt)
+    {
+      button::update(dt);
+      std::shared_ptr<ui::mouse_collider> mc = get_component<ui::mouse_collider>();
+      sf::FloatRect r = tobj_.data().getGlobalBounds();
+      mc->set_position(object_transform.translation());
+      mc->set_dimensions(glm::vec2(r.width, r.height));
     }
 
   }
