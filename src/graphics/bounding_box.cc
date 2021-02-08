@@ -6,12 +6,12 @@ namespace waifuengine
   {
     bounding_box::bounding_box(int width, int height) : box(rectangle(width, height)) 
     {
-      box.set_fill_color(colors::color(0,0,0,255));
+      box.set_fill_color(colors::color(sf::Color::Transparent));
     }
 
     bounding_box::bounding_box(glm::vec2 d) : box(rectangle(d.x, d.y))
     {
-      box.set_fill_color(colors::color(0,0,0,255));
+      box.set_fill_color(colors::color(sf::Color::Transparent));
     }
 
     bounding_box::~bounding_box() {}
@@ -52,6 +52,7 @@ namespace waifuengine
     void bounding_box::set_dimensions(int width, int height)
     {
       box.set_dimensions(width, height);
+      
     }
 
     glm::vec2 bounding_box::get_dimensions() const

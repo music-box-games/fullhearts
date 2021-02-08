@@ -44,14 +44,14 @@ namespace waifuengine
       if(debugging)
       {
 
-      if(colliding)
-      {
-        col.draw_debug(graphics::colors::color(0,255,0,255), parent->get_transform());
-      }
-      else
-      {
-        col.draw_debug(graphics::colors::color(255,0,0,255), parent->get_transform());
-      }
+        if(colliding)
+        {
+          col.draw_debug(graphics::colors::color(0,255,0,255), parent->get_transform());
+        }
+        else
+        {
+          col.draw_debug(graphics::colors::color(255,0,0,255), parent->get_transform());
+        }
       }
     }
 

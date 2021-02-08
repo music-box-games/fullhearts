@@ -46,7 +46,8 @@ namespace waifuengine
               {"UI Space", space_order::UI},
               {"Transition Space", space_order::TRANSITION},
       };
-          class space_sort
+      
+      class space_sort
       {
       public:
         bool operator()(std::string const& a, std::string const& b) const

@@ -190,9 +190,12 @@ namespace waifuengine
         void mouse_collider_tree(std::shared_ptr<ui::mouse_collider> & mc)
         {
           ImGui::Text("Colliding: %s", (mc->colliding) ? "True" : "False");
-          ImGui::Text("Position: %d, %d", mc->get_position().x, mc->get_position().y);
-          ImGui::Text("Width: %d", mc->get_dimensions().x);
-          ImGui::Text("Height: %d", mc->get_dimensions().y);
+          if(ImGui::TreeNode("Collider Transform"))
+          {
+            sftransform_tree(mc->col.data().data());
+            ImGui::TreePop();
+          }
+          // todo : separate transforms for the gameobject and the component, and compose the component one with the object one 
         }
 
         void slidefx_tree(std::shared_ptr<graphics::slidefx> & s)
@@ -276,7 +279,11 @@ namespace waifuengine
           ImGui::Text("Width: %d", trec.width);
           ImGui::Text("Height: %d", trec.height);
           // text transform (different from graphics::transform)
-          sftransform_tree(tobj.tobj_);
+          if(ImGui::TreeNode("Text Transform"))
+          {
+            sftransform_tree(tobj.tobj_);
+            ImGui::TreePop();
+          }
           
         }
 
@@ -332,7 +339,11 @@ namespace waifuengine
             rect.set_outline_thickness(ot);
           }
 
-          sftransform_tree(rect.data());
+          if(ImGui::TreeNode("Rectangle Transform"))
+          {
+            sftransform_tree(rect.data());
+            ImGui::TreePop();
+          }
         }
 
         void fade_object_tree(std::shared_ptr<graphics::vfx::fade> & obj)
