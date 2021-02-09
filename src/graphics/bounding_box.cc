@@ -7,11 +7,15 @@ namespace waifuengine
     bounding_box::bounding_box(int width, int height) : box(rectangle(width, height)) 
     {
       box.set_fill_color(colors::color(sf::Color::Transparent));
+      box.set_outline_color(colors::color(sf::Color::Black));
+      box.set_outline_thickness(1);
     }
 
     bounding_box::bounding_box(glm::vec2 d) : box(rectangle(d.x, d.y))
     {
       box.set_fill_color(colors::color(sf::Color::Transparent));
+      box.set_outline_color(colors::color(sf::Color::Black));
+      box.set_outline_thickness(1);
     }
 
     bounding_box::~bounding_box() {}

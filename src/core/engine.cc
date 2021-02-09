@@ -142,8 +142,8 @@ void engine::load_initial_scene()
   we::log::LOGTRACE("Loading inital scene");
   we::scenes::scene_loader func = []() -> void { 
       //we::scenes::build_splashscreen_scene(); 
-      we::scenes::build_scene_mainmenu();
-      //we::scenes::build_sandbox_scene();
+      //we::scenes::build_scene_mainmenu();
+      we::scenes::build_sandbox_scene();
     };
   we::scenes::queue_scene(func);
 }

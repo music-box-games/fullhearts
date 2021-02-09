@@ -48,9 +48,32 @@ namespace waifuengine
         std::deque<float> fps_histogram;
         std::weak_ptr<sf::RenderWindow> main_window;
 
+        std::unordered_map<std::string, ImFont *> loaded_fonts;
+
       public:
-        imgui_listener() {}
-        ~imgui_listener() {}
+        imgui_listener() 
+        {
+          // load playtime fonts
+          ImGuiIO& io = ImGui::GetIO();
+          std::string fontpath = utils::get_exe_path() + "\\assets\\fonts\\playtime.ttf";
+          ImFont * playtime = io.Fonts->AddFontFromFile(fontpath.c_str());
+          if(playtime)
+          {
+            loaded_fonts["playtime.ttf"] = playtime;
+            ImGui::PushFont(playtime);
+          }
+          else
+          {
+            log::LOGWARNING(std::string("ImGui failed to load font: " + fontpath));
+          }
+        }
+        ~imgui_listener() 
+        {
+          if(loaded_fonts.count("playtime.ttf"))
+          {
+            ImGui::PopFont();
+          }
+        }
 
         void run()
         {
@@ -62,12 +85,12 @@ namespace waifuengine
           else
           {
 
-          fps_graph();
-          mouse_pos();
-          main_window_info();
-          font_manager_tree();
-          current_scene();
-          ImGui::End();
+            fps_graph();
+            mouse_pos();
+            main_window_info();
+            font_manager_tree();
+            current_scene();
+            ImGui::End();
           }
         }
 
