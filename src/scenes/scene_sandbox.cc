@@ -4,8 +4,10 @@
 #include "sprite.hpp"
 #include "button.hpp"
 #include "colors.hpp"
+#include "rectangle.hpp"
 
 namespace we = ::waifuengine;
+
 
 namespace waifuengine
 {
@@ -24,9 +26,11 @@ namespace waifuengine
       auto uisp = sp_manager->get_space("UI Space");
       auto trsp = sp_manager->get_space("Transition Space");
     
-      auto test_button = uisp->add_object_t<ui::text_button>("test button", std::optional<fs::path>(), "Test Me");
-      test_button->set_font("playtime.ttf");
-      test_button->set_color(graphics::colors::color(255,255,255,255));
+      // auto test_button = uisp->add_object_t<ui::text_button>("test button", std::optional<fs::path>(), "Test Me");
+      // test_button->set_font("playtime.ttf");
+      // test_button->set_color(graphics::colors::color(255,255,255,255));
+      
+
       return scn;
     }
   } // namespace scenes
