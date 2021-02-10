@@ -32,6 +32,12 @@ namespace waifuengine
       rw->setFramerateLimit(f);
     }
 
+    glm::vec2 window::get_dimensions() const
+    {
+      sf::Vector2u s = rw->getSize();
+      return glm::vec2(s.x, s.y);
+    }
+
     void window::update()
     {
       // events

@@ -1,6 +1,7 @@
 #ifndef _WE_WINDOW_HPP_
 #define _WE_WINDOW_HPP_
 
+#include <glm/glm.hpp>
 #include <string>
 #include <memory>
 
@@ -21,6 +22,8 @@ namespace waifuengine
       void display();
 
       void set_frame_limit(int f);
+
+      glm::vec2 get_dimensions() const;
 
       std::weak_ptr<sf::RenderWindow> data();
 
